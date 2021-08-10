@@ -90,6 +90,7 @@ const ActiveLink = styled.a<StyledComponentProps>`
   border-bottom: ${(props) => (props.active ? `2px solid #2AC1BC` : '')};
   color: ${(props) => (props.active ? '#2AC1BC' : 'inherit')};
   font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  margin-bottom: ${(props) => (props.active ? '-1px' : '0px')};
 `;
 
 export { Router, Route, Link, NavLink };

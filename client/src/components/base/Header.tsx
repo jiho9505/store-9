@@ -47,6 +47,7 @@ const Header = () => {
 
 const HeaderContainer = styled.div`
   min-width: 1450px;
+  border-bottom: 1px solid#CCD3D3; ;
 `;
 
 const SearchHeader = styled.div`
