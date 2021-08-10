@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
-import { Link } from '@/Router';
+import { Link, NavLink } from '@/Router';
 
 import '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
+
+const categories = [
+  ['전체', '/total'],
+  ['문구', '/suplies'],
+  ['리빙', '/living'],
+  ['책', '/books'],
+  ['배민그린', '/green'],
+  ['ㅋㅋ 에디션', '/smile-edition'],
+  ['을지로 에디션', '/euljiro-edition'],
+  ['배달이 친구들', '/baedal-friends'],
+  ['선물세트', '/present'],
+  ['콜라보레이션', '/collaborate'],
+];
 
 const Header = () => {
   return (
     <HeaderContainer>
       <SearchHeader>
-        <StyledLink to="/">
+        <LogoLink to="/">
           <Logo src="images/logo.png" />
-        </StyledLink>
+        </LogoLink>
         <SearchContainer>
           <SearchInput placeholder="검색어를 입력해 주세요" />
           <Button>
@@ -19,7 +32,15 @@ const Header = () => {
           </Button>
         </SearchContainer>
       </SearchHeader>
-      <Navigation></Navigation>
+      <Navigation>
+        {categories.map(([category, path], idx) => (
+          <Fragment key={idx}>
+            <CategoryLink to={path}>
+              <li>{category}</li>
+            </CategoryLink>
+          </Fragment>
+        ))}
+      </Navigation>
     </HeaderContainer>
   );
 };
@@ -36,7 +57,7 @@ const SearchHeader = styled.div`
   grid-template-columns: repeat(8, 1fr);
 `;
 
-const StyledLink = styled(Link)`
+const LogoLink = styled(Link)`
   grid-column-start: 3;
   grid-column-end: 6;
   display: flex;
@@ -72,6 +93,19 @@ const SearchImg = styled.img`
   width: 100%;
 `;
 
-const Navigation = styled.ul``;
+const Navigation = styled.ul`
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CategoryLink = styled(NavLink)`
+  height: 55px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 0 10px 0;
+`;
 
 export default Header;
