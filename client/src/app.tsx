@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '@/components/base/Header';
+// import Header from '@/components/base/Header';
 import { Router, Route, Link } from './Router';
-
+import Footer from './components/base/Footer/Footer';
 const App = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Router>
         <Route exact path="/">
           <MainPage />
@@ -18,6 +18,7 @@ const App = () => {
         </Route>
         <Navigation />
       </Router>
+      <Footer />
     </>
   );
 };
