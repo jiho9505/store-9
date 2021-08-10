@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import styled from '@emotion/styled';
 
 type historyContextType = {
   curLocation: string;
@@ -59,4 +60,36 @@ const Link = ({ to, children, ...rest }) => {
   );
 };
 
-export { Router, Route, Link };
+const NavLink = ({ to, children, ...rest }) => {
+  const { curLocation, onChangeLocation } = useContext(HistoryContext);
+  const [isActive, setActive] = useState(curLocation === to);
+
+  useEffect(() => {
+    if (curLocation !== to) {
+      setActive(false);
+    }
+  }, [curLocation]);
+
+  const handleClickLink = () => {
+    onChangeLocation(to);
+    setActive(true);
+  };
+
+  return (
+    <ActiveLink {...rest} active={isActive} onClick={handleClickLink}>
+      {children}
+    </ActiveLink>
+  );
+};
+
+interface StyledComponentProps {
+  active: boolean;
+}
+
+const ActiveLink = styled.a<StyledComponentProps>`
+  border-bottom: ${(props) => (props.active ? `2px solid #2AC1BC` : '')};
+  color: ${(props) => (props.active ? '#2AC1BC' : 'inherit')};
+  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+`;
+
+export { Router, Route, Link, NavLink };
