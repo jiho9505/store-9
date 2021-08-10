@@ -5,10 +5,14 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "../dist"),
+    publicPath: "/",
     filename: "index.js",
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
   },
   module: {
     rules: [
@@ -24,6 +28,7 @@ module.exports = {
                 "@babel/preset-react",
                 "@babel/preset-typescript",
               ],
+              plugins: ["@emotion"],
             },
           },
         ],
