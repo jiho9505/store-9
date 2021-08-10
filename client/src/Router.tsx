@@ -45,14 +45,18 @@ const Route = ({ exact, path, children }) => {
   return isMatched() ? children : null;
 };
 
-const Link = ({ to, children }) => {
+const Link = ({ to, children, ...rest }) => {
   const { onChangeLocation } = useContext(HistoryContext);
 
   const handleClickLink = () => {
     onChangeLocation(to);
   };
 
-  return <a onClick={handleClickLink}>{children}</a>;
+  return (
+    <a {...rest} onClick={handleClickLink}>
+      {children}
+    </a>
+  );
 };
 
 export { Router, Route, Link };

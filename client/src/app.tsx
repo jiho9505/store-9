@@ -5,8 +5,8 @@ import { Router, Route, Link } from './Router';
 const App = () => {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Route exact path="/">
           <MainPage />
         </Route>
