@@ -6,8 +6,8 @@
  */
 
 module.exports = {
-  semi: true,
   tabWidth: 2,
+  semi: true,
   printWidth: 100,
   arrowParens: 'always',
   singleQuote: true,
