@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 
 type historyContextType = {
   curLocation: string;
-  onChangeLoc?: (path: string) => void;
+  onChangeLocation?: (path: string) => void;
   history?: History;
 };
 
@@ -25,7 +25,7 @@ const Router = ({ children }) => {
   });
 
   return (
-    <HistoryContext.Provider value={{ curLocation, onChangeLoc: handleSetLocation, history }}>
+    <HistoryContext.Provider value={{ curLocation, onChangeLocation: handleSetLocation, history }}>
       {children}
     </HistoryContext.Provider>
   );
@@ -33,7 +33,6 @@ const Router = ({ children }) => {
 
 const Route = ({ exact, path, children }) => {
   const { curLocation } = useContext(HistoryContext);
-  console.log(curLocation, path);
 
   const isMatched = (): boolean => {
     if (exact) {
@@ -47,13 +46,13 @@ const Route = ({ exact, path, children }) => {
 };
 
 const Link = ({ to, children }) => {
-  const { onChangeLoc } = useContext(HistoryContext);
+  const { onChangeLocation } = useContext(HistoryContext);
 
   const handleClickLink = () => {
-    onChangeLoc(to);
+    onChangeLocation(to);
   };
 
-  return <div onClick={handleClickLink}>{children}</div>;
+  return <a onClick={handleClickLink}>{children}</a>;
 };
 
 export { Router, Route, Link };
