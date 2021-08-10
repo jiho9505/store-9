@@ -1,11 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import App from "./app";
+import '@/static/style/init.css';
 
-ReactDOM.render(
-  <>
-    <App />
-  </>,
-  document.getElementById("root")
-);
+import App from './app';
+
+ReactDOM.render(<App />, document.getElementById('root'));
