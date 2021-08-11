@@ -4,6 +4,10 @@
 */
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@300;400;700&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body,
 div,
