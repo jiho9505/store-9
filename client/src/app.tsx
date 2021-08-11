@@ -3,8 +3,9 @@ import { Router, Route, Link } from './Router';
 
 import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
-import '@/static/assets/img/baemin-favicon.png';
+import CartPage from '@/pages/cart';
 
+import '@/static/assets/img/baemin-favicon.png';
 
 const App = () => {
   return (
@@ -12,7 +13,8 @@ const App = () => {
       <Router>
         <Header />
         <Route exact path="/">
-          <MainPage />
+          {/* <MainPage /> */}
+          <CartPage />
         </Route>
         <Route exact path="/login">
           <LoginPage />
@@ -20,7 +22,6 @@ const App = () => {
         <Route exact path="/product/:id">
           <ProductPage />
         </Route>
-        <Navigation />
       </Router>
       <Footer />
     </>
@@ -37,15 +38,6 @@ const LoginPage = () => {
 
 const ProductPage = () => {
   return <div>This is Product Page</div>;
-};
-
-const Navigation = () => {
-  return (
-    <>
-      <Link to="/">Main</Link>
-      <Link to="/login">Login</Link>
-    </>
-  );
 };
 
 export default App;
