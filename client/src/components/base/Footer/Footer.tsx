@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import '@/static/assets/img/footer_logo.png';
+import '@/static/assets/img/footerLogo.png';
 import { baeminFont, greySpan, greyBg1 } from '@/static/style/common';
 
 const Footer = () => {
   return (
     <FooterElement>
-      <img src="images/footer_logo.png" />
+      <img src="images/footerLogo.png" />
       <FooterInfoContainer>
         <FooterNav>
           <span>공지사항</span>
