@@ -4,6 +4,10 @@ import '@/static/assets/img/bannerImage1.gif';
 import '@/static/assets/img/bannerImage2.gif';
 import '@/static/assets/img/bannerImage3.gif';
 
+/**
+ * TODO:
+ * 이미지 클릭 시 해당 상품으로 넘어가도록 추후 Link에 product id 달 것
+ */
 const Carousel = () => {
   const [index, setIndex] = useState(1);
   const [clickEventActive, setClickEventActive] = useState(false);
