@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router, Route, Link } from './Router';
+import Header from './components/base/Header';
 import Footer from './components/base/Footer/Footer';
+
 const App = () => {
   return (
     <>
