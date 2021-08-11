@@ -1,3 +1,2 @@
-import CartHeader from './CartHeader';
-
-export { CartHeader };
+export { default as CartHeader } from './CartHeader';
+export { default as CartContent } from './CartContent';
