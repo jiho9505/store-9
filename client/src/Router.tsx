@@ -60,7 +60,7 @@ const Link = ({ to, children, ...rest }) => {
   );
 };
 
-const NavLink = ({ to, children, ...rest }) => {
+const NavLink = ({ to, children, ...props }) => {
   const { curLocation, onChangeLocation } = useContext(HistoryContext);
   const [isActive, setActive] = useState(curLocation === to);
 
@@ -76,7 +76,7 @@ const NavLink = ({ to, children, ...rest }) => {
   };
 
   return (
-    <ActiveLink {...rest} active={isActive} onClick={handleClickLink}>
+    <ActiveLink {...props} active={isActive} onClick={handleClickLink}>
       {children}
     </ActiveLink>
   );
