@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import '@/static/assets/img/sampleItem.jpeg';
+
 /**
  * 테스트용 더미데이터
  */
@@ -44,7 +46,9 @@ const ItemLists = () => {
     return array.map((item, idx) => {
       return (
         <Item key={idx}>
-          <ImageContainer></ImageContainer>
+          <ImageContainer>
+            <img src="images/sampleItem.jpeg"></img>
+          </ImageContainer>
           <Discount>10%</Discount>
           <ProductName>반반휴지. 물반휴지반</ProductName>
           <ProductOriginalPrice isDiscount={item.discount}>1,500원</ProductOriginalPrice>
@@ -108,16 +112,17 @@ const Discount = styled.div`
 const ImageContainer = styled.div`
   width: 285px;
   height: 350px;
-  background-color: #e0e0e0;
   img {
     width: 100%;
     height: 100%;
+    cursor: pointer;
   }
 `;
 
 const ProductName = styled.span`
   display: block;
   margin-bottom: 6px;
+  cursor: pointer;
 `;
 
 type PriceProps = {
