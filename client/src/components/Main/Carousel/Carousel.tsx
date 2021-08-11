@@ -8,11 +8,31 @@ const Carousel = () => {
   const [index, setIndex] = useState(1);
   const [clickEventActive, setClickEventActive] = useState(false);
 
+  /**
+   * button clickEvent가 일어나지 않았을때
+   * index를 이동합니다. ( 이미지를 보여주기 위해서 )
+   */
   !clickEventActive &&
     setTimeout(() => {
       const standardIndex = index + 1 > 3 ? 1 : index + 1;
       setIndex(standardIndex);
     }, 3000);
+
+  /**
+   * Carousel 안에 버튼 클릭 시 해당 이미지로 이동합니다.
+   * 그 후 자동으로 슬라이드 되는 기능을 3초간 막습니다.
+   */
+  const onClickButton = (e: React.MouseEvent) => {
+    const { target } = e;
+    if (!(target instanceof HTMLElement)) return;
+    const nextIndex = target.dataset.idx;
+    setIndex(Number(nextIndex));
+    setClickEventActive(true);
+
+    setTimeout(() => {
+      setClickEventActive(false);
+    }, 3000);
+  };
 
   return (
     <CarouselContainer>
