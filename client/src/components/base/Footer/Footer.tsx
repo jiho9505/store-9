@@ -72,7 +72,7 @@ const FooterElement = styled.footer`
   padding: 50px 250px 0 250px;
   height: 260px;
   background-color: ${greyBg1};
-  min-width: 1000px;
+
   img {
     width: 100px;
     height: 76px;
