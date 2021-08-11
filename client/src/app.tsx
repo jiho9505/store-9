@@ -1,12 +1,12 @@
 import React from 'react';
-// import Header from '@/components/base/Header';
+import Header from '@/components/base/Header';
 import { Router, Route, Link } from './Router';
 import Footer from './components/base/Footer/Footer';
 const App = () => {
   return (
     <>
-      {/* <Header /> */}
       <Router>
+        <Header />
         <Route exact path="/">
           <MainPage />
         </Route>
