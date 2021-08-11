@@ -1,7 +1,10 @@
 import React from 'react';
 import { Router, Route, Link } from './Router';
-import Header from './components/base/Header';
-import Footer from './components/base/Footer/Footer';
+
+import Header from '@/components/base/Header';
+import Footer from '@/components/base/Footer/Footer';
+import '@/static/assets/img/baemin-favicon.png';
+
 
 const App = () => {
   return (

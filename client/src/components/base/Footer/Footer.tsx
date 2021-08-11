@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import '@/static/assets/img/footer_logo.png';
+import { baeminFont, greySpan, greyBg1 } from '@/static/style/common';
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <FooterElement>
       <img src="images/footer_logo.png" />
@@ -70,8 +71,8 @@ const FooterElement = styled.footer`
   justify-content: center;
   padding: 50px 250px 0 250px;
   height: 260px;
-  background-color: #f6f6f6;
-
+  background-color: ${greyBg1};
+  min-width: 1000px;
   img {
     width: 100px;
     height: 76px;
@@ -84,6 +85,7 @@ const FooterNav = styled.nav`
 
   span {
     font-weight: bold;
+    font-family: ${baeminFont};
 
     &:not(:last-child) {
       margin-right: 40px;
@@ -93,11 +95,12 @@ const FooterNav = styled.nav`
 
 const FooterInfoContainer = styled.div`
   margin-left: 150px;
+  min-width: 700px;
 `;
 
 const CompanyInfo = styled.div`
   font-size: 12px;
-  color: #717171;
+  color: ${greySpan};
   display: flex;
   margin-bottom: 7px;
 
@@ -118,5 +121,5 @@ const CompanyLicense = styled.span`
 
 const Copyright = styled.small`
   font-size: 12px;
-  color: #717171;
+  color: ${greySpan};
 `;
