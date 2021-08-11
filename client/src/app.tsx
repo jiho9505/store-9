@@ -13,7 +13,7 @@ const App = () => {
       <Router>
         <Header />
         <Route exact path="/">
-          <MainPage />
+          <Main />;
         </Route>
         <Route exact path="/login">
           <LoginPage />
@@ -26,10 +26,6 @@ const App = () => {
       <Footer />
     </>
   );
-};
-
-const MainPage = () => {
-  return <Main />;
 };
 
 const LoginPage = () => {
