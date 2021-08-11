@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+type test = {
+  [key: string]: number | {c: React.ReactNode, colSpan: number}
+}
+
 type ListTableProps = {
   checkable: boolean;
   header: Array<{ id: string; name: string; width?: string; rowSpan?: number }>;
-  body: Object[];
+  body: test [];
   selectedItems?: Set<number>;
   onCheck?: (id: number) => void;
   onCheckAll?: (e) => void

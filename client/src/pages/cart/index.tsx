@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { normalContainerWidth } from '@/static/style/common';
 
 import { CartHeader, CartContent } from '@/components/cart';
+import PricePannel from '@/components/base/PricePannel';
 
 const cartProducts = [
   {
@@ -39,6 +40,15 @@ const CartPage = () => {
     }
   };
 
+  const calTotalProductPrice = () => {
+    return cartProducts.reduce((acc, { productId, totalPrice }) => {
+      if (selectedProducts.has(productId)) {
+        return acc + totalPrice;
+      }
+      return acc;
+    }, 0);
+  };
+
   const handleToggleSelectAllBtn = (e) => {
     const { target } = e;
     const curProductId = cartProducts.map(({ productId }) => productId);
@@ -57,6 +67,10 @@ const CartPage = () => {
         onCheck={handleClickCheckbox}
         onCheckAll={handleToggleSelectAllBtn}
         selectedProduct={selectedProducts}
+      />
+      <PricePannel
+        totalProductNumber={selectedProducts.size}
+        productTotalPrice={calTotalProductPrice()}
       />
     </CartPageContainer>
   );
