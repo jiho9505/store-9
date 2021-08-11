@@ -2,13 +2,17 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import Carousel from '@/components/Main/Carousel/Carousel';
-import Best from '@/components/Main/Best/Best';
+import FeatureSection from '@/components/Main/FeatureSection/FeatureSection';
+import GiftSection from '@/components/Main/GiftSection/GiftSection';
 
 const Main = () => {
   return (
     <MainContainer>
       <Carousel></Carousel>
-      <Best></Best>
+      <FeatureSection mode="best"></FeatureSection>
+      <FeatureSection mode="new"></FeatureSection>
+      <GiftSection></GiftSection>
+      <FeatureSection mode="discount"></FeatureSection>
     </MainContainer>
   );
 };
