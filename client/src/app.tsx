@@ -5,7 +5,7 @@ import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
 import Main from '@/pages/Main/Main';
 
-import '@/static/assets/img/baemin-favicon.png';
+import '@/static/assets/img/baeminFavicon.png';
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
       <Router>
         <Header />
         <Route exact path="/">
-          <Main />;
+          <Main />
         </Route>
         <Route exact path="/login">
           <LoginPage />
