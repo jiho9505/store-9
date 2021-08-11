@@ -82,9 +82,9 @@ const NavLink = ({ to, children, ...props }) => {
   );
 };
 
-interface StyledComponentProps {
+type StyledComponentProps = {
   active: boolean;
-}
+};
 
 const ActiveLink = styled.a<StyledComponentProps>`
   border-bottom: ${(props) => (props.active ? `2px solid #2AC1BC` : '')};

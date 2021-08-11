@@ -1,22 +1,10 @@
 import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 import { Link, NavLink } from '@/Router';
+import { categories } from '@/static/constants';
 
 import '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
-
-const categories = [
-  ['전체', '/total'],
-  ['문구', '/suplies'],
-  ['리빙', '/living'],
-  ['책', '/books'],
-  ['배민그린', '/green'],
-  ['ㅋㅋ 에디션', '/smile-edition'],
-  ['을지로 에디션', '/euljiro-edition'],
-  ['배달이 친구들', '/baedal-friends'],
-  ['선물세트', '/present'],
-  ['콜라보레이션', '/collaborate'],
-];
 
 const Header = () => {
   return (
@@ -47,7 +35,7 @@ const Header = () => {
 
 const HeaderContainer = styled.div`
   min-width: 1450px;
-  border-bottom: 1px solid#CCD3D3; ;
+  border-bottom: 1px solid #CCD3D3; ;
 `;
 
 const SearchHeader = styled.div`
