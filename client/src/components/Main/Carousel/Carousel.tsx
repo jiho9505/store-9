@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import '@/static/assets/img/bannerImage1.gif';
 import '@/static/assets/img/bannerImage2.gif';
 import '@/static/assets/img/bannerImage3.gif';
+import { greyButton } from '@/static/style/common';
 
 /**
  * TODO:
@@ -86,7 +87,6 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  z-index: 1;
   gap: 20px;
 `;
 
@@ -94,7 +94,7 @@ const Button = styled.button<ButtonProps>`
   width: 8px;
   height: 8px;
   border-radius: 100%;
-  background: ${(props) => (props.active ? 'white' : '#b5b5b5')};
+  background: ${(props) => (props.active ? 'white' : greyButton)};
 `;
 
 export default Carousel;
