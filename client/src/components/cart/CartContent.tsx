@@ -9,6 +9,9 @@ import { normalContainerWidth, greyLine } from '@/static/style/common';
 // api 확정되면 type 지정
 type CartContentProps = {
   cartProducts: any;
+  selectedProduct: Set<number>;
+  onCheck: (id: number) => void;
+  onCheckAll: (e) => void;
 };
 
 const tableHeader = [
@@ -18,23 +21,16 @@ const tableHeader = [
   { id: 'delivery', name: '배송비', width: '10%', rowSpan: 6 },
 ];
 
-const CartContent = ({ cartProducts }: CartContentProps) => {
+const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: CartContentProps) => {
   const createTableBody = () => {
     return cartProducts.reduce((acc, cartProducts) => {
       return [
         ...acc,
-        [
-          {
-            id: cartProducts.productId,
-            component: <TableItem cartProduct={cartProducts} />,
-            colSpan: 3,
-          },
-          {
-            id: cartProducts.productId,
-            component: <div style={{ textAlign: 'center' }}>2500</div>,
-            colSpan: 1,
-          },
-        ],
+        {
+          id: cartProducts.productId,
+          cell1: { c: <TableItem cartProduct={cartProducts} />, colSpan: 3 },
+          cell2: { c: <div style={{ textAlign: 'center' }}>2500</div>, colSpan: 1 },
+        },
       ];
     }, []);
   };
@@ -44,7 +40,14 @@ const CartContent = ({ cartProducts }: CartContentProps) => {
       {cartProducts.length === 0 ? (
         <CartEmptyAlert>장바구니가 비었어요!!</CartEmptyAlert>
       ) : (
-        <ListTable checkable={true} header={tableHeader} body={createTableBody()} />
+        <ListTable
+          checkable={true}
+          header={tableHeader}
+          body={createTableBody()}
+          selectedItems={selectedProduct}
+          onCheck={onCheck}
+          onCheckAll={onCheckAll}
+        />
       )}
     </CartContentContainer>
   );

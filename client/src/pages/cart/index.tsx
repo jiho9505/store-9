@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { normalContainerWidth } from '@/static/style/common';
 
@@ -26,10 +26,38 @@ const cartProducts = [
 ];
 
 const CartPage = () => {
+  const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
+
+  const handleClickCheckbox = (id) => {
+    if (selectedProducts.has(id)) {
+      setSelectedProducts((prev) => {
+        prev.delete(id);
+        return new Set(prev);
+      });
+    } else {
+      setSelectedProducts((prev) => new Set(prev.add(id)));
+    }
+  };
+
+  const handleToggleSelectAllBtn = (e) => {
+    const { target } = e;
+    const curProductId = cartProducts.map(({ productId }) => productId);
+    if (target.checked) {
+      setSelectedProducts(new Set(curProductId));
+    } else {
+      setSelectedProducts(new Set());
+    }
+  };
+
   return (
     <CartPageContainer>
       <CartHeader />
-      <CartContent cartProducts={cartProducts} />
+      <CartContent
+        cartProducts={cartProducts}
+        onCheck={handleClickCheckbox}
+        onCheckAll={handleToggleSelectAllBtn}
+        selectedProduct={selectedProducts}
+      />
     </CartPageContainer>
   );
 };

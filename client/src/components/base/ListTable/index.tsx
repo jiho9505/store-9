@@ -4,13 +4,17 @@ import styled from '@emotion/styled';
 type ListTableProps = {
   checkable: boolean;
   header: Array<{ id: string; name: string; width?: string; rowSpan?: number }>;
-  body: Array<{ id: number; component: React.ReactNode; colSpan: number }>[];
+  body: Object[];
+  selectedItems?: Set<number>;
+  onCheck?: (id: number) => void;
+  onCheckAll?: (e) => void
 };
 
-const ListTable = ({ checkable, header, body }: ListTableProps) => {
+const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAll}: ListTableProps) => {
   const calculateThWidth = () => {
     return header.reduce((acc, { width }) => [...acc, width ? width : '10%'], []);
   };
+
 
   return (
     <Table>
@@ -24,7 +28,7 @@ const ListTable = ({ checkable, header, body }: ListTableProps) => {
         <tr>
           {checkable && (
             <th>
-              <input type="checkbox" />
+              <input type="checkbox" onChange={onCheckAll}/>
             </th>
           )}
           {header.map(({ id, name, rowSpan }) => (
@@ -35,18 +39,16 @@ const ListTable = ({ checkable, header, body }: ListTableProps) => {
         </tr>
       </thead>
       <tbody>
-        {body.map((row, idx) => (
-          <tr key={idx}>
+        {body.map(({ id, ...rest }) => (
+          <tr key={id}>
             {checkable && (
               <td>
-                <input type="checkbox" />
+                <input type="checkbox" checked={selectedItems.has(id)} onChange={() => onCheck(id)} />
               </td>
             )}
-            {row.map(({ id, component, colSpan }) => (
-              <td key={id} colSpan={colSpan}>
-                {component}
-              </td>
-            ))}
+            {Object.keys(rest).map((cell) => {
+              return <td key={cell} colSpan={rest.[cell].colSpan}>{rest.[cell].c}</td>;
+            })}
           </tr>
         ))}
       </tbody>
