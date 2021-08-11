@@ -70,6 +70,7 @@ const CarouselContainer = styled.div`
 const ImageContainer = styled.div<ImageProps>`
   display: flex;
   width: 100%;
+  height: 500px;
   transition: all 0.5s ease-in-out;
   transform: translateX(${(props) => `${(props.translateX - 1) * -100}%`});
 `;
