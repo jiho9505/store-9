@@ -17,7 +17,7 @@ const Router = ({ children }) => {
 
     const movePage = ({ target }) => {
       const nextPath = target.location.pathname;
-      history.push(nextPath);
+      setLocation(nextPath);
     };
 
     window.addEventListener('popstate', movePage);
