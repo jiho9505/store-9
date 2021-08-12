@@ -81,16 +81,3 @@ const Navigation = () => {
 };
 
 export default App;
-
-// import Suplies from '@/pages/ProductList/Suplies';
-// import Living from '@/pages/ProductList/Living';
-// import Books from '@/pages/ProductList/Books';
-// import Green from '@/pages/ProductList/Green';
-// import SmileEdition from '@/pages/ProductList/SmileEdition';
-// import EuljiroEdition from '@/pages/ProductList/EuljiroEdition';
-// import BaedalFriends from '@/pages/ProductList/BaedalFriends';
-// import Present from '@/pages/ProductList/Present';
-// import Collaborate from '@/pages/ProductList/Collaborate';
-{
-  /* */
-}
