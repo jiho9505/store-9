@@ -29,7 +29,10 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: Car
         {
           id: cartProducts.productId,
           cell1: { c: <TableItem cartProduct={cartProducts} />, colSpan: 3 },
-          cell2: { c: <div style={{ textAlign: 'center' }}>2500</div>, colSpan: 1 },
+          cell2: {
+            c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div>,
+            colSpan: 1,
+          },
         },
       ];
     }, []);
@@ -55,8 +58,8 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: Car
 
 const CartContentContainer = styled.div`
   width: ${normalContainerWidth};
-  border-top: 1px solid ${greyLine};
-  border-bottom: 1px solid ${greyLine};
+  /* border-top: 1px solid ${greyLine}; */
+  /* border-bottom: 1px solid ${greyLine}; */
 `;
 
 const CartEmptyAlert = styled.div`

@@ -4,7 +4,7 @@ import {
   normalContainerWidth,
   greyLine,
   greySpan,
-  normalButtonRadius,
+  normalRadius,
 } from '@/static/style/common';
 
 import { CartHeader, CartContent } from '@/components/cart';
@@ -106,7 +106,7 @@ const Button = styled.button`
   width: 120px;
   height: 30px;
   border: 1px solid ${greyLine};
-  border-radius: ${normalButtonRadius};
+  border-radius: ${normalRadius};
   color: ${greySpan};
   &:first-child {
     margin-right: 10px;

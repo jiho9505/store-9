@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { greyLine, normalRadius, greyBg1 } from '@/static/style/common';
 
 type test = {
   [key: string]: number | {c: React.ReactNode, colSpan: number}
@@ -29,31 +30,31 @@ const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAl
         ))}
       </colgroup>
       <thead>
-        <tr>
+        <TableHeaderRow>
           {checkable && (
-            <th>
-              <input type="checkbox" onChange={onCheckAll}/>
-            </th>
+            <TableHeaderCell>
+              <CheckBox type="checkbox" onChange={onCheckAll}/>
+            </TableHeaderCell>
           )}
           {header.map(({ id, name, rowSpan }) => (
-            <th key={id} rowSpan={rowSpan && rowSpan}>
+            <TableHeaderCell key={id} rowSpan={rowSpan && rowSpan}>
               {name}
-            </th>
+            </TableHeaderCell>
           ))}
-        </tr>
+        </TableHeaderRow>
       </thead>
       <tbody>
         {body.map(({ id, ...rest }) => (
-          <tr key={id}>
+          <TableBodyRow key={id}>
             {checkable && (
               <td>
-                <input type="checkbox" checked={selectedItems.has(id)} onChange={() => onCheck(id)} />
+                <CheckBox type="checkbox" checked={selectedItems.has(id)} onChange={() => onCheck(id)} />
               </td>
             )}
             {Object.keys(rest).map((cell) => {
               return <td key={cell} colSpan={rest.[cell].colSpan}>{rest.[cell].c}</td>;
             })}
-          </tr>
+          </TableBodyRow>
         ))}
       </tbody>
     </Table>
@@ -62,6 +63,25 @@ const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAl
 
 const Table = styled.table`
   width: 100%;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: ${normalRadius};
 `;
+
+const TableHeaderRow = styled.tr`
+  height: 40px;
+  border-bottom: 1px solid ${greyLine};
+`
+
+const TableHeaderCell = styled.th`
+  line-height: 40px;
+`
+
+const TableBodyRow = styled.tr`
+  border-bottom: 1px solid ${greyBg1}
+`
+
+const CheckBox = styled.input`
+  margin-right: 10px;
+`
 
 export default ListTable;

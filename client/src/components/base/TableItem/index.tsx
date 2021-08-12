@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { greyLine, greySpan, normalRadius } from '@/static/style/common';
+
 const TableItem = ({ cartProduct }) => {
   const { productId, name, thumbNail, price, quantity, totalPrice } = cartProduct;
   return (
@@ -10,12 +12,12 @@ const TableItem = ({ cartProduct }) => {
         <ProductName>{name}</ProductName>
       </ProductBasicInfo>
       <ProductPriceInfo>
-        <div>
-          {price} / <span>{quantity} 개</span>
-        </div>
-        <button>옵션/수량 변경</button>
+        <ProductPrice>
+          {price.toLocaleString()} 원 / <span>{quantity} 개</span>
+        </ProductPrice>
+        <Button>옵션/수량 변경</Button>
       </ProductPriceInfo>
-      <ProductTotalPrice>{totalPrice}</ProductTotalPrice>
+      <ProductTotalPrice>{totalPrice.toLocaleString()} 원</ProductTotalPrice>
     </TableItemContainer>
   );
 };
@@ -25,7 +27,6 @@ const TableItemContainer = styled.div`
   height: 100px;
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  /* padding: 15px 10px; */
 `;
 
 const ProductBasicInfo = styled.div`
@@ -39,7 +40,9 @@ const ProductImg = styled.img`
   margin-right: 10px;
 `;
 
-const ProductName = styled.span``;
+const ProductName = styled.span`
+  font-size: 14px;
+`;
 
 const ProductPriceInfo = styled.div`
   grid-column: 8 / 9;
@@ -51,10 +54,23 @@ const ProductPriceInfo = styled.div`
   }
 `;
 
+const ProductPrice = styled.div`
+  margin-bottom: 10px;
+  font-size: 14px;
+`;
+
+const Button = styled.button`
+  border: 1px solid ${greyLine};
+  border-radius: ${normalRadius};
+  color: ${greySpan};
+  padding: 4px;
+`;
+
 const ProductTotalPrice = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
 `;
 
 export default TableItem;

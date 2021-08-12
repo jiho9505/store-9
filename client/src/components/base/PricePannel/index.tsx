@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import { normalButtonRadius, primary1, white } from '@/static/style/common';
+import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
 
 type PricePannelProps = {
   totalProductNumber: number;
@@ -35,6 +35,9 @@ const PricePannelContainer = styled.div`
   justify-content: space-between;
   width: 400px;
   padding: 20px;
+  & div:not(:last-of-type) {
+    margin-bottom: 15px;
+  }
 `;
 
 const ProductTotalPrice = styled.div`
@@ -53,12 +56,17 @@ const TotalPrice = styled.div`
 `;
 
 const OrderButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${primary1};
   color: ${white};
   margin-top: 15px;
   width: 100%;
   height: 40px;
-  border-radius: ${normalButtonRadius};
+  border-radius: ${normalRadius};
+  font-family: ${baeminFont};
+  font-size: 20px;
 `;
 
 export default PricePannel;
