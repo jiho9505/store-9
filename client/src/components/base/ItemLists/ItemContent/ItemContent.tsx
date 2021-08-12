@@ -9,24 +9,22 @@ type ContentProps = {
 };
 
 const ItemContent = ({ quantity, discount }: ContentProps) => {
-  if (!quantity) {
-    return (
-      <div>
-        <ProductName>반반휴지. 물반휴지반</ProductName>
-        <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
-      </div>
-    );
-  }
-
-  return (
-    <div>
+  return quantity ? (
+    <ItemContentContainer>
       {discount ? <Discount>10%</Discount> : ``}
       <ProductName>반반휴지. 물반휴지반</ProductName>
       <ProductOriginalPrice isDiscount={discount}>1,500원</ProductOriginalPrice>
       <ProductDiscountPrice isDiscount={discount}>1,000원</ProductDiscountPrice>
-    </div>
+    </ItemContentContainer>
+  ) : (
+    <ItemContentContainer>
+      <ProductName>반반휴지. 물반휴지반</ProductName>
+      <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
+    </ItemContentContainer>
   );
 };
+
+const ItemContentContainer = styled.div``;
 
 const ProductName = styled.span`
   display: block;
