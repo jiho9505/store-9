@@ -9,19 +9,25 @@ import { greyButton } from '@/static/style/common';
  * TODO:
  * 이미지 클릭 시 해당 상품으로 넘어가도록 추후 Link에 product id 달 것
  */
+
+const timeToChangeSlide = 3000;
+
 const Carousel = () => {
   const [index, setIndex] = useState(1);
-  const [clickEventActive, setClickEventActive] = useState(false);
+  const [isClickEventActive, setIsClickEventActive] = useState(false);
 
   /**
    * button clickEvent가 일어나지 않았을때
    * index를 이동합니다. ( 이미지를 보여주기 위해서 )
    */
-  !clickEventActive &&
-    setTimeout(() => {
+  setTimeout(() => {
+    if (!isClickEventActive) {
       const standardIndex = index + 1 > 3 ? 1 : index + 1;
       setIndex(standardIndex);
-    }, 3000);
+    } else {
+      setIsClickEventActive(false);
+    }
+  }, timeToChangeSlide);
 
   /**
    * Carousel 안에 버튼 클릭 시 해당 이미지로 이동합니다.
@@ -32,11 +38,7 @@ const Carousel = () => {
     if (!(target instanceof HTMLElement)) return;
     const nextIndex = target.dataset.idx;
     setIndex(Number(nextIndex));
-    setClickEventActive(true);
-
-    setTimeout(() => {
-      setClickEventActive(false);
-    }, 3000);
+    setIsClickEventActive(true);
   };
 
   return (
@@ -47,9 +49,9 @@ const Carousel = () => {
         <SlideImage src="images/bannerImage3.gif" />
       </ImageContainer>
       <ButtonContainer>
-        <Button onClick={onClickButton} data-idx="1" active={index === 1 ? true : false}></Button>
-        <Button onClick={onClickButton} data-idx="2" active={index === 2 ? true : false}></Button>
-        <Button onClick={onClickButton} data-idx="3" active={index === 3 ? true : false}></Button>
+        <Button onClick={onClickButton} data-idx="1" active={index === 1}></Button>
+        <Button onClick={onClickButton} data-idx="2" active={index === 2}></Button>
+        <Button onClick={onClickButton} data-idx="3" active={index === 3}></Button>
       </ButtonContainer>
     </CarouselContainer>
   );
