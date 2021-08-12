@@ -10,5 +10,6 @@ export const baemin: Color = '#4bc2cb';
 export const green: Color = '#3e8d28';
 export const red1: Color = '#ed2e3f';
 export const red2: Color = '#ff6350';
+export const lightBlack: Color = '#333';
 
 export const baeminFont: Font = `'Do Hyeon', sans-serif`;
