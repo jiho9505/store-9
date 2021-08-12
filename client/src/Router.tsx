@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
+import styled from '@emotion/styled';
 
 type historyContextType = {
   curLocation: string;
-  onChangeLoc?: (path: string) => void;
+  onChangeLocation?: (path: string) => void;
   history?: History;
 };
 
@@ -25,7 +26,7 @@ const Router = ({ children }) => {
   });
 
   return (
-    <HistoryContext.Provider value={{ curLocation, onChangeLoc: handleSetLocation, history }}>
+    <HistoryContext.Provider value={{ curLocation, onChangeLocation: handleSetLocation, history }}>
       {children}
     </HistoryContext.Provider>
   );
@@ -33,7 +34,6 @@ const Router = ({ children }) => {
 
 const Route = ({ exact, path, children }) => {
   const { curLocation } = useContext(HistoryContext);
-  console.log(curLocation, path);
 
   const isMatched = (): boolean => {
     if (exact) {
@@ -46,14 +46,51 @@ const Route = ({ exact, path, children }) => {
   return isMatched() ? children : null;
 };
 
-const Link = ({ to, children }) => {
-  const { onChangeLoc } = useContext(HistoryContext);
+const Link = ({ to, children, ...rest }) => {
+  const { onChangeLocation } = useContext(HistoryContext);
 
   const handleClickLink = () => {
-    onChangeLoc(to);
+    onChangeLocation(to);
   };
 
-  return <div onClick={handleClickLink}>{children}</div>;
+  return (
+    <a {...rest} onClick={handleClickLink}>
+      {children}
+    </a>
+  );
 };
 
-export { Router, Route, Link };
+const NavLink = ({ to, children, ...props }) => {
+  const { curLocation, onChangeLocation } = useContext(HistoryContext);
+  const [isActive, setActive] = useState(curLocation === to);
+
+  useEffect(() => {
+    if (curLocation !== to) {
+      setActive(false);
+    }
+  }, [curLocation]);
+
+  const handleClickLink = () => {
+    onChangeLocation(to);
+    setActive(true);
+  };
+
+  return (
+    <ActiveLink {...props} active={isActive} onClick={handleClickLink}>
+      {children}
+    </ActiveLink>
+  );
+};
+
+type StyledComponentProps = {
+  active: boolean;
+};
+
+const ActiveLink = styled.a<StyledComponentProps>`
+  border-bottom: ${(props) => (props.active ? `2px solid #2AC1BC` : '')};
+  color: ${(props) => (props.active ? '#2AC1BC' : 'inherit')};
+  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  margin-bottom: ${(props) => (props.active ? '-1px' : '0px')};
+`;
+
+export { Router, Route, Link, NavLink };

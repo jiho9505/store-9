@@ -1,12 +1,19 @@
 import React from 'react';
 import { Router, Route, Link } from './Router';
 
+import Header from '@/components/base/Header';
+import Footer from '@/components/base/Footer/Footer';
+import Main from '@/pages/Main/Main';
+
+import '@/static/assets/img/baeminFavicon.png';
+
 const App = () => {
   return (
     <>
       <Router>
+        <Header />
         <Route exact path="/">
-          <MainPage />
+          <Main />
         </Route>
         <Route exact path="/login">
           <LoginPage />
@@ -16,12 +23,9 @@ const App = () => {
         </Route>
         <Navigation />
       </Router>
+      <Footer />
     </>
   );
-};
-
-const MainPage = () => {
-  return <div>This is MainPage</div>;
 };
 
 const LoginPage = () => {
