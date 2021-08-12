@@ -56,7 +56,17 @@ const ShortCuts = styled.ul`
   margin: 0 auto;
 `;
 
-const ShortCut = styled.li``;
+const ShortCut = styled.li`
+  display: flex;
+  align-items: center;
+  &:not(:last-of-type):after {
+    content: '|';
+    font-size: 5px;
+    display: inline-block;
+    margin: 0 10px;
+    color: ${greyLine};
+  }
+`;
 
 const HeaderContainer = styled.div`
   min-width: 1450px;
