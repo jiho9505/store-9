@@ -1,5 +1,6 @@
 type Color = string;
 type Font = string;
+type Size = string;
 
 export const primary1: Color = '#2AC1BC';
 export const greySpan: Color = '#717171';
@@ -11,4 +12,10 @@ export const green: Color = '#3e8d28';
 export const red1: Color = '#ed2e3f';
 export const red2: Color = '#ff6350';
 
+export const white: Color = '#ffffff';
+
 export const baeminFont: Font = `'Do Hyeon', sans-serif`;
+
+export const normalContainerWidth: Size = '1200px';
+
+export const normalRadius: Size = '5px';

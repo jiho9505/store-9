@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 import { Link, NavLink } from '@/Router';
 import { categories } from '@/static/constants';
+import { normalContainerWidth } from '@/static/style/common';
 
 import '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
@@ -35,11 +36,11 @@ const Header = () => {
 
 const HeaderContainer = styled.div`
   min-width: 1450px;
-  border-bottom: 1px solid #CCD3D3; ;
+  border-bottom: 1px solid #ccd3d3; ;
 `;
 
 const SearchHeader = styled.div`
-  width: 1200px;
+  width: ${normalContainerWidth};
   min-height: 103px;
   margin: 0 auto;
   display: grid;
@@ -83,7 +84,7 @@ const SearchImg = styled.img`
 `;
 
 const Navigation = styled.ul`
-  width: 1200px;
+  width: ${normalContainerWidth};
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

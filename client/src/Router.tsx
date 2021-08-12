@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from '@emotion/styled';
 
-type historyContextType = {
-  curLocation: string;
-  onChangeLocation?: (path: string) => void;
-  history?: History;
-};
+import { HistoryContext } from '@/hooks/context';
 
-const HistoryContext = React.createContext<historyContextType>({ curLocation: '/' });
+// type historyContextType = {
+//   curLocation: string;
+//   onChangeLocation?: (path: string) => void;
+//   history?: History;
+// };
+
+// const HistoryContext = React.createContext<historyContextType>({ curLocation: '/' });
 
 const Router = ({ children }) => {
   const [curLocation, setLocation] = useState(window.location.pathname);
