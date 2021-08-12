@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from '@emotion/styled';
 
+import useLocation from './hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
 
 const Router = ({ children }) => {
@@ -27,7 +28,7 @@ const Router = ({ children }) => {
 };
 
 const Route = ({ exact, path, children }) => {
-  const { curLocation } = useContext(HistoryContext);
+  const curLocation = useLocation();
 
   const isMatched = (): boolean => {
     if (exact) {
