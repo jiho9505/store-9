@@ -4,11 +4,10 @@ import styled from '@emotion/styled';
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
 
 type PricePannelProps = {
-  totalProductNumber: number;
   productTotalPrice: number;
 };
 
-const PricePannel = ({ totalProductNumber, productTotalPrice }: PricePannelProps) => {
+const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
   return (
     <PricePannelContainer>

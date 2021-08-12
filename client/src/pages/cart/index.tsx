@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import {
-  normalContainerWidth,
-  greyLine,
-  greySpan,
-  normalRadius,
-} from '@/static/style/common';
+import { normalContainerWidth, greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { CartHeader, CartContent } from '@/components/cart';
 import PricePannel from '@/components/base/PricePannel';
@@ -78,10 +73,7 @@ const CartPage = () => {
           <Button>선택상품 삭제</Button>
           <Button>선택상품 찜</Button>
         </SelectProductAction>
-        <PricePannel
-          totalProductNumber={selectedProducts.size}
-          productTotalPrice={calTotalProductPrice()}
-        />
+        <PricePannel productTotalPrice={calTotalProductPrice()} />
       </CartFooter>
     </CartPageContainer>
   );
