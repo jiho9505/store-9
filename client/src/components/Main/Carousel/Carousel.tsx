@@ -44,9 +44,9 @@ const Carousel = () => {
   return (
     <CarouselContainer>
       <ImageContainer translateX={index}>
-        <SlideImage src="images/bannerImage1.gif" />
-        <SlideImage src="images/bannerImage2.gif" />
-        <SlideImage src="images/bannerImage3.gif" />
+        <SlideImage src="images/bannerImage1.gif" alt="first-banner-image" />
+        <SlideImage src="images/bannerImage2.gif" alt="second-banner-image" />
+        <SlideImage src="images/bannerImage3.gif" alt="third-banner-image" />
       </ImageContainer>
       <ButtonContainer>
         <Button onClick={onClickButton} data-idx="1" active={index === 1}></Button>
