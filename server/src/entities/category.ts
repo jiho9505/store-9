@@ -1,28 +1,23 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from "typeorm";
-import { BaseModel } from "./base-model";
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { BaseModel } from './base-model';
+import Product from './product';
 
-@Entity({ name: "categories" })
+@Entity({ name: 'categories' })
 class Category extends BaseModel {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ type: "smallint" })
+  @Column()
   level: number;
 
   @Column()
   name: string;
 
-  @ManyToOne((type) => Category, (category) => category.id)
-  parent_id: number;
+  @ManyToOne((type) => Category, (category) => category.children)
+  parent: Category;
 
-  @OneToMany((type) => Category, (category) => category.id)
-  child_id: number;
+  @OneToMany((type) => Category, (category) => category.parent)
+  children: Category[];
+
+  @OneToMany((type) => Product, (product) => product.category)
+  products: Product[];
 }
 
 export default Category;
