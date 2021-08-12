@@ -15,3 +15,5 @@ export const white: Color = '#ffffff';
 export const baeminFont: Font = `'Do Hyeon', sans-serif`;
 
 export const normalContainerWidth: Size = '1200px';
+
+export const normalButtonRadius: Size = '5px';

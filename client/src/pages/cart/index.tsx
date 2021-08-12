@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { normalContainerWidth } from '@/static/style/common';
+import {
+  normalContainerWidth,
+  greyLine,
+  greySpan,
+  normalButtonRadius,
+} from '@/static/style/common';
 
 import { CartHeader, CartContent } from '@/components/cart';
 import PricePannel from '@/components/base/PricePannel';
@@ -68,10 +73,16 @@ const CartPage = () => {
         onCheckAll={handleToggleSelectAllBtn}
         selectedProduct={selectedProducts}
       />
-      <PricePannel
-        totalProductNumber={selectedProducts.size}
-        productTotalPrice={calTotalProductPrice()}
-      />
+      <CartFooter>
+        <SelectProductAction>
+          <Button>선택상품 삭제</Button>
+          <Button>선택상품 찜</Button>
+        </SelectProductAction>
+        <PricePannel
+          totalProductNumber={selectedProducts.size}
+          productTotalPrice={calTotalProductPrice()}
+        />
+      </CartFooter>
     </CartPageContainer>
   );
 };
@@ -80,6 +91,26 @@ const CartPageContainer = styled.div`
   width: ${normalContainerWidth};
   margin: 0 auto;
   padding-top: 40px;
+`;
+
+const CartFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+`;
+
+const SelectProductAction = styled.div``;
+
+const Button = styled.button`
+  width: 120px;
+  height: 30px;
+  border: 1px solid ${greyLine};
+  border-radius: ${normalButtonRadius};
+  color: ${greySpan};
+  &:first-child {
+    margin-right: 10px;
+  }
 `;
 
 export default CartPage;
