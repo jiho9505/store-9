@@ -10,14 +10,14 @@ const GiftSection = () => {
     <GiftContainer>
       <Title>선물하기 딱 좋아요!</Title>
       <GiftBlock>
-        <img src="images/giftSection1.png" />
+        <img src="images/giftSection1.png" alt="first-gift-image" />
         <GiftInfo>
           <h3>한 상 가득</h3>
           <span>캬~ 좋다. 을지로 쟁반</span>
         </GiftInfo>
       </GiftBlock>
       <GiftBlock>
-        <img src="images/giftSection2.png" />
+        <img src="images/giftSection2.png" alt="second-gift-image" />
         <GiftInfo>
           <h3>쉿 비밀펜</h3>
           <span>진짜진짜 아무한테도 말하지마</span>
