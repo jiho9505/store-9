@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
 import ListTable from '../base/ListTable';
@@ -22,21 +22,15 @@ const tableHeader = [
 ];
 
 const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: CartContentProps) => {
-  const createTableBody = () => {
-    return cartProducts.reduce((acc, cartProducts) => {
-      return [
-        ...acc,
-        {
-          id: cartProducts.productId,
-          cell1: { c: <TableItem cartProduct={cartProducts} />, colSpan: 3 },
-          cell2: {
-            c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div>,
-            colSpan: 1,
-          },
-        },
-      ];
-    }, []);
-  };
+  const tableBody = useMemo(() => {
+    return cartProducts.map((cartProducts) => {
+      return {
+        id: cartProducts.productId,
+        cell1: { c: <TableItem cartProduct={cartProducts} />, colSpan: 3 },
+        cell2: { c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div> },
+      };
+    });
+  }, [cartProducts]);
 
   return (
     <CartContentContainer>
@@ -46,7 +40,7 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: Car
         <ListTable
           checkable={true}
           header={tableHeader}
-          body={createTableBody()}
+          body={tableBody}
           selectedItems={selectedProduct}
           onCheck={onCheck}
           onCheckAll={onCheckAll}
@@ -58,8 +52,6 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: Car
 
 const CartContentContainer = styled.div`
   width: ${normalContainerWidth};
-  /* border-top: 1px solid ${greyLine}; */
-  /* border-bottom: 1px solid ${greyLine}; */
 `;
 
 const CartEmptyAlert = styled.div`

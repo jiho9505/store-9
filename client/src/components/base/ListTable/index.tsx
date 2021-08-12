@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styled from '@emotion/styled';
 import { greyLine, normalRadius, greyBg1 } from '@/static/style/common';
 
@@ -16,16 +16,16 @@ type ListTableProps = {
 };
 
 const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAll}: ListTableProps) => {
-  const calculateThWidth = () => {
-    return header.reduce((acc, { width }) => [...acc, width ? width : '10%'], []);
-  };
 
+  const tHeaderWidth = useMemo(() => {
+    return header.map(({ width }) => width ? width : '10%')
+  }, [header])
 
   return (
     <Table>
       <colgroup>
         {checkable && <col width="1%" />}
-        {calculateThWidth().map((width, idx) => (
+        {tHeaderWidth.map((width, idx) => (
           <col key={idx} width={width} />
         ))}
       </colgroup>
