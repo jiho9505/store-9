@@ -3,8 +3,9 @@ import { Router, Route, Link } from './Router';
 
 import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
-import '@/static/assets/img/baemin-favicon.png';
+import Main from '@/pages/Main/Main';
 
+import '@/static/assets/img/baeminFavicon.png';
 
 const App = () => {
   return (
@@ -12,7 +13,7 @@ const App = () => {
       <Router>
         <Header />
         <Route exact path="/">
-          <MainPage />
+          <Main />
         </Route>
         <Route exact path="/login">
           <LoginPage />
@@ -25,10 +26,6 @@ const App = () => {
       <Footer />
     </>
   );
-};
-
-const MainPage = () => {
-  return <div>This is MainPage</div>;
 };
 
 const LoginPage = () => {
