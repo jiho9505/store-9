@@ -1,33 +1,31 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  OneToOne,
-  ManyToOne,
-  JoinColumn,
-} from "typeorm";
-import { DateBaseModel } from "./base-model";
-import OrderItem from "./order-item";
-import User from "./user";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { DateBaseModel } from './base-model';
+import OrderItem from './order-item';
+import User from './user';
 
-@Entity({ name: "orders" })
+export enum Order_Status {
+  InCart = 'InCart',
+  Before_Payment = 'Before_Payment',
+  After_Payment = 'After_Payment',
+  Shipping = 'Shipping',
+  Shipping_Complete = 'Shipping_Complete',
+  Purchasing_Complete = 'Purchasing_Complete',
+}
+
+@Entity({ name: 'orders' })
 class Order extends DateBaseModel {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Column({ type: 'enum', enum: Order_Status })
+  status!: Order_Status;
 
-  @Column()
-  user_id!: number;
-
-  @ManyToOne((type) => User, (user) => user.products)
-  @JoinColumn({ name: "user_id" })
+  @ManyToOne((type) => User, (user) => user.orders)
+  @JoinColumn()
   user!: User;
 
-  @OneToMany((type) => OrderItem, (orderItem) => orderItem.id)
+  @OneToMany((type) => OrderItem, (orderItem) => orderItem.order)
   items: OrderItem[];
 
   @Column()
-  has배송비: boolean;
+  hasShippingCharge: boolean;
 }
 
 export default Order;
