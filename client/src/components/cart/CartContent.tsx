@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import ListTable from '../base/ListTable';
 import TableItem from '../base/TableItem';
 
-import { normalContainerWidth, greyLine } from '@/static/style/common';
+import { normalContainerWidth } from '@/static/style/common';
 
 // api 확정되면 type 지정
 type CartContentProps = {
@@ -23,11 +23,13 @@ const tableHeader = [
 
 const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: CartContentProps) => {
   const tableBody = useMemo(() => {
-    return cartProducts.map((cartProducts) => {
+    return cartProducts.map((cartProduct) => {
       return {
-        id: cartProducts.productId,
-        cell1: { c: <TableItem cartProduct={cartProducts} />, colSpan: 3 },
-        cell2: { c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div> },
+        id: cartProduct.productId,
+        cells: [
+          { c: <TableItem cartProduct={cartProduct} />, colSpan: 3 },
+          { c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div> },
+        ],
       };
     });
   }, [cartProducts]);

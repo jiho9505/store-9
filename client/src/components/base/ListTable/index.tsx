@@ -1,25 +1,32 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 import { greyLine, normalRadius, greyBg1 } from '@/static/style/common';
 
-type test = {
-  [key: string]: number | {c: React.ReactNode, colSpan: number}
-}
+type bodyType = {
+  id: number;
+  cells: { c: React.ReactNode; colSpan?: number }[];
+};
 
 type ListTableProps = {
   checkable: boolean;
   header: Array<{ id: string; name: string; width?: string; rowSpan?: number }>;
-  body: test [];
+  body: bodyType[];
   selectedItems?: Set<number>;
   onCheck?: (id: number) => void;
-  onCheckAll?: (e) => void
+  onCheckAll?: (e) => void;
 };
 
-const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAll}: ListTableProps) => {
-
+const ListTable = ({
+  checkable,
+  header,
+  body,
+  selectedItems,
+  onCheck,
+  onCheckAll,
+}: ListTableProps) => {
   const tHeaderWidth = useMemo(() => {
-    return header.map(({ width }) => width ? width : '10%')
-  }, [header])
+    return header.map(({ width }) => (width ? width : '10%'));
+  }, [header]);
 
   return (
     <Table>
@@ -33,7 +40,7 @@ const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAl
         <TableHeaderRow>
           {checkable && (
             <TableHeaderCell>
-              <CheckBox type="checkbox" onChange={onCheckAll}/>
+              <CheckBox type="checkbox" onChange={onCheckAll} />
             </TableHeaderCell>
           )}
           {header.map(({ id, name, rowSpan }) => (
@@ -44,15 +51,23 @@ const ListTable = ({ checkable, header, body, selectedItems ,onCheck , onCheckAl
         </TableHeaderRow>
       </thead>
       <tbody>
-        {body.map(({ id, ...rest }) => (
+        {body.map(({ id, cells }) => (
           <TableBodyRow key={id}>
             {checkable && (
               <td>
-                <CheckBox type="checkbox" checked={selectedItems.has(id)} onChange={() => onCheck(id)} />
+                <CheckBox
+                  type="checkbox"
+                  checked={selectedItems.has(id)}
+                  onChange={() => onCheck(id)}
+                />
               </td>
             )}
-            {Object.keys(rest).map((cell) => {
-              return <td key={cell} colSpan={rest.[cell].colSpan}>{rest.[cell].c}</td>;
+            {cells.map((cell, idx) => {
+              return (
+                <td key={`${id}_${idx}`} colSpan={cell.colSpan}>
+                  {cell.c}
+                </td>
+              );
             })}
           </TableBodyRow>
         ))}
@@ -65,23 +80,26 @@ const Table = styled.table`
   width: 100%;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: ${normalRadius};
+  overflow: hidden;
 `;
 
 const TableHeaderRow = styled.tr`
   height: 40px;
+  background-color: ${greyBg1};
   border-bottom: 1px solid ${greyLine};
-`
+`;
 
 const TableHeaderCell = styled.th`
   line-height: 40px;
-`
+`;
 
 const TableBodyRow = styled.tr`
-  border-bottom: 1px solid ${greyBg1}
-`
+  border-bottom: 1px solid ${greyBg1};
+`;
 
 const CheckBox = styled.input`
-  margin-right: 10px;
-`
+  margin: 0 10px 0;
+  opacity: 0.5;
+`;
 
 export default ListTable;
