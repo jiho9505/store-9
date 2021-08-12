@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import '@/static/assets/img/footer_logo.png';
+import '@/static/assets/img/footerLogo.png';
 import { baeminFont, greySpan, greyBg1 } from '@/static/style/common';
 
 const Footer = () => {
   return (
     <FooterElement>
-      <img src="images/footer_logo.png" />
+      <img src="images/footerLogo.png" />
       <FooterInfoContainer>
         <FooterNav>
           <span>공지사항</span>
@@ -72,7 +72,7 @@ const FooterElement = styled.footer`
   padding: 50px 250px 0 250px;
   height: 260px;
   background-color: ${greyBg1};
-  min-width: 1000px;
+
   img {
     width: 100px;
     height: 76px;
