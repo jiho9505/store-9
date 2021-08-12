@@ -3,14 +3,6 @@ import styled from '@emotion/styled';
 
 import { HistoryContext } from '@/hooks/context';
 
-// type historyContextType = {
-//   curLocation: string;
-//   onChangeLocation?: (path: string) => void;
-//   history?: History;
-// };
-
-// const HistoryContext = React.createContext<historyContextType>({ curLocation: '/' });
-
 const Router = ({ children }) => {
   const [curLocation, setLocation] = useState(window.location.pathname);
   const history = window.history;
