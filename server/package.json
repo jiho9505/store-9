@@ -4,8 +4,6 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "docs": "swagger-cli bundle ./src/swagger/openapi.yaml --outfile dist/swagger.yaml --type yaml",
-    "predev": "npm run docs",
     "dev": "ts-node-dev ./app.ts"
   },
   "keywords": [],
