@@ -21,7 +21,12 @@ const ItemFilterBar = ({ handleFilter, totalProductCount }: ItemFilterBarProps) 
 
   const createFilter = () => {
     return filterName.map((itemName, idx) => (
-      <Fliter key={idx} onClick={onClickFilter} active={index === idx} data-idx={idx}>
+      <Fliter
+        key={`filter-item-${itemName}`}
+        onClick={onClickFilter}
+        active={index === idx}
+        data-idx={idx}
+      >
         {itemName}
       </Fliter>
     ));
