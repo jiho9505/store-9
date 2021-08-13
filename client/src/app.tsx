@@ -14,7 +14,7 @@ const App = () => {
       <Router>
         <Header />
         <Route exact path="/">
-          <Main />v
+          <Main />
         </Route>
         <Route exact path="/login">
           <LoginPage />

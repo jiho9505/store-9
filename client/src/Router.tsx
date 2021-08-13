@@ -1,41 +1,39 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from '@emotion/styled';
 
+import useLocation from './hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
 
-// type historyContextType = {
-//   curLocation: string;
-//   onChangeLocation?: (path: string) => void;
-//   history?: History;
-// };
-
-// const HistoryContext = React.createContext<historyContextType>({ curLocation: '/' });
+const history = window.history;
 
 const Router = ({ children }) => {
   const [curLocation, setLocation] = useState(window.location.pathname);
-  const history = window.history;
-
-  const handleSetLocation = (path) => {
-    history.pushState('', '', path);
-    setLocation(path);
-  };
 
   useEffect(() => {
-    window.addEventListener('popstate', ({ target }) => {
+    History.prototype.push = (path) => {
+      history.pushState('', '', path);
+      setLocation(path);
+    };
+
+    const movePage = ({ target }) => {
       const nextPath = target.location.pathname;
-      handleSetLocation(nextPath);
-    });
-  });
+      setLocation(nextPath);
+    };
+
+    window.addEventListener('popstate', movePage);
+
+    return () => {
+      window.removeEventListener('popstate', movePage);
+    };
+  }, []);
 
   return (
-    <HistoryContext.Provider value={{ curLocation, onChangeLocation: handleSetLocation, history }}>
-      {children}
-    </HistoryContext.Provider>
+    <HistoryContext.Provider value={{ curLocation, history }}>{children}</HistoryContext.Provider>
   );
 };
 
 const Route = ({ exact, path, children }) => {
-  const { curLocation } = useContext(HistoryContext);
+  const curLocation = useLocation();
 
   const isMatched = (): boolean => {
     if (exact) {
@@ -49,10 +47,10 @@ const Route = ({ exact, path, children }) => {
 };
 
 const Link = ({ to, children, ...rest }) => {
-  const { onChangeLocation } = useContext(HistoryContext);
+  const { history } = useContext(HistoryContext);
 
   const handleClickLink = () => {
-    onChangeLocation(to);
+    history.push(to);
   };
 
   return (
@@ -63,7 +61,7 @@ const Link = ({ to, children, ...rest }) => {
 };
 
 const NavLink = ({ to, children, ...props }) => {
-  const { curLocation, onChangeLocation } = useContext(HistoryContext);
+  const { curLocation, history } = useContext(HistoryContext);
   const [isActive, setActive] = useState(curLocation === to);
 
   useEffect(() => {
@@ -73,7 +71,7 @@ const NavLink = ({ to, children, ...props }) => {
   }, [curLocation]);
 
   const handleClickLink = () => {
-    onChangeLocation(to);
+    history.push(to);
     setActive(true);
   };
 

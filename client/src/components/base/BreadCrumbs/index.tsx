@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from '@emotion/styled';
+import useLocation from '@/hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
 
 import { baeminFont, greySpan } from '@/static/style/common';
@@ -8,14 +9,13 @@ import '@/static/assets/img/right_arrow.svg';
 import '@/static/assets/img/right_arrow_grey.svg';
 
 const stages = [
-  ['장바구니', '/'],
+  ['장바구니', '/cart'],
   ['주문서작성/결제', '/order'],
   ['주문완료', '/end-order'],
 ];
 
 const BreadCrumbs = () => {
-  // 추후 customHook로 분리 예정
-  const { curLocation } = useContext(HistoryContext);
+  const curLocation = useLocation();
   return (
     <BreadCrumbContainer>
       {stages.map(([stage, path], idx, arr) => (
