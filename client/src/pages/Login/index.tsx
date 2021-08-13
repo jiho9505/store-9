@@ -7,6 +7,8 @@ import Input from '@/components/base/Input';
 import useInput from '@/hooks/customHooks/useInput';
 import Button from '@/components/base/Button';
 
+const CAUTION_TEXT = '주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.';
+
 const LoginPage = () => {
   const {
     form: { id, password, name, orderNumber },
@@ -105,9 +107,7 @@ const LoginPage = () => {
             onClick={onLoginClick}
             theme="normal"
           />
-          <CautionText>
-            주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.
-          </CautionText>
+          <CautionText>{CAUTION_TEXT}</CautionText>
         </LoginForm>
       </LoginContainer>
     </LoginPageContainer>
