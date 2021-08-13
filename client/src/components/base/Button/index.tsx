@@ -4,9 +4,10 @@ import { css } from '@emotion/react';
 
 type ButtonTheme = 'normal' | 'github' | 'dark' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
+type ButtonSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 type ButtonProps = {
-  size: string;
+  size: ButtonSize;
   value: string;
   type: ButtonType;
   onClick: (e: React.MouseEvent) => void;
@@ -48,7 +49,15 @@ const ButtonContainer = styled.div<ButtonContainerProps>`
 `;
 
 const getButtonSize = (size: string) => {
-  if (size === 'large') {
+  if (size === 'xlarge') {
+    return css`
+      width: 25rem;
+      height: 5rem;
+      button {
+        font-size: 1.5rem;
+      }
+    `;
+  } else if (size === 'large') {
     return css`
       width: 25rem;
       height: 3rem;
@@ -62,6 +71,9 @@ const getButtonSize = (size: string) => {
     return css`
       width: 10rem;
       height: 3rem;
+      button {
+        font-size: 0.8rem;
+      }
     `;
   }
 };
@@ -87,7 +99,7 @@ const getButtonTheme = (theme: string) => {
       &:hover {
         color: ${buttonWhite};
         background-color: ${buttonDarkBlack};
-        border: none;
+        border: 1px solid ${buttonDarkBlack};
       }
     `;
   } else if (theme === 'dark') {
