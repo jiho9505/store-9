@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
 
+import { baemin } from '@/static/style/common';
+
 /**
  * @params categoryId
  * url pathname에 따라 key value 식으로 정해줄 것
@@ -38,6 +40,8 @@ const ProductList = () => {
   });
   const [totalProductCount, setTotalProductCount] = useState(77);
   const [product, setProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState(true);
 
   /**
    * TODO:
@@ -59,6 +63,36 @@ const ProductList = () => {
     setFilter(newFilter);
   };
 
+  const observeTag = () => {
+    const observerCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target.id === 'end') {
+            setIsLoading(true);
+            /*
+            const data = await api 요청
+            if (data.success) {
+              if (data.length > 0) {
+                setSkip
+                setProduct([...product,...data])
+              } else {
+                setIsActiveInfiniteScroll(false)
+              }
+            } else {
+            	alert(data.message);
+            }
+             setIsLoading(true);
+            */
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+    const items = document.querySelectorAll('.item');
+    const observer = new IntersectionObserver(observerCallback);
+    items.forEach((item) => observer.observe(item));
+  };
+
   return (
     <WholeContainer>
       <ElementContainer>
@@ -66,12 +100,12 @@ const ProductList = () => {
           handleFilter={handleFilter}
           totalProductCount={totalProductCount}
         ></ItemFilterBar>
-        <ItemLists></ItemLists>
+        <ItemLists observeTag={observeTag}></ItemLists>
       </ElementContainer>
     </WholeContainer>
   );
 };
-
+baemin;
 const WholeContainer = styled.div`
   width: 100vw;
   display: flex;
