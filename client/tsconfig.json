@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/*", "src/hooks/customHooks", "src/hooks/customHooks"],
+  "include": ["src/*"],
   "exclude": ["node_modules"]
 }

@@ -4,7 +4,8 @@ import { Router, Route, Link } from './Router';
 import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
 import ArrowButton from '@/components/base/ArrowButton';
-
+import LoginPage from '@/pages/Login';
+import SignupMethod from '@/pages/SignupMethod';
 import Main from '@/pages/Main';
 import ProductList from '@/pages/ProductList';
 import CartPage from '@/pages/cart';
@@ -31,6 +32,9 @@ const App = () => {
         </Route>
         <Route exact path="/product/:id">
           <ProductPage />
+        </Route>
+        <Route exact path="/signupMethod">
+          <SignupMethod />
         </Route>
         <Route exact path="/total">
           <ProductList />
@@ -67,10 +71,6 @@ const App = () => {
       <Footer />
     </>
   );
-};
-
-const LoginPage = () => {
-  return <div>This is LoginPage</div>;
 };
 
 const ProductPage = () => {
