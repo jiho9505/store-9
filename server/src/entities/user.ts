@@ -1,18 +1,22 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-} from "typeorm";
-import { DateBaseModel } from "./base-model";
-import Like from "./like";
-import OrderItem from "./order-item";
-import Product from "./product";
+import { Column, Entity, OneToMany } from 'typeorm';
+import { DateBaseModel } from './base-model';
+import Like from './like';
+import Order from './order';
+import QnA from './qna';
+import Review from './review';
 
-@Entity({ name: "users" })
+export enum User_Role {
+  Master = 'Master',
+  Admin = 'Admin',
+  User = 'User',
+  NotUser = 'NotUser',
+}
+
+@Entity({ name: 'users' })
 class User extends DateBaseModel {
+  @Column({ type: 'enum', enum: User_Role })
+  role: User_Role;
+
   @Column({ unique: true })
   email: string;
 
@@ -34,12 +38,17 @@ class User extends DateBaseModel {
   @Column({ nullable: true })
   call_number: string;
 
-  @OneToMany((type) => Product, (product) => product.id)
-  @JoinColumn()
-  orderItems: OrderItem[];
-
   @OneToMany((type) => Like, (like) => like.user)
-  likes!: Like[];
+  likes: Like[];
+
+  @OneToMany((type) => Order, (order) => order.user)
+  orders: Order[];
+
+  @OneToMany((type) => QnA, (qna) => qna.user)
+  qnas: QnA[];
+
+  @OneToMany((type) => Review, (review) => review.user)
+  reviews: Review[];
 }
 
 export default User;

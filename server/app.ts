@@ -1,11 +1,9 @@
-import path from 'path';
-import express from 'express';
-import { createConnection } from 'typeorm';
-import swagger from 'swagger-ui-express';
-import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import yamljs from 'yamljs';
+import express from 'express';
+import morgan from 'morgan';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 
 import { env } from './src/config/env';
 import apiRouter from './src/routes';
@@ -19,14 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 app.use(morgan(env.isDev ? 'dev' : 'combine'));
-
-if (env.isDev) {
-  const swaggerSpecs = yamljs.load(
-    path.join(__dirname, 'dist', 'swagger.yaml')
-  ) as swagger.SwaggerOptions;
-
-  app.use('/api-docs', swagger.serve, swagger.setup(swaggerSpecs));
-}
 
 app.use('/api', apiRouter);
 

@@ -1,14 +1,14 @@
-import { Column, Entity, ManyToOne } from "typeorm";
-import { DateBaseModel } from "./base-model";
-import Product from "./product";
-import User from "./user";
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { DateBaseModel } from './base-model';
+import Product from './product';
+import User from './user';
 
-Entity({ name: "reviews" });
+@Entity({ name: 'reviews' })
 class Review extends DateBaseModel {
-  @ManyToOne((type) => User, (user) => user.id)
+  @ManyToOne((type) => User, (user) => user.reviews)
   user: User;
 
-  @ManyToOne((type) => Product, (product) => product.id)
+  @ManyToOne((type) => Product, (product) => product.reviews)
   product: Product;
 
   @Column()

@@ -5,7 +5,11 @@ import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
 import LoginPage from '@/pages/Login';
 import SignupMethod from '@/pages/SignupMethod';
-import '@/static/assets/img/baemin-favicon.png';
+
+import CartPage from '@/pages/cart';
+import Main from '@/pages/Main/Main';
+
+import '@/static/assets/img/baeminFavicon.png';
 
 const App = () => {
   return (
@@ -13,10 +17,13 @@ const App = () => {
       <Router>
         <Header />
         <Route exact path="/">
-          <MainPage />
+          <Main />v
         </Route>
         <Route exact path="/login">
           <LoginPage />
+        </Route>
+        <Route exact path="/cart">
+          <CartPage />
         </Route>
         <Route exact path="/product/:id">
           <ProductPage />
@@ -24,28 +31,14 @@ const App = () => {
         <Route exact path="/signupMethod">
           <SignupMethod />
         </Route>
-        <Navigation />
       </Router>
       <Footer />
     </>
   );
 };
 
-const MainPage = () => {
-  return <div>This is MainPage</div>;
-};
-
 const ProductPage = () => {
   return <div>This is Product Page</div>;
-};
-
-const Navigation = () => {
-  return (
-    <>
-      <Link to="/">Main</Link>
-      <Link to="/login">Login</Link>
-    </>
-  );
 };
 
 export default App;
