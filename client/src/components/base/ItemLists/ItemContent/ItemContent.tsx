@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { red2 } from '@/static/style/common';
+import { baeminFont, red2 } from '@/static/style/common';
 
 type ContentProps = {
   quantity: number;
@@ -30,6 +30,7 @@ const ProductName = styled.span`
   display: block;
   margin-bottom: 6px;
   cursor: pointer;
+  font-family: ${baeminFont};
 `;
 
 type PriceProps = {
@@ -41,6 +42,7 @@ const ProductOriginalPrice = styled.strong<PriceProps>`
   font-weight: ${(props) => (props.isDiscount ? 'normal' : 'bold')};
   color: ${(props) => (props.isDiscount ? '#888' : 'black')};
   text-decoration: ${(props) => (props.isDiscount ? 'line-through' : 'none')};
+  font-family: ${baeminFont};
 `;
 
 const ProductDiscountPrice = styled.strong<PriceProps>`
@@ -48,6 +50,7 @@ const ProductDiscountPrice = styled.strong<PriceProps>`
   font-weight: 'bold';
   color: black;
   display: ${(props) => (props.isDiscount ? 'block' : 'none')};
+  font-family: ${baeminFont};
 `;
 
 const Discount = styled.div`
@@ -55,6 +58,7 @@ const Discount = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 6px;
+  font-family: ${baeminFont};
 `;
 
 export default ItemContent;
