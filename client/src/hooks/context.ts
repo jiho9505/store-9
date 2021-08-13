@@ -1,8 +1,7 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 
 type historyContextType = {
   curLocation: string;
-  onChangeLocation?: (path: string) => void;
   history?: History;
 };
 
