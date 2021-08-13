@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
 
+import { LoadingOutlined } from '@ant-design/icons';
 import { baemin } from '@/static/style/common';
 
 /**
@@ -81,7 +82,7 @@ const ProductList = () => {
             } else {
             	alert(data.message);
             }
-             setIsLoading(true);
+             setIsLoading(false);
             */
           }
           observer.unobserve(entry.target);
@@ -101,6 +102,7 @@ const ProductList = () => {
           totalProductCount={totalProductCount}
         ></ItemFilterBar>
         <ItemLists observeTag={observeTag}></ItemLists>
+        {isLoading && <LoadingOutlined style={{ fontSize: '45px', color: '#ddd' }} />}
       </ElementContainer>
     </WholeContainer>
   );
