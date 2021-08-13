@@ -3,12 +3,11 @@ import { Router, Route, Link } from './Router';
 
 import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
+import ArrowButton from '@/components/base/ArrowButton';
 
 import Main from '@/pages/Main';
 import ProductList from '@/pages/ProductList';
 import CartPage from '@/pages/cart';
-
-
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -63,8 +62,8 @@ const App = () => {
         <Route exact path="/collaborate">
           <ProductList />
         </Route>
-        <Navigation />
       </Router>
+      <ArrowButton />
       <Footer />
     </>
   );
