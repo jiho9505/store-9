@@ -3,11 +3,19 @@ import { Router, Route, Link } from './Router';
 
 import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
+
+import Main from '@/pages/Main';
+import ProductList from '@/pages/ProductList';
 import CartPage from '@/pages/cart';
-import Main from '@/pages/Main/Main';
+
+
 
 import '@/static/assets/img/baeminFavicon.png';
 
+/**
+ * FIXME:
+ * 추후 여러 경로가 동일 컴포넌트 가리키는 것에 대한 처리 필요
+ */
 const App = () => {
   return (
     <>
@@ -25,6 +33,37 @@ const App = () => {
         <Route exact path="/product/:id">
           <ProductPage />
         </Route>
+        <Route exact path="/total">
+          <ProductList />
+        </Route>
+        <Route exact path="/suplies">
+          <ProductList />
+        </Route>
+        <Route exact path="/living">
+          <ProductList />
+        </Route>
+        <Route exact path="/books">
+          <ProductList />
+        </Route>
+        <Route exact path="/green">
+          <ProductList />
+        </Route>
+        <Route exact path="/smile-edition">
+          <ProductList />
+        </Route>
+        <Route exact path="/euljiro-edition">
+          <ProductList />
+        </Route>
+        <Route exact path="/baedal-friends">
+          <ProductList />
+        </Route>
+        <Route exact path="/present">
+          <ProductList />
+        </Route>
+        <Route exact path="/collaborate">
+          <ProductList />
+        </Route>
+        <Navigation />
       </Router>
       <Footer />
     </>
