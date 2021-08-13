@@ -12,10 +12,10 @@ export const green: Color = '#3e8d28';
 export const red1: Color = '#ed2e3f';
 export const red2: Color = '#ff6350';
 export const lightBlack: Color = '#333333';
-
 export const white: Color = '#ffffff';
 
-export const baeminFont: Font = `'Do Hyeon', sans-serif`;
+export const baeminFont: Font = 'BMHANNAAir, sans-serif';
+export const baeminThickFont: Font = 'BMDOHYEON, sans-serif';
 
 export const normalContainerWidth: Size = '1200px';
 
