@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 
 import ItemImage from './ItemImage/ItemImage';
@@ -23,25 +23,36 @@ const array = [
   { discount: false, quantity: 0 },
 ];
 
-const ItemLists = () => {
+type ItemListsProps = {
+  observeTag?: () => void;
+};
+
+const ItemLists = ({ observeTag }: ItemListsProps) => {
   const createItem = () => {
-    return array.map((item, idx) => {
-      return (
-        <Item key={idx}>
-          <ItemImage quantity={item.quantity}></ItemImage>
-          <ItemContent quantity={item.quantity} discount={item.discount}></ItemContent>
-          {item.quantity ? <ItemLabel quantity={item.quantity}></ItemLabel> : ``}
-        </Item>
-      );
-    });
+    return array.map((item, idx) => (
+      <Item key={idx} className="item">
+        <ItemImage quantity={item.quantity}></ItemImage>
+        <ItemContent quantity={item.quantity} discount={item.discount}></ItemContent>
+        {item.quantity ? <ItemLabel quantity={item.quantity}></ItemLabel> : ``}
+      </Item>
+    ));
   };
+
+  useEffect(() => {
+    observeTag && observeTag();
+  }, []);
 
   return (
     <>
-      <ItemContainer>{createItem()}</ItemContainer>
+      <ItemContainer>
+        {createItem()}
+        <EndPositionTag className="item" id="end" />
+      </ItemContainer>
     </>
   );
 };
+
+const EndPositionTag = styled.div``;
 
 const Item = styled.article`
   position: relative;
