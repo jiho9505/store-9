@@ -30,6 +30,7 @@ const ProductImg = styled.img`
   width: 100%;
   height: 100%;
   cursor: pointer;
+  border-radius: 10px;
 `;
 
 const SoldOutImg = styled.img`
@@ -40,4 +41,5 @@ const SoldOutImg = styled.img`
   height: 100%;
   cursor: pointer;
   background-color: transparent;
+  border-radius: 10px;
 `;
