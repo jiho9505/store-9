@@ -3,6 +3,8 @@ import { Router, Route, Link } from './Router';
 
 import Header from '@/components/base/Header';
 import Footer from '@/components/base/Footer/Footer';
+import LoginPage from '@/pages/Login';
+import SignupMethod from '@/pages/SignupMethod';
 import '@/static/assets/img/baemin-favicon.png';
 
 const App = () => {
@@ -19,6 +21,9 @@ const App = () => {
         <Route exact path="/product/:id">
           <ProductPage />
         </Route>
+        <Route exact path="/signupMethod">
+          <SignupMethod />
+        </Route>
         <Navigation />
       </Router>
       <Footer />
@@ -28,10 +33,6 @@ const App = () => {
 
 const MainPage = () => {
   return <div>This is MainPage</div>;
-};
-
-const LoginPage = () => {
-  return <div>This is LoginPage</div>;
 };
 
 const ProductPage = () => {
