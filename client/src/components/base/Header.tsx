@@ -2,44 +2,80 @@ import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 import { Link, NavLink } from '@/Router';
 import { categories } from '@/static/constants';
+import { greyLine, normalContainerWidth } from '@/static/style/common';
 
 import '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
 
+const shortCuts = [
+  { name: '로그인', path: '/login' },
+  { name: '마이페이지', path: '/my-page' },
+  { name: '장바구니', path: '/cart' },
+];
+
 const Header = () => {
   return (
-    <HeaderContainer>
-      <SearchHeader>
-        <LogoLink to="/">
-          <Logo src="images/logo.png" />
-        </LogoLink>
-        <SearchContainer>
-          <SearchInput placeholder="검색어를 입력해 주세요" />
-          <Button>
-            <SearchImg src="images/search.png" />
-          </Button>
-        </SearchContainer>
-      </SearchHeader>
-      <Navigation>
-        {categories.map(([category, path], idx) => (
-          <Fragment key={idx}>
-            <CategoryLink to={path}>
-              <li>{category}</li>
-            </CategoryLink>
-          </Fragment>
+    <>
+      <ShortCuts>
+        {shortCuts.map(({ name, path }) => (
+          <ShortCut key={path}>
+            <Link to={path}>{name}</Link>
+          </ShortCut>
         ))}
-      </Navigation>
-    </HeaderContainer>
+      </ShortCuts>
+      <HeaderContainer>
+        <SearchHeader>
+          <LogoLink to="/">
+            <Logo src="images/logo.png" />
+          </LogoLink>
+          <SearchContainer>
+            <SearchInput placeholder="검색어를 입력해 주세요" />
+            <Button>
+              <SearchImg src="images/search.png" />
+            </Button>
+          </SearchContainer>
+        </SearchHeader>
+        <Navigation>
+          {categories.map(([category, path], idx) => (
+            <li key={idx}>
+              <CategoryLink to={path}>{category}</CategoryLink>
+            </li>
+          ))}
+        </Navigation>
+      </HeaderContainer>
+    </>
   );
 };
 
+const ShortCuts = styled.ul`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: ${normalContainerWidth};
+  margin: 0 auto;
+`;
+
+const ShortCut = styled.li`
+  display: flex;
+  align-items: center;
+  &:not(:last-of-type):after {
+    content: '|';
+    font-size: 5px;
+    display: inline-block;
+    margin: 0 10px;
+    color: ${greyLine};
+  }
+`;
+
 const HeaderContainer = styled.div`
   min-width: 1450px;
-  border-bottom: 1px solid #CCD3D3; ;
+  border-top: 1px solid ${greyLine};
+  border-bottom: 1px solid ${greyLine}; ;
 `;
 
 const SearchHeader = styled.div`
-  width: 1200px;
+  width: ${normalContainerWidth};
   min-height: 103px;
   margin: 0 auto;
   display: grid;
@@ -83,7 +119,7 @@ const SearchImg = styled.img`
 `;
 
 const Navigation = styled.ul`
-  width: 1200px;
+  width: ${normalContainerWidth};
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

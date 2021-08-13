@@ -1,15 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { DateBaseModel } from "./base-model";
-import Product from "./product";
-import User from "./user";
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { DateBaseModel } from './base-model';
+import Order from './order';
+import Product from './product';
 
-@Entity({ name: "order-items" })
+@Entity({ name: 'order-items' })
 class OrderItem extends DateBaseModel {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @ManyToOne((type) => User, (user) => user.id)
-  user: User;
+  @ManyToOne((type) => Order, (order) => order.items)
+  order: Order;
 
   @ManyToOne((type) => Product, (product) => product.id)
   product: Product;

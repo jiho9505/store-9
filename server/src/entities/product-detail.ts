@@ -1,10 +1,10 @@
-import { Entity, Column, OneToOne } from "typeorm";
-import { DateBaseModel } from "./base-model";
-import Product from "./product";
+import { Entity, Column, OneToOne } from 'typeorm';
+import { DateBaseModel } from './base-model';
+import Product from './product';
 
-@Entity({ name: "product-details" })
+@Entity({ name: 'product-details' })
 class ProductDetail extends DateBaseModel {
-  @OneToOne((type) => Product, (product) => product.id)
+  @OneToOne((type) => Product, (product) => product.detail)
   product: Product;
 
   @Column()

@@ -1,19 +1,15 @@
-import { Column, Entity, ManyToOne } from "typeorm";
-import { DateBaseModel } from "./base-model";
-import Category from "./category";
-import Product from "./product";
-import User from "./user";
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { DateBaseModel } from './base-model';
+import Product from './product';
+import User from './user';
 
-Entity({ name: "qnas" });
+@Entity({ name: 'qnas' })
 class QnA extends DateBaseModel {
-  @ManyToOne((type) => User, (user) => user.id)
+  @ManyToOne((type) => User, (user) => user.qnas)
   user: User;
 
   @ManyToOne((type) => Product, (product) => product.id)
   product: Product;
-
-  @ManyToOne((type) => Category, (category) => category.id)
-  category: Category;
 
   @Column()
   title: string;
@@ -23,6 +19,9 @@ class QnA extends DateBaseModel {
 
   @Column()
   isPrivate: boolean;
+
+  @Column()
+  images: string;
 }
 
 export default QnA;
