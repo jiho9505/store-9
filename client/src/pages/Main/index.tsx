@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import Carousel from '@/components/main/Carousel/Carousel';
-import FeatureSection from '@/components/main/FeatureSection/FeatureSection';
-import GiftSection from '@/components/main/GiftSection/GiftSection';
+import Carousel from '@/components/Main/Carousel/Carousel';
+import FeatureSection from '@/components/Main/FeatureSection/FeatureSection';
+import GiftSection from '@/components/Main/GiftSection/GiftSection';
 
 const Main = () => {
   return (
