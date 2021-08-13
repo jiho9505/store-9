@@ -33,7 +33,7 @@ const ProductList = () => {
   const [filter, setFilter] = useState({
     skip: 0,
     limit: 20,
-    productFilter: -1,
+    productFilterIndex: -1,
     categoryId: 0,
   });
   const [totalProductCount, setTotalProductCount] = useState(77);
@@ -55,8 +55,7 @@ const ProductList = () => {
   let url = path + qs;
 
   const handleFilter = (index) => {
-    const newFilter = { ...filter };
-    newFilter.productFilter = index;
+    const newFilter = { ...filter, productFilter: index };
     setFilter(newFilter);
   };
 
