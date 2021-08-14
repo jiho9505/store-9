@@ -45,9 +45,9 @@ const Input = ({
         onBlur={handleBlur}
         placeholder={placeholder}
         variant={variant}
-        valid={validate.isValid}
+        valid={validate?.isValid}
       />
-      {validate.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>}
+      {validate?.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>}
     </InputContainer>
   );
 };
@@ -88,8 +88,10 @@ const CustomInput = styled.input<InputVariantProps>`
   width: 100%;
   height: 2.5rem;
   padding: 0 10px;
-  border-bottom: ${(props) => (props.variant === 'outlined' ? 'none' : `1px solid ${greyLine}`)};
-  border: ${(props) => (props.variant === 'outlined' ? `1px solid ${greyLine}` : 'none')};
+  ${(props) =>
+    props.variant === 'outlined'
+      ? `border: 1px solid ${greyLine};`
+      : `border-bottom: 1px solid ${greyLine};`}
   border-radius: ${(props) => (props.variant === 'outlined' ? `${normalRadius}` : '0px')};
   border-color: ${(props) => (props.valid === false ? `${red2}` : `${greyLine}`)};
   font-size: 1rem;
