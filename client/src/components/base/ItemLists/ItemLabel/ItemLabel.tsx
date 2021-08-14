@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { baemin, green, red1 } from '@/static/style/common';
+import { baemin, baeminFont, green, red1 } from '@/static/style/common';
 
 const feature = ['NEW', 'BEST', 'SALE', 'GREEN'];
 
@@ -62,6 +62,9 @@ const Feature = styled.div`
   font-weight: bold;
   letter-spacing: 0.1em;
   color: #fff;
+  span {
+    font-family: ${baeminFont};
+  }
 `;
 
 export default ItemLabel;
