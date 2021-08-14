@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { Router, Route, Link } from './Router';
 
 import Header from '@/components/base/Header';
@@ -19,7 +20,7 @@ import '@/static/assets/img/baeminFavicon.png';
  */
 const App = () => {
   return (
-    <>
+    <PageContainer>
       <Router>
         <Header />
         <Route exact path="/">
@@ -73,9 +74,13 @@ const App = () => {
       </Router>
       <ButtonToMoveToTop />
       <Footer />
-    </>
+    </PageContainer>
   );
 };
+
+const PageContainer = styled.div`
+  min-width: 1450px;
+`;
 
 const ProductPage = () => {
   return <div>This is Product Page</div>;
