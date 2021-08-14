@@ -1,13 +1,13 @@
 import React from 'react';
 import { Router, Route, Link } from './Router';
 
-import Header from '@/components/base/Header';
+import Header from '@/components/base/Header/Header';
 import Footer from '@/components/base/Footer/Footer';
-import ArrowButton from '@/components/base/ArrowButton';
+import ButtonToMoveToTop from '@/components/base/ButtonToMoveToTop';
 
 import Main from '@/pages/Main';
 import ProductList from '@/pages/ProductList';
-import CartPage from '@/pages/cart';
+import CartPage from '@/pages/Cart';
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -63,7 +63,7 @@ const App = () => {
           <ProductList />
         </Route>
       </Router>
-      <ArrowButton />
+      <ButtonToMoveToTop />
       <Footer />
     </>
   );

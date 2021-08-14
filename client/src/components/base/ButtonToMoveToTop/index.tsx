@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { baemin } from '@/static/style/common';
 
-const ArrowButton = () => {
+const ButtonToMoveToTop = () => {
   const [isActive, setIsActive] = useState(false);
 
   const standardHeight = 800;
@@ -48,4 +48,4 @@ const Button = styled.button<ButtonProps>`
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
 `;
 
-export default ArrowButton;
+export default ButtonToMoveToTop;
