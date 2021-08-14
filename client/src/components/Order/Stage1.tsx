@@ -69,7 +69,7 @@ const Stage1 = ({ form, onChange }: Stage1Props) => {
 
 const StageContainer = styled.div`
   & div {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 `;
 
