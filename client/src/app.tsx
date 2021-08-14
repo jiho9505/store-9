@@ -9,6 +9,7 @@ import SignupMethod from '@/pages/SignupMethod';
 import Main from '@/pages/Main';
 import ProductList from '@/pages/ProductList';
 import CartPage from '@/pages/Cart';
+import Order from '@/pages/Order';
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -29,6 +30,9 @@ const App = () => {
         </Route>
         <Route exact path="/cart">
           <CartPage />
+        </Route>
+        <Route exact path="/order">
+          <Order />
         </Route>
         <Route exact path="/product/:id">
           <ProductPage />
