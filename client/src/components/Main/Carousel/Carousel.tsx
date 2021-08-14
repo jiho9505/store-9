@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import '@/static/assets/img/bannerImage1.gif';
 import '@/static/assets/img/bannerImage2.gif';
@@ -20,14 +20,20 @@ const Carousel = () => {
    * button clickEvent가 일어나지 않았을때
    * index를 이동합니다. ( 이미지를 보여주기 위해서 )
    */
-  setTimeout(() => {
+  useEffect(() => {
+    let timer;
     if (!isClickEventActive) {
-      const standardIndex = index + 1 > 3 ? 1 : index + 1;
-      setIndex(standardIndex);
+      timer = setTimeout(() => {
+        const standardIndex = index + 1 > 3 ? 1 : index + 1;
+        setIndex(standardIndex);
+      }, timeToChangeSlide);
     } else {
       setIsClickEventActive(false);
     }
-  }, timeToChangeSlide);
+    return () => {
+      clearTimeout(timer);
+    };
+  });
 
   /**
    * Carousel 안에 버튼 클릭 시 해당 이미지로 이동합니다.
@@ -36,8 +42,8 @@ const Carousel = () => {
   const onClickButton = (e: React.MouseEvent) => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
-    const nextIndex = target.dataset.idx;
-    setIndex(Number(nextIndex));
+    const nextIndex = Number(target.dataset.idx);
+    setIndex(nextIndex);
     setIsClickEventActive(true);
   };
 
