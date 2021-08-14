@@ -16,7 +16,7 @@ const shortCuts = [
 const Header = () => {
   return (
     <>
-      <ShortCuts className="header">
+      <ShortCuts>
         {shortCuts.map(({ name, path }) => (
           <ShortCut key={path}>
             <Link to={path}>{name}</Link>
