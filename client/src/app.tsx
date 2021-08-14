@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router, Route, Link } from './Router';
 
-import Header from '@/components/base/Header/Header';
-import Footer from '@/components/base/Footer/Footer';
+import Header from '@/components/base/Header';
+import Footer from '@/components/base/Footer';
 import ButtonToMoveToTop from '@/components/base/ButtonToMoveToTop';
 import LoginPage from '@/pages/Login';
 import SignupMethod from '@/pages/SignupMethod';

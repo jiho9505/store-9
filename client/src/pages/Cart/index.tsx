@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { normalContainerWidth, greyLine, greySpan, normalRadius } from '@/static/style/common';
 
-import { CartHeader, CartContent } from '@/components/cart';
+import { CartHeader, CartContent } from '@/components/Cart';
 import PricePannel from '@/components/base/PricePannel';
 
 const cartProducts = [
