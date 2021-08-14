@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { greyLine, normalRadius } from '@/static/style/common';
+import { greyLine, normalRadius, red2 } from '@/static/style/common';
 
 type inputSize = 'large' | 'medium' | 'small';
 type inputVariant = 'normal' | 'outlined';
+type validate = { isValid: boolean; onCheck(): void; message: string };
 
 type InputProps = {
   name: string;
@@ -13,10 +14,27 @@ type InputProps = {
   value: string;
   placeholder: string;
   variant: inputVariant;
+  validate?: validate;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({ name, required, onChange, size, value, placeholder, variant }: InputProps) => {
+const Input = ({
+  name,
+  required,
+  onChange,
+  size,
+  value,
+  placeholder,
+  variant,
+  validate,
+}: InputProps) => {
+  const handleBlur = () => {
+    if (!validate?.onCheck) {
+      return;
+    }
+    validate.onCheck();
+  };
+
   return (
     <InputContainer size={size}>
       <CustomInput
@@ -24,9 +42,12 @@ const Input = ({ name, required, onChange, size, value, placeholder, variant }: 
         name={name}
         required={required}
         onChange={onChange}
+        onBlur={handleBlur}
         placeholder={placeholder}
         variant={variant}
+        valid={validate.isValid}
       />
+      {validate.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>}
     </InputContainer>
   );
 };
@@ -39,6 +60,7 @@ type InputContainerProps = {
 
 type InputVariantProps = {
   variant: inputVariant;
+  valid?: boolean;
 };
 
 const getInputSize = (size: string) => {
@@ -70,7 +92,15 @@ const CustomInput = styled.input<InputVariantProps>`
   border-bottom: ${(props) => (props.variant === 'outlined' ? 'none' : `1px solid ${greyLine}`)};
   border: ${(props) => (props.variant === 'outlined' ? `1px solid ${greyLine}` : 'none')};
   border-radius: ${(props) => (props.variant === 'outlined' ? `${normalRadius}` : '0px')};
+  border-color: ${(props) => (props.valid === false ? `${red2}` : 'inherit')};
   font-size: 1rem;
+`;
+
+const ErrorMessage = styled.div`
+  color: ${red2};
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 10px;
 `;
 
 Input.defaultProps = {
