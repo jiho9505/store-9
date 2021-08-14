@@ -1,84 +1,71 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import Input from '@/components/base/Input';
-import InputLabel from '@/components/base/InputLabel';
+import Stage1 from './Stage1';
+import Stage2 from './Stage2';
 import Button from '@/components/base/Button';
 
 import useInput from '@/hooks/customHooks/useInput';
-import useValidate from '@/hooks/customHooks/useValidate';
 
 import { normalRadius } from '@/static/style/common';
 
+const stage1InitialForm = {
+  orderName: '',
+  phoneNumber: '',
+  email: '',
+};
+
+const stage2InitialForm = {
+  recName: '',
+  recPlace: '',
+  recPhoneNumber: '',
+};
+
 const OrderForm = () => {
-  const { form, onChange, reset } = useInput({
-    orderName: '',
-    phoneNumber: '',
-    email: '',
+  const { form, onChange } = useInput({
+    ...stage1InitialForm,
+    ...stage2InitialForm,
   });
+
+  const { orderName, phoneNumber, email, recName, recPlace, recPhoneNumber } = form;
+
   const [stage, setStage] = useState(1);
 
-  const { isValid: orderNameCheck, check: handleNameCheck } = useValidate(form.orderName);
-  const { isValid: phoneCheck, check: handlePhoneCheck } = useValidate(form.phoneNumber);
-  const { isValid: emailCheck, check: handleEmailCheck } = useValidate(form.email);
+  const handleClickNext = () => {
+    setStage((prev) => prev + 1);
+  };
+
+  const handleClickPrev = () => {
+    setStage((prev) => prev - 1);
+  };
+
+  const forms = () => {
+    if (stage === 1) {
+      return <Stage1 onChange={onChange} form={{ orderName, email, phoneNumber }} />;
+    } else if (stage === 2) {
+      return <Stage2 onChange={onChange} form={{ recName, recPlace, recPhoneNumber }} />;
+    }
+  };
 
   return (
     <OrderFormContainer>
-      <Stage1>
-        <InputLabel labelName="주문자 명" />
-        <Input
-          name="orderName"
-          required={true}
-          variant="outlined"
-          size="large"
-          onChange={onChange}
-          value={form.orderName}
-          validate={{
-            isValid: orderNameCheck,
-            onCheck: handleNameCheck,
-            message: '주문자 명을 입력해 주세요.',
-          }}
-          placeholder="주문자명을 입력해 주세요."
-        />
-        <InputLabel labelName="전화번호" />
-        <Input
-          name="phoneNumber"
-          required={true}
-          variant="outlined"
-          size="large"
-          onChange={onChange}
-          value={form.phoneNumber}
-          validate={{
-            isValid: phoneCheck,
-            onCheck: handlePhoneCheck,
-            message: '전화번호를 입력해 주세요',
-          }}
-          placeholder="전화번호를 입력해 주세요."
-        />
-        <InputLabel labelName="이메일" />
-        <Input
-          name="email"
-          required={true}
-          variant="outlined"
-          size="large"
-          onChange={onChange}
-          value={form.email}
-          validate={{
-            isValid: emailCheck,
-            onCheck: handleEmailCheck,
-            message: '이메일을 입력해 주세요.',
-          }}
-          placeholder="이메일을 입력해 주세요."
-        />
-      </Stage1>
+      {forms()}
       <PageAction>
-        <Button
-          size="small"
-          theme="white"
-          value="next"
-          type="button"
-          onClick={() => console.log('a')}
-        />
+        {stage !== 1 && (
+          <Button size="small" theme="white" value="prev" type="button" onClick={handleClickPrev} />
+        )}
+        {stage !== 2 && (
+          <Button size="small" theme="white" value="next" type="button" onClick={handleClickNext} />
+        )}
+        {stage === 2 && (
+          <Button
+            size="small"
+            theme="white"
+            value="submit"
+            type="button"
+            onClick={() => console.log('a')}
+          />
+        )}
       </PageAction>
     </OrderFormContainer>
   );
@@ -97,12 +84,10 @@ const OrderFormContainer = styled.form`
   overflow: hidden;
 `;
 
-const Stage1 = styled.div`
-  & div {
-    margin-bottom: 20px;
-  }
+const PageAction = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
-
-const PageAction = styled.div``;
 
 export default OrderForm;
