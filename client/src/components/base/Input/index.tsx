@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { greyLine, normalRadius } from '@/static/style/common';
+
+type inputSize = 'large' | 'medium' | 'small';
+type inputVariant = 'normal' | 'outlined';
 
 type InputProps = {
   name: string;
   required: boolean;
-  size: string;
+  size: inputSize;
   value: string;
   placeholder: string;
+  variant: inputVariant;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({ name, required, onChange, size, value, placeholder }: InputProps) => {
+const Input = ({ name, required, onChange, size, value, placeholder, variant }: InputProps) => {
   return (
     <InputContainer size={size}>
       <CustomInput
@@ -20,6 +25,7 @@ const Input = ({ name, required, onChange, size, value, placeholder }: InputProp
         required={required}
         onChange={onChange}
         placeholder={placeholder}
+        variant={variant}
       />
     </InputContainer>
   );
@@ -28,7 +34,11 @@ const Input = ({ name, required, onChange, size, value, placeholder }: InputProp
 export default Input;
 
 type InputContainerProps = {
-  size: string;
+  size: inputSize;
+};
+
+type InputVariantProps = {
+  variant: inputVariant;
 };
 
 const getInputSize = (size: string) => {
@@ -53,12 +63,16 @@ const InputContainer = styled.div<InputContainerProps>`
   padding: 0 10px;
 `;
 
-const CustomInput = styled.input`
+const CustomInput = styled.input<InputVariantProps>`
   width: 100%;
   height: 100%;
-  border: none;
   padding: 0 10px;
-  border-bottom: 1px solid #c0c0c0;
-  outline: none;
+  border-bottom: ${(props) => (props.variant === 'outlined' ? 'none' : `1px solid ${greyLine}`)};
+  border: ${(props) => (props.variant === 'outlined' ? `1px solid ${greyLine}` : 'none')};
+  border-radius: ${(props) => (props.variant === 'outlined' ? `${normalRadius}` : '0px')};
   font-size: 1rem;
 `;
+
+Input.defaultProps = {
+  variant: 'normal',
+};
