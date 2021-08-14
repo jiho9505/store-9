@@ -1,20 +1,24 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import BreadCrumbs from '../base/BreadCrumbs';
+import BreadCrumbs from '../BreadCrumbs';
 
 import { baeminFont } from '@/static/style/common';
 
-const CartHeader = () => {
+type OrderStageHeaderProps = {
+  title: string;
+};
+
+const OrderStageHeader = ({ title }: OrderStageHeaderProps) => {
   return (
-    <CartHeaderContainer>
-      <Title>장바구니</Title>
+    <OrderStageContainer>
+      <Title>{title}</Title>
       <BreadCrumbs />
-    </CartHeaderContainer>
+    </OrderStageContainer>
   );
 };
 
-const CartHeaderContainer = styled.div`
+const OrderStageContainer = styled.div`
   height: 64px;
   display: flex;
   justify-content: space-between;
@@ -26,4 +30,4 @@ const Title = styled.h2`
   font-family: ${baeminFont};
 `;
 
-export default CartHeader;
+export default OrderStageHeader;
