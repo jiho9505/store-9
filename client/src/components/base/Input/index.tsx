@@ -81,18 +81,17 @@ const getInputSize = (size: string) => {
 
 const InputContainer = styled.div<InputContainerProps>`
   ${({ size }) => getInputSize(size)}
-  height: 2.5rem;
   padding: 0 10px;
 `;
 
 const CustomInput = styled.input<InputVariantProps>`
   width: 100%;
-  height: 100%;
+  height: 2.5rem;
   padding: 0 10px;
   border-bottom: ${(props) => (props.variant === 'outlined' ? 'none' : `1px solid ${greyLine}`)};
   border: ${(props) => (props.variant === 'outlined' ? `1px solid ${greyLine}` : 'none')};
   border-radius: ${(props) => (props.variant === 'outlined' ? `${normalRadius}` : '0px')};
-  border-color: ${(props) => (props.valid === false ? `${red2}` : 'inherit')};
+  border-color: ${(props) => (props.valid === false ? `${red2}` : `${greyLine}`)};
   font-size: 1rem;
 `;
 
