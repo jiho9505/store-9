@@ -33,6 +33,7 @@ const PricePannelContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 400px;
+  height: fit-content;
   padding: 20px;
   & div:not(:last-of-type) {
     margin-bottom: 15px;
