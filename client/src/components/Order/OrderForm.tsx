@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
+import Stepper from './Stepper';
 import Stage1 from './Stage1';
 import Stage2 from './Stage2';
 import Button from '@/components/base/Button';
@@ -49,6 +50,7 @@ const OrderForm = () => {
 
   return (
     <OrderFormContainer>
+      <Stepper steps={2} curStep={stage} />
       {forms()}
       <PageAction>
         {stage !== 1 && (
