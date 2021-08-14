@@ -17,8 +17,7 @@ const ArrowButton = () => {
     if (!(target instanceof HTMLElement)) return;
 
     if (target.closest('.arrow-button')) {
-      const scrollTo = document.querySelector('.header');
-      scrollTo.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
