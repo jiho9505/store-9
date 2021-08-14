@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
+import { normalContainerWidth } from '@/static/style/common';
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { baemin } from '@/static/style/common';
@@ -116,7 +117,7 @@ const WholeContainer = styled.div`
 `;
 
 const ElementContainer = styled.div`
-  width: 1200px;
+  width: ${normalContainerWidth};
   margin-top: 50px;
   display: flex;
   flex-direction: column;

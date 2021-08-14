@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 
-import { baeminFont } from '@/static/style/common';
+import { baeminFont, normalContainerWidth } from '@/static/style/common';
 
 const getTitle = (mode) => {
   if (mode === 'new') {
@@ -36,7 +36,7 @@ const FeatureSection = (props) => {
 export default FeatureSection;
 
 const FeatureContainer = styled.div`
-  width: 1200px;
+  width: ${normalContainerWidth};
   margin-top: 100px;
   display: flex;
   flex-direction: column;
