@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-
 import styled from '@emotion/styled';
+
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
-import { normalContainerWidth } from '@/static/style/common';
+import Loading from '@/components/base/Loading';
 
-import { LoadingOutlined } from '@ant-design/icons';
-import { baemin } from '@/static/style/common';
+import { normalContainerWidth } from '@/static/style/common';
 
 /**
  * @params categoryId
@@ -103,12 +102,12 @@ const ProductList = () => {
           totalProductCount={totalProductCount}
         ></ItemFilterBar>
         <ItemLists observeTag={observeTag}></ItemLists>
-        {isLoading && <LoadingOutlined style={{ fontSize: '45px', color: '#ddd' }} />}
+        {isLoading && <Loading />}
       </ElementContainer>
     </WholeContainer>
   );
 };
-baemin;
+
 const WholeContainer = styled.div`
   width: 100vw;
   display: flex;
