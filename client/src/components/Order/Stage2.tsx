@@ -51,7 +51,7 @@ const Stage2 = ({ form, onChange }: Stage2Props) => {
       <InputLabel labelName="휴대폰" />
       <Input
         name="recPhonenumber"
-        required={true}
+        required
         variant="outlined"
         size="large"
         onChange={onChange}

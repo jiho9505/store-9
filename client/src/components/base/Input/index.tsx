@@ -29,10 +29,7 @@ const Input = ({
   validate,
 }: InputProps) => {
   const handleBlur = () => {
-    if (!validate?.onCheck) {
-      return;
-    }
-    validate.onCheck();
+    validate?.onCheck?.();
   };
 
   return (

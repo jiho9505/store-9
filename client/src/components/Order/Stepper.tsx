@@ -10,9 +10,9 @@ type StepperProps = {
 const Stepper = ({ steps, curStep }: StepperProps) => {
   return (
     <StepperContainer>
-      {new Array(steps).fill(0).map((_, idx) => (
-        <StepContainer>
-          {idx !== 0 && <Dash />}
+      {Array.from({ length: steps }).map((_, idx) => (
+        <StepContainer key={`${steps}_${idx}`}>
+          {idx ? <Dash /> : null}
           <Step isActive={idx + 1 <= curStep}>{idx + 1}</Step>
         </StepContainer>
       ))}

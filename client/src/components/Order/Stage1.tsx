@@ -51,7 +51,7 @@ const Stage1 = ({ form, onChange }: Stage1Props) => {
       <InputLabel labelName="이메일" />
       <Input
         name="email"
-        required={true}
+        required
         variant="outlined"
         size="large"
         onChange={onChange}
