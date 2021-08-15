@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import useLocation from '@/hooks/customHooks/useLocation';
-import { HistoryContext } from '@/hooks/context';
 
 import { baeminFont, greySpan } from '@/static/style/common';
 
-import '@/static/assets/img/right_arrow.svg';
-import '@/static/assets/img/right_arrow_grey.svg';
+import { RightArrow, RightArrowGrey } from '@/static/assets/svg';
 
 const stages = [
   ['장바구니', '/cart'],
@@ -21,9 +19,7 @@ const BreadCrumbs = () => {
       {stages.map(([stage, path], idx, arr) => (
         <BreadCrumb key={path}>
           <Stage isMatched={path === curLocation}>{stage}</Stage>
-          {idx !== arr.length - 1 && (
-            <RightArrow src={`images/right_arrow${path === curLocation ? '' : '_grey'}.svg`} />
-          )}
+          {idx !== arr.length - 1 && (path === curLocation ? <RightArrow /> : <RightArrowGrey />)}
         </BreadCrumb>
       ))}
     </BreadCrumbContainer>
@@ -54,10 +50,6 @@ const Stage = styled.span<StageStyledComp>`
     margin-right: 5px;
   }
   color: ${(props) => (!props.isMatched ? greySpan : 'inherit')};
-`;
-
-const RightArrow = styled.img`
-  width: 14px;
 `;
 
 export default BreadCrumbs;

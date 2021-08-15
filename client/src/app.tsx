@@ -1,14 +1,16 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { Router, Route, Link } from './Router';
 
-import Header from '@/components/base/Header/Header';
-import Footer from '@/components/base/Footer/Footer';
+import Header from '@/components/base/Header';
+import Footer from '@/components/base/Footer';
 import ButtonToMoveToTop from '@/components/base/ButtonToMoveToTop';
 import LoginPage from '@/pages/Login';
 import SignupMethod from '@/pages/SignupMethod';
 import Main from '@/pages/Main';
 import ProductList from '@/pages/ProductList';
 import CartPage from '@/pages/Cart';
+import Order from '@/pages/Order';
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -18,7 +20,7 @@ import '@/static/assets/img/baeminFavicon.png';
  */
 const App = () => {
   return (
-    <>
+    <PageContainer>
       <Router>
         <Header />
         <Route exact path="/">
@@ -29,6 +31,9 @@ const App = () => {
         </Route>
         <Route exact path="/cart">
           <CartPage />
+        </Route>
+        <Route exact path="/order">
+          <Order />
         </Route>
         <Route exact path="/product/:id">
           <ProductPage />
@@ -69,9 +74,13 @@ const App = () => {
       </Router>
       <ButtonToMoveToTop />
       <Footer />
-    </>
+    </PageContainer>
   );
 };
+
+const PageContainer = styled.div`
+  min-width: 1450px;
+`;
 
 const ProductPage = () => {
   return <div>This is Product Page</div>;
