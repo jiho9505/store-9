@@ -1,4 +1,5 @@
 import murmurhash from 'murmurhash';
+import { compile, serialize, stringify, middleware, prefixer } from 'stylis';
 
 const charsLength = 52;
 
@@ -16,4 +17,19 @@ const generateAlphabeticName = (code: number): string => {
   return getAlphabeticChar(x % charsLength) + name;
 };
 
-export { generateAlphabeticName };
+const createStyleRule = (className, styles) => {
+  serialize(
+    compile(`${className}{${styles}}`),
+    middleware([
+      prefixer,
+      stringify,
+      (element) => {
+        if (element.type === 'rule') {
+          console.log(element.return);
+        }
+      },
+    ])
+  );
+};
+
+export { generateAlphabeticName, createStyleRule };
