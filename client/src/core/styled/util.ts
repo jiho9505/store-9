@@ -19,17 +19,23 @@ const generateAlphabeticName = (code: number): string => {
 
 const createStyleRule = (className, styles) => {
   serialize(
-    compile(`${className}{${styles}}`),
+    compile(`.${className}{${styles}}`),
     middleware([
       prefixer,
       stringify,
       (element) => {
         if (element.type === 'rule') {
-          console.log(element.return);
+          injectStyle(element.return);
         }
       },
     ])
   );
+};
+
+const injectStyle = (rule) => {
+  const styleTag = document.createElement('style');
+  document.head.appendChild(styleTag);
+  styleTag.appendChild(document.createTextNode(rule));
 };
 
 export { generateAlphabeticName, createStyleRule };
