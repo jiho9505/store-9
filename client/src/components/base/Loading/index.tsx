@@ -1,30 +1,43 @@
 import React from 'react';
 
-import styled from '@emotion/styled';
-import { baeminFont } from '@/static/style/common';
+import { baemin, baeminFont } from '@/static/style/common';
 import '@/static/assets/img/loading.gif';
+import styled from '@emotion/styled';
 
-const Loading = () => {
+type Size = 'small' | 'big';
+
+type LoadingProps = {
+  size: Size;
+};
+
+const Loading = ({ size }: LoadingProps) => {
   return (
     <LoadingContainer>
-      <LoadingTitle>Loading...</LoadingTitle>
-      <LoadingImg src="images/sample.gif"></LoadingImg>
+      <LoadingTitle size={size}>Loading...</LoadingTitle>
+      <LoadingImg src="images/loading.gif" size={size}></LoadingImg>
     </LoadingContainer>
   );
 };
 
 export default Loading;
 
+type SizeProps = {
+  size: string;
+};
 const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
 `;
-const LoadingTitle = styled.h3`
+
+const LoadingTitle = styled.h3<SizeProps>`
   font-family: ${baeminFont};
-  font-size: 20px;
+  font-size: ${(props) => (props.size === 'big' ? '40px' : '20px')};
 `;
-const LoadingImg = styled.img`
-  width: 100px;
-  height: 100px;
+const LoadingImg = styled.img<SizeProps>`
+  width: ${(props) => (props.size === 'big' ? '200px' : '100px')};
+  height: ${(props) => (props.size === 'big' ? '200px' : '100px')};
+  font-family: ${baeminFont};
+  color: ${baemin};
 `;
