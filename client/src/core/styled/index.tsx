@@ -7,8 +7,9 @@ const classList = new Set();
 
 const guguStyled =
   (Tag) =>
-  (strings, ...exprs) => {
+  (strings: TemplateStringsArray, ...exprs: any[]) => {
     const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
+
     return (props) => {
       const interpolateStyle = useMemo(() => {
         return exprs.reduce(
@@ -22,9 +23,18 @@ const guguStyled =
       }, [strings, exprs]);
 
       let prevClassName = '';
+      let newProps = {};
       if (typeof Tag === 'function') {
         const parent = Tag(props);
         prevClassName = parent.props.className;
+      } else {
+        const $dom = document.createElement(Tag);
+        newProps = Object.keys(props).reduce((result, prop) => {
+          if (prop in $dom) {
+            return { ...result, [prop]: props[prop] };
+          }
+          return result;
+        }, {});
       }
 
       if (!classList.has(uniqueClassName)) {
@@ -36,12 +46,20 @@ const guguStyled =
         ? `${prevClassName} ${uniqueClassName}`
         : uniqueClassName;
 
+      const property = Object.keys(newProps).length === 0 ? props : newProps;
+
       return (
-        <Tag className={combinedClassName} {...props}>
+        <Tag className={combinedClassName} {...property}>
           {props?.children}
         </Tag>
       );
     };
   };
+
+export const keyframes = (animation: TemplateStringsArray): string => {
+  const animationName = generateAlphabeticName(counter);
+  createStyleRule('', `@keyframes ${animationName} {${animation}}`);
+  return animationName;
+};
 
 export default guguStyled;
