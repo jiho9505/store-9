@@ -74,15 +74,15 @@ const ProductList = () => {
   const observeTag = () => {
     const observerCallback = (entries, observer) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target.id === 'end') {
-            setIsLoading(true);
-            setTimeout(() => {
-              const newProduct = [...product, ...datas];
-              setProduct(newProduct);
-              setIsLoading(false);
-            }, 2000);
-            /*
+        if (!entry.isIntersecting) return;
+        if (entry.target.id === 'end') {
+          setIsLoading(true);
+          setTimeout(() => {
+            const newProduct = [...product, ...datas];
+            setProduct(newProduct);
+            setIsLoading(false);
+          }, 2000);
+          /*
             const data = await api 요청
             if (data.success) {
               if (data.length > 0) {
@@ -96,9 +96,8 @@ const ProductList = () => {
             }
              setIsLoading(false);
             */
-          }
-          observer.unobserve(entry.target);
         }
+        observer.unobserve(entry.target);
       });
     };
     const items = document.querySelectorAll('.item');
