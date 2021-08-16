@@ -33,7 +33,7 @@ const Carousel = () => {
     return () => {
       clearTimeout(timer);
     };
-  });
+  }, [index, isClickEventActive]);
 
   /**
    * Carousel 안에 버튼 클릭 시 해당 이미지로 이동합니다.
