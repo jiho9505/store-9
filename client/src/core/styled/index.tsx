@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { generateAlphabeticName, createStyleRule } from './util';
+import tag, { tags } from './tag';
 
 let counter = 0;
 const classList = new Set<string>();
@@ -59,6 +60,10 @@ const guguStyled =
     NewComponent.getPrevClassName = getPrevClassName;
     return NewComponent;
   };
+
+tags.forEach((tag) => {
+  guguStyled[tag] = guguStyled(tag);
+});
 
 export const keyframes = (animation: TemplateStringsArray): string => {
   const animationName = generateAlphabeticName(counter);
