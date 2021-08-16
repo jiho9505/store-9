@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { baemin, baeminFont, lightBlack } from '@/static/style/common';
+import { baemin, baeminFont, baeminThickFont, lightBlack } from '@/static/style/common';
 
 const filterName = ['추천순', '인기순', '최신순', '낮은가격순', '높은가격순'];
 
@@ -57,13 +57,15 @@ const ItemFilterContainer = styled.ul`
 
 const TotalNumber = styled.span`
   font-weight: bold;
-  font-family: ${baeminFont};
+  font-family: ${baeminThickFont};
   font-size: 18px;
 `;
 
 const Total = styled.span`
   color: ${lightBlack};
   font-size: 14px;
+
+  font-family: ${baeminFont};
 `;
 
 type FilterProps = {

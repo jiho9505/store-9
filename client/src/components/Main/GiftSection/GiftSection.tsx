@@ -1,4 +1,4 @@
-import { baeminFont } from '@/static/style/common';
+import { baeminFont, normalContainerWidth } from '@/static/style/common';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -30,7 +30,7 @@ const GiftSection = () => {
 export default GiftSection;
 
 const GiftContainer = styled.div`
-  width: 1200px;
+  width: ${normalContainerWidth};
   margin-top: 100px;
   display: flex;
   flex-direction: column;
@@ -62,5 +62,6 @@ const GiftInfo = styled.div`
   span {
     font-size: 16px;
     color: #333333;
+    font-family: ${baeminFont};
   }
 `;

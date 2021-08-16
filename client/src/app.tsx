@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import styled from '@emotion/styled';
 import { Router, Route, Link } from './Router';
 
-import Header from '@/components/base/Header';
-import Footer from '@/components/base/Footer/Footer';
-import LoginPage from '@/pages/Login';
-import SignupMethod from '@/pages/SignupMethod';
-import Main from '@/pages/Main';
-import ProductList from '@/pages/ProductList';
-import CartPage from '@/pages/cart';
+const Header = React.lazy(() => import('@/components/base/Header'));
+const Footer = React.lazy(() => import('@/components/base/Footer'));
+const ButtonToMoveToTop = React.lazy(() => import('@/components/base/ButtonToMoveToTop'));
+const LoginPage = React.lazy(() => import('@/pages/Login'));
+const SignupMethod = React.lazy(() => import('@/pages/SignupMethod'));
+const Main = React.lazy(() => import('@/pages/Main'));
+const ProductList = React.lazy(() => import('@/pages/ProductList'));
+const CartPage = React.lazy(() => import('@/pages/Cart'));
+const Order = React.lazy(() => import('@/pages/Order'));
+const NotFound = React.lazy(() => import('@/pages/NotFound'));
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -17,59 +21,72 @@ import '@/static/assets/img/baeminFavicon.png';
  */
 const App = () => {
   return (
-    <>
-      <Router>
-        <Header />
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
-        <Route exact path="/cart">
-          <CartPage />
-        </Route>
-        <Route exact path="/product/:id">
-          <ProductPage />
-        </Route>
-        <Route exact path="/signupMethod">
-          <SignupMethod />
-        </Route>
-        <Route exact path="/total">
-          <ProductList />
-        </Route>
-        <Route exact path="/suplies">
-          <ProductList />
-        </Route>
-        <Route exact path="/living">
-          <ProductList />
-        </Route>
-        <Route exact path="/books">
-          <ProductList />
-        </Route>
-        <Route exact path="/green">
-          <ProductList />
-        </Route>
-        <Route exact path="/smile-edition">
-          <ProductList />
-        </Route>
-        <Route exact path="/euljiro-edition">
-          <ProductList />
-        </Route>
-        <Route exact path="/baedal-friends">
-          <ProductList />
-        </Route>
-        <Route exact path="/present">
-          <ProductList />
-        </Route>
-        <Route exact path="/collaborate">
-          <ProductList />
-        </Route>
-      </Router>
-      <Footer />
-    </>
+    <PageContainer>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router>
+          <Header />
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route exact path="/login">
+            <LoginPage />
+          </Route>
+          <Route exact path="/cart">
+            <CartPage />
+          </Route>
+          <Route exact path="/order">
+            <Order />
+          </Route>
+          <Route exact path="/product/:id">
+            <ProductPage />
+          </Route>
+          <Route exact path="/signupMethod">
+            <SignupMethod />
+          </Route>
+          <Route exact path="/total">
+            <ProductList />
+          </Route>
+          <Route exact path="/suplies">
+            <ProductList />
+          </Route>
+          <Route exact path="/living">
+            <ProductList />
+          </Route>
+          <Route exact path="/books">
+            <ProductList />
+          </Route>
+          <Route exact path="/green">
+            <ProductList />
+          </Route>
+          <Route exact path="/smile-edition">
+            <ProductList />
+          </Route>
+          <Route exact path="/euljiro-edition">
+            <ProductList />
+          </Route>
+          <Route exact path="/baedal-friends">
+            <ProductList />
+          </Route>
+          <Route exact path="/present">
+            <ProductList />
+          </Route>
+          <Route exact path="/collaborate">
+            <ProductList />
+          </Route>
+          <Route exact path="/notfound">
+            <NotFound />
+          </Route>
+        </Router>
+        <ButtonToMoveToTop />
+        <Footer />
+      </Suspense>
+    </PageContainer>
   );
 };
+
+const PageContainer = styled.div`
+  min-width: 1450px;
+`;
 
 const ProductPage = () => {
   return <div>This is Product Page</div>;
