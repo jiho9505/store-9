@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable"],
+    "lib": ["dom", "dom.iterable", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -15,8 +15,9 @@
     "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "typeRoots": ["@types"]
   },
-  "include": ["src/*"],
+  "include": ["src/*", "@types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

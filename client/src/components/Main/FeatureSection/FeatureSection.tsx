@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 
-import { baeminFont } from '@/static/style/common';
+import { baeminFont, normalContainerWidth } from '@/static/style/common';
 
 const getTitle = (mode) => {
   if (mode === 'new') {
@@ -20,15 +20,21 @@ const getTitle = (mode) => {
  * mode 에 따라 api 호출해서
  * state update 할 것
  */
-const FeatureSection = (props) => {
+
+type FeatureSectionProps = {
+  mode: string;
+  product;
+};
+
+const FeatureSection = ({ mode, product }: FeatureSectionProps) => {
   let title: String = '';
 
-  title = getTitle(props.mode);
+  title = getTitle(mode);
 
   return (
     <FeatureContainer>
       <Title>{title}</Title>
-      <ItemLists></ItemLists>
+      <ItemLists products={product}></ItemLists>
     </FeatureContainer>
   );
 };
@@ -36,7 +42,7 @@ const FeatureSection = (props) => {
 export default FeatureSection;
 
 const FeatureContainer = styled.div`
-  width: 1200px;
+  width: ${normalContainerWidth};
   margin-top: 100px;
   display: flex;
   flex-direction: column;

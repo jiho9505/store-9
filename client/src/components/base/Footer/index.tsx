@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import '@/static/assets/img/footerLogo.png';
-import { baeminFont, greySpan, greyBg1 } from '@/static/style/common';
+import { greySpan, greyBg1, baeminThickFont } from '@/static/style/common';
 
 const Footer = () => {
   return (
@@ -71,6 +71,7 @@ const FooterElement = styled.footer`
   justify-content: center;
   padding: 50px 250px 0 250px;
   height: 260px;
+  margin-top: 80px;
   background-color: ${greyBg1};
 
   img {
@@ -84,8 +85,8 @@ const FooterNav = styled.nav`
   margin-bottom: 32px;
 
   span {
-    font-weight: bold;
-    font-family: ${baeminFont};
+    font-size: 13px;
+    font-family: ${baeminThickFont};
 
     &:not(:last-child) {
       margin-right: 40px;

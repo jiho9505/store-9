@@ -1,35 +1,36 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { baemin, green, red1 } from '@/static/style/common';
-
-const feature = ['NEW', 'BEST', 'SALE', 'GREEN'];
+import { baemin, baeminFont, green, red1 } from '@/static/style/common';
 
 type LabelProps = {
-  quantity: number;
+  product;
 };
 
-const ItemLabel = ({ quantity }: LabelProps) => {
-  const getColor = (feature) => {
-    switch (feature) {
-      case 'NEW':
+const ItemLabel = ({ product }: LabelProps) => {
+  const getColor = (item) => {
+    switch (item) {
+      case 'new':
         return newFeatureColor;
 
-      case 'BEST':
+      case 'best':
         return bestFeatureColor;
 
-      case 'SALE':
+      case 'sale':
         return saleFeatureColor;
 
-      case 'GREEN':
+      case 'green':
         return greenFeatureColor;
     }
   };
 
   const createFeature = () => {
-    return feature.map((item, idx) => (
+    const badge = product.badge;
+    const allBadge = product.is_green ? [...badge, 'green'] : badge;
+
+    return allBadge.map((item, idx) => (
       <Feature color={getColor(item)} key={idx}>
-        <span>{item}</span>
+        <span>{item.toUpperCase()}</span>
       </Feature>
     ));
   };
@@ -62,6 +63,9 @@ const Feature = styled.div`
   font-weight: bold;
   letter-spacing: 0.1em;
   color: #fff;
+  span {
+    font-family: ${baeminFont};
+  }
 `;
 
 export default ItemLabel;

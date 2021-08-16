@@ -1,28 +1,53 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { red2 } from '@/static/style/common';
+import { baeminFont, red2 } from '@/static/style/common';
 
 type ContentProps = {
-  quantity: number;
-  discount: boolean;
+  item: {
+    quantity: number;
+    price: string;
+    discount_rate: string;
+    discount_price?: string;
+    title: string;
+  };
 };
 
-const ItemContent = ({ quantity, discount }: ContentProps) => {
-  return quantity ? (
-    <ItemContentContainer>
-      {discount ? <Discount>10%</Discount> : ``}
-      <ProductName>반반휴지. 물반휴지반</ProductName>
-      <ProductOriginalPrice isDiscount={discount}>1,500원</ProductOriginalPrice>
-      <ProductDiscountPrice isDiscount={discount}>1,000원</ProductDiscountPrice>
-    </ItemContentContainer>
-  ) : (
-    <ItemContentContainer>
-      <ProductName>반반휴지. 물반휴지반</ProductName>
-      <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
-    </ItemContentContainer>
-  );
+const ItemContent = ({ item }: ContentProps) => {
+  const calculateDiscount = () => {
+    const priceWithoutComma = Number(item.price.replace(/[,]/g, ''));
+    const discountWithoutPercent = Number(item.discount_rate.replace('%', ''));
+    const discountPrice = (
+      priceWithoutComma - Math.floor(priceWithoutComma / discountWithoutPercent)
+    ).toLocaleString();
+    return discountPrice;
+  };
+
+  if (item.quantity) {
+    item.discount_price = item.discount_rate ? calculateDiscount() : '';
+    return (
+      <ItemContentContainer>
+        {item.discount_rate ? <Discount>{item.discount_rate}</Discount> : ``}
+        <ProductName>{item.title}</ProductName>
+        <ProductOriginalPrice isDiscount={item.discount_rate ? true : false}>
+          {item.price}원
+        </ProductOriginalPrice>
+        <ProductDiscountPrice isDiscount={item.discount_rate ? true : false}>
+          {item.discount_price}원
+        </ProductDiscountPrice>
+      </ItemContentContainer>
+    );
+  } else {
+    return (
+      <ItemContentContainer>
+        <ProductName>{item.title}</ProductName>
+        <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
+      </ItemContentContainer>
+    );
+  }
 };
+
+export default ItemContent;
 
 const ItemContentContainer = styled.div``;
 
@@ -30,6 +55,7 @@ const ProductName = styled.span`
   display: block;
   margin-bottom: 6px;
   cursor: pointer;
+  font-family: ${baeminFont};
 `;
 
 type PriceProps = {
@@ -41,6 +67,7 @@ const ProductOriginalPrice = styled.strong<PriceProps>`
   font-weight: ${(props) => (props.isDiscount ? 'normal' : 'bold')};
   color: ${(props) => (props.isDiscount ? '#888' : 'black')};
   text-decoration: ${(props) => (props.isDiscount ? 'line-through' : 'none')};
+  font-family: ${baeminFont};
 `;
 
 const ProductDiscountPrice = styled.strong<PriceProps>`
@@ -48,6 +75,7 @@ const ProductDiscountPrice = styled.strong<PriceProps>`
   font-weight: 'bold';
   color: black;
   display: ${(props) => (props.isDiscount ? 'block' : 'none')};
+  font-family: ${baeminFont};
 `;
 
 const Discount = styled.div`
@@ -55,6 +83,5 @@ const Discount = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 6px;
+  font-family: ${baeminFont};
 `;
-
-export default ItemContent;

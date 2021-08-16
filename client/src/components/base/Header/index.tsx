@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Link, NavLink } from '@/Router';
 import { categories } from '@/static/constants';
-import { greyLine, normalContainerWidth } from '@/static/style/common';
+import { baeminFont, greyLine, normalContainerWidth } from '@/static/style/common';
 
 import '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
@@ -65,6 +65,10 @@ const ShortCut = styled.li`
     display: inline-block;
     margin: 0 10px;
     color: ${greyLine};
+  }
+
+  a {
+    font-family: ${baeminFont};
   }
 `;
 
@@ -131,6 +135,7 @@ const CategoryLink = styled(NavLink)`
   align-items: center;
   font-size: 16px;
   padding: 0 10px 0;
+  font-family: ${baeminFont};
 `;
 
 export default Header;

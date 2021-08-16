@@ -35,11 +35,15 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
+        test: /\.(jpg|jpeg|png|gif|ico)$/,
         type: 'asset/resource',
         generator: {
           filename: 'images/[name][ext]',
         },
+      },
+      {
+        test: /\.(svg)$/,
+        use: ['@svgr/webpack'],
       },
     ],
   },
