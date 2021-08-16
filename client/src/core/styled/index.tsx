@@ -2,15 +2,18 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { generateAlphabeticName, createStyleRule } from './util';
 
 let counter = 0;
-
-const classList = new Set();
+const classList = new Set<string>();
 
 const guguStyled =
-  (Tag) =>
+  (Tag: string | ReturnType<typeof guguStyled>) =>
   (strings: TemplateStringsArray, ...exprs: any[]) => {
     const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
 
-    return (props) => {
+    const getPrevClassName = () => {
+      return uniqueClassName;
+    };
+
+    const NewComponent = (props) => {
       const interpolateStyle = useMemo(() => {
         return exprs.reduce(
           (styles, expr, idx) => {
@@ -25,8 +28,7 @@ const guguStyled =
       let prevClassName = '';
       let newProps = {};
       if (typeof Tag === 'function') {
-        const parent = Tag(props);
-        prevClassName = parent.props.className;
+        prevClassName = Tag.getPrevClassName();
       } else {
         const $dom = document.createElement(Tag);
         newProps = Object.keys(props).reduce((result, prop) => {
@@ -54,6 +56,8 @@ const guguStyled =
         </Tag>
       );
     };
+    NewComponent.getPrevClassName = getPrevClassName;
+    return NewComponent;
   };
 
 export const keyframes = (animation: TemplateStringsArray): string => {
