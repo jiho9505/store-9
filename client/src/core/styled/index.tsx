@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { generateAlphabeticName, createStyleRule } from './util';
-import tag, { tags } from './tag';
+import { tags } from './tag';
 
 let counter = 0;
 const classList = new Set<string>();
@@ -31,9 +31,8 @@ const guguStyled =
       if (typeof Tag === 'function') {
         prevClassName = Tag.getPrevClassName();
       } else {
-        const $dom = document.createElement(Tag);
         newProps = Object.keys(props).reduce((result, prop) => {
-          if (prop in $dom) {
+          if (prop in HTMLElement.prototype) {
             return { ...result, [prop]: props[prop] };
           }
           return result;
