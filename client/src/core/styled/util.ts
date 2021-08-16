@@ -28,4 +28,13 @@ const injectStyle = (rule) => {
   styleTag.appendChild(document.createTextNode(rule));
 };
 
-export { generateAlphabeticName, createStyleRule };
+const getProperProps = (props: Object): Object => {
+  return Object.keys(props).reduce((result, prop) => {
+    if (prop in HTMLElement.prototype) {
+      return { ...result, [prop]: props[prop] };
+    }
+    return result;
+  }, {});
+};
+
+export { generateAlphabeticName, createStyleRule, getProperProps };

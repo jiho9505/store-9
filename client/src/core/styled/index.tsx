@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { generateAlphabeticName, createStyleRule } from './util';
+import { generateAlphabeticName, createStyleRule, getProperProps } from './util';
 import { tags } from './tag';
 
 let counter = 0;
@@ -27,16 +27,12 @@ const guguStyled =
       }, [strings, exprs]);
 
       let prevClassName = '';
-      let newProps = {};
+      let property = {};
       if (typeof Tag === 'function') {
         prevClassName = Tag.getPrevClassName();
       } else {
-        newProps = Object.keys(props).reduce((result, prop) => {
-          if (prop in HTMLElement.prototype) {
-            return { ...result, [prop]: props[prop] };
-          }
-          return result;
-        }, {});
+        const properProps = getProperProps(props);
+        property = Object.keys(properProps).length === 0 ? props : properProps;
       }
 
       if (!classList.has(uniqueClassName)) {
@@ -47,8 +43,6 @@ const guguStyled =
       const combinedClassName = prevClassName
         ? `${prevClassName} ${uniqueClassName}`
         : uniqueClassName;
-
-      const property = Object.keys(newProps).length === 0 ? props : newProps;
 
       return (
         <Tag className={combinedClassName} {...property}>
