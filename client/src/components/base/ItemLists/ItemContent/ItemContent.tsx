@@ -4,25 +4,50 @@ import React from 'react';
 import { baeminFont, red2 } from '@/static/style/common';
 
 type ContentProps = {
-  quantity: number;
-  discount: boolean;
+  item: {
+    quantity: number;
+    price: string;
+    discount_rate: string;
+    discount_price?: string;
+    title: string;
+  };
 };
 
-const ItemContent = ({ quantity, discount }: ContentProps) => {
-  return quantity ? (
-    <ItemContentContainer>
-      {discount ? <Discount>10%</Discount> : ``}
-      <ProductName>반반휴지. 물반휴지반</ProductName>
-      <ProductOriginalPrice isDiscount={discount}>1,500원</ProductOriginalPrice>
-      <ProductDiscountPrice isDiscount={discount}>1,000원</ProductDiscountPrice>
-    </ItemContentContainer>
-  ) : (
-    <ItemContentContainer>
-      <ProductName>반반휴지. 물반휴지반</ProductName>
-      <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
-    </ItemContentContainer>
-  );
+const ItemContent = ({ item }: ContentProps) => {
+  const calculateDiscount = () => {
+    const priceWithoutComma = Number(item.price.replace(/[,]/g, ''));
+    const discountWithoutPercent = Number(item.discount_rate.replace('%', ''));
+    const discountPrice = (
+      priceWithoutComma - Math.floor(priceWithoutComma / discountWithoutPercent)
+    ).toLocaleString();
+    return discountPrice;
+  };
+
+  if (item.quantity) {
+    item.discount_price = item.discount_rate ? calculateDiscount() : '';
+    return (
+      <ItemContentContainer>
+        {item.discount_rate ? <Discount>{item.discount_rate}</Discount> : ``}
+        <ProductName>{item.title}</ProductName>
+        <ProductOriginalPrice isDiscount={item.discount_rate ? true : false}>
+          {item.price}원
+        </ProductOriginalPrice>
+        <ProductDiscountPrice isDiscount={item.discount_rate ? true : false}>
+          {item.discount_price}원
+        </ProductDiscountPrice>
+      </ItemContentContainer>
+    );
+  } else {
+    return (
+      <ItemContentContainer>
+        <ProductName>{item.title}</ProductName>
+        <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
+      </ItemContentContainer>
+    );
+  }
 };
+
+export default ItemContent;
 
 const ItemContentContainer = styled.div``;
 
@@ -60,5 +85,3 @@ const Discount = styled.div`
   margin-bottom: 6px;
   font-family: ${baeminFont};
 `;
-
-export default ItemContent;
