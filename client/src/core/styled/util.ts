@@ -18,18 +18,8 @@ const generateAlphabeticName = (code: number): string => {
 };
 
 const createStyleRule = (className, styles) => {
-  serialize(
-    compile(`.${className}{${styles}}`),
-    middleware([
-      prefixer,
-      stringify,
-      (element) => {
-        if (element.type === 'rule') {
-          injectStyle(element.return);
-        }
-      },
-    ])
-  );
+  const rules = serialize(compile(`.${className}{${styles}}`), middleware([prefixer, stringify]));
+  injectStyle(rules);
 };
 
 const injectStyle = (rule) => {
