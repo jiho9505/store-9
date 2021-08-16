@@ -25,9 +25,9 @@ const Main = () => {
     let discountProducts = [];
 
     Datas.filter((data) => data.quantity).forEach((data) => {
-      if (data.badge.indexOf('best') > -1) bestProducts.push(data);
-      if (data.badge.indexOf('new') > -1) newProducts.push(data);
-      if (data.badge.indexOf('sale') > -1) discountProducts.push(data);
+      if (data.badge.includes('best')) bestProducts.push(data);
+      if (data.badge.includes('new')) newProducts.push(data);
+      if (data.badge.includes('sale')) discountProducts.push(data);
     });
 
     bestProducts = extractRandomlyProduct(bestProducts, 4);
