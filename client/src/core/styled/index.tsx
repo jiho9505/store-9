@@ -1,12 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { generateAlphabeticName, createStyleRule } from './util';
-import { compile, serialize, stringify, middleware, prefixer } from 'stylis';
 
 let counter = 0;
+
+const classList = new Set();
 
 const guguStyled =
   (Tag) =>
   (strings, ...exprs) => {
+    const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
     return (props) => {
       const interpolateStyle = useMemo(() => {
         return exprs.reduce(
@@ -19,13 +21,23 @@ const guguStyled =
         );
       }, [strings, exprs]);
 
-      const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
-      createStyleRule(uniqueClassName, interpolateStyle);
-      console.log(props.className);
-      const test = `${uniqueClassName} ${props.className}`;
+      let prevClassName = '';
+      if (typeof Tag === 'function') {
+        const parent = Tag(props);
+        prevClassName = parent.props.className;
+      }
+
+      if (!classList.has(uniqueClassName)) {
+        createStyleRule(uniqueClassName, interpolateStyle);
+        classList.add(uniqueClassName);
+      }
+
+      const combinedClassName = prevClassName
+        ? `${prevClassName} ${uniqueClassName}`
+        : uniqueClassName;
 
       return (
-        <Tag className={test} {...props}>
+        <Tag className={combinedClassName} {...props}>
           {props?.children}
         </Tag>
       );
