@@ -5,7 +5,13 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../shared/*"]
+    }
   },
+  "include": ["src/**/*", "../shared/**/*"],
   "exclude": ["node_modules"]
 }
