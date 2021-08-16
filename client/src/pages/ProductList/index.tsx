@@ -4,7 +4,8 @@ import styled from '@emotion/styled';
 import ItemLists from '@/components/base/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
 import Loading from '@/components/base/Loading';
-
+import useLocation from '@/hooks/customHooks/useLocation';
+import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
 
 /**
@@ -39,10 +40,11 @@ const ProductList = () => {
     productFilterIndex: -1,
     categoryId: 0,
   });
-  const [totalProductCount, setTotalProductCount] = useState(77);
+  const [totalProductCount, setTotalProductCount] = useState(0);
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState(true);
+  const currPath = useLocation();
 
   /**
    * TODO:
@@ -50,14 +52,19 @@ const ProductList = () => {
    * setProduct()
    * setTotalProductCount()
    * setFilter() : skip = skip + limit
+   *
+   * DB에서 stock > 0 이상만 부르기
+   * 가져온 데이터가 0일때 stock = 0 요청
    */
   useEffect(() => {
-    console.log(filter);
+    setProduct(datas);
   }, [filter]);
 
-  let path = window.location.pathname;
-  let qs = window.location.search;
-  let url = path + qs;
+  useEffect(() => {
+    setTotalProductCount(datas.length);
+  }, []);
+
+  // let qs = window.location.search;
 
   const handleFilter = (index) => {
     const newFilter = { ...filter, productFilter: index };
@@ -70,6 +77,11 @@ const ProductList = () => {
         if (entry.isIntersecting) {
           if (entry.target.id === 'end') {
             setIsLoading(true);
+            setTimeout(() => {
+              const newProduct = [...product, ...datas];
+              setProduct(newProduct);
+              setIsLoading(false);
+            }, 2000);
             /*
             const data = await api 요청
             if (data.success) {
@@ -101,8 +113,8 @@ const ProductList = () => {
           handleFilter={handleFilter}
           totalProductCount={totalProductCount}
         ></ItemFilterBar>
-        <ItemLists observeTag={observeTag}></ItemLists>
-        {isLoading && <Loading />}
+        <ItemLists observeTag={observeTag} products={product}></ItemLists>
+        {isLoading && <Loading size="small" />}
       </ElementContainer>
     </WholeContainer>
   );
