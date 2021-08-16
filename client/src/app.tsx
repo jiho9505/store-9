@@ -11,6 +11,7 @@ import Main from '@/pages/Main';
 import ProductList from '@/pages/ProductList';
 import CartPage from '@/pages/Cart';
 import Order from '@/pages/Order';
+import NotFound from '@/pages/NotFound';
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -70,6 +71,9 @@ const App = () => {
         </Route>
         <Route exact path="/collaborate">
           <ProductList />
+        </Route>
+        <Route exact path="/notfound">
+          <NotFound />
         </Route>
       </Router>
       <ButtonToMoveToTop />
