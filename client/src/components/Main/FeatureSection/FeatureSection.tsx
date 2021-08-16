@@ -20,15 +20,21 @@ const getTitle = (mode) => {
  * mode 에 따라 api 호출해서
  * state update 할 것
  */
-const FeatureSection = (props) => {
+
+type FeatureSectionProps = {
+  mode: string;
+  product;
+};
+
+const FeatureSection = ({ mode, product }: FeatureSectionProps) => {
   let title: String = '';
 
-  title = getTitle(props.mode);
+  title = getTitle(mode);
 
   return (
     <FeatureContainer>
       <Title>{title}</Title>
-      <ItemLists></ItemLists>
+      <ItemLists products={product}></ItemLists>
     </FeatureContainer>
   );
 };
