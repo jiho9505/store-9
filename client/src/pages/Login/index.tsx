@@ -22,12 +22,10 @@ const LoginPage = () => {
   });
 
   const onLoginClick = () => {
-    console.log('click');
     reset();
   };
 
   const onGithubLoginClick = () => {
-    console.log('github');
     reset();
   };
 

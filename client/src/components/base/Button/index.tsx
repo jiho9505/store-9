@@ -10,7 +10,7 @@ type ButtonProps = {
   size: ButtonSize;
   value: string;
   type: ButtonType;
-  onClick: (e: React.MouseEvent) => void;
+  onClick(e: React.MouseEvent): void;
   theme: ButtonTheme;
 };
 
@@ -41,14 +41,7 @@ const buttonDarkBlack: Color = '#000';
 const buttonWhite: Color = '#fff';
 const borderGrey: Color = '#cccccc';
 
-const ButtonContainer = styled.div<ButtonContainerProps>`
-  ${({ size }) => getButtonSize(size)}
-  i {
-    margin-right: 5px;
-  }
-`;
-
-const getButtonSize = (size: string) => {
+const getButtonSize = ({ size }: ButtonContainerProps) => {
   if (size === 'xlarge') {
     return css`
       width: 25rem;
@@ -78,19 +71,14 @@ const getButtonSize = (size: string) => {
   }
 };
 
-const CustomButton = styled.button<CustomButtonProps>`
-  width: 100%;
-  height: 100%;
-  color: #fff;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0 10px;
-  transition: all 0.2s;
-  ${({ theme }) => getButtonTheme(theme)};
+const ButtonContainer = styled.div<ButtonContainerProps>`
+  ${getButtonSize}
+  i {
+    margin-right: 5px;
+  }
 `;
 
-const getButtonTheme = (theme: string) => {
+const getButtonTheme = ({ theme }: CustomButtonProps) => {
   if (theme === 'github') {
     return css`
       background-color: ${buttonWhite};
@@ -124,3 +112,15 @@ const getButtonTheme = (theme: string) => {
     `;
   }
 };
+
+const CustomButton = styled.button<CustomButtonProps>`
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: all 0.2s;
+  ${getButtonTheme}
+`;
