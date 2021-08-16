@@ -12,17 +12,14 @@ const ButtonToMoveToTop = () => {
     else if (!isActive && window.scrollY > standardHeight) setIsActive(true);
   });
 
-  const onClickHandler = (e: React.MouseEvent) => {
+  const handleClickButton = (e: React.MouseEvent) => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
-
-    if (target.closest('.arrow-button')) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    target.closest('.arrow-button') && window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <Button className="arrow-button" onClick={onClickHandler} active={isActive}>
+    <Button className="arrow-button" onClick={handleClickButton} active={isActive}>
       <i className="fas fa-arrow-up"></i>
     </Button>
   );

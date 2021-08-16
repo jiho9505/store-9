@@ -12,7 +12,7 @@ const ItemImage = ({ quantity }: ImageProps) => {
     <ImageContainer>
       <ProductImg src="images/sampleItem.jpeg" />
       {!quantity ? <SoldOutImg src="images/soldout.png" /> : ``}
-      {quantity ? <ItemWishButton /> : ``}
+      {/* {quantity ? <ItemWishButton /> : ``} */}
     </ImageContainer>
   );
 };
