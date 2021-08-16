@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -25,7 +26,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-              plugins: ['@emotion'],
+              plugins: ['@emotion', '@babel/plugin-transform-runtime'],
             },
           },
         ],
@@ -53,6 +54,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'index.css',
+    }),
+    new DefinePlugin({
+      'process.env.API_URL': process.env.API_URL,
     }),
   ],
 };
