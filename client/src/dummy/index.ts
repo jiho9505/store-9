@@ -345,7 +345,7 @@ const Datas = [
     quantity: 10,
   },
   {
-    discount_rate: null,
+    discount_rate: '20%',
     title: '돈봉투. 효도',
     price: '2,500',
     image: 'https://store.baemin.com/data/goods/19/10/43/194/194_main_01.jpg',
@@ -356,7 +356,7 @@ const Datas = [
     ],
     is_green: false,
     category_id: '008',
-    badge: ['best', 'new'],
+    badge: ['best', 'new', 'sale'],
     quantity: 10,
   },
 ];
