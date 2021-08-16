@@ -11,6 +11,7 @@ const Main = React.lazy(() => import('@/pages/Main'));
 const ProductList = React.lazy(() => import('@/pages/ProductList'));
 const CartPage = React.lazy(() => import('@/pages/Cart'));
 const Order = React.lazy(() => import('@/pages/Order'));
+const NotFound = React.lazy(() => import('@/pages/NotFound'));
 
 import '@/static/assets/img/baeminFavicon.png';
 
@@ -71,6 +72,9 @@ const App = () => {
           </Route>
           <Route exact path="/collaborate">
             <ProductList />
+          </Route>
+          <Route exact path="/notfound">
+            <NotFound />
           </Route>
         </Router>
         <ButtonToMoveToTop />
