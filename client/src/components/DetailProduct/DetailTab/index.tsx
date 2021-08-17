@@ -12,34 +12,41 @@ import styled from '@emotion/styled';
 
 type DetailTab = {
   index: number;
+  handleClickItemName: (e) => void;
 };
-function DetailTab({ index }: DetailTab) {
+const DetailTab = ({ index, handleClickItemName }: DetailTab) => {
   return (
     <TabContainer>
       <Tab>
         <TabItem>
-          <ItemName active={index === 0}>상품상세정보</ItemName>
+          <ItemName onClick={handleClickItemName} active={index === 0} data-idx="0">
+            상품상세정보
+          </ItemName>
         </TabItem>
         <TabItem>
-          <ItemName active={index === 1}>배송안내</ItemName>
+          <ItemName onClick={handleClickItemName} active={index === 1} data-idx="1">
+            배송안내
+          </ItemName>
         </TabItem>
         <TabItem>
-          <ItemName active={index === 2}>교환 및 반품안내</ItemName>
+          <ItemName onClick={handleClickItemName} active={index === 2} data-idx="2">
+            교환 및 반품안내
+          </ItemName>
         </TabItem>
         <TabItem>
-          <ItemName active={index === 3}>
+          <ItemName onClick={handleClickItemName} active={index === 3} data-idx="3">
             상품후기 <ReviewCount> 0</ReviewCount>
           </ItemName>
         </TabItem>
         <TabItem>
-          <ItemName active={index === 4}>
+          <ItemName onClick={handleClickItemName} active={index === 4} data-idx="4">
             상품문의 <QnaCount> 0</QnaCount>
           </ItemName>
         </TabItem>
       </Tab>
     </TabContainer>
   );
-}
+};
 
 export default DetailTab;
 
