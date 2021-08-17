@@ -1,6 +1,7 @@
 import React from 'react';
 import guguStyled from '@/core/styled';
 
+import LikePage from './Like';
 import { Route } from '@/Router';
 import { LeftNav } from '@/components/MyPage';
 
@@ -14,7 +15,7 @@ const MyPage = () => {
         <MyPageHeader>반가워요</MyPageHeader>
         <UserName>OOO 님</UserName>
         <Route path="/mypage/like">
-          <div>TEST</div>
+          <LikePage />
         </Route>
       </MyPageContentContiner>
     </MyPageContainer>
@@ -28,7 +29,9 @@ const MyPageContainer = guguStyled.div`
   padding: 40px 0 0 0;
 `;
 
-const MyPageContentContiner = guguStyled.div``;
+const MyPageContentContiner = guguStyled.div`
+  width: 100%;
+`;
 
 const MyPageHeader = guguStyled.h2`
   font-family: ${baeminThickFont};
@@ -36,8 +39,9 @@ const MyPageHeader = guguStyled.h2`
   margin-bottom: 10px;
 `;
 
-const UserName = guguStyled.span`
+const UserName = guguStyled.div`
   font-size: 20px;
+  margin-bottom: 35px;
 `;
 
 export default MyPage;
