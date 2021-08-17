@@ -32,7 +32,7 @@ const Router = ({ children }) => {
   );
 };
 
-const Route = ({ exact, path, children }) => {
+const Route = ({ exact = false, path, children }) => {
   const curLocation = useLocation();
 
   const isMatched = (): boolean => {
