@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import { greyBg1, greyLine, baeminFont } from '@/static/style/common';
 
-const StockSelectorComponent = ({ title, price }) => {
-  const [stock, setStock] = useState(1);
+const StockSelectorComponent = ({ title, price, refreshStock, stock }) => {
+  const handleChangeInput = (e) => {
+    refreshStock(e.target.value);
+  };
+
+  const handleBlurInput = (e) => {
+    if (e.target.value < 1 || e.target.value > 100) {
+      refreshStock(1);
+    }
+  };
 
   return (
     <StockSelectorContainer>
