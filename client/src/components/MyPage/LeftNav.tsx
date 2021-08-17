@@ -14,7 +14,7 @@ const LeftNav = () => {
         items: [
           { path: '/cart', icon: <CustomCart />, title: '장바구니' },
           { path: '/mypage/like', icon: <CustomLike />, title: '찜 목록' },
-          { path: '/#', icon: <CustomBuy />, title: '주문 목록' },
+          { path: '/mypage/order', icon: <CustomBuy />, title: '주문 목록' },
         ],
       },
       {

@@ -2,6 +2,7 @@ import React from 'react';
 import guguStyled from '@/core/styled';
 
 import LikePage from './Like';
+import OrderPage from './Order';
 import { Route } from '@/Router';
 import { LeftNav } from '@/components/MyPage';
 
@@ -16,6 +17,9 @@ const MyPage = () => {
         <UserName>OOO 님</UserName>
         <Route path="/mypage/like">
           <LikePage />
+        </Route>
+        <Route path="/mypage/order">
+          <OrderPage />
         </Route>
       </MyPageContentContiner>
     </MyPageContainer>
