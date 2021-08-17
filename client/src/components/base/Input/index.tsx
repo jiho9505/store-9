@@ -12,7 +12,8 @@ type InputProps = {
   required: boolean;
   size: inputSize;
   value: string;
-  placeholder: string;
+  type?: string;
+  placeholder?: string;
   variant: inputVariant;
   validate?: validate;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -24,6 +25,7 @@ const Input = ({
   onChange,
   size,
   value,
+  type,
   placeholder,
   variant,
   validate,
@@ -37,6 +39,7 @@ const Input = ({
       <CustomInput
         value={value}
         name={name}
+        type={type}
         required={required}
         onChange={onChange}
         onBlur={handleBlur}
@@ -103,4 +106,5 @@ const ErrorMessage = styled.div`
 
 Input.defaultProps = {
   variant: 'normal',
+  type: 'text',
 };
