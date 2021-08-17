@@ -107,6 +107,11 @@ const ZoomableImage = ({ src, width = 500, height }: ZoomableImageProps) => {
           bgImgHeight={zoomedImgHeight}
           size={zoomSize}
           backgroundUrl={src}
+          style={{
+            left: `${zoomPos[0]}px`,
+            top: `${zoomPos[1]}px`,
+            backgroundPosition: `${zoomBgPos[0]}px ${zoomBgPos[1]}px`,
+          }}
         />
       )}
       <SmallImg ref={imgRef} src={src} width={width} height={height} alt="product-image" />
@@ -151,7 +156,4 @@ const Zoom = styled.div<ZoomProps>`
   transition: all 0.1s;
   background-size: ${({ bgImgWidth, bgImgHeight }) => `${bgImgWidth}px ${bgImgHeight}px`};
   background-color: white;
-  left: ${({ boxPos }) => boxPos[0]}px;
-  top: ${({ boxPos }) => boxPos[1]}px;
-  background-position: ${({ bgPos }) => `${bgPos[0]}px ${bgPos[1]}px`};
 `;
