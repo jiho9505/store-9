@@ -14,18 +14,26 @@ const StockSelectorComponent = ({ title, price, refreshStock, stock }) => {
     }
   };
 
+  const handleClickButton = (e) => {
+    if (e.target.className === 'fas fa-sort-up') {
+      stock < 100 && refreshStock(stock + 1);
+    } else if (e.target.className === 'fas fa-sort-down') {
+      stock > 1 && refreshStock(stock - 1);
+    }
+  };
+
   return (
     <StockSelectorContainer>
       <span>{title}</span>
-      <span>{price}원</span>
+      <span>{(price * stock).toLocaleString()}원</span>
       <StockSelector>
         <input type="number" onChange={handleChangeInput} onBlur={handleBlurInput} value={stock} />
         <StockSelectorButtonContainer>
           <StockSelectorUpButton>
-            <i className="fas fa-sort-up"></i>
+            <i className="fas fa-sort-up" onClick={handleClickButton}></i>
           </StockSelectorUpButton>
           <StockSelectorDownButton>
-            <i className="fas fa-sort-down"></i>
+            <i className="fas fa-sort-down" onClick={handleClickButton}></i>
           </StockSelectorDownButton>
         </StockSelectorButtonContainer>
       </StockSelector>
