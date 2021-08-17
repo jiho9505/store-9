@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
+import { calculateDiscount } from '@/util/calculateDiscount';
 import { baeminFont, red2 } from '@/static/style/common';
 
 type ContentProps = {
@@ -14,17 +15,10 @@ type ContentProps = {
 };
 
 const ItemContent = ({ item }: ContentProps) => {
-  const calculateDiscount = () => {
-    const priceWithoutComma = Number(item.price.replace(/[,]/g, ''));
-    const discountWithoutPercent = Number(item.discount_rate.replace('%', ''));
-    const discountPrice = (
-      priceWithoutComma - Math.floor(priceWithoutComma / discountWithoutPercent)
-    ).toLocaleString();
-    return discountPrice;
-  };
-
   if (item.quantity) {
-    item.discount_price = item.discount_rate ? calculateDiscount() : '';
+    item.discount_price = item.discount_rate
+      ? calculateDiscount(item.price, item.discount_rate)
+      : '';
     return (
       <ItemContentContainer>
         {item.discount_rate ? <Discount>{item.discount_rate}</Discount> : ``}
