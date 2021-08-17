@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
+import Detail from '@/components/DetailProduct/Detail';
 import Overview from '@/components/DetailProduct/Overview';
 import { normalContainerWidth } from '@/static/style/common';
 import Datas from '@/dummy';
@@ -18,6 +19,7 @@ const DetailProduct = () => {
     <WholeContainer>
       <DetailProductContainer>
         <Overview info={product}></Overview>
+        <Detail info={product}></Detail>
       </DetailProductContainer>
     </WholeContainer>
   );
