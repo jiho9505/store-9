@@ -1,9 +1,23 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { greyBg1, greyLine, baeminFont } from '@/static/style/common';
+import { greyBg1, greyLine, baeminFont, baeminThickFont, greyButton } from '@/static/style/common';
 
-const StockSelectorComponent = ({ title, price, refreshStock, stock }) => {
+type StockSelectorComponentProps = {
+  title: string;
+  price: number;
+  refreshStock: (number) => void;
+  selectedStock: number;
+  currStock: number;
+};
+
+const StockSelectorComponent = ({
+  title,
+  price,
+  refreshStock,
+  selectedStock,
+  currStock,
+}: StockSelectorComponentProps) => {
   const handleChangeInput = (e) => {
     refreshStock(e.target.value);
   };
@@ -16,42 +30,74 @@ const StockSelectorComponent = ({ title, price, refreshStock, stock }) => {
 
   const handleClickButton = (e) => {
     if (e.target.className === 'fas fa-sort-up') {
-      stock < 100 && refreshStock(stock + 1);
+      selectedStock < 100 && refreshStock(selectedStock + 1);
     } else if (e.target.className === 'fas fa-sort-down') {
-      stock > 1 && refreshStock(stock - 1);
+      selectedStock > 1 && refreshStock(selectedStock - 1);
     }
   };
 
   return (
-    <StockSelectorContainer>
-      <span>{title}</span>
-      <span>{(price * stock).toLocaleString()}원</span>
-      <StockSelector>
-        <input type="number" onChange={handleChangeInput} onBlur={handleBlurInput} value={stock} />
-        <StockSelectorButtonContainer>
-          <StockSelectorUpButton>
-            <i className="fas fa-sort-up" onClick={handleClickButton}></i>
-          </StockSelectorUpButton>
-          <StockSelectorDownButton>
-            <i className="fas fa-sort-down" onClick={handleClickButton}></i>
-          </StockSelectorDownButton>
-        </StockSelectorButtonContainer>
-      </StockSelector>
+    <StockSelectorContainer haveCurrStock={currStock}>
+      {currStock ? (
+        <>
+          <span>{title}</span>
+          <span>{(price * selectedStock).toLocaleString()}원</span>
+          <StockSelector>
+            <input
+              type="number"
+              onChange={handleChangeInput}
+              onBlur={handleBlurInput}
+              value={selectedStock}
+            />
+            <StockSelectorButtonContainer>
+              <StockSelectorUpButton>
+                <i className="fas fa-sort-up" onClick={handleClickButton}></i>
+              </StockSelectorUpButton>
+              <StockSelectorDownButton>
+                <i className="fas fa-sort-down" onClick={handleClickButton}></i>
+              </StockSelectorDownButton>
+            </StockSelectorButtonContainer>
+          </StockSelector>
+        </>
+      ) : (
+        <SoldOutContainer>
+          <SoldOut>Sold Out</SoldOut>
+        </SoldOutContainer>
+      )}
     </StockSelectorContainer>
   );
 };
 
 export default StockSelectorComponent;
 
-const StockSelectorContainer = styled.div`
+type StockSelectorContainerProps = {
+  haveCurrStock: number;
+};
+
+const SoldOutContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const SoldOut = styled.span`
+  font-family: ${baeminThickFont};
+  font-size: 20px;
+  color: white;
+`;
+
+const StockSelectorContainer = styled.div<StockSelectorContainerProps>`
   width: 100%;
   height: 60px;
   padding: 20px 30px;
-  background-color: ${greyBg1};
-  position: relative;
   display: flex;
   justify-content: space-between;
   margin-top: 70px;
+  background-color: ${(props) => (props.haveCurrStock ? greyBg1 : greyButton)};
+  position: ${(props) => (props.haveCurrStock ? 'relative' : 'absolute')};
+  bottom: 0px;
+  left: 0px;
 
   span {
     font-family: ${baeminFont};
