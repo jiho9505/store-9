@@ -29,7 +29,7 @@ const guguStyled =
       let prevClassName = '';
       let property = {};
       if (typeof Tag === 'function') {
-        prevClassName = Tag.getPrevClassName();
+        prevClassName = Tag.getPrevClassName?.();
       } else {
         const properProps = getProperProps(props);
         property = Object.keys(properProps).length === 0 ? props : properProps;
