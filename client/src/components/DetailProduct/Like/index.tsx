@@ -34,6 +34,7 @@ const LikeContainer = styled.div`
   height: 52px;
   border: 1px solid ${greyLine};
   i {
+    cursor: pointer;
     font-size: 25px;
   }
 `;
