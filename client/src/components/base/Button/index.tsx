@@ -4,13 +4,13 @@ import { css } from '@emotion/react';
 
 type ButtonTheme = 'normal' | 'github' | 'dark' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
-type ButtonSize = 'xlarge' | 'large' | 'medium' | 'small';
+type ButtonSize = 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
 
 type ButtonProps = {
   size: ButtonSize;
   value: string;
   type: ButtonType;
-  onClick(e: React.MouseEvent): void;
+  onClick?(e: React.MouseEvent): void;
   theme: ButtonTheme;
 };
 
@@ -64,6 +64,14 @@ const getButtonSize = ({ size }: ButtonContainerProps) => {
     return css`
       width: 10rem;
       height: 3rem;
+      button {
+        font-size: 0.8rem;
+      }
+    `;
+  } else if (size === 'xsmall') {
+    return css`
+      width: 10rem;
+      height: 40px;
       button {
         font-size: 0.8rem;
       }
