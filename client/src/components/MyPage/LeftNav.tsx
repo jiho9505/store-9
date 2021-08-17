@@ -13,7 +13,7 @@ const LeftNav = () => {
         title: '쇼핑정보',
         items: [
           { path: '/cart', icon: <CustomCart />, title: '장바구니' },
-          { path: '/#', icon: <CustomLike />, title: '찜 목록' },
+          { path: '/mypage/like', icon: <CustomLike />, title: '찜 목록' },
           { path: '/#', icon: <CustomBuy />, title: '주문 목록' },
         ],
       },
@@ -36,7 +36,10 @@ const LeftNav = () => {
             <SubNavList>
               {items.map(({ path, icon, title }) => (
                 <SubNavListItem key={title}>
-                  <SubNavLink to={path}>
+                  <SubNavLink
+                    activeStyle={{ color: '#000000', 'background-color': greyBg1, border: 'none' }}
+                    to={path}
+                  >
                     {icon}
                     <span>{title}</span>
                   </SubNavLink>
@@ -56,6 +59,7 @@ const LeftNavContainer = guguStyled.div`
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   padding: 10px 0;
+  margin-right: 40px;
 `;
 
 const SubNavTitle = guguStyled.h4`
@@ -71,7 +75,6 @@ const SubNavList = guguStyled.ul`
 
 const SubNavListItem = guguStyled.li`
   font-size: 18px;
-  margin-top: 10px;
   &:hover {
     background-color: ${greyBg1};
   }

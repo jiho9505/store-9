@@ -86,11 +86,26 @@ type StyledComponentProps = {
   active: boolean;
 };
 
+const setStyle = (props) => {
+  const { activeStyle, active } = props;
+  if (activeStyle && active) {
+    return Object.keys(activeStyle)
+      .map((property) => {
+        return `${property}: ${activeStyle[property]}`;
+      })
+      .join(';');
+  }
+  return '';
+};
+
 const ActiveLink = styled.a<StyledComponentProps>`
   border-bottom: ${(props) => (props.active ? `2px solid #2AC1BC` : '')};
   color: ${(props) => (props.active ? '#2AC1BC' : 'inherit')};
   font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
   margin-bottom: ${(props) => (props.active ? '-1px' : '0px')};
+  ${(props) => {
+    return setStyle(props);
+  }}
 `;
 
 export { Router, Route, Link, NavLink };
