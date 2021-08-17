@@ -2,7 +2,7 @@ import React from 'react';
 import guguStyled from '@/core/styled';
 
 import { NavLink } from '@/Router';
-import { Like, Buy } from '@/static/assets/svg';
+import { Like, Buy, Review, QnA, Cart } from '@/static/assets/svg';
 
 import { greyBg1, greyButton, normalRadius, primary1 } from '@/static/style/common';
 
@@ -12,25 +12,41 @@ const LeftNav = () => {
       <SubNavTitle>쇼핑정보</SubNavTitle>
       <SubNavConatainer>
         <SubNavList>
-          <SubNabListItem>
-            <SubNavLink to="/#">
+          <SubNavListItem>
+            <SubNavLink to="/cart">
+              <CustomCart />
+              <span>장바구니</span>
+            </SubNavLink>
+          </SubNavListItem>
+          <SubNavListItem>
+            <SubNavLink to="/">
               <CustomBuy />
               <span>주문 목록</span>
             </SubNavLink>
-          </SubNabListItem>
-          <SubNabListItem>
+          </SubNavListItem>
+          <SubNavListItem>
             <SubNavLink to="/#">
               <CustomLike />
               <span>찜 목록</span>
             </SubNavLink>
-          </SubNabListItem>
+          </SubNavListItem>
         </SubNavList>
       </SubNavConatainer>
       <SubNavTitle>회원정보</SubNavTitle>
       <SubNavConatainer>
         <SubNavList>
-          <SubNabListItem>나의 상품문의</SubNabListItem>
-          <SubNabListItem>나의 상품후기</SubNabListItem>
+          <SubNavListItem>
+            <SubNavLink to="/#">
+              <CustomQnA />
+              <span>나의 상품문의</span>
+            </SubNavLink>
+          </SubNavListItem>
+          <SubNavListItem>
+            <SubNavLink to="/#">
+              <CustomReview />
+              <span>나의 상품후기</span>
+            </SubNavLink>
+          </SubNavListItem>
         </SubNavList>
       </SubNavConatainer>
     </LeftNavContainer>
@@ -58,7 +74,7 @@ const SubNavTitle = guguStyled.h4`
 
 const SubNavList = guguStyled.ul``;
 
-const SubNabListItem = guguStyled.li`
+const SubNavListItem = guguStyled.li`
   font-size: 18px;
   margin-top: 10px;
   &:hover {
@@ -83,11 +99,23 @@ const getIconStyle = () => {
   `;
 };
 
+const CustomCart = guguStyled(Cart)`
+  ${getIconStyle()}
+`;
+
 const CustomLike = guguStyled(Like)`
   ${getIconStyle()}
 `;
 
 const CustomBuy = guguStyled(Buy)`
+  ${getIconStyle()}
+`;
+
+const CustomReview = guguStyled(Review)`
+  ${getIconStyle()}
+`;
+
+const CustomQnA = guguStyled(QnA)`
   ${getIconStyle()}
 `;
 
