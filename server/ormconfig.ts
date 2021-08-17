@@ -13,6 +13,7 @@ const ormconfig = {
   migrations: ['src/migrations/**/*.ts'],
   cli: {
     entitiesDir: 'src/entities',
+    migrationsDir: 'src/migrations',
   },
 };
 

@@ -1,16 +1,20 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { BaseModel } from './base-model';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BasicEntity } from './base_entity';
 import Product from './product';
 
 @Entity({ name: 'categories' })
-class Category extends BaseModel {
+class Category extends BasicEntity {
   @Column()
   level: number;
 
   @Column()
   name: string;
 
+  @Column()
+  parent_id: number;
+
   @ManyToOne((type) => Category, (category) => category.children)
+  @JoinColumn({ name: 'parent_id' })
   parent: Category;
 
   @OneToMany((type) => Category, (category) => category.parent)

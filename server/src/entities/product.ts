@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { DateBasicEntity } from './base_entity';
 import Like from './like';
-import ProductDetail from './product-detail';
+import ProductDetail from './product_detail';
 import QnA from './qna';
 import Discount from './discount';
 import User from './user';
@@ -9,7 +9,7 @@ import Review from './review';
 import Category from './category';
 
 @Entity({ name: 'products' })
-class Product extends DateBaseModel {
+class Product extends DateBasicEntity {
   @Column()
   name: string;
 
@@ -25,19 +25,26 @@ class Product extends DateBaseModel {
   @Column()
   content: string;
 
+  @Column()
+  detail_id: number;
+
+  @Column()
+  discount_id: number;
+
+  @Column()
+  category_id: number;
+
   @ManyToOne((type) => Category, (category) => category.products)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @OneToOne((type) => ProductDetail, (productDatail) => productDatail.product)
-  @JoinColumn()
+  @JoinColumn({ name: 'detail_id' })
   detail: ProductDetail;
 
   @OneToOne((type) => Discount, (discount) => discount.product)
-  @JoinColumn()
+  @JoinColumn({ name: 'discount_id' })
   discount: Discount;
-
-  @ManyToOne((type) => User, (user) => user.id)
-  user: User;
 
   @OneToMany((type) => Like, (like) => like.product)
   likes: Like[];

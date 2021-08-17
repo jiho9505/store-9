@@ -2,8 +2,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
-import 'reflect-metadata';
 import { createConnection } from 'typeorm';
+import 'reflect-metadata';
 
 import { env } from './src/config/env';
 import apiRouter from './src/routes';
@@ -20,6 +20,6 @@ app.use(morgan(env.isDev ? 'dev' : 'combine'));
 
 app.use('/api', apiRouter);
 
-createConnection().then((conn) => {
+createConnection().then(() => {
   app.listen(port, () => console.log('Server run on:', port));
 });

@@ -1,9 +1,9 @@
 import { Entity, Column, OneToOne } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { DateBasicEntity } from './base_entity';
 import Product from './product';
 
-@Entity({ name: 'product-details' })
-class ProductDetail extends DateBaseModel {
+@Entity({ name: 'product_details' })
+class ProductDetail extends DateBasicEntity {
   @OneToOne((type) => Product, (product) => product.detail)
   product: Product;
 
