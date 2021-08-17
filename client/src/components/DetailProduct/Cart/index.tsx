@@ -3,9 +3,17 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 const Cart = () => {
+  /**
+   * TODO:
+   * POST (userid,productid,stock ...etc)
+   */
+  const handleClickText = () => {
+    history.push('/cart');
+  };
+
   return (
     <CartContainer>
-      <span>장바구니</span>
+      <span onClick={handleClickText}>장바구니</span>
     </CartContainer>
   );
 };
@@ -17,6 +25,7 @@ const CartContainer = styled.div`
   width: 152px;
   height: 52px;
   border: 1px solid ${greyLine};
+
   span {
     font-size: 18px;
     font-family: ${baeminFont};
