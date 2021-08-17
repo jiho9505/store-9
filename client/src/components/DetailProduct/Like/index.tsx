@@ -1,15 +1,27 @@
 import { greyLine } from '@/static/style/common';
 import styled from '@emotion/styled';
-import React from 'react';
-
-// {
-// <i className="fas fa-heart"></i>  */
-// }
+import React, { useState } from 'react';
 
 const Like = () => {
+  /**
+   * 유저의 like 여부 필요
+   */
+  const [isIconActive, setIsIconActive] = useState(false);
+  const handleClickIcon = () => {
+    // if (isIconActive) {
+    //   // delete Like
+    // } else {
+    //   // Post Like
+    // }
+    setIsIconActive(!isIconActive);
+  };
   return (
     <LikeContainer>
-      <i className="far fa-heart"></i>
+      {isIconActive ? (
+        <i className="fas fa-heart" onClick={handleClickIcon}></i>
+      ) : (
+        <i className="far fa-heart" onClick={handleClickIcon}></i>
+      )}
     </LikeContainer>
   );
 };
