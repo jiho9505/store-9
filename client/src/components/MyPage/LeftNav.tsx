@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useMemo } from 'react';
 import guguStyled from '@/core/styled';
 
 import { NavLink } from '@/Router';
@@ -7,48 +7,45 @@ import { Like, Buy, Review, QnA, Cart } from '@/static/assets/svg';
 import { greyBg1, greyButton, normalRadius, primary1 } from '@/static/style/common';
 
 const LeftNav = () => {
+  const navMenus = useMemo(() => {
+    return [
+      {
+        title: '쇼핑정보',
+        items: [
+          { path: '/cart', icon: <CustomCart />, title: '장바구니' },
+          { path: '/#', icon: <CustomLike />, title: '찜 목록' },
+          { path: '/#', icon: <CustomBuy />, title: '주문 목록' },
+        ],
+      },
+      {
+        title: '회원정보',
+        items: [
+          { path: '/#', icon: <CustomQnA />, title: '나의 상품문의' },
+          { path: '/#', icon: <CustomReview />, title: '나의 구매후기' },
+        ],
+      },
+    ];
+  }, []);
+
   return (
     <LeftNavContainer>
-      <SubNavTitle>쇼핑정보</SubNavTitle>
-      <SubNavConatainer>
-        <SubNavList>
-          <SubNavListItem>
-            <SubNavLink to="/cart">
-              <CustomCart />
-              <span>장바구니</span>
-            </SubNavLink>
-          </SubNavListItem>
-          <SubNavListItem>
-            <SubNavLink to="/">
-              <CustomBuy />
-              <span>주문 목록</span>
-            </SubNavLink>
-          </SubNavListItem>
-          <SubNavListItem>
-            <SubNavLink to="/#">
-              <CustomLike />
-              <span>찜 목록</span>
-            </SubNavLink>
-          </SubNavListItem>
-        </SubNavList>
-      </SubNavConatainer>
-      <SubNavTitle>회원정보</SubNavTitle>
-      <SubNavConatainer>
-        <SubNavList>
-          <SubNavListItem>
-            <SubNavLink to="/#">
-              <CustomQnA />
-              <span>나의 상품문의</span>
-            </SubNavLink>
-          </SubNavListItem>
-          <SubNavListItem>
-            <SubNavLink to="/#">
-              <CustomReview />
-              <span>나의 상품후기</span>
-            </SubNavLink>
-          </SubNavListItem>
-        </SubNavList>
-      </SubNavConatainer>
+      {navMenus.map(({ title, items }) => {
+        return (
+          <Fragment key={title}>
+            <SubNavTitle>{title}</SubNavTitle>
+            <SubNavList>
+              {items.map(({ path, icon, title }) => (
+                <SubNavListItem key={title}>
+                  <SubNavLink to={path}>
+                    {icon}
+                    <span>{title}</span>
+                  </SubNavLink>
+                </SubNavListItem>
+              ))}
+            </SubNavList>
+          </Fragment>
+        );
+      })}
     </LeftNavContainer>
   );
 };
@@ -61,18 +58,16 @@ const LeftNavContainer = guguStyled.div`
   padding: 10px 0;
 `;
 
-const SubNavConatainer = guguStyled.div`
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
-`;
-
 const SubNavTitle = guguStyled.h4`
   color: ${greyButton};
   margin-left: 10px;
 `;
 
-const SubNavList = guguStyled.ul``;
+const SubNavList = guguStyled.ul`
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+`;
 
 const SubNavListItem = guguStyled.li`
   font-size: 18px;
