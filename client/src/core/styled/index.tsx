@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react';
+import React, { useMemo, forwardRef, useEffect } from 'react';
 import { generateAlphabeticName, createStyleRule, getProperProps } from './util';
 import { tags } from './tag';
 
@@ -8,12 +8,6 @@ const classList = new Set<string>();
 const guguStyled =
   (Tag: string | ReturnType<typeof guguStyled>) =>
   (strings: TemplateStringsArray, ...exprs: any[]) => {
-    const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
-
-    const getPrevClassName = () => {
-      return uniqueClassName;
-    };
-
     const NewComponent: any = forwardRef<HTMLElement>((props, ref) => {
       const interpolateStyle = useMemo(() => {
         return exprs.reduce(
@@ -24,7 +18,7 @@ const guguStyled =
           },
           [strings[0]]
         );
-      }, [strings, exprs]);
+      }, [props]);
 
       let prevClassName = '';
       let property = { ...props, ref };
@@ -36,10 +30,10 @@ const guguStyled =
           Object.keys(properProps).length === 0 ? { ...property } : { ...properProps, ref };
       }
 
-      if (!classList.has(uniqueClassName)) {
-        createStyleRule(uniqueClassName, interpolateStyle);
-        classList.add(uniqueClassName);
-      }
+      const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
+
+      createStyleRule(uniqueClassName, interpolateStyle);
+      classList.add(uniqueClassName);
 
       const combinedClassName = prevClassName
         ? `${prevClassName} ${uniqueClassName}`
@@ -51,7 +45,6 @@ const guguStyled =
         </Tag>
       );
     });
-    NewComponent.getPrevClassName = getPrevClassName;
     return NewComponent;
   };
 
