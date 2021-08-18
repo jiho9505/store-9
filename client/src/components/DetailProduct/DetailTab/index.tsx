@@ -14,6 +14,12 @@ type DetailTab = {
   index: number;
   handleClickItemName: (e) => void;
 };
+
+/**
+ * TODO:
+ * TabItem의 상품 후기 , 상품 문의 카운트는
+ * 상위에서 받아와야 합니다!
+ */
 const DetailTab = ({ index, handleClickItemName }: DetailTab) => {
   return (
     <TabContainer>
