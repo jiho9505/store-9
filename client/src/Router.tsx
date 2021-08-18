@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import styled from '@emotion/styled';
 
 import useLocation from './hooks/customHooks/useLocation';
@@ -62,36 +62,29 @@ const Link = ({ to, children, ...rest }) => {
 
 const NavLink = ({ to, children, ...props }) => {
   const { curLocation, history } = useContext(HistoryContext);
-  const [isActive, setActive] = useState(curLocation === to);
-
-  useEffect(() => {
-    if (curLocation !== to) {
-      setActive(false);
-    }
-  }, [curLocation]);
+  const isActive = useMemo(() => curLocation === to, [curLocation]);
 
   const handleClickLink = () => {
     history.push(to);
-    setActive(true);
   };
 
   return (
-    <ActiveLink {...props} active={isActive} onClick={handleClickLink}>
+    <ActiveLink {...props} isActive={isActive} onClick={handleClickLink}>
       {children}
     </ActiveLink>
   );
 };
 
 type StyledComponentProps = {
-  active: boolean;
+  isActive: boolean;
 };
 
 const setStyle = (props) => {
-  const { activeStyle, active } = props;
-  if (activeStyle && active) {
-    return Object.keys(activeStyle)
-      .map((property) => {
-        return `${property}: ${activeStyle[property]}`;
+  const { activeStyle, isActive } = props;
+  if (activeStyle !== undefined && isActive) {
+    return Object.entries(activeStyle)
+      .map(([key, value]) => {
+        return `${key}: ${value}`;
       })
       .join(';');
   }
@@ -99,10 +92,10 @@ const setStyle = (props) => {
 };
 
 const ActiveLink = styled.a<StyledComponentProps>`
-  border-bottom: ${(props) => (props.active ? `2px solid #2AC1BC` : '')};
-  color: ${(props) => (props.active ? '#2AC1BC' : 'inherit')};
-  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
-  margin-bottom: ${(props) => (props.active ? '-1px' : '0px')};
+  border-bottom: ${(props) => (props.isActive ? `2px solid #2AC1BC` : '')};
+  color: ${(props) => (props.isActive ? '#2AC1BC' : 'inherit')};
+  font-weight: ${(props) => (props.isActive ? 'bold' : 'normal')};
+  margin-bottom: ${(props) => (props.isActive ? '-1px' : '0px')};
   ${(props) => {
     return setStyle(props);
   }}
