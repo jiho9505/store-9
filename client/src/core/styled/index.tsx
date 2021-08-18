@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, forwardRef } from 'react';
 import { generateAlphabeticName, createStyleRule, getProperProps } from './util';
 import { tags } from './tag';
 
@@ -14,7 +14,7 @@ const guguStyled =
       return uniqueClassName;
     };
 
-    const NewComponent = (props) => {
+    const NewComponent: any = forwardRef<HTMLElement>((props, ref) => {
       const interpolateStyle = useMemo(() => {
         return exprs.reduce(
           (styles, expr, idx) => {
@@ -27,13 +27,13 @@ const guguStyled =
       }, [strings, exprs]);
 
       let prevClassName = '';
-      let property = {};
+      let property = { ...props, ref };
       if (typeof Tag === 'function') {
         prevClassName = Tag.getPrevClassName?.();
-        property = { ...props };
       } else {
         const properProps = getProperProps(props);
-        property = Object.keys(properProps).length === 0 ? props : properProps;
+        property =
+          Object.keys(properProps).length === 0 ? { ...property } : { ...properProps, ref };
       }
 
       if (!classList.has(uniqueClassName)) {
@@ -50,7 +50,7 @@ const guguStyled =
           {props?.children}
         </Tag>
       );
-    };
+    });
     NewComponent.getPrevClassName = getPrevClassName;
     return NewComponent;
   };
