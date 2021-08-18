@@ -3,6 +3,9 @@ import React from 'react';
 
 import DetailTab from '../DetailTab';
 import DetailInfo from '../DetailInfo';
+import ShipInfo from '../ShipInfo';
+import ReplaceItemInfo from '../ReplaceItemInfo';
+import ProductBoard from '@/components/base/ProductBoard';
 
 const Detail = ({ info }) => {
   const scrollIntoView = (idx) => {
@@ -40,20 +43,24 @@ const Detail = ({ info }) => {
   return (
     <DetailContainer>
       <DetailTabContainer id="Tab_1">
-        <DetailTab index={0} handleClickItemName={handleClickItemName}></DetailTab>
+        <DetailTab index={0} handleClickItemName={handleClickItemName} />
       </DetailTabContainer>
       <DetailInfo images={info.content_urls}></DetailInfo>
       <DetailTabContainer id="Tab_2">
-        <DetailTab index={1} handleClickItemName={handleClickItemName}></DetailTab>
+        <DetailTab index={1} handleClickItemName={handleClickItemName} />
+        <ShipInfo />
       </DetailTabContainer>
       <DetailTabContainer id="Tab_3">
-        <DetailTab index={2} handleClickItemName={handleClickItemName}></DetailTab>
+        <DetailTab index={2} handleClickItemName={handleClickItemName} />
+        <ReplaceItemInfo />
       </DetailTabContainer>
       <DetailTabContainer id="Tab_4">
-        <DetailTab index={3} handleClickItemName={handleClickItemName}></DetailTab>
+        <DetailTab index={3} handleClickItemName={handleClickItemName} />
+        <ProductBoard title="상품 후기" />
       </DetailTabContainer>
       <DetailTabContainer id="Tab_5">
-        <DetailTab index={4} handleClickItemName={handleClickItemName}></DetailTab>
+        <DetailTab index={4} handleClickItemName={handleClickItemName} />
+        <ProductBoard title="상품 문의" />
       </DetailTabContainer>
     </DetailContainer>
   );
@@ -68,4 +75,6 @@ const DetailContainer = styled.div`
   margin-top: 100px;
 `;
 
-const DetailTabContainer = styled.div``;
+const DetailTabContainer = styled.div`
+  width: 100%;
+`;
