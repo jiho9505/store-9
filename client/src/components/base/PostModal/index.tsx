@@ -94,6 +94,7 @@ const Overlay = styled.div`
   right: 0px;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 `;
 
 const Modal = styled.div`
@@ -114,6 +115,10 @@ const ModalHeader = styled.div`
   align-items: center;
   border-bottom: 1px solid ${greyLine};
   padding: 10px 0px;
+
+  i {
+    cursor: pointer;
+  }
 `;
 
 const GuideText = styled.h3`
@@ -148,6 +153,8 @@ const Title = styled.input`
   height: 30px;
   border-radius: 12px;
   padding: 0px 15px;
+  font-family: ${baeminFont};
+  font-size: 17px;
 `;
 
 const Content = styled.textarea`
@@ -156,6 +163,8 @@ const Content = styled.textarea`
   height: 200px;
   padding: 10px;
   border-radius: 12px;
+  font-family: ${baeminFont};
+  font-size: 17px;
 `;
 
 const Label = styled.label`
