@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { MouseEvent, ChangeEvent } from 'react';
 import guguStyled from '@/core/styled';
+
+import styled from '@emotion/styled';
 
 import Input from '../Input';
 import Button from '../Button';
 
-import useInput from '@/hooks/customHooks/useInput';
 import { primary1, normalRadius } from '@/static/style/common';
+import { getDashFormat } from '@/utils/dateParse';
 
 const durationFilter = [
   { type: 'day', value: 0, content: '오늘' },
@@ -16,11 +18,27 @@ const durationFilter = [
   { type: 'year', value: 1, content: '1년' },
 ];
 
-const DurationFilter = () => {
-  const { form, onChange, reset } = useInput({
-    start: '',
-    finish: '',
-  });
+type Form = { start: string; finish: string };
+
+type DurationFilterProps = {
+  form: Form;
+  onChange(e: ChangeEvent<HTMLInputElement>): void;
+  onSetForm(obj: Form): void;
+};
+
+const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
+  const handleClickButton = (type, value) => (e: MouseEvent<HTMLDivElement>) => {
+    let curDate = new Date();
+    let pastDate = null;
+    if (type === 'day') {
+      pastDate = new Date().setDate(new Date().getDate() - value);
+    } else if (type === 'month') {
+      pastDate = new Date().setMonth(new Date().getMonth() - value);
+    } else if (type === 'year') {
+      pastDate = new Date().setFullYear(new Date().getFullYear() - value);
+    }
+    onSetForm({ start: getDashFormat(pastDate), finish: getDashFormat(curDate) });
+  };
 
   return (
     <DurationFilterContainer>
@@ -48,7 +66,9 @@ const DurationFilter = () => {
         </DateInputContainer>
         <DurationButtons>
           {durationFilter.map(({ type, value, content }) => (
-            <DuartionButton>{content}</DuartionButton>
+            <DuartionButton key={content} onClick={handleClickButton(type, value)}>
+              {content}
+            </DuartionButton>
           ))}
         </DurationButtons>
       </FilterContainer>
