@@ -22,6 +22,7 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
   const [pageStart, setPageStart] = useState(0);
   const [pageEnd, setPageEnd] = useState(10);
   const [isActiveModal, setIsActiveModal] = useState(false);
+  const [showContent, setShowContent] = useState([]);
 
   useEffect(() => {
     setPostInfoDatas(postDummyDatas.slice(pageStart, pageEnd));
@@ -40,6 +41,7 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
     setPageStart(newStartPoint);
     setPageEnd(newEndPoint);
     setPostInfoDatas(newPostInfoDatas);
+    setShowContent([]);
   };
 
   const handleClickButton = () => {
@@ -50,10 +52,29 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
     setIsActiveModal(false);
   };
 
+  const handleClickTitle = (e) => {
+    const index = Number(e.target.dataset.idx);
+
+    if (showContent.includes(index)) {
+      const tempArray = [...showContent];
+      const idxToDelete = tempArray.indexOf(index);
+      tempArray.splice(idxToDelete, 1);
+      setShowContent(tempArray);
+      return;
+    }
+    setShowContent([...showContent, index]);
+
+    console.log('showContent: ', showContent);
+  };
   return (
     <ProductBoardContainer>
       <BoardHeader title={title} handleClickButton={handleClickButton} />
-      <BoardPost title={title} infos={postInfoDatas} />
+      <BoardPost
+        title={title}
+        infos={postInfoDatas}
+        handleClickTitle={handleClickTitle}
+        showContent={showContent}
+      />
       <BoardPageNumber
         length={postDummyDatas.length}
         pageNumber={pageNumber}
@@ -81,88 +102,35 @@ const ProductBoardContainer = styled.div`
 
 const postDummyDatas = [
   {
-    content: 'Start 1page',
+    title: 'Start 1page',
+    content: 'Start 1page Content',
     userId: 'User-ID',
     createAt: '2021-08-18',
   },
   {
+    title: 'TEST',
     content: '빠른배송감사합니다--',
     userId: 'User-ID',
     createAt: '2021-08-18',
   },
   {
+    title: 'TEST',
     content: '빠른배송감사합니다--',
     userId: 'User-ID',
     createAt: '2021-08-18',
   },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: 'Start 2page--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'Start 2page--', content: 'Start 2page--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
+  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
 ];

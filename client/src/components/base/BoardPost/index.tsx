@@ -1,8 +1,10 @@
-import { baemin, baeminFont, greyLine, lightBlack } from '@/static/style/common';
-import styled from '@emotion/styled';
 import React from 'react';
 
-const BoardPost = ({ infos, title }) => {
+import styled from '@emotion/styled';
+
+import { baemin, baeminFont, greyBg1, greyLine, lightBlack } from '@/static/style/common';
+
+const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
   const createLockIcon = () => {
     return (
       title === '상품 문의' && (
@@ -14,22 +16,34 @@ const BoardPost = ({ infos, title }) => {
   };
 
   const createPostlist = () => {
-    return infos.map((info) => (
-      <Post>
-        <PostNumber width="5%">1</PostNumber>
-        {createLockIcon()}
-        <PostContent width="65%">{info.content}~</PostContent>
-        <PostText width="15%">{info.userId}</PostText>
-        <PostText width="15%">{info.createAt}</PostText>
-      </Post>
+    return infos.map((info, idx) => (
+      <tbody key={idx}>
+        <PostTitleRow>
+          <PostNumber width="5%">1</PostNumber>
+          {createLockIcon()}
+          <PostTitleContainer width="65%">
+            <PostTitle onClick={handleClickTitle} data-idx={idx}>
+              {info.title}
+            </PostTitle>
+          </PostTitleContainer>
+          <PostText width="15%">{info.userId}</PostText>
+          <PostText width="15%">{info.createAt}</PostText>
+        </PostTitleRow>
+        {showContent.includes(idx) && (
+          <PostContentRow>
+            <PostNumber width="5%"></PostNumber>
+            <PostContent width="65%">{info.content}</PostContent>
+            <PostText width="15%"></PostText>
+            <PostText width="15%"></PostText>
+          </PostContentRow>
+        )}
+      </tbody>
     ));
   };
 
   return (
     <BoardPostContainer>
-      <PostList>
-        <tbody>{createPostlist()}</tbody>
-      </PostList>
+      <PostList>{createPostlist()}</PostList>
     </BoardPostContainer>
   );
 };
@@ -43,19 +57,27 @@ const BoardPostContainer = styled.div`
 const PostList = styled.table`
   width: 100%;
   table-layout: fixed;
+  border-bottom: 1px solid ${greyLine};
 `;
 
-const Post = styled.tr`
+const PostTitle = styled.span`
+  user-select: none;
+`;
+
+const PostTitleRow = styled.tr`
   width: 100%;
-  border-bottom: 1px solid ${greyLine};
+  border-top: 1px solid ${greyLine};
   padding: 13px 40px;
   height: 50px;
   display: flex;
   align-items: center;
+`;
 
-  &:first-of-type {
-    border-top: 1px solid ${greyLine};
-  }
+const PostContentRow = styled(PostTitleRow)`
+  display: flex;
+  align-items: flex-start;
+  min-height: 100px;
+  background-color: ${greyBg1};
 `;
 
 const PostText = styled.td`
@@ -68,7 +90,9 @@ const PostNumber = styled(PostText)`
   color: ${baemin};
 `;
 
-const PostContent = styled(PostText)`
+const PostContent = styled(PostText)``;
+
+const PostTitleContainer = styled(PostText)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
