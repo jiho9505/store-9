@@ -1,13 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
 
-import { baeminFont, baeminThickFont, greyBg1, greyLine } from '@/static/style/common';
+import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/style/common';
 
-const PostModal = ({ item, handleClickForClose }) => {
+const timeToShowMsg = 2000;
+
+const PostModal = ({ item, handleClickForClose, title }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
 
   /**
    * TODO:
@@ -18,6 +21,15 @@ const PostModal = ({ item, handleClickForClose }) => {
     e.preventDefault();
     const title = inputRef.current.value;
     const content = textAreaRef.current.value;
+
+    if (!title.length || !content.length) {
+      setShowErrorMsg(true);
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, timeToShowMsg);
+      return;
+    }
+    handleClickForClose();
   };
 
   return (
@@ -25,7 +37,7 @@ const PostModal = ({ item, handleClickForClose }) => {
       <Overlay onClick={handleClickForClose} />
       <Modal>
         <ModalHeader>
-          <GuideText>상품 문의</GuideText>
+          <GuideText>{title}</GuideText>
           <i onClick={handleClickForClose} className="fas fa-times"></i>
         </ModalHeader>
 
@@ -35,9 +47,10 @@ const PostModal = ({ item, handleClickForClose }) => {
         </ItemContainer>
         <Form>
           <Label>제목 : </Label>
-          <Title ref={inputRef} />
+          <Title maxLength={30} ref={inputRef} required />
           <Label>내용 : </Label>
-          <Content ref={textAreaRef} />
+          <Content maxLength={550} ref={textAreaRef} required />
+          {showErrorMsg && <ErrorMsg>모든 값을 입력해주시기 바랍니다.</ErrorMsg>}
           <ButtonContainer>
             <Button
               size="small"
@@ -69,6 +82,12 @@ const ModalContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
 `;
 
+const ErrorMsg = styled.p`
+  text-align: center;
+  font-family: ${baeminFont};
+  color: ${red1};
+  font-size: 20px;
+`;
 const Overlay = styled.div`
   position: absolute;
   left: 0px;
@@ -86,6 +105,7 @@ const Modal = styled.div`
   background: ${greyBg1};
   border-radius: 0.5rem;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1;
 `;
 
 const ModalHeader = styled.div`
