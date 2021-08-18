@@ -21,7 +21,7 @@ const LeftNav = () => {
         title: '회원정보',
         items: [
           { path: '/mypage/QnA', icon: <CustomQnA />, title: '나의 상품문의' },
-          { path: '/#', icon: <CustomReview />, title: '나의 구매후기' },
+          { path: '/mypage/review', icon: <CustomReview />, title: '나의 구매후기' },
         ],
       },
     ];

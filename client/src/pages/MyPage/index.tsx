@@ -4,6 +4,7 @@ import guguStyled from '@/core/styled';
 import LikePage from './Like';
 import OrderPage from './Order';
 import QnAPage from './QnA';
+import ReviewPage from './Reivew';
 import { Route } from '@/Router';
 import { LeftNav } from '@/components/MyPage';
 
@@ -24,6 +25,9 @@ const MyPage = () => {
         </Route>
         <Route path="/mypage/QnA">
           <QnAPage />
+        </Route>
+        <Route path="/mypage/review">
+          <ReviewPage />
         </Route>
       </MyPageContentContiner>
     </MyPageContainer>
