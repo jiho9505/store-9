@@ -5,14 +5,19 @@ import Button from '../Button';
 
 import { baeminFont } from '@/static/style/common';
 
-const BoardHeader = ({ title }) => {
+type BoardHeaderProps = {
+  title: string;
+  handleClickButton: () => void;
+};
+
+const BoardHeader = ({ title, handleClickButton }: BoardHeaderProps) => {
   return (
     <BoardHeaderContainer>
       <Title>{title}</Title>
       <Button
         size="small"
         value={title + ' 글쓰기'}
-        onClick={() => {}}
+        onClick={handleClickButton}
         type="button"
         theme="dark"
       />
