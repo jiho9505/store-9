@@ -9,7 +9,7 @@ import '@/static/assets/img/search.png';
 
 const shortCuts = [
   { name: '로그인', path: '/login' },
-  { name: '마이페이지', path: '/my-page' },
+  { name: '마이페이지', path: '/mypage' },
   { name: '장바구니', path: '/cart' },
 ];
 
