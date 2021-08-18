@@ -31,6 +31,7 @@ const LikeContainer = styled.div`
   span {
     font-size: 18px;
     font-family: ${baeminFont};
+    cursor: pointer;
   }
 `;
 
