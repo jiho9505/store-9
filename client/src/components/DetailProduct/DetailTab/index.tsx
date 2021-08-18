@@ -18,27 +18,27 @@ const DetailTab = ({ index, handleClickItemName }: DetailTab) => {
   return (
     <TabContainer>
       <Tab>
-        <TabItem>
+        <TabItem onClick={handleClickItemName} data-idx="0">
           <ItemName onClick={handleClickItemName} active={index === 0} data-idx="0">
             상품상세정보
           </ItemName>
         </TabItem>
-        <TabItem>
+        <TabItem onClick={handleClickItemName} data-idx="1">
           <ItemName onClick={handleClickItemName} active={index === 1} data-idx="1">
             배송안내
           </ItemName>
         </TabItem>
-        <TabItem>
+        <TabItem onClick={handleClickItemName} data-idx="2">
           <ItemName onClick={handleClickItemName} active={index === 2} data-idx="2">
             교환 및 반품안내
           </ItemName>
         </TabItem>
-        <TabItem>
+        <TabItem onClick={handleClickItemName} data-idx="3">
           <ItemName onClick={handleClickItemName} active={index === 3} data-idx="3">
             상품후기 <ReviewCount> 0</ReviewCount>
           </ItemName>
         </TabItem>
-        <TabItem>
+        <TabItem onClick={handleClickItemName} data-idx="4">
           <ItemName onClick={handleClickItemName} active={index === 4} data-idx="4">
             상품문의 <QnaCount> 0</QnaCount>
           </ItemName>
