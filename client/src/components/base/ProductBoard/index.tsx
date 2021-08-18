@@ -17,17 +17,36 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   const [pageNumber, setPageNumber] = useState(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
   const [pageStart, setPageStart] = useState(0);
-  const [pageEnd, setpageEnd] = useState(10);
+  const [pageEnd, setPageEnd] = useState(10);
 
   useEffect(() => {
     setPostInfoDatas(postDummyDatas.slice(pageStart, pageEnd));
   }, []);
 
+  /**
+   * page Number를 클릭해줌으로써
+   * 게시글 리스트와 페이지 넘버 color가 바뀐다.
+   */
+  const handleClickNumber = (e) => {
+    const newPageNumber = e.target.dataset.idx;
+    const newStartPoint = newPageNumber * 10;
+    const newEndPoint = newPageNumber * 10 + 10;
+    const newPostInfoDatas = postDummyDatas.slice(newStartPoint, newEndPoint);
+    setPageNumber(newPageNumber);
+    setPageStart(newStartPoint);
+    setPageEnd(newEndPoint);
+    setPostInfoDatas(newPostInfoDatas);
+  };
+
   return (
     <ProductBoardContainer>
       <BoardHeader title={title} />
       <BoardPost title={title} infos={postInfoDatas} />
-      <BoardPageNumber length={postDummyDatas.length} pageNumber={pageNumber} />
+      <BoardPageNumber
+        length={postDummyDatas.length}
+        pageNumber={pageNumber}
+        handleClickNumber={handleClickNumber}
+      />
     </ProductBoardContainer>
   );
 };
@@ -41,7 +60,7 @@ const ProductBoardContainer = styled.div`
 
 const postDummyDatas = [
   {
-    content: '빠른배송감사합니다--',
+    content: 'Start 1page',
     userId: 'User-ID',
     createAt: '2021-08-18',
   },
@@ -91,7 +110,7 @@ const postDummyDatas = [
     createAt: '2021-08-18',
   },
   {
-    content: '빠른배송감사합니다--',
+    content: 'Start 2page--',
     userId: 'User-ID',
     createAt: '2021-08-18',
   },

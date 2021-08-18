@@ -5,15 +5,16 @@ import { lightBlack } from '@/static/style/common';
 type BoardPageNumber = {
   length: number;
   pageNumber: number;
+  handleClickNumber: (e: React.MouseEvent) => void;
 };
 
-const BoardPageNumber = ({ length, pageNumber }: BoardPageNumber) => {
+const BoardPageNumber = ({ length, pageNumber, handleClickNumber }: BoardPageNumber) => {
   const createPageNumber = () => {
     const getPageLength = Math.floor(length / 10) + 1;
     const PageLengthArray = new Array(getPageLength).fill(0);
 
     return PageLengthArray.map((value, idx) => (
-      <PageNumber key={idx} active={pageNumber === idx}>
+      <PageNumber onClick={handleClickNumber} key={idx} active={pageNumber === idx} data-idx={idx}>
         {idx + 1}
       </PageNumber>
     ));
