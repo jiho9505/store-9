@@ -1,8 +1,11 @@
 import React from 'react';
 import guguStyled from '@/core/styled';
 
+import useInput from '@/hooks/customHooks/useInput';
+
 import DurationFilter from '@/components/base/DurationFilter';
 import { OrderContent } from '@/components/MyPage';
+import { getDashFormat } from '@/utils/dateParse';
 
 const orderedProducts = [
   {
@@ -28,9 +31,14 @@ const orderedProducts = [
 ];
 
 const OrderPage = () => {
+  const { form, onChange, onSetForm } = useInput({
+    start: '',
+    finish: getDashFormat(new Date()),
+  });
+
   return (
     <OrderPageContainer>
-      <DurationFilter />
+      <DurationFilter form={form} onChange={onChange} onSetForm={onSetForm} />
       <OrderContent orderProducts={orderedProducts} />
     </OrderPageContainer>
   );

@@ -1,4 +1,4 @@
-import React, { MouseEvent, ChangeEvent } from 'react';
+import React, { MouseEvent, ChangeEvent, useState } from 'react';
 import guguStyled from '@/core/styled';
 
 import styled from '@emotion/styled';
@@ -27,7 +27,9 @@ type DurationFilterProps = {
 };
 
 const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
-  const handleClickButton = (type, value) => (e: MouseEvent<HTMLDivElement>) => {
+  const [curActiveFilter, setActiveFilter] = useState<string>('');
+
+  const handleClickButton = (type, value, content) => (e: MouseEvent<HTMLDivElement>) => {
     let curDate = new Date();
     let pastDate = null;
     if (type === 'day') {
@@ -37,6 +39,7 @@ const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
     } else if (type === 'year') {
       pastDate = new Date().setFullYear(new Date().getFullYear() - value);
     }
+    setActiveFilter(content);
     onSetForm({ start: getDashFormat(pastDate), finish: getDashFormat(curDate) });
   };
 
@@ -66,7 +69,11 @@ const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
         </DateInputContainer>
         <DurationButtons>
           {durationFilter.map(({ type, value, content }) => (
-            <DuartionButton key={content} onClick={handleClickButton(type, value)}>
+            <DuartionButton
+              key={content}
+              isActive={curActiveFilter === content}
+              onClick={handleClickButton(type, value, content)}
+            >
               {content}
             </DuartionButton>
           ))}
@@ -109,6 +116,10 @@ const DurationButtons = guguStyled.div`
   margin-top: 20px;
 `;
 
+type test = {
+  isActive: boolean;
+};
+
 const DuartionButton = guguStyled.div`
   display: flex;
   align-items: center;
@@ -117,8 +128,8 @@ const DuartionButton = guguStyled.div`
   width: 80px;
   padding: 10px;
   margin-right: 10px;
-  border: 1px solid ${primary1};
   cursor: pointer;
+  border: ${({ isActive }) => (isActive ? `1px solid ${primary1}` : 'none')};
 `;
 
 export default DurationFilter;
