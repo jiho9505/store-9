@@ -4,13 +4,13 @@ import styled from '@emotion/styled';
 import OverViewContent from '../OverViewContent';
 
 type OverviewProps = {
-  info: object;
+  info;
 };
 
 const Overview = ({ info }: OverviewProps) => {
   return (
     <OverviewContainer>
-      <OverviewImage src="images/sampleItem.jpeg"></OverviewImage>
+      <OverviewImage referrerPolicy="no-referrer" src={info.image}></OverviewImage>
       <OverViewContent info={info}></OverViewContent>
     </OverviewContainer>
   );
@@ -26,5 +26,5 @@ const OverviewContainer = styled.div`
 
 const OverviewImage = styled.img`
   max-width: 473px;
-  max-height: 100%;
+  height: 585px;
 `;

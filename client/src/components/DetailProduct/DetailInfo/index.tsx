@@ -7,7 +7,6 @@ type DetailInfo = {
 };
 
 const DetailInfo = ({ images }: DetailInfo) => {
-  console.log('images: ', images);
   const createInfoImages = () => {
     return images.map((image, idx) => (
       <img key={idx} referrerPolicy="no-referrer" src={image}></img>
