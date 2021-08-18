@@ -56,11 +56,11 @@ const Detail = ({ info }) => {
       </DetailTabContainer>
       <DetailTabContainer id="Tab_4">
         <DetailTab index={3} handleClickItemName={handleClickItemName} />
-        <ProductBoard title="상품 후기" />
+        <ProductBoard title="상품 후기" item={info} />
       </DetailTabContainer>
       <DetailTabContainer id="Tab_5">
         <DetailTab index={4} handleClickItemName={handleClickItemName} />
-        <ProductBoard title="상품 문의" />
+        <ProductBoard title="상품 문의" item={info} />
       </DetailTabContainer>
     </DetailContainer>
   );

@@ -61,7 +61,11 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
       />
       {isActiveModal && (
         <ModalPortal>
-          <PostModal handleClickForClose={handleClickForClose} item={item}></PostModal>
+          <PostModal
+            handleClickForClose={handleClickForClose}
+            title={title}
+            item={item}
+          ></PostModal>
         </ModalPortal>
       )}
     </ProductBoardContainer>
