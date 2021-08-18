@@ -5,12 +5,14 @@ import Button from '../Button';
 
 import { baeminFont, baeminThickFont, greyBg1, greyLine } from '@/static/style/common';
 
-const PostModal = ({ item }) => {
+const PostModal = ({ item, handleClickForClose }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   /**
    * TODO:
+   * 아래 내용과 product userId 등 조합해서 post 요청 보내야합니다.
+   * 그 후 mobx를 통해 상태 업뎃해서 상위부터 리렌더링 되게 하면 될것 같습니다.
    */
   const handleClickButton = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -20,10 +22,11 @@ const PostModal = ({ item }) => {
 
   return (
     <ModalContainer>
+      <Overlay onClick={handleClickForClose} />
       <Modal>
         <ModalHeader>
           <GuideText>상품 문의</GuideText>
-          <i className="fas fa-times"></i>
+          <i onClick={handleClickForClose} className="fas fa-times"></i>
         </ModalHeader>
 
         <ItemContainer>
@@ -64,6 +67,14 @@ const ModalContainer = styled.div`
   height: 100%;
   font-size: 1.2rem;
   background-color: rgba(0, 0, 0, 0.3);
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Modal = styled.div`
