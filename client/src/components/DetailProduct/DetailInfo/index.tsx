@@ -1,7 +1,10 @@
-import { baeminThickFont } from '@/static/style/common';
-import styled from '@emotion/styled';
 import React from 'react';
+import styled from '@emotion/styled';
 
+import DetailInfoTable from '../DetailInfoTable';
+import DetailInfoRecommend from '../DetailInfoRecommend';
+
+import { baeminThickFont } from '@/static/style/common';
 type DetailInfo = {
   images: string[];
 };
@@ -16,6 +19,8 @@ const DetailInfo = ({ images }: DetailInfo) => {
     <DetailInfoContainer>
       <Title>상품상세정보</Title>
       {images && createInfoImages()}
+      <DetailInfoTable />
+      <DetailInfoRecommend />
     </DetailInfoContainer>
   );
 };
