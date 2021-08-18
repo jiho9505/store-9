@@ -42,6 +42,18 @@ const ReplaceItemInfo = () => {
       <Space />
       <p>· 반송지 : 우)10846 경기 파주시 탄현면 축현리 241-4 배민문방구 물류센터</p>
       <Space /> <Space /> <Space /> <Space /> <Space />
+      <Title>환불안내</Title>
+      <p>
+        · 주문취소 및 반품 시 환불은 주문 시 이용하신 결제수단으로 2~7 영업일 이내 환불됩니다.
+        <Space></Space>
+      </p>
+      <ASTitle>AS안내</ASTitle>
+      <p>
+        · 제품에 문제가 있으신 경우, 배민문방구 고객센터로 접수해주시면 안내 도와드리겠습니다.
+        <Space></Space>
+        <Space></Space>· 배민문방구에서 발생한 문제는 소비자분쟁해결 기준(공정거래위원회 고시)에
+        따라 피해를 보상받을 수 있습니다.
+      </p>
     </ReplaceItemInfoContainer>
   );
 };
@@ -53,6 +65,7 @@ const ReplaceItemInfoContainer = styled.div`
   gap: 10px;
   font-size: 13px;
   color: ${greySpan};
+  margin-bottom: 100px;
 `;
 
 const Title = styled.div`
@@ -62,6 +75,22 @@ const Title = styled.div`
   margin-bottom: 15px;
 `;
 
+const ASTitle = styled(Title)`
+  margin-top: 100px;
+`;
+
 const Space = styled.br``;
 
 export default ReplaceItemInfo;
+
+{
+  /* 
+
+
+
+
+
+
+
+ */
+}
