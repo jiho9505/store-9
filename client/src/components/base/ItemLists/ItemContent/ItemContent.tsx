@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { calculateDiscount } from '@/util/calculateDiscount';
+import { calculateDiscount } from '@/utils/calculateDiscount';
 import { baeminFont, red2 } from '@/static/style/common';
 
 type ContentProps = {

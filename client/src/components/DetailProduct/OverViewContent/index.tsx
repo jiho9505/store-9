@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { calculateDiscount } from '@/util/calculateDiscount';
+import { calculateDiscount } from '@/utils/calculateDiscount';
 import StockSelector from '../StockSelector';
 import TotalPrice from '../TotalPrice';
-import Like from '../Like';
-import Cart from '../Cart';
-import Buy from '../Buy';
+import Like from '../LikeButton';
+import Cart from '../CartButton';
+import Buy from '../BuyButton';
 
 import styled from '@emotion/styled';
 import {
