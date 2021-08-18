@@ -7,13 +7,9 @@ import Button from '@/components/base/Button';
 const LOGIN_SUGGESTION_TEXT = '이미 배민문방구 회원이신가요?';
 
 const SignupMethod = () => {
-  const onSignupClick = () => {
-    console.log('signup');
-  };
+  const onSignupClick = () => {};
 
-  const onGithubSignupClick = () => {
-    console.log('github signup');
-  };
+  const onGithubSignupClick = () => {};
 
   return (
     <SignupMethodContainer>
