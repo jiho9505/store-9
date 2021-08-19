@@ -21,7 +21,7 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.map((item, idx) => (
       <Item key={idx} className="item">
-        <ItemImage quantity={item.quantity}></ItemImage>
+        <ItemImage productImage={item.image} quantity={item.quantity}></ItemImage>
         <ItemContent item={item}></ItemContent>
         {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
       </Item>

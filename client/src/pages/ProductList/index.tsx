@@ -66,7 +66,7 @@ const ProductList = () => {
 
   // let qs = window.location.search;
 
-  const handleFilter = (index) => {
+  const handleFilter = (index: number) => {
     const newFilter = { ...filter, productFilter: index };
     setFilter(newFilter);
   };

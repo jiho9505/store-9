@@ -14,7 +14,10 @@ const Order = React.lazy(() => import('@/pages/Order'));
 const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
+const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
+
 import '@/static/assets/img/baeminFavicon.png';
+import Loading from './components/base/Loading';
 
 /**
  * FIXME:
@@ -23,7 +26,13 @@ import '@/static/assets/img/baeminFavicon.png';
 const App = () => {
   return (
     <PageContainer>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <LoadingContainer>
+            <Loading size="big"></Loading>
+          </LoadingContainer>
+        }
+      >
         <Router>
           <Header />
           <Route exact path="/">
@@ -77,6 +86,9 @@ const App = () => {
           <Route exact path="/collaborate">
             <ProductList />
           </Route>
+          <Route exact path="/detail">
+            <DetailProduct />
+          </Route>
           <Route exact path="/notfound">
             <NotFound />
           </Route>
@@ -95,6 +107,11 @@ const PageContainer = styled.div`
   min-width: 1450px;
 `;
 
+const LoadingContainer = styled.div`
+  position: absolute;
+  left: 45%;
+  top: 35%;
+`;
 const ProductPage = () => {
   return <div>This is Product Page</div>;
 };
