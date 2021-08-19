@@ -8,6 +8,7 @@ type inputVariant = 'normal' | 'outlined';
 type validate = { isValid: boolean; onCheck(): void; message: string };
 
 type InputProps = {
+  id?: string;
   name: string;
   required: boolean;
   size: inputSize;
@@ -16,7 +17,9 @@ type InputProps = {
   placeholder?: string;
   variant: inputVariant;
   validate?: validate;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onKeyPress?(e: React.KeyboardEvent): void;
 };
 
 const Input = ({
@@ -29,6 +32,7 @@ const Input = ({
   placeholder,
   variant,
   validate,
+  ...otherProps
 }: InputProps) => {
   const handleBlur = () => {
     validate?.onCheck?.();
@@ -43,9 +47,10 @@ const Input = ({
         required={required}
         onChange={onChange}
         onBlur={handleBlur}
-        placeholder={placeholder}
+        placeholder={placeholder || ''}
         variant={variant}
         valid={validate?.isValid}
+        {...otherProps}
       />
       {validate?.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>}
     </InputContainer>
