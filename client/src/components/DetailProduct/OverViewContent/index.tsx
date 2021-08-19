@@ -33,12 +33,8 @@ const OverViewContent = ({ info }: OverViewContentProps) => {
     );
   };
 
-  const createPrice = () => {
-    const discount = info.discount_rate;
-    const price = info.price;
-    const quantity = info.quantity;
-
-    return discount ? (
+  const createPrice = ({ discount_rate, price, quantity }) => {
+    return discount_rate ? (
       <PriceContainer>
         {quantity ? (
           <OriginalPrice>
@@ -68,7 +64,7 @@ const OverViewContent = ({ info }: OverViewContentProps) => {
   return (
     <OverviewContent>
       <Title>{info.title}</Title>
-      {createPrice()}
+      {createPrice(info)}
       <ShipInfo>
         <ShipInfoText>배송정보</ShipInfoText>
         <ShipInfoDetail>
