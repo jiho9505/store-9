@@ -102,4 +102,8 @@ const CheckBox = styled.input`
   opacity: 0.5;
 `;
 
+ListTable.defaultProps = {
+  checkable: false,
+};
+
 export default ListTable;

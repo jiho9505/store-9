@@ -16,11 +16,15 @@ const useInput = <TFields extends {}>(initialState: TFields) => {
     }));
   }, []);
 
+  const onSetForm = useCallback((obj: TFields) => {
+    setForm(obj);
+  }, []);
+
   const reset = useCallback(() => {
     setForm(initialState);
   }, [initialState]);
 
-  return { form, onChange, reset };
+  return { form, onChange, reset, onSetForm };
 };
 
 export default useInput;
