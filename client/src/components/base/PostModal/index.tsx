@@ -5,12 +5,15 @@ import Button from '../Button';
 
 import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/style/common';
 
-const timeToShowMsg = 2000;
+const timeToShowMsg: number = 2000;
+const arrForTotalStarLength: Array<number> = [1, 2, 3, 4, 5];
 
 const PostModal = ({ item, handleClickForClose, title }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [showErrorMsg, setShowErrorMsg] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
+  const [starScore, setStarScore] = useState<number>(1);
+
   let timeOutId: number;
 
   useEffect(() => {
@@ -49,6 +52,22 @@ const PostModal = ({ item, handleClickForClose, title }) => {
     return false;
   };
 
+  const createStar = () => {
+    return arrForTotalStarLength.map((value, idx) => (
+      <i
+        key={value}
+        onClick={handleClickStarIcon}
+        data-idx={idx + 1}
+        className={`${idx < starScore ? 'fas' : 'far'} fa-star`}
+      ></i>
+    ));
+  };
+
+  const handleClickStarIcon = (e: React.MouseEvent<HTMLElement>) => {
+    const score = Number(e.currentTarget.dataset.idx);
+    setStarScore(score);
+  };
+
   return (
     <ModalContainer>
       <Overlay onClick={handleClickForClose} />
@@ -63,6 +82,11 @@ const PostModal = ({ item, handleClickForClose, title }) => {
           <ItemName>{item.title}</ItemName>
         </ItemContainer>
         <Form>
+          <ScoreContainer>
+            <Label>별점 : </Label>
+            {createStar()}
+          </ScoreContainer>
+
           <Label>제목 : </Label>
           <Title maxLength={30} ref={inputRef} required />
           <Label>내용 : </Label>
@@ -97,6 +121,21 @@ const ModalContainer = styled.div`
   height: 100%;
   font-size: 1.2rem;
   background-color: rgba(0, 0, 0, 0.3);
+`;
+
+const ScoreContainer = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  i {
+    color: #fcba03;
+    cursor: pointer;
+  }
+
+  Label {
+    margin-top: 0px;
+    margin-right: 5px;
+  }
 `;
 
 const ErrorMsg = styled.p`
@@ -177,7 +216,7 @@ const Title = styled.input`
 const Content = styled.textarea`
   border: none;
   resize: none;
-  height: 200px;
+  height: 170px;
   padding: 10px;
   border-radius: 12px;
   font-family: ${baeminFont};
