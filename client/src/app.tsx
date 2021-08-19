@@ -11,6 +11,7 @@ const Main = React.lazy(() => import('@/pages/Main'));
 const ProductList = React.lazy(() => import('@/pages/ProductList'));
 const CartPage = React.lazy(() => import('@/pages/Cart'));
 const Order = React.lazy(() => import('@/pages/Order'));
+const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
@@ -44,6 +45,9 @@ const App = () => {
           </Route>
           <Route exact path="/order">
             <Order />
+          </Route>
+          <Route exact path="/mypage">
+            <MyPage />
           </Route>
           <Route exact path="/product/:id">
             <ProductPage />

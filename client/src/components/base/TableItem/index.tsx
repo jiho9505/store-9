@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
 
-const TableItem = ({ cartProduct }) => {
-  const { productId, name, thumbNail, price, quantity, totalPrice } = cartProduct;
+const TableItem = ({ product }) => {
+  const { productId, name, thumbNail, price, quantity, totalPrice } = product;
   return (
     <TableItemContainer>
       <ProductBasicInfo>
