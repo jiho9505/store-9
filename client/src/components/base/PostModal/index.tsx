@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
+import StarComponent from '@/components/base/Star';
 
 import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
-const arrForTotalStarLength: Array<number> = [1, 2, 3, 4, 5];
 
 const PostModal = ({ item, handleClickForClose, title }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,17 +52,6 @@ const PostModal = ({ item, handleClickForClose, title }) => {
     return false;
   };
 
-  const createStar = () => {
-    return arrForTotalStarLength.map((value, idx) => (
-      <i
-        key={value}
-        onClick={handleClickStarIcon}
-        data-idx={idx + 1}
-        className={`${idx < starScore ? 'fas' : 'far'} fa-star`}
-      ></i>
-    ));
-  };
-
   const handleClickStarIcon = (e: React.MouseEvent<HTMLElement>) => {
     const score = Number(e.currentTarget.dataset.idx);
     setStarScore(score);
@@ -85,7 +74,7 @@ const PostModal = ({ item, handleClickForClose, title }) => {
           {title === '상품 후기' && (
             <ScoreContainer>
               <Label>별점 : </Label>
-              {createStar()}
+              <StarComponent score={starScore} handleClickStarIcon={handleClickStarIcon} />
             </ScoreContainer>
           )}
 
@@ -130,7 +119,6 @@ const ScoreContainer = styled.div`
   gap: 5px;
   align-items: center;
   i {
-    color: #fcba03;
     cursor: pointer;
   }
 

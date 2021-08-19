@@ -1,8 +1,6 @@
-import { Link } from '@/Router';
-import styled from '@emotion/styled';
 import React from 'react';
-
-import ItemWishButton from '../ItemWishButton/ItemWishButton';
+import styled from '@emotion/styled';
+import { Link } from '@/Router';
 
 type ImageProps = {
   quantity: number;

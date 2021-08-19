@@ -1,10 +1,10 @@
 import React from 'react';
-
 import styled from '@emotion/styled';
 
-import { baemin, baeminFont, greyBg1, greyLine, lightBlack } from '@/static/style/common';
+import StarComponent from '@/components/base/Star';
 
-const arrForTotalStarLength = [1, 2, 3, 4, 5];
+import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
+
 const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
   const createLockIcon = () => {
     return (
@@ -16,19 +16,16 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
     );
   };
 
-  const createStar = (score: number) => {
-    return arrForTotalStarLength.map((value, idx) => (
-      <Star key={value} className={`${idx < score ? 'fas' : 'far'} fa-star`}></Star>
-    ));
-  };
-
   const createFirstField = () => {
     return title === '상품 후기' ? (
-      <StarContainer width="10%">{createStar(5)}</StarContainer>
+      <StarContainer width="10%">
+        <StarComponent score={5}></StarComponent>
+      </StarContainer>
     ) : (
       <PostNumber width="10%">1</PostNumber>
     );
   };
+
   const createPostlist = () => {
     return infos.map((info, idx) => (
       <tbody key={idx}>
@@ -65,10 +62,6 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
 export default BoardPost;
 
 const StarContainer = styled.td``;
-
-const Star = styled.i`
-  color: #fcba03;
-`;
 
 const BoardPostContainer = styled.div`
   margin-top: 20px;
