@@ -22,9 +22,6 @@ const DetailInfoRecommend = () => {
   return (
     <DetailInfoRecommendContainer>
       <Title>이건 어때요?</Title>
-      <br />
-      <br />
-      <br />
       <ItemLists products={products} />
     </DetailInfoRecommendContainer>
   );
@@ -35,9 +32,13 @@ export default DetailInfoRecommend;
 const DetailInfoRecommendContainer = styled.div`
   margin-top: 100px;
   margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const Title = styled.span`
   font-family: ${baeminThickFont};
   font-size: 17px;
+  margin-bottom: 30px;
 `;
