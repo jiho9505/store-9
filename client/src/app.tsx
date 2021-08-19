@@ -46,7 +46,7 @@ const App = () => {
           <Route exact path="/order">
             <Order />
           </Route>
-          <Route exact path="/mypage">
+          <Route path="/mypage">
             <MyPage />
           </Route>
           <Route exact path="/product/:id">

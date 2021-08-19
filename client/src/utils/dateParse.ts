@@ -1,5 +1,5 @@
 const appendZero = (number: number): string => {
-  return number < 10 ? `0${number}` : `${number}`;
+  return String(number).padStart(2, '0');
 };
 
 export const getDashFormat = (date: string | Date): string => {
