@@ -26,8 +26,8 @@ const DetailInfo = ({ images }: DetailInfo) => {
 };
 
 const DetailInfoContainer = styled.div`
-  margin-top: 50px;
   width: 900px;
+  margin: 100px auto 0px auto;
 `;
 
 const Title = styled.span`
