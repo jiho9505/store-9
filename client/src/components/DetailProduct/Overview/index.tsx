@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import OverViewContent from '../OverViewContent';
+import ZoomableImage from '@/components/base/ZoomableImage';
 
 type OverviewProps = {
   info;
@@ -10,7 +11,7 @@ type OverviewProps = {
 const Overview = ({ info }: OverviewProps) => {
   return (
     <OverviewContainer>
-      <OverviewImage referrerPolicy="no-referrer" src={info.image}></OverviewImage>
+      <ZoomableImage width={473} height={585} src={info.image}></ZoomableImage>
       <OverViewContent info={info}></OverViewContent>
     </OverviewContainer>
   );
