@@ -16,7 +16,7 @@ const BoardHeader = ({ title, handleClickButton }: BoardHeaderProps) => {
       <Title>{title}</Title>
       <Button
         size="small"
-        value={title + ' 글쓰기'}
+        value={`${title} 글쓰기`}
         onClick={handleClickButton}
         type="button"
         theme="dark"
