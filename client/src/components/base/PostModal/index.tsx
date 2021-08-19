@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
@@ -11,6 +11,13 @@ const PostModal = ({ item, handleClickForClose, title }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState(false);
+  let timeOutId: number;
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeOutId);
+    };
+  }, []);
 
   /**
    * TODO:
@@ -19,17 +26,27 @@ const PostModal = ({ item, handleClickForClose, title }) => {
    */
   const handleClickButton = (e: React.MouseEvent) => {
     e.preventDefault();
-    const title = inputRef.current.value;
-    const content = textAreaRef.current.value;
+    const title: string = inputRef.current.value;
+    const content: string = textAreaRef.current.value;
 
-    if (!title.length || !content.length) {
-      setShowErrorMsg(true);
-      setTimeout(() => {
-        setShowErrorMsg(false);
-      }, timeToShowMsg);
-      return;
-    }
+    const result = isPassedValidation(title, content);
+    if (result) return;
     handleClickForClose();
+  };
+
+  const createErrorMsg = () => {
+    setShowErrorMsg(true);
+    timeOutId = setTimeout(() => {
+      setShowErrorMsg(false);
+    }, timeToShowMsg);
+  };
+
+  const isPassedValidation = (title: string, content: string): boolean => {
+    if (!title.length || !content.length) {
+      createErrorMsg();
+      return true;
+    }
+    return false;
   };
 
   return (
