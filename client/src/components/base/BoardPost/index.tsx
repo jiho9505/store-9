@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { baemin, baeminFont, greyBg1, greyLine, lightBlack } from '@/static/style/common';
 
+const arrForTotalStarLength = [1, 2, 3, 4, 5];
 const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
   const createLockIcon = () => {
     return (
@@ -15,13 +16,26 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
     );
   };
 
+  const createStar = (score: number) => {
+    return arrForTotalStarLength.map((value, idx) => (
+      <Star key={value} className={`${idx < score ? 'fas' : 'far'} fa-star`}></Star>
+    ));
+  };
+
+  const createFirstField = () => {
+    return title === '상품 후기' ? (
+      <StarContainer width="10%">{createStar(5)}</StarContainer>
+    ) : (
+      <PostNumber width="10%">1</PostNumber>
+    );
+  };
   const createPostlist = () => {
     return infos.map((info, idx) => (
       <tbody key={idx}>
         <PostTitleRow>
-          <PostNumber width="5%">1</PostNumber>
+          {createFirstField()}
           {createLockIcon()}
-          <PostTitleContainer width="65%">
+          <PostTitleContainer width="60%">
             <PostTitle onClick={handleClickTitle} data-idx={idx}>
               {info.title}
             </PostTitle>
@@ -31,8 +45,8 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
         </PostTitleRow>
         {showContent.includes(idx) && (
           <PostContentRow>
-            <PostNumber width="5%"></PostNumber>
-            <PostContent width="65%">{info.content}</PostContent>
+            <PostNumber width="10%"></PostNumber>
+            <PostContent width="60%">{info.content}</PostContent>
             <PostText width="15%"></PostText>
             <PostText width="15%"></PostText>
           </PostContentRow>
@@ -49,6 +63,12 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
 };
 
 export default BoardPost;
+
+const StarContainer = styled.td``;
+
+const Star = styled.i`
+  color: #fcba03;
+`;
 
 const BoardPostContainer = styled.div`
   margin-top: 20px;
@@ -67,7 +87,7 @@ const PostTitle = styled.span`
 const PostTitleRow = styled.tr`
   width: 100%;
   border-top: 1px solid ${greyLine};
-  padding: 13px 40px;
+  padding: 13px 20px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -81,13 +101,13 @@ const PostContentRow = styled(PostTitleRow)`
 `;
 
 const PostText = styled.td`
-  font-family: ${baeminFont};
   font-size: 13px;
   color: ${lightBlack};
 `;
 
 const PostNumber = styled(PostText)`
   color: ${baemin};
+  padding: 0px 20px;
 `;
 
 const PostContent = styled(PostText)``;
