@@ -17,11 +17,7 @@ const Like = () => {
   };
   return (
     <LikeContainer>
-      {isIconActive ? (
-        <i className="fas fa-heart" onClick={handleClickIcon}></i>
-      ) : (
-        <i className="far fa-heart" onClick={handleClickIcon}></i>
-      )}
+      <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickIcon}></i>
     </LikeContainer>
   );
 };

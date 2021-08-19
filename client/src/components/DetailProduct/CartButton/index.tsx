@@ -12,8 +12,8 @@ const Cart = () => {
   };
 
   return (
-    <CartContainer>
-      <span onClick={handleClickText}>장바구니</span>
+    <CartContainer onClick={handleClickText}>
+      <span>장바구니</span>
     </CartContainer>
   );
 };
@@ -25,11 +25,10 @@ const CartContainer = styled.div`
   width: 152px;
   height: 52px;
   border: 1px solid ${greyLine};
-
+  cursor: pointer;
   span {
     font-size: 18px;
     font-family: ${baeminFont};
-    cursor: pointer;
   }
 `;
 

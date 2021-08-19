@@ -32,7 +32,6 @@ const Detail = ({ info }) => {
 
   const moveViewThroughTap = (idx: string) => {
     const el = refItems[idx].current;
-    console.log('el: ', el);
     el.scrollIntoView({ behavior: 'smooth' });
   };
 
