@@ -30,7 +30,7 @@ const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
   const [curActiveFilter, setActiveFilter] = useState<string>('');
 
   const handleClickButton = (type, value, content) => (e: MouseEvent<HTMLDivElement>) => {
-    let curDate = new Date();
+    const curDate = new Date();
     let pastDate = null;
     if (type === 'day') {
       pastDate = new Date().setDate(new Date().getDate() - value);

@@ -18,14 +18,16 @@ const tableHeader = [
 ];
 
 const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: LikeContentProps) => {
-  const tableBody = useMemo(() => {
-    return likeProducts.map((likeProduct) => {
-      return {
-        id: likeProduct.productId,
-        cells: [{ c: <TableItem product={likeProduct} />, colSpan: 3 }],
-      };
-    });
-  }, [likeProducts]);
+  const tableBody = useMemo(
+    () =>
+      likeProducts.map((likeProduct) => {
+        return {
+          id: likeProduct.productId,
+          cells: [{ c: <TableItem product={likeProduct} />, colSpan: 3 }],
+        };
+      }),
+    [likeProducts]
+  );
 
   return (
     <div>

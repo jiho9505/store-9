@@ -32,8 +32,10 @@ const LikePage = () => {
   const handleClickCheckbox = (id) => {
     if (selectedProducts.has(id)) {
       setSelectedProducts((prev) => {
-        prev.delete(id);
-        return new Set(prev);
+        // prev.delete(id);
+        const newSet = new Set(prev);
+        newSet.delete(id);
+        return newSet;
       });
     } else {
       setSelectedProducts((prev) => new Set(prev.add(id)));

@@ -29,26 +29,24 @@ const LeftNav = () => {
 
   return (
     <LeftNavContainer>
-      {navMenus.map(({ title, items }) => {
-        return (
-          <Fragment key={title}>
-            <SubNavTitle>{title}</SubNavTitle>
-            <SubNavList>
-              {items.map(({ path, icon, title }) => (
-                <SubNavListItem key={title}>
-                  <SubNavLink
-                    activeStyle={{ color: '#000000', 'background-color': greyBg1, border: 'none' }}
-                    to={path}
-                  >
-                    {icon}
-                    <span>{title}</span>
-                  </SubNavLink>
-                </SubNavListItem>
-              ))}
-            </SubNavList>
-          </Fragment>
-        );
-      })}
+      {navMenus.map(({ title, items }) => (
+        <Fragment key={title}>
+          <SubNavTitle>{title}</SubNavTitle>
+          <SubNavList>
+            {items.map(({ path, icon, title }) => (
+              <SubNavListItem key={title}>
+                <SubNavLink
+                  activeStyle={{ color: '#000000', 'background-color': greyBg1, border: 'none' }}
+                  to={path}
+                >
+                  {icon}
+                  <span>{title}</span>
+                </SubNavLink>
+              </SubNavListItem>
+            ))}
+          </SubNavList>
+        </Fragment>
+      ))}
     </LeftNavContainer>
   );
 };
