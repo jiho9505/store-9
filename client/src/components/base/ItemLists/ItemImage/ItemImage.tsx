@@ -5,12 +5,13 @@ import ItemWishButton from '../ItemWishButton/ItemWishButton';
 
 type ImageProps = {
   quantity: number;
+  productImage: string;
 };
 
-const ItemImage = ({ quantity }: ImageProps) => {
+const ItemImage = ({ quantity, productImage }: ImageProps) => {
   return (
     <ImageContainer>
-      <ProductImg src="images/sampleItem.jpeg" />
+      <ProductImg referrerPolicy="no-referrer" src={productImage} />
       {!quantity ? <SoldOutImg src="images/soldout.png" /> : ``}
       {/* {quantity ? <ItemWishButton /> : ``} */}
     </ImageContainer>

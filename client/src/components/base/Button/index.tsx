@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { baeminFont } from '@/static/style/common';
 
 type ButtonTheme = 'normal' | 'github' | 'dark' | 'white';
 type ButtonType = 'button' | 'submit' | 'reset';
@@ -65,7 +66,7 @@ const getButtonSize = ({ size }: ButtonContainerProps) => {
       width: 10rem;
       height: 3rem;
       button {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
       }
     `;
   }
@@ -122,5 +123,7 @@ const CustomButton = styled.button<CustomButtonProps>`
   cursor: pointer;
   padding: 0 10px;
   transition: all 0.2s;
+  font-size: 1.2rem;
+  font-family: ${baeminFont};
   ${getButtonTheme}
 `;

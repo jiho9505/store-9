@@ -9,7 +9,6 @@ import { greyButton } from '@/static/style/common';
  * TODO:
  * 이미지 클릭 시 해당 상품으로 넘어가도록 추후 Link에 product id 달 것
  */
-
 const timeToChangeSlide = 3000;
 
 const Carousel = () => {
@@ -87,6 +86,7 @@ const SlideImage = styled.img`
   width: 100%;
   cursor: pointer;
   opacity: 1;
+  object-fit: cover;
 `;
 
 const ButtonContainer = styled.div`
