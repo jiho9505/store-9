@@ -1,8 +1,13 @@
-import { greyLine, baeminFont } from '@/static/style/common';
-import styled from '@emotion/styled';
 import React from 'react';
+import styled from '@emotion/styled';
+
+import useHistory from '@/hooks/customHooks/useHistory';
+
+import { greyLine, baeminFont } from '@/static/style/common';
 
 const Buy = () => {
+  const history = useHistory();
+
   /**
    * TODO:
    * 1.push에 인자를 싣는것이 된다면 그렇게 할 것
@@ -12,13 +17,13 @@ const Buy = () => {
     history.push('/order');
   };
   return (
-    <LikeContainer>
-      <span onClick={handleClickText}>바로 구매</span>
-    </LikeContainer>
+    <BuyContainer onClick={handleClickText}>
+      <span>바로 구매</span>
+    </BuyContainer>
   );
 };
 
-const LikeContainer = styled.div`
+const BuyContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +36,6 @@ const LikeContainer = styled.div`
   span {
     font-size: 18px;
     font-family: ${baeminFont};
-    cursor: pointer;
   }
 `;
 

@@ -42,7 +42,7 @@ const Detail = ({ info }) => {
 
   const createInfoEachTab = () => {
     return TabItems.map((item, idx) => (
-      <DetailTabContainer key={`${item.toString()}${idx}`} ref={refItems[idx]}>
+      <DetailTabContainer key={idx} ref={refItems[idx]}>
         <DetailTab choicedIdx={idx} handleClickItemName={handleClickItemName} />
         {item}
       </DetailTabContainer>
