@@ -82,10 +82,12 @@ const PostModal = ({ item, handleClickForClose, title }) => {
           <ItemName>{item.title}</ItemName>
         </ItemContainer>
         <Form>
-          <ScoreContainer>
-            <Label>별점 : </Label>
-            {createStar()}
-          </ScoreContainer>
+          {title === '상품 후기' && (
+            <ScoreContainer>
+              <Label>별점 : </Label>
+              {createStar()}
+            </ScoreContainer>
+          )}
 
           <Label>제목 : </Label>
           <Title maxLength={30} ref={inputRef} required />
