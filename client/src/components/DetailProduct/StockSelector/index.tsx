@@ -18,20 +18,21 @@ const StockSelectorComponent = ({
   selectedStock,
   currStock,
 }: StockSelectorComponentProps) => {
-  const handleChangeInput = (e) => {
-    refreshStock(e.target.value);
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    refreshStock(e.currentTarget.value);
   };
 
-  const handleBlurInput = (e) => {
-    if (e.target.value < 1 || e.target.value > 100) {
+  const handleBlurInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = Number(e.currentTarget.value);
+    if (inputValue < 1 || inputValue > 100) {
       refreshStock(1);
     }
   };
 
-  const handleClickButton = (e) => {
-    if (e.target.className === 'fas fa-sort-up') {
+  const handleClickButton = (e: React.MouseEvent) => {
+    if (e.currentTarget.className === 'fas fa-sort-up') {
       selectedStock < 100 && refreshStock(selectedStock + 1);
-    } else if (e.target.className === 'fas fa-sort-down') {
+    } else if (e.currentTarget.className === 'fas fa-sort-down') {
       selectedStock > 1 && refreshStock(selectedStock - 1);
     }
   };

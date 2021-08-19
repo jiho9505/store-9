@@ -32,8 +32,8 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
    * page Number를 클릭해줌으로써
    * 게시글 리스트와 페이지 넘버 color가 바뀐다.
    */
-  const handleClickNumber = (e) => {
-    const newPageNumber = e.target.dataset.idx;
+  const handleClickNumber = (e: React.MouseEvent<HTMLLIElement>) => {
+    const newPageNumber = Number(e.currentTarget.dataset.idx);
     const newStartPoint = newPageNumber * 10;
     const newEndPoint = newPageNumber * 10 + 10;
     const newPostInfoDatas = postDummyDatas.slice(newStartPoint, newEndPoint);
@@ -52,8 +52,8 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
     setIsActiveModal(false);
   };
 
-  const handleClickTitle = (e) => {
-    const index = Number(e.target.dataset.idx);
+  const handleClickTitle = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const index = Number(e.currentTarget.dataset.idx);
 
     if (showContent.includes(index)) {
       const tempArray = [...showContent];
@@ -63,8 +63,6 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
       return;
     }
     setShowContent([...showContent, index]);
-
-    console.log('showContent: ', showContent);
   };
   return (
     <ProductBoardContainer>

@@ -13,9 +13,8 @@ const ButtonToMoveToTop = () => {
   });
 
   const handleClickButton = (e: React.MouseEvent) => {
-    const { target } = e;
-    if (!(target instanceof HTMLElement)) return;
-    target.closest('.arrow-button') && window.scrollTo({ top: 0, behavior: 'smooth' });
+    const { currentTarget } = e;
+    currentTarget.closest('.arrow-button') && window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

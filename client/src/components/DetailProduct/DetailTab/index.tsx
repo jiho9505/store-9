@@ -12,7 +12,7 @@ import styled from '@emotion/styled';
 
 type DetailTab = {
   choicedIdx: number;
-  handleClickItemName(e: React.MouseEvent<HTMLElement>): void;
+  handleClickItemName(e: React.MouseEvent<HTMLSpanElement>): void;
 };
 
 const TabName = ['상품상세정보', '배송안내', '교환 및 반품안내', '상품후기', '상품문의'];
