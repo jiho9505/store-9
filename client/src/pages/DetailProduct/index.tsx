@@ -9,6 +9,8 @@ import Datas from '@/dummy';
 const sampleData = Datas[0];
 
 const DetailProduct = () => {
+  window.scrollTo({ top: 0 });
+
   const [product, setProduct] = useState({});
 
   useEffect(() => {
