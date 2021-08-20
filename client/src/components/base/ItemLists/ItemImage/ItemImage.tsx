@@ -25,6 +25,7 @@ const ImageContainer = styled.div`
   width: 285px;
   height: 350px;
   margin-bottom: 12px;
+  overflow: hidden;
 `;
 
 const ProductImg = styled.img`
@@ -32,6 +33,11 @@ const ProductImg = styled.img`
   height: 100%;
   cursor: pointer;
   border-radius: 10px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const SoldOutImg = styled.img`
