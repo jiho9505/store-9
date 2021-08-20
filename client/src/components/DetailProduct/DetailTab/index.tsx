@@ -21,12 +21,14 @@ const TabName = ['상품상세정보', '배송안내', '교환 및 반품안내'
  * TODO:
  * TabItem의 상품 후기 , 상품 문의 카운트는
  * 상위에서 받아와야 합니다!
+ * ReviewCount 추가가 필요합니다!
  */
 const DetailTab = ({ choicedIdx, handleClickItemName }: DetailTab) => {
   const createTabItem = () => {
     return TabName.map((itemName, idx) => (
       <TabItem key={itemName} onClick={handleClickItemName} data-idx={idx}>
         <ItemName active={choicedIdx === idx}>{itemName}</ItemName>
+        {/* <ReviewCount>0</ReviewCount> */}
       </TabItem>
     ));
   };

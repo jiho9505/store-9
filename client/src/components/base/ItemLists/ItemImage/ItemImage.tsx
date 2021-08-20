@@ -1,7 +1,6 @@
-import styled from '@emotion/styled';
 import React from 'react';
-
-import ItemWishButton from '../ItemWishButton/ItemWishButton';
+import styled from '@emotion/styled';
+import { Link } from '@/Router';
 
 type ImageProps = {
   quantity: number;
@@ -11,9 +10,10 @@ type ImageProps = {
 const ItemImage = ({ quantity, productImage }: ImageProps) => {
   return (
     <ImageContainer>
-      <ProductImg referrerPolicy="no-referrer" src={productImage} />
-      {!quantity ? <SoldOutImg src="images/soldout.png" /> : ``}
-      {/* {quantity ? <ItemWishButton /> : ``} */}
+      <Link to="/detail">
+        <ProductImg referrerPolicy="no-referrer" src={productImage} />
+        {!quantity ? <SoldOutImg src="images/soldout.png" /> : ``}
+      </Link>
     </ImageContainer>
   );
 };

@@ -3,6 +3,7 @@ import React from 'react';
 
 import { calculateDiscount } from '@/utils/calculateDiscount';
 import { baeminFont, red2 } from '@/static/style/common';
+import { Link } from '@/Router';
 
 type ContentProps = {
   item: {
@@ -22,7 +23,9 @@ const ItemContent = ({ item }: ContentProps) => {
     return (
       <ItemContentContainer>
         {item.discount_rate ? <Discount>{item.discount_rate}</Discount> : ``}
-        <ProductName>{item.title}</ProductName>
+        <Link to="/detail">
+          <ProductName>{item.title}</ProductName>
+        </Link>
         <ProductOriginalPrice isDiscount={item.discount_rate ? true : false}>
           {item.price}원
         </ProductOriginalPrice>
