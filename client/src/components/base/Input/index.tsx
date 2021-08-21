@@ -10,14 +10,16 @@ type validate = { isValid: boolean; onCheck(): void; message: string };
 type InputProps = {
   id?: string;
   name: string;
-  required: boolean;
+  required?: boolean;
+  readOnly?: boolean;
   size: inputSize;
-  value: string;
+  value?: string;
+  defaultValue?: string;
   placeholder?: string;
   variant: inputVariant;
   validate?: validate;
   type?: string;
-  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };
 
@@ -27,7 +29,7 @@ const Input = ({
   onChange,
   size,
   value,
-  placeholder,
+  placeholder = '',
   variant,
   validate,
   ...otherProps
@@ -44,7 +46,7 @@ const Input = ({
         required={required}
         onChange={onChange}
         onBlur={handleBlur}
-        placeholder={placeholder || ''}
+        placeholder={placeholder}
         variant={variant}
         valid={validate?.isValid}
         {...otherProps}

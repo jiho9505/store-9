@@ -5,11 +5,13 @@ import AddressModel from './AddressModel';
 
 export default class UserModel implements UserSchema {
   id: number;
-  userId: string;
+  loginId: string;
+  password: string;
+  confirmPassword: string;
   name: string;
   email: string;
   birth: Date;
-  phone: string;
+  phoneNumber: string;
   callNumber?: string;
   address?: AddressModel[];
 
@@ -23,7 +25,7 @@ export default class UserModel implements UserSchema {
       name: observable,
       email: observable,
       birth: observable,
-      phone: observable,
+      phoneNumber: observable,
       callNumber: observable,
       address: observable,
     });
