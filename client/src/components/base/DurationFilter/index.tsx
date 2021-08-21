@@ -7,7 +7,7 @@ import Input from '../Input';
 import Button from '../Button';
 
 import { primary1, normalRadius } from '@/static/style/common';
-import { getDashFormat } from '@/utils/dateParse';
+import { getDateFormat } from '@/utils/dateParse';
 
 const durationFilter = [
   { type: 'day', value: 0, content: '오늘' },
@@ -40,7 +40,7 @@ const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
       pastDate = new Date().setFullYear(new Date().getFullYear() - value);
     }
     setActiveFilter(content);
-    onSetForm({ start: getDashFormat(pastDate), finish: getDashFormat(curDate) });
+    onSetForm({ start: getDateFormat(pastDate), finish: getDateFormat(curDate) });
   };
 
   return (

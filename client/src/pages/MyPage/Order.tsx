@@ -5,7 +5,7 @@ import useInput from '@/hooks/customHooks/useInput';
 
 import DurationFilter from '@/components/base/DurationFilter';
 import { OrderContent } from '@/components/MyPage';
-import { getDashFormat } from '@/utils/dateParse';
+import { getDateFormat } from '@/utils/dateParse';
 
 const orderedProducts = [
   {
@@ -33,7 +33,7 @@ const orderedProducts = [
 const OrderPage = () => {
   const { form, onChange, onSetForm } = useInput({
     start: '',
-    finish: getDashFormat(new Date()),
+    finish: getDateFormat(new Date()),
   });
 
   return (

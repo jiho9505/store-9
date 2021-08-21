@@ -3,7 +3,7 @@ import guguStyled from '@/core/styled';
 
 import ListTable from '../base/ListTable';
 import Cell from '../base/Cell';
-import { getDashFormat } from '@/utils/dateParse';
+import { getDateFormat } from '@/utils/dateParse';
 
 type ReviewContentProps = {
   reviews: any;
@@ -25,7 +25,7 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
         cells: [
           { c: <Cell>{id}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
-          { c: <Cell>{getDashFormat(date)}</Cell>, colSpan: 1 },
+          { c: <Cell>{getDateFormat(date)}</Cell>, colSpan: 1 },
           { c: <Cell>{writer}</Cell>, colSpan: 1 },
         ],
       };

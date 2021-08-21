@@ -1,4 +1,4 @@
-import { getDashFormat } from '@/utils/dateParse';
+import { getDateFormat } from '@/utils/dateParse';
 import React, { useMemo } from 'react';
 
 import ListTable from '../base/ListTable';
@@ -21,7 +21,7 @@ const QnAContent = ({ questions }: QnAContentProps) => {
       return {
         id,
         cells: [
-          { c: <Cell>{getDashFormat(date)}</Cell>, colSpan: 1 },
+          { c: <Cell>{getDateFormat(date)}</Cell>, colSpan: 1 },
           { c: <Cell>{category}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
         ],
