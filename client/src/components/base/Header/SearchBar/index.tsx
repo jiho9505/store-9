@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import SearchHistoryComponent from '../SearchHistory';
+
 const SearchBar = () => {
   return (
     <SearchContainer>
@@ -8,6 +10,8 @@ const SearchBar = () => {
       <Button>
         <SearchImg src="images/search.png" />
       </Button>
+
+      <SearchHistoryComponent></SearchHistoryComponent>
     </SearchContainer>
   );
 };
@@ -15,6 +19,7 @@ const SearchBar = () => {
 export default SearchBar;
 
 const SearchContainer = styled.div`
+  position: relative;
   grid-column-start: 7;
   grid-column-end: 9;
   display: flex;
