@@ -1,24 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
+import ModalPortal from '@/utils/portal';
+import ModalWrapper from '../ModalWrapper';
+
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
+import { OptionModal } from '@/components/Cart';
 
 const TableItem = ({ product }) => {
+  const [activeModal, setActiveModal] = useState(false);
   const { productId, name, thumbNail, price, quantity, totalPrice } = product;
+
+  const handleOpenModal = () => {
+    setActiveModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setActiveModal(false);
+  };
+
   return (
-    <TableItemContainer>
-      <ProductBasicInfo>
-        <ProductImg src={thumbNail} />
-        <ProductName>{name}</ProductName>
-      </ProductBasicInfo>
-      <ProductPriceInfo>
-        <ProductPrice>
-          {price.toLocaleString()} 원 / <span>{quantity} 개</span>
-        </ProductPrice>
-        <Button>옵션/수량 변경</Button>
-      </ProductPriceInfo>
-      <ProductTotalPrice>{totalPrice.toLocaleString()} 원</ProductTotalPrice>
-    </TableItemContainer>
+    <>
+      <TableItemContainer>
+        <ProductBasicInfo>
+          <ProductImg src={thumbNail} />
+          <ProductName>{name}</ProductName>
+        </ProductBasicInfo>
+        <ProductPriceInfo>
+          <ProductPrice>
+            {price.toLocaleString()} 원 / <span>{quantity} 개</span>
+          </ProductPrice>
+          <Button onClick={handleOpenModal}>옵션/수량 변경</Button>
+        </ProductPriceInfo>
+        <ProductTotalPrice>{totalPrice.toLocaleString()} 원</ProductTotalPrice>
+      </TableItemContainer>
+      {activeModal && (
+        <ModalPortal>
+          <ModalWrapper onClose={handleCloseModal}>
+            <OptionModal />
+          </ModalWrapper>
+        </ModalPortal>
+      )}
+    </>
   );
 };
 
