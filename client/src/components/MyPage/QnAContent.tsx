@@ -54,7 +54,7 @@ const QnAContent = ({ questions }: QnAContentProps) => {
       <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
       {activeModal && (
         <ModalPortal>
-          <PostModal item={questions[0]} handleClickForClose={handleModalClose} title="문의하기" />
+          <PostModal item={questions[0]} onClose={handleModalClose} title="문의하기" />
         </ModalPortal>
       )}
     </>

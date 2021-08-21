@@ -9,7 +9,7 @@ import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/s
 
 const timeToShowMsg: number = 2000;
 
-const PostModal = ({ item, handleClickForClose, title }) => {
+const PostModal = ({ item, onClose, title }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const PostModal = ({ item, handleClickForClose, title }) => {
 
     const result = isPassedValidation(title, content);
     if (result) return;
-    handleClickForClose();
+    onClose();
   };
 
   const createErrorMsg = () => {
@@ -59,7 +59,7 @@ const PostModal = ({ item, handleClickForClose, title }) => {
   };
 
   return (
-    <ModalWrapper onClose={handleClickForClose} title={title}>
+    <ModalWrapper onClose={onClose} title={title}>
       <ItemContainer>
         <ItemImage src={item.image} />
         <ItemName>{item.title}</ItemName>
