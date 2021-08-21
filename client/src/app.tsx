@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import styled from '@emotion/styled';
-import { Router, Route, Link } from './Router';
+import { Router, Route } from './Router';
 
 const Header = React.lazy(() => import('@/components/base/Header'));
 const Footer = React.lazy(() => import('@/components/base/Footer'));
@@ -19,10 +19,6 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 import '@/static/assets/img/baeminFavicon.png';
 import Loading from './components/base/Loading';
 
-/**
- * FIXME:
- * 추후 여러 경로가 동일 컴포넌트 가리키는 것에 대한 처리 필요
- */
 const App = () => {
   return (
     <PageContainer>
@@ -47,11 +43,8 @@ const App = () => {
           <Route exact path="/order">
             <Order />
           </Route>
-          <Route path="/mypage">
+          <Route exact path="/mypage">
             <MyPage />
-          </Route>
-          <Route exact path="/product/:id">
-            <ProductPage />
           </Route>
           <Route exact path="/signupMethod">
             <SignupMethod />
@@ -66,6 +59,9 @@ const App = () => {
             <ProductList />
           </Route>
           <Route exact path="/books">
+            <ProductList />
+          </Route>
+          <Route exact path="/books/:id">
             <ProductList />
           </Route>
           <Route exact path="/green">
@@ -89,11 +85,11 @@ const App = () => {
           <Route exact path="/detail">
             <DetailProduct />
           </Route>
-          <Route exact path="/notfound">
-            <NotFound />
-          </Route>
           <Route exact path="/signup">
             <Signup />
+          </Route>
+          <Route exact path="/:notfound">
+            <NotFound />
           </Route>
         </Router>
         <ButtonToMoveToTop />
@@ -112,8 +108,5 @@ const LoadingContainer = styled.div`
   left: 45%;
   top: 35%;
 `;
-const ProductPage = () => {
-  return <div>This is Product Page</div>;
-};
 
 export default App;
