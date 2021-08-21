@@ -6,11 +6,15 @@ import SearchHistoryComponent from '../SearchHistory';
 
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
+import { baeminFont, greyLine, lightBlack, red1 } from '@/static/style/common';
+
+const timeToShowError = 2000;
 
 const SearchBar = () => {
   const [history, setHistory] = useLocalStorage('searchs', []);
-  const [nameForSearch, setNameForSearch] = useState('');
+  const [nameForSearch, setNameForSearch] = useState<string>('');
   const [showHistory, setShowHistory] = useState<boolean>(false);
+  const [isOccuredError, setIsOccuredError] = useState<boolean>(false);
 
   useEffect(() => {
     registerDomClickEvent();
@@ -61,7 +65,18 @@ const SearchBar = () => {
   };
 
   const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter') createNewHistory(e.currentTarget.value);
+    if (e.code === 'Enter') {
+      if (e.currentTarget.value.length === 0) {
+        setIsOccuredError(true);
+        setShowHistory(false);
+
+        setTimeout(() => {
+          setIsOccuredError(false);
+        }, timeToShowError);
+        return;
+      }
+      createNewHistory(e.currentTarget.value);
+    }
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,18 +91,28 @@ const SearchBar = () => {
         onKeyPress={handleKeyPressInput}
         onChange={handleChangeInput}
         value={nameForSearch}
-        required
+        maxLength={15}
       />
       <Button>
         <SearchImg src="images/search.png" onClick={handleClickImg} />
       </Button>
 
       {showHistory && <SearchHistoryComponent handleClick={handleClick} histories={history} />}
+      {isOccuredError && <ErrorMsg>1글자 이상 입력해주세요❗️</ErrorMsg>}
     </SearchContainer>
   );
 };
 
 export default SearchBar;
+
+const ErrorMsg = styled.div`
+  position: absolute;
+  left: 0px;
+  bottom: 22px;
+  color: ${red1};
+  font-size: 14px;
+  font-family: ${baeminFont};
+`;
 
 const SearchContainer = styled.div`
   position: relative;
@@ -101,7 +126,7 @@ const SearchInput = styled.input`
   height: 34px;
   font-size: 14px;
   flex-grow: 1;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid ${greyLine};
 `;
 
 const Button = styled.button`
@@ -110,5 +135,6 @@ const Button = styled.button`
 `;
 
 const SearchImg = styled.img`
-  width: 100%;
+  width: 70%;
+  margin-top: 5px;
 `;
