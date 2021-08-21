@@ -53,10 +53,10 @@ const Carousel = () => {
         <SlideImage src="images/bannerImage2.gif" alt="second-banner-image" />
         <SlideImage src="images/bannerImage3.gif" alt="third-banner-image" />
       </ImageContainer>
-      <ButtonContainer>
-        <Button onClick={onClickButton} data-idx="1" active={index === 1}></Button>
-        <Button onClick={onClickButton} data-idx="2" active={index === 2}></Button>
-        <Button onClick={onClickButton} data-idx="3" active={index === 3}></Button>
+      <ButtonContainer onClick={onClickButton}>
+        <Button data-idx="1" active={index === 1}></Button>
+        <Button data-idx="2" active={index === 2}></Button>
+        <Button data-idx="3" active={index === 3}></Button>
       </ButtonContainer>
     </CarouselContainer>
   );
