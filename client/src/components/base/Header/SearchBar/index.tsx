@@ -16,6 +16,11 @@ const SearchBar = () => {
     setShowHistory(true);
   };
 
+  /**
+   * TODO:
+   * target.id === 'content'
+   * Text 결과로 새 페이지에 보여줘야함.
+   */
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
@@ -27,7 +32,9 @@ const SearchBar = () => {
       const newHistory = history.length > 1 ? [...history].splice(idxToRemove, 1) : [];
       setHistory(newHistory);
     } else if (target.id === 'clear') {
+      setHistory([]);
     } else if (target.id === 'content') {
+      console.log(target.innerText);
     } else return;
   };
 
