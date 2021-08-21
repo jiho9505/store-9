@@ -59,12 +59,7 @@ const PostModal = ({ item, handleClickForClose, title }) => {
   };
 
   return (
-    <ModalWrapper onClose={handleClickForClose}>
-      <ModalHeader>
-        <GuideText>{title}</GuideText>
-        <i onClick={handleClickForClose} className="fas fa-times"></i>
-      </ModalHeader>
-
+    <ModalWrapper onClose={handleClickForClose} title={title}>
       <ItemContainer>
         <ItemImage src={item.image} />
         <ItemName>{item.title}</ItemName>
@@ -117,22 +112,6 @@ const ErrorMsg = styled.p`
   font-family: ${baeminFont};
   color: ${red1};
   font-size: 20px;
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid ${greyLine};
-  padding: 10px 0px;
-
-  i {
-    cursor: pointer;
-  }
-`;
-
-const GuideText = styled.h3`
-  font-family: ${baeminThickFont};
 `;
 
 const ItemContainer = styled.div`

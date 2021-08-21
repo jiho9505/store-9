@@ -1,18 +1,25 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { greyBg1 } from '@/static/style/common';
+import { greyBg1, greyLine, baeminThickFont } from '@/static/style/common';
 
 type ModalWrapperProps = {
   onClose(): void;
+  title?: string;
   children: React.ReactNode;
 };
 
-const ModalWrapper = ({ onClose, children }: ModalWrapperProps) => {
+const ModalWrapper = ({ onClose, title, children }: ModalWrapperProps) => {
   return (
     <ModalContainer>
       <Overlay onClick={onClose} />
-      <Modal>{children}</Modal>
+      <Modal>
+        <ModalHeader>
+          <GuideText>{title}</GuideText>
+          <i onClick={onClose} className="fas fa-times" />
+        </ModalHeader>
+        {children}
+      </Modal>
     </ModalContainer>
   );
 };
@@ -50,6 +57,22 @@ const Modal = styled.div`
   border-radius: 0.5rem;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
   z-index: 1;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid ${greyLine};
+  padding: 10px 0px;
+
+  i {
+    cursor: pointer;
+  }
+`;
+
+const GuideText = styled.h3`
+  font-family: ${baeminThickFont};
 `;
 
 export default ModalWrapper;
