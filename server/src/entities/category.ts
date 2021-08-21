@@ -10,7 +10,7 @@ class Category extends BasicEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   parent_id: number;
 
   @ManyToOne((type) => Category, (category) => category.children)
