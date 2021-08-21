@@ -27,12 +27,6 @@ class Product extends DateBasicEntity {
   @Column()
   category_id: number;
 
-  @Column()
-  detail_id: number;
-
-  @Column()
-  discount_id: number;
-
   @ManyToOne((type) => Category, (category) => category.products)
   @JoinColumn({ name: 'category_id' })
   category: Category;
