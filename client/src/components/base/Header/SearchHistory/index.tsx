@@ -12,35 +12,61 @@ type Histories = {
 type SearchHistoryComponentProps = {
   handleClick(e: React.MouseEvent<HTMLElement>): void;
   histories: Array<Histories>;
+  nameForSearch: string;
 };
 
-const SearchHistoryComponent = ({ handleClick, histories }: SearchHistoryComponentProps) => {
+const SearchHistoryComponent = ({
+  handleClick,
+  histories,
+  nameForSearch,
+}: SearchHistoryComponentProps) => {
+  /**
+   * TODO:
+   * else 일 때
+   * 자동완성 관련 데이터로 재사용없이 UI 구현할 것
+   * 현재는 임시데이터
+   */
   const createHistory = () => {
-    return histories.length > 0 ? (
-      histories.map((history, idx) => (
+    if (nameForSearch.length === 0) {
+      return histories.length > 0 ? (
+        histories.map((history, idx) => (
+          <SearchHistory key={history.id}>
+            <Content id="content">{history.content}</Content>
+            <RightSide>
+              <Day>{history.day}</Day>
+              <Remove id="remove" className="fas fa-times" data-idx={idx}></Remove>
+            </RightSide>
+          </SearchHistory>
+        ))
+      ) : (
+        <EmptyHistory>최근 검색어가 없습니다.</EmptyHistory>
+      );
+    } else {
+      return histories.map((history, idx) => (
         <SearchHistory key={history.id}>
           <Content id="content">{history.content}</Content>
-          <RightSide>
-            <Day>{history.day}</Day>
-            <Remove id="remove" className="fas fa-times" data-idx={idx}></Remove>
-          </RightSide>
         </SearchHistory>
-      ))
-    ) : (
-      <EmptyHistory>최근 검색어가 없습니다.</EmptyHistory>
-    );
+      ));
+    }
+  };
+
+  const createTitle = () => {
+    return nameForSearch.length > 0 ? <Title>추천검색어</Title> : <Title>최근검색어</Title>;
+  };
+
+  const createClearButton = () => {
+    const viewToShow = nameForSearch.length > 0 ? '' : histories.length > 0 ? '전체삭제' : '';
+    return <ClearHistoriesButton id="clear">{viewToShow}</ClearHistoriesButton>;
   };
 
   return (
     <SearchHistoryContainer onClick={handleClick}>
       <SearchHistories>
-        <Title>최근검색어</Title>
+        {createTitle()}
         {createHistory()}
       </SearchHistories>
       <SearchOptionContainer>
-        <ClearHistoriesButton id="clear">
-          {histories.length > 0 ? '전체삭제' : ''}
-        </ClearHistoriesButton>
+        {createClearButton()}
         <CloseButton id="close">닫기</CloseButton>
       </SearchOptionContainer>
     </SearchHistoryContainer>
