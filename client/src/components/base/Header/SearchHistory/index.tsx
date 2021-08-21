@@ -4,27 +4,30 @@ import styled from '@emotion/styled';
 import { getDateFormat } from '@/utils/dateParse';
 import { baeminFont, greyBg1, greyLine, greySpan } from '@/static/style/common';
 
-const SearchHistoryComponent = () => {
+type SearchHistoryComponentProps = {
+  handleClick(e: React.MouseEvent<HTMLElement>): void;
+};
+const SearchHistoryComponent = ({ handleClick }: SearchHistoryComponentProps) => {
   const createHistory = () => {
     return (
       <SearchHistory>
-        <Content>TEST</Content>
+        <Content id="content">TEST</Content>
         <RightSide>
           <Day>{getDateFormat('', 'dot')}</Day>
-          <Close className="fas fa-times"></Close>
+          <Remove id="remove" className="fas fa-times"></Remove>
         </RightSide>
       </SearchHistory>
     );
   };
   return (
-    <SearchHistoryContainer>
+    <SearchHistoryContainer onClick={handleClick}>
       <SearchHistories>
         <Title>최근검색어</Title>
         {createHistory()}
       </SearchHistories>
       <SearchOptionContainer>
-        <ClearHistoriesButton>전체삭제</ClearHistoriesButton>
-        <CloseButton>닫기</CloseButton>
+        <ClearHistoriesButton id="clear">전체삭제</ClearHistoriesButton>
+        <CloseButton id="close">닫기</CloseButton>
       </SearchOptionContainer>
     </SearchHistoryContainer>
   );
@@ -46,7 +49,7 @@ const RightSide = styled.div`
 const Day = styled.span`
   font-family: ${baeminFont};
 `;
-const Close = styled.i`
+const Remove = styled.i`
   cursor: pointer;
 `;
 const Title = styled.div`
