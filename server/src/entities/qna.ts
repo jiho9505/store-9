@@ -11,10 +11,10 @@ class QnA extends DateBasicEntity {
   @Column()
   content: string;
 
-  @Column()
+  @Column({ nullable: true, default: false })
   isPrivate: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   images: string;
 
   @Column()
