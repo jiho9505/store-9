@@ -37,7 +37,7 @@ const TableItem = ({ product }) => {
       {activeModal && (
         <ModalPortal>
           <ModalWrapper onClose={handleCloseModal} title="옵션변경">
-            <OptionModal product={product} />
+            <OptionModal product={product} onClose={handleCloseModal}/>
           </ModalWrapper>
         </ModalPortal>
       )}
