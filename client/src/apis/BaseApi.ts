@@ -16,6 +16,7 @@ export default class BaseApi {
       baseURL: url.href,
       validateStatus: (status) => 200 <= status && status < 300,
       paramsSerializer: qs.stringify,
+      withCredentials: true,
     });
 
     this.instance.interceptors.request.use((config: CustomAxiosRequestConfig) => {
