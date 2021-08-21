@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { nanoid } from 'nanoid';
 
@@ -11,6 +11,10 @@ const SearchBar = () => {
   const [history, setHistory] = useLocalStorage('searchs', []);
   const [nameForSearch, setNameForSearch] = useState('');
   const [showHistory, setShowHistory] = useState<boolean>(false);
+
+  useEffect(() => {
+    registerDomClickEvent();
+  }, []);
 
   const handleFocusInput = () => {
     setShowHistory(true);
@@ -38,17 +42,17 @@ const SearchBar = () => {
     } else return;
   };
 
-  const handleBlur = (e) => {
-    // setShowHistory(false);
+  const registerDomClickEvent = () => {
+    document.addEventListener('click', (e) => {
+      const { target } = e;
+      if (!(target instanceof HTMLElement)) return;
+      if (!target.closest('#search')) setShowHistory(false);
+    });
   };
 
   const createNewHistory = (value: string) => {
-    if (history.length === 10) {
-      const newHistory = [...history].slice(0, 9);
-      setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
-    } else {
-      setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...history]);
-    }
+    const newHistory = history.length === 10 ? [...history].slice(0, 9) : [...history];
+    setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
   };
 
@@ -65,13 +69,14 @@ const SearchBar = () => {
   };
 
   return (
-    <SearchContainer onBlur={handleBlur}>
+    <SearchContainer id="search">
       <SearchInput
         onFocus={handleFocusInput}
         placeholder="검색어를 입력해 주세요"
         onKeyPress={handleKeyPressInput}
         onChange={handleChangeInput}
         value={nameForSearch}
+        required
       />
       <Button>
         <SearchImg src="images/search.png" onClick={handleClickImg} />
