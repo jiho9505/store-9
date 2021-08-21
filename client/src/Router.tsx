@@ -3,16 +3,20 @@ import styled from '@emotion/styled';
 
 import useLocation from './hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 const history = window.history;
 
+// let success = false;
 const Router = ({ children }) => {
+  // console.log('start: -------------', children);
   const [curLocation, setLocation] = useState(window.location.pathname);
 
   useEffect(() => {
     History.prototype.push = (path) => {
       history.pushState('', '', path);
       setLocation(path);
+      // success = false;
     };
 
     const movePage = ({ target }) => {
@@ -32,24 +36,59 @@ const Router = ({ children }) => {
   );
 };
 
-const Route = ({ exact = false, path, children }) => {
+const haveRouterParameter = (path: string, curLocation: string): boolean => {
+  if (path.includes(':')) {
+    if (curLocation === '/') return false;
+    const curLocationLastSlashIdx = curLocation.lastIndexOf('/');
+    const pathLastSlashIdx = path.lastIndexOf('/');
+    const curLocationBeforeSlash = curLocation.slice(0, curLocationLastSlashIdx);
+    const pathBeforeSlash = path.slice(0, pathLastSlashIdx);
+
+    return curLocationBeforeSlash === pathBeforeSlash;
+  }
+  return false;
+};
+
+type RouteType = {
+  exact?: boolean;
+  path: string;
+  children: ReactJSXElement;
+};
+const Route = ({ exact = false, path, children }: RouteType) => {
+  // console.log('children: ', children);
+  // console.log('success: ', success);
+  // console.log('path: ', path);
+  // if (success) return null;
+  // console.log('success-after: ', success);
+
   const curLocation = useLocation();
+  // console.log('curLocation: ', curLocation);
 
   const isMatched = (): boolean => {
     if (exact) {
+      const result = haveRouterParameter(path, curLocation);
+      if (result) return true;
       return path === curLocation;
     } else {
       return curLocation.match(path)?.index === 0;
     }
   };
+  // console.log('isMatched: ', isMatched());
 
-  return isMatched() ? children : null;
+  if (isMatched()) {
+    // success = true;
+    // console.log('success: ', success);
+
+    return children;
+  }
+  return null;
 };
 
 const Link = ({ to, children, ...rest }) => {
   const { history } = useContext(HistoryContext);
 
-  const handleClickLink = () => {
+  const handleClickLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     history.push(to);
   };
 
