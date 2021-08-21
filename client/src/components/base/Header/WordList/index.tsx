@@ -9,24 +9,26 @@ type Histories = {
   id: string;
 };
 
-type SearchHistoryComponentProps = {
+type WordListProps = {
   handleClick(e: React.MouseEvent<HTMLElement>): void;
   histories: Array<Histories>;
   nameForSearch: string;
+  recommendWords: string[];
 };
 
 const SearchHistoryComponent = ({
   handleClick,
   histories,
   nameForSearch,
-}: SearchHistoryComponentProps) => {
+  recommendWords,
+}: WordListProps) => {
   /**
    * TODO:
    * else 일 때
    * 자동완성 관련 데이터로 재사용없이 UI 구현할 것
    * 현재는 임시데이터
    */
-  const createHistory = () => {
+  const createWordList = () => {
     if (nameForSearch.length === 0) {
       return histories.length > 0 ? (
         histories.map((history, idx) => (
@@ -42,11 +44,14 @@ const SearchHistoryComponent = ({
         <EmptyHistory>최근 검색어가 없습니다.</EmptyHistory>
       );
     } else {
-      return histories.map((history, idx) => (
-        <SearchHistory key={history.id}>
-          <Content id="content">{history.content}</Content>
-        </SearchHistory>
-      ));
+      return (
+        recommendWords &&
+        recommendWords.map((word) => (
+          <RecommendWord key={word}>
+            <Content id="content">{word}</Content>
+          </RecommendWord>
+        ))
+      );
     }
   };
 
@@ -60,16 +65,16 @@ const SearchHistoryComponent = ({
   };
 
   return (
-    <SearchHistoryContainer onClick={handleClick}>
-      <SearchHistories>
+    <WordListContainer onClick={handleClick}>
+      <Words>
         {createTitle()}
-        {createHistory()}
-      </SearchHistories>
+        {createWordList()}
+      </Words>
       <SearchOptionContainer>
         {createClearButton()}
         <CloseButton id="close">닫기</CloseButton>
       </SearchOptionContainer>
-    </SearchHistoryContainer>
+    </WordListContainer>
   );
 };
 
@@ -79,10 +84,12 @@ const EmptyHistory = styled.div`
   font-size: 12px;
   color: ${lightBlack};
 `;
+
 const Content = styled.div`
   font-family: ${baeminFont};
   cursor: pointer;
 `;
+
 const RightSide = styled.div`
   display: flex;
   align-items: center;
@@ -90,14 +97,17 @@ const RightSide = styled.div`
   color: ${greySpan};
   font-size: 11px;
 `;
+
 const Day = styled.span`
   font-family: ${baeminFont};
 `;
+
 const Remove = styled.i`
   cursor: pointer;
 `;
+
 const Title = styled.div`
-  font-size: 15px;
+  font-size: 16px;
   font-family: ${baeminFont};
   font-weight: bold;
   width: 100%;
@@ -108,22 +118,26 @@ const Title = styled.div`
 const ClearHistoriesButton = styled.span`
   cursor: pointer;
 `;
+
 const CloseButton = styled.span`
   cursor: pointer;
 `;
+
 const SearchHistory = styled.li`
   display: flex;
   justify-content: space-between;
-
-  font-size: 12px;
+  font-size: 14px;
 `;
-const SearchHistories = styled.ul`
+
+const RecommendWord = styled.li(SearchHistory);
+
+const Words = styled.ul`
   padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 `;
-const SearchHistoryContainer = styled.div`
+const WordListContainer = styled.div`
   position: absolute;
   left: 0px;
   top: 65px;
