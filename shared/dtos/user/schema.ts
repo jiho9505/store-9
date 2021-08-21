@@ -2,12 +2,13 @@ import { AddressSchema } from '../address/schema';
 
 export interface UserSchema {
   id: number;
-  userId: string;
-  password?: string;
+  loginId?: string;
+  password: string;
+  confirmPassword: string;
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   callNumber?: string;
-  birth: Date;
+  birth?: Date;
   address?: AddressSchema[];
 }

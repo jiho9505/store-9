@@ -2,12 +2,12 @@ import { Optional } from '@shared/operators';
 import { UserSchema } from '../user/schema';
 
 namespace AuthRequest {
-  export type Login = {
-    userId: string;
-    password: string;
-  };
+  export interface Login extends FormData {
+    id?: string;
+    password?: string;
+  }
 
-  export type Signup = Optional<Omit<UserSchema, 'id'>, 'callNumber'>;
+  export type Signup = FormData;
 }
 
 export default AuthRequest;

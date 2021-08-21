@@ -18,6 +18,9 @@ class User extends DateBasicEntity {
   role: User_Role;
 
   @Column({ unique: true })
+  login_id: string;
+
+  @Column({ unique: true })
   email: string;
 
   @Column()
