@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 import SearchHistoryComponent from '../SearchHistory';
 
 const SearchBar = () => {
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+
+  const handleFocusInput = () => {
+    setShowHistory(true);
+  };
+
   return (
     <SearchContainer>
-      <SearchInput placeholder="검색어를 입력해 주세요" />
+      <SearchInput onFocus={handleFocusInput} placeholder="검색어를 입력해 주세요" />
       <Button>
         <SearchImg src="images/search.png" />
       </Button>
 
-      <SearchHistoryComponent></SearchHistoryComponent>
+      {showHistory && <SearchHistoryComponent />}
     </SearchContainer>
   );
 };
