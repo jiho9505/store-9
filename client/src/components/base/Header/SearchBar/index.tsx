@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { nanoid } from 'nanoid';
 
 import SearchHistoryComponent from '../SearchHistory';
 
+import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 
 const SearchBar = () => {
-  const [history, setHistory] = useState([]);
-
-  const [showHistory, setShowHistory] = useState(false);
+  const [history, setHistory] = useLocalStorage('searchs', []);
+  const [nameForSearch, setNameForSearch] = useState('');
+  const [showHistory, setShowHistory] = useState<boolean>(false);
 
   const handleFocusInput = () => {
     setShowHistory(true);
@@ -28,14 +30,41 @@ const SearchBar = () => {
   const handleBlur = (e) => {
     setShowHistory(false);
   };
+
+  const createNewHistory = (value: string) => {
+    if (history.length === 10) {
+      const newHistory = [...history].slice(0, 9);
+      setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
+    } else {
+      setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...history]);
+    }
+  };
+
+  const handleClickImg = (e: React.MouseEvent<HTMLImageElement>) => {
+    createNewHistory(nameForSearch);
+  };
+
+  const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Enter') createNewHistory(e.currentTarget.value);
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNameForSearch(e.currentTarget.value);
+  };
+
   return (
     <SearchContainer onBlur={handleBlur}>
-      <SearchInput onFocus={handleFocusInput} placeholder="검색어를 입력해 주세요" />
+      <SearchInput
+        onFocus={handleFocusInput}
+        placeholder="검색어를 입력해 주세요"
+        onKeyPress={handleKeyPressInput}
+        onChange={handleChangeInput}
+      />
       <Button>
-        <SearchImg src="images/search.png" />
+        <SearchImg src="images/search.png" onClick={handleClickImg} />
       </Button>
 
-      {showHistory && <SearchHistoryComponent handleClick={handleClick} />}
+      {showHistory && <SearchHistoryComponent handleClick={handleClick} histories={history} />}
     </SearchContainer>
   );
 };
