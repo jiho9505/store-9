@@ -11,6 +11,17 @@ const SearchBar = () => {
     setShowHistory(true);
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const { target } = e;
+    if (!(target instanceof HTMLElement)) return;
+    if (target.id === 'close') {
+      setShowHistory(false);
+    } else if (target.id === 'remove') {
+    } else if (target.id === 'clear') {
+    } else if (target.id === 'content') {
+    } else return;
+  };
+
   return (
     <SearchContainer>
       <SearchInput onFocus={handleFocusInput} placeholder="검색어를 입력해 주세요" />
@@ -18,7 +29,7 @@ const SearchBar = () => {
         <SearchImg src="images/search.png" />
       </Button>
 
-      {showHistory && <SearchHistoryComponent />}
+      {showHistory && <SearchHistoryComponent handleClick={handleClick} />}
     </SearchContainer>
   );
 };
