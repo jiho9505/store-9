@@ -7,11 +7,12 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["../shared/*"]
-    }
+    "typeRoots": ["node_modules/@types", "@types"]
   },
-  "include": ["src/**/*", "../shared/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "../shared/**/*", "test/**/*"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true
+  }
 }
