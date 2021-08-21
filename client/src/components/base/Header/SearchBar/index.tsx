@@ -22,13 +22,17 @@ const SearchBar = () => {
     if (target.id === 'close') {
       setShowHistory(false);
     } else if (target.id === 'remove') {
+      const idx = Number(target.dataset.idx);
+      const idxToRemove = history.length - 1 - idx;
+      const newHistory = history.length > 1 ? [...history].splice(idxToRemove, 1) : [];
+      setHistory(newHistory);
     } else if (target.id === 'clear') {
     } else if (target.id === 'content') {
     } else return;
   };
 
   const handleBlur = (e) => {
-    setShowHistory(false);
+    // setShowHistory(false);
   };
 
   const createNewHistory = (value: string) => {
@@ -38,9 +42,10 @@ const SearchBar = () => {
     } else {
       setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...history]);
     }
+    setNameForSearch('');
   };
 
-  const handleClickImg = (e: React.MouseEvent<HTMLImageElement>) => {
+  const handleClickImg = () => {
     createNewHistory(nameForSearch);
   };
 
@@ -59,6 +64,7 @@ const SearchBar = () => {
         placeholder="검색어를 입력해 주세요"
         onKeyPress={handleKeyPressInput}
         onChange={handleChangeInput}
+        value={nameForSearch}
       />
       <Button>
         <SearchImg src="images/search.png" onClick={handleClickImg} />

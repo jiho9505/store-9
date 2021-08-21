@@ -17,12 +17,12 @@ type SearchHistoryComponentProps = {
 const SearchHistoryComponent = ({ handleClick, histories }: SearchHistoryComponentProps) => {
   const createHistory = () => {
     return histories.length > 0 ? (
-      histories.map((history) => (
+      histories.map((history, idx) => (
         <SearchHistory key={history.id}>
           <Content id="content">{history.content}</Content>
           <RightSide>
             <Day>{history.day}</Day>
-            <Remove id="remove" className="fas fa-times"></Remove>
+            <Remove id="remove" className="fas fa-times" data-idx={idx}></Remove>
           </RightSide>
         </SearchHistory>
       ))
