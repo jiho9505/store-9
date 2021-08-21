@@ -100,7 +100,7 @@ const SearchHistories = styled.ul`
 const SearchHistoryContainer = styled.div`
   position: absolute;
   left: 0px;
-  top: 73px;
+  top: 65px;
   border: 1px solid ${greyLine};
   width: 90%;
   z-index: 1;

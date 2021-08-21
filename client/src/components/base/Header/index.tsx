@@ -84,7 +84,7 @@ const SearchHeader = styled.div`
 `;
 
 const LogoLink = styled(Link)`
-  grid-column-start: 3;
+  grid-column-start: 4;
   grid-column-end: 6;
   display: flex;
   justify-content: center;
@@ -93,6 +93,7 @@ const LogoLink = styled(Link)`
 `;
 
 const Logo = styled.img`
+  margin-top: 15px;
   width: 100%;
 `;
 
