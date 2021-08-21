@@ -38,7 +38,9 @@ const SearchHistoryComponent = ({ handleClick, histories }: SearchHistoryCompone
         {createHistory()}
       </SearchHistories>
       <SearchOptionContainer>
-        <ClearHistoriesButton id="clear">전체삭제</ClearHistoriesButton>
+        <ClearHistoriesButton id="clear">
+          {histories.length > 0 ? '전체삭제' : ''}
+        </ClearHistoriesButton>
         <CloseButton id="close">닫기</CloseButton>
       </SearchOptionContainer>
     </SearchHistoryContainer>
