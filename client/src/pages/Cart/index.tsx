@@ -101,7 +101,7 @@ const Button = styled.button`
   border: 1px solid ${greyLine};
   border-radius: ${normalRadius};
   color: ${greySpan};
-  &:first-child {
+  &:first-of-type {
     margin-right: 10px;
   }
 `;
