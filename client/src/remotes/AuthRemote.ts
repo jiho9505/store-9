@@ -14,7 +14,7 @@ export const login = async (body: AuthRequest.Login) => {
   }
 };
 
-export const singup = async (body: AuthRequest.Signup) => {
+export const signup = async (body: AuthRequest.Signup) => {
   try {
     const result = await AuthApi.signup(body);
 
