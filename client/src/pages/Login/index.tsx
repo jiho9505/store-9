@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
@@ -6,10 +6,18 @@ import { Link } from '@/Router';
 import Input from '@/components/base/Input';
 import useInput from '@/hooks/customHooks/useInput';
 import Button from '@/components/base/Button';
+import AuthApi from '@/apis/AuthApi';
+import useHistory from '@/hooks/customHooks/useHistory';
 
 const CAUTION_TEXT = '주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.';
+const githubAuthUrl = 'https://github.com/login/oauth/authorize';
+const CLIENT_ID = '79b5ee470c52ef9c3eac';
 
 const LoginPage = () => {
+  const loginInputFormRef = useRef(null);
+  const nonUserLoginRef = useRef(null);
+  const [errors, setErrors] = useState({ idError: '', passwordError: '', serverError: '' });
+  const history = useHistory();
   const {
     form: { id, password, name, orderNumber },
     onChange,
@@ -21,19 +29,28 @@ const LoginPage = () => {
     orderNumber: '',
   });
 
-  const onLoginClick = () => {
-    reset();
+  const callback = () => {};
+
+  const onLoginClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const form = new FormData(loginInputFormRef.current);
+      const data = await AuthApi.login(form);
+      if (data.ok) {
+        history.push('/');
+      }
+    } catch (err) {
+      setErrors({ ...errors, serverError: err.message });
+    }
   };
 
-  const onGithubLoginClick = () => {
-    reset();
-  };
+  const onNonUserLoginClick = () => {};
 
   return (
     <LoginPageContainer>
       <LoginContainer>
         <LoginHeader>회원 로그인</LoginHeader>
-        <LoginForm>
+        <LoginForm onSubmit={onLoginClick} ref={loginInputFormRef}>
           <Input
             required
             size="medium"
@@ -49,30 +66,21 @@ const LoginPage = () => {
             onChange={onChange}
             value={password}
             placeholder="패스워드 입력"
+            type="password"
           />
-          <Button
-            size="medium"
-            value="로그인"
-            type="button"
-            onClick={onLoginClick}
-            theme="normal"
-          />
-          <Button
-            size="medium"
-            value="Github 로그인"
-            type="button"
-            onClick={onGithubLoginClick}
-            theme="github"
-          />
+          <Button size="medium" value="로그인" type="submit" theme="normal" />
+          <a href={`${githubAuthUrl}?client_id=${CLIENT_ID}`}>
+            <Button size="medium" value="Github 로그인" type="button" theme="github" />
+          </a>
           <LoginBtnBox>
             <LoginBtnList>
-              <Link to="/signup">
+              <Link to="/signupMethod">
                 <LoginBtnItem>회원가입</LoginBtnItem>
               </Link>
-              <Link to="/signup">
+              <Link to="/signupMethod">
                 <LoginBtnItem>아이디 찾기</LoginBtnItem>
               </Link>
-              <Link to="/signup">
+              <Link to="/signupMethod">
                 <LoginBtnItem>비밀번호 찾기</LoginBtnItem>
               </Link>
             </LoginBtnList>
@@ -81,7 +89,7 @@ const LoginPage = () => {
       </LoginContainer>
       <LoginContainer>
         <LoginHeader>비회원 주문 조회 하기</LoginHeader>
-        <LoginForm>
+        <LoginForm onSubmit={onNonUserLoginClick} ref={nonUserLoginRef}>
           <Input
             required
             size="medium"
