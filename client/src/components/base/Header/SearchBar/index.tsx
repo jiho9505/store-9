@@ -3,8 +3,11 @@ import styled from '@emotion/styled';
 
 import SearchHistoryComponent from '../SearchHistory';
 
+import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
+
 const SearchBar = () => {
   const [history, setHistory] = useState([]);
+
   const [showHistory, setShowHistory] = useState(false);
 
   const handleFocusInput = () => {
@@ -22,8 +25,11 @@ const SearchBar = () => {
     } else return;
   };
 
+  const handleBlur = (e) => {
+    setShowHistory(false);
+  };
   return (
-    <SearchContainer>
+    <SearchContainer onBlur={handleBlur}>
       <SearchInput onFocus={handleFocusInput} placeholder="검색어를 입력해 주세요" />
       <Button>
         <SearchImg src="images/search.png" />
