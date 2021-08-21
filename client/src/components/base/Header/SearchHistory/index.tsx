@@ -1,24 +1,36 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { getDateFormat } from '@/utils/dateParse';
-import { baeminFont, greyBg1, greyLine, greySpan } from '@/static/style/common';
+import { baeminFont, greyBg1, greyLine, greySpan, lightBlack } from '@/static/style/common';
+
+type Histories = {
+  content: string;
+  day: string;
+  id: string;
+};
 
 type SearchHistoryComponentProps = {
   handleClick(e: React.MouseEvent<HTMLElement>): void;
+  histories: Array<Histories>;
 };
-const SearchHistoryComponent = ({ handleClick }: SearchHistoryComponentProps) => {
+
+const SearchHistoryComponent = ({ handleClick, histories }: SearchHistoryComponentProps) => {
   const createHistory = () => {
-    return (
-      <SearchHistory>
-        <Content id="content">TEST</Content>
-        <RightSide>
-          <Day>{getDateFormat('', 'dot')}</Day>
-          <Remove id="remove" className="fas fa-times"></Remove>
-        </RightSide>
-      </SearchHistory>
+    return histories.length > 0 ? (
+      histories.map((history) => (
+        <SearchHistory key={history.id}>
+          <Content id="content">{history.content}</Content>
+          <RightSide>
+            <Day>{history.day}</Day>
+            <Remove id="remove" className="fas fa-times"></Remove>
+          </RightSide>
+        </SearchHistory>
+      ))
+    ) : (
+      <EmptyHistory>최근 검색어가 없습니다.</EmptyHistory>
     );
   };
+
   return (
     <SearchHistoryContainer onClick={handleClick}>
       <SearchHistories>
@@ -35,6 +47,10 @@ const SearchHistoryComponent = ({ handleClick }: SearchHistoryComponentProps) =>
 
 export default SearchHistoryComponent;
 
+const EmptyHistory = styled.div`
+  font-size: 12px;
+  color: ${lightBlack};
+`;
 const Content = styled.div`
   font-family: ${baeminFont};
   cursor: pointer;
