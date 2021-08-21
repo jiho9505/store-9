@@ -44,6 +44,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "korean-regexp": "^1.0.9",
     "murmurhash": "^2.0.0",
     "nanoid": "^3.1.25",
     "react": "^17.0.2",
