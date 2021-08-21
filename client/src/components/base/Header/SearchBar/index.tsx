@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { nanoid } from 'nanoid';
+import { getRegExp } from 'korean-regexp';
 
-import SearchHistoryComponent from '../SearchHistory';
+import WordList from '../WordList';
 
+import words from '@/static/constants/words';
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
@@ -19,15 +21,16 @@ const timeToShowError = 2000;
 const SearchBar = () => {
   const [history, setHistory] = useLocalStorage('searchs', []);
   const [nameForSearch, setNameForSearch] = useState<string>('');
-  const [showHistory, setShowHistory] = useState<boolean>(false);
+  const [showWordList, setShowWordList] = useState<boolean>(false);
   const [isOccuredError, setIsOccuredError] = useState<boolean>(false);
+  const [recommendWords, setRecommendWords] = useState<string[]>([]);
 
   useEffect(() => {
     registerDomClickEvent();
   }, []);
 
   const handleFocusInput = () => {
-    setShowHistory(true);
+    setShowWordList(true);
   };
 
   /**
@@ -39,7 +42,7 @@ const SearchBar = () => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
     if (target.id === 'close') {
-      setShowHistory(false);
+      setShowWordList(false);
     } else if (target.id === 'remove') {
       const idx = Number(target.dataset.idx);
       const idxToRemove = history.length - 1 - idx;
@@ -56,7 +59,7 @@ const SearchBar = () => {
     document.addEventListener('click', (e) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
-      if (!target.closest('#search')) setShowHistory(false);
+      if (!target.closest('#search')) setShowWordList(false);
     });
   };
 
@@ -73,7 +76,7 @@ const SearchBar = () => {
   const checkLength = (value: string): boolean => {
     if (value.length === 0) {
       setIsOccuredError(true);
-      setShowHistory(false);
+      setShowWordList(false);
 
       setTimeout(() => {
         setIsOccuredError(false);
@@ -83,7 +86,14 @@ const SearchBar = () => {
     return true;
   };
 
-  const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUpInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const matchedWords = words
+      .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
+      .sort((a, b) => a.length - b.length)
+      .slice(0, 10);
+
+    setRecommendWords(matchedWords);
+
     if (e.code === 'Enter') {
       checkLength(e.currentTarget.value) && createNewHistory(e.currentTarget.value);
     }
@@ -98,7 +108,7 @@ const SearchBar = () => {
       <SearchInput
         onFocus={handleFocusInput}
         placeholder="검색어를 입력해 주세요"
-        onKeyPress={handleKeyPressInput}
+        onKeyUp={handleKeyUpInput}
         onChange={handleChangeInput}
         value={nameForSearch}
         maxLength={15}
@@ -107,11 +117,12 @@ const SearchBar = () => {
         <SearchImg src="images/search.png" onClick={handleClickImg} />
       </Button>
 
-      {showHistory && (
-        <SearchHistoryComponent
+      {showWordList && (
+        <WordList
           handleClick={handleClick}
           histories={history}
           nameForSearch={nameForSearch}
+          recommendWords={recommendWords}
         />
       )}
       {isOccuredError && <ErrorMsg>1글자 이상 입력해주세요❗️</ErrorMsg>}
