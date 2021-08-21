@@ -1,6 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import guguStyled from '@/core/styled';
 
+import ModalPortal from '@/utils/portal';
+import PostModal from '../base/PostModal';
 import ListTable from '../base/ListTable';
 import Cell from '../base/Cell';
 import { getDashFormat } from '@/utils/dateParse';
@@ -17,6 +19,8 @@ const tableHeader = [
 ];
 
 const ReviewContent = ({ reviews }: ReviewContentProps) => {
+  const [activeModal, setActiveModal] = useState(false);
+
   const tableBody = useMemo(() => {
     return reviews.map((review) => {
       const { id, title, date, writer } = review;
@@ -32,9 +36,22 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
     });
   }, []);
 
+  const handleModalClose = () => {
+    setActiveModal(false);
+  };
+
+  const handleModalOpen = () => {
+    setActiveModal(true);
+  };
+
   return (
     <RiviewContentContainer>
-      <ListTable header={tableHeader} body={tableBody} />
+      <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
+      {activeModal && (
+        <ModalPortal>
+          <PostModal item={reviews[0]} title="상품후기" onClose={handleModalClose} />
+        </ModalPortal>
+      )}
     </RiviewContentContainer>
   );
 };
