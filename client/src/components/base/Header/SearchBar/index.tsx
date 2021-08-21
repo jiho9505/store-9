@@ -6,10 +6,16 @@ import SearchHistoryComponent from '../SearchHistory';
 
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
-import { baeminFont, greyLine, lightBlack, red1 } from '@/static/style/common';
+import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowError = 2000;
 
+/**
+ * TODO:
+ * 1. 자동완성을 위한 state 하나 추가
+ * 2. useEffect로 key press 마다 데이터 최대 10개 받아올 것
+ * 3. state를 하위로 내려줄 것
+ */
 const SearchBar = () => {
   const [history, setHistory] = useLocalStorage('searchs', []);
   const [nameForSearch, setNameForSearch] = useState<string>('');
@@ -61,21 +67,25 @@ const SearchBar = () => {
   };
 
   const handleClickImg = () => {
-    createNewHistory(nameForSearch);
+    checkLength(nameForSearch) && createNewHistory(nameForSearch);
+  };
+
+  const checkLength = (value: string): boolean => {
+    if (value.length === 0) {
+      setIsOccuredError(true);
+      setShowHistory(false);
+
+      setTimeout(() => {
+        setIsOccuredError(false);
+      }, timeToShowError);
+      return false;
+    }
+    return true;
   };
 
   const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
-      if (e.currentTarget.value.length === 0) {
-        setIsOccuredError(true);
-        setShowHistory(false);
-
-        setTimeout(() => {
-          setIsOccuredError(false);
-        }, timeToShowError);
-        return;
-      }
-      createNewHistory(e.currentTarget.value);
+      checkLength(e.currentTarget.value) && createNewHistory(e.currentTarget.value);
     }
   };
 
@@ -97,7 +107,13 @@ const SearchBar = () => {
         <SearchImg src="images/search.png" onClick={handleClickImg} />
       </Button>
 
-      {showHistory && <SearchHistoryComponent handleClick={handleClick} histories={history} />}
+      {showHistory && (
+        <SearchHistoryComponent
+          handleClick={handleClick}
+          histories={history}
+          nameForSearch={nameForSearch}
+        />
+      )}
       {isOccuredError && <ErrorMsg>1글자 이상 입력해주세요❗️</ErrorMsg>}
     </SearchContainer>
   );
@@ -108,7 +124,7 @@ export default SearchBar;
 const ErrorMsg = styled.div`
   position: absolute;
   left: 0px;
-  bottom: 22px;
+  bottom: 18px;
   color: ${red1};
   font-size: 14px;
   font-family: ${baeminFont};
