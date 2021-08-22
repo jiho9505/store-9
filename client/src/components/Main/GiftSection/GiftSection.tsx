@@ -53,6 +53,7 @@ const GiftContainer = styled.div`
 const Img = styled.img`
   cursor: pointer;
   transition: transform 0.2s ease;
+  border-radius: 18px;
   &:hover {
     transform: scale(1.1);
   }
