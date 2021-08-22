@@ -22,12 +22,6 @@ const SearchHistoryComponent = ({
   nameForSearch,
   recommendWords,
 }: WordListProps) => {
-  /**
-   * TODO:
-   * else 일 때
-   * 자동완성 관련 데이터로 재사용없이 UI 구현할 것
-   * 현재는 임시데이터
-   */
   const createWordList = () => {
     if (nameForSearch.length === 0) {
       return histories.length > 0 ? (
@@ -88,6 +82,7 @@ const EmptyHistory = styled.div`
 const Content = styled.div`
   font-family: ${baeminFont};
   cursor: pointer;
+  font-size: 14px;
 `;
 
 const RightSide = styled.div`
@@ -107,7 +102,7 @@ const Remove = styled.i`
 `;
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: 17px;
   font-family: ${baeminFont};
   font-weight: bold;
   width: 100%;
@@ -126,7 +121,6 @@ const CloseButton = styled.span`
 const SearchHistory = styled.li`
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
 `;
 
 const RecommendWord = styled.li(SearchHistory);
@@ -137,6 +131,7 @@ const Words = styled.ul`
   flex-direction: column;
   gap: 10px;
 `;
+
 const WordListContainer = styled.div`
   position: absolute;
   left: 0px;
