@@ -26,7 +26,7 @@ const useInput = <TFields extends inputInfoType>(inputInfo: TFields) => {
     }
   }, []);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
 
     setForm((prevForm) => ({
@@ -38,7 +38,7 @@ const useInput = <TFields extends inputInfoType>(inputInfo: TFields) => {
       ...prev,
       [name]: validationSchema[name].isValid(value),
     }));
-  };
+  }, []);
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { target } = e;
