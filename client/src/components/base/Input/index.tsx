@@ -17,7 +17,7 @@ type InputProps = {
   error?: any;
   type?: string;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
-  onBlur?(e: React.ChangeEvent<HTMLInputElement>): void;
+  onBlur?(e: React.FocusEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };
 
@@ -95,7 +95,7 @@ const CustomInput = styled.input<InputVariantProps>`
       ? `border: 1px solid ${greyLine};`
       : `border-bottom: 1px solid ${greyLine};`}
   border-radius: ${(props) => (props.variant === 'outlined' ? `${normalRadius}` : '0px')};
-  border-color: ${({ error, name }) => (error[name] ? `${red2}` : `${greyLine}`)};
+  border-color: ${({ error, name }) => (error?.[name] ? `${red2}` : `${greyLine}`)};
   font-size: 1rem;
 `;
 
