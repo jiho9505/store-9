@@ -9,6 +9,7 @@ import words from '@/static/constants/words';
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
+import useHistory from '@/hooks/customHooks/useHistory';
 
 const timeToShowError = 2000;
 
@@ -45,8 +46,10 @@ const SearchBar = () => {
       setShowWordList(false);
     } else if (target.id === 'remove') {
       const idx = Number(target.dataset.idx);
-      const idxToRemove = history.length - 1 - idx;
-      const newHistory = history.length > 1 ? [...history].splice(idxToRemove, 1) : [];
+      let newHistory = [...history];
+
+      newHistory.splice(idx, 1);
+
       setHistory(newHistory);
     } else if (target.id === 'clear') {
       setHistory([]);
@@ -67,6 +70,7 @@ const SearchBar = () => {
     const newHistory = history.length === 10 ? [...history].slice(0, 9) : [...history];
     setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
+    setShowWordList(false);
   };
 
   const handleClickImg = () => {
@@ -87,15 +91,19 @@ const SearchBar = () => {
   };
 
   const handleKeyUpInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Enter') return;
     const matchedWords = words
       .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
       .sort((a, b) => a.length - b.length)
       .slice(0, 10);
 
     setRecommendWords(matchedWords);
+  };
 
+  const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
       checkLength(e.currentTarget.value) && createNewHistory(e.currentTarget.value);
+      e.currentTarget.blur();
     }
   };
 
@@ -109,6 +117,7 @@ const SearchBar = () => {
         onFocus={handleFocusInput}
         placeholder="검색어를 입력해 주세요"
         onKeyUp={handleKeyUpInput}
+        onKeyPress={handleKeyPressInput}
         onChange={handleChangeInput}
         value={nameForSearch}
         maxLength={15}
