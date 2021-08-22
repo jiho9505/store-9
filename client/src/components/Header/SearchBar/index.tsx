@@ -25,6 +25,7 @@ const SearchBar = () => {
   const [showWordList, setShowWordList] = useState<boolean>(false);
   const [isOccuredError, setIsOccuredError] = useState<boolean>(false);
   const [recommendWords, setRecommendWords] = useState<string[]>([]);
+  const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(0);
 
   useEffect(() => {
     registerDomClickEvent();
@@ -92,6 +93,20 @@ const SearchBar = () => {
 
   const handleKeyUpInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') return;
+    if (e.code === 'ArrowUp') {
+      const newIdx: number =
+        idxForChoicedWord === 0 ? recommendWords.length - 1 : idxForChoicedWord - 1;
+      setNameForSearch(recommendWords[newIdx]);
+      setIdxForChoicedWord(newIdx);
+      return;
+    }
+    if (e.code === 'ArrowDown') {
+      const newIdx: number =
+        idxForChoicedWord === recommendWords.length - 1 ? 0 : idxForChoicedWord + 1;
+      setNameForSearch(recommendWords[newIdx]);
+      setIdxForChoicedWord(newIdx);
+      return;
+    }
     const matchedWords = words
       .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
       .sort((a, b) => a.length - b.length)
