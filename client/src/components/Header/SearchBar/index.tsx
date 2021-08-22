@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { nanoid } from 'nanoid';
 import { getRegExp } from 'korean-regexp';
@@ -20,7 +20,7 @@ const SearchBar = () => {
   const [isOccuredError, setIsOccuredError] = useState<boolean>(false);
   const [recommendWords, setRecommendWords] = useState<string[]>([]);
   const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(-1);
-  const RouterHistory = useHistory();
+  const routerHistory = useHistory();
 
   useEffect(() => {
     registerDomClickEvent();
@@ -48,18 +48,18 @@ const SearchBar = () => {
       setHistory([]);
     } else if (target.id === 'content') {
       movePageBySearch(target.innerText);
-      RouterHistory.push(`/search`);
-      // RouterHistory.push(`/search?item=${target.innerText}`);
+      routerHistory.push(`/search`);
+      // routerHistory.push(`/search?item=${target.innerText}`);
     } else return;
   };
 
-  const registerDomClickEvent = () => {
+  const registerDomClickEvent = useCallback(() => {
     document.addEventListener('click', (e) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
       if (!target.closest('#search')) setShowWordList(false);
     });
-  };
+  }, []);
 
   /**
    * TODO:
@@ -70,8 +70,8 @@ const SearchBar = () => {
     setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
     setShowWordList(false);
-    RouterHistory.push(`/search`);
-    // RouterHistory.push(`/search?item=${value}`);
+    routerHistory.push(`/search`);
+    // routerHistory.push(`/search?item=${value}`);
   };
 
   const handleClickImg = () => {

@@ -17,7 +17,7 @@ type WordListProps = {
   idxForChoicedWord: number;
 };
 
-const SearchHistoryComponent = ({
+const WordList = ({
   handleClick,
   histories,
   nameForSearch,
@@ -32,7 +32,7 @@ const SearchHistoryComponent = ({
             <Content id="content">{history.content}</Content>
             <RightSide>
               <Day>{history.day}</Day>
-              <Remove id="remove" className="fas fa-times" data-idx={idx}></Remove>
+              <Remove id="remove" className="fas fa-times" data-idx={idx} />
             </RightSide>
           </SearchHistory>
         ))
@@ -76,7 +76,7 @@ const SearchHistoryComponent = ({
   );
 };
 
-export default SearchHistoryComponent;
+export default WordList;
 
 type ContentProps = {
   active?: boolean;
