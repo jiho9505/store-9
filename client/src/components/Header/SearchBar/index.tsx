@@ -25,7 +25,7 @@ const SearchBar = () => {
   const [showWordList, setShowWordList] = useState<boolean>(false);
   const [isOccuredError, setIsOccuredError] = useState<boolean>(false);
   const [recommendWords, setRecommendWords] = useState<string[]>([]);
-  const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(0);
+  const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(-1);
 
   useEffect(() => {
     registerDomClickEvent();
@@ -95,7 +95,8 @@ const SearchBar = () => {
     if (recommendWords.length) {
       let newIdx: number = 0;
       if (pos === 'ArrowUp')
-        newIdx = idxForChoicedWord === 0 ? recommendWords.length - 1 : idxForChoicedWord - 1;
+        if (idxForChoicedWord === 0 || idxForChoicedWord === -1) newIdx = recommendWords.length - 1;
+        else newIdx = idxForChoicedWord - 1;
       else if (pos === 'ArrowDown')
         newIdx = idxForChoicedWord === recommendWords.length - 1 ? 0 : idxForChoicedWord + 1;
       setNameForSearch(recommendWords[newIdx]);
@@ -113,12 +114,14 @@ const SearchBar = () => {
       changeSearchName('ArrowDown');
       return;
     }
+
     const matchedWords = words
       .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
       .sort((a, b) => a.length - b.length)
       .slice(0, 10);
 
     setRecommendWords(matchedWords);
+    setIdxForChoicedWord(-1);
   };
 
   const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -153,6 +156,7 @@ const SearchBar = () => {
           histories={history}
           nameForSearch={nameForSearch}
           recommendWords={recommendWords}
+          idxForChoicedWord={idxForChoicedWord}
         />
       )}
       {isOccuredError && <ErrorMsg>1글자 이상 입력해주세요❗️</ErrorMsg>}

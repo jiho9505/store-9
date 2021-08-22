@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { baeminFont, greyBg1, greyLine, greySpan, lightBlack } from '@/static/style/common';
+import { baemin, baeminFont, greyBg1, greyLine, greySpan, lightBlack } from '@/static/style/common';
 
 type Histories = {
   content: string;
@@ -14,6 +14,7 @@ type WordListProps = {
   histories: Array<Histories>;
   nameForSearch: string;
   recommendWords: string[];
+  idxForChoicedWord: number;
 };
 
 const SearchHistoryComponent = ({
@@ -21,6 +22,7 @@ const SearchHistoryComponent = ({
   histories,
   nameForSearch,
   recommendWords,
+  idxForChoicedWord,
 }: WordListProps) => {
   const createWordList = () => {
     if (nameForSearch.length === 0) {
@@ -40,9 +42,11 @@ const SearchHistoryComponent = ({
     } else {
       return (
         recommendWords &&
-        recommendWords.map((word) => (
+        recommendWords.map((word, idx) => (
           <RecommendWord key={word}>
-            <Content id="content">{word}</Content>
+            <Content id="content" active={idxForChoicedWord === idx}>
+              {word}
+            </Content>
           </RecommendWord>
         ))
       );
@@ -74,15 +78,20 @@ const SearchHistoryComponent = ({
 
 export default SearchHistoryComponent;
 
+type ContentProps = {
+  active?: boolean;
+};
+
 const EmptyHistory = styled.div`
   font-size: 12px;
   color: ${lightBlack};
 `;
 
-const Content = styled.div`
+const Content = styled.div<ContentProps>`
   font-family: ${baeminFont};
   cursor: pointer;
   font-size: 14px;
+  color: ${(props) => (props.active ? baemin : lightBlack)};
 `;
 
 const RightSide = styled.div`
