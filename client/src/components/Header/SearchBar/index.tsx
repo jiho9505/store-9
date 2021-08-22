@@ -13,12 +13,6 @@ import useHistory from '@/hooks/customHooks/useHistory';
 
 const timeToShowError = 2000;
 
-/**
- * TODO:
- * 1. 자동완성을 위한 state 하나 추가
- * 2. useEffect로 key press 마다 데이터 최대 10개 받아올 것
- * 3. state를 하위로 내려줄 것
- */
 const SearchBar = () => {
   const [history, setHistory] = useLocalStorage('searchs', []);
   const [nameForSearch, setNameForSearch] = useState<string>('');
@@ -26,6 +20,7 @@ const SearchBar = () => {
   const [isOccuredError, setIsOccuredError] = useState<boolean>(false);
   const [recommendWords, setRecommendWords] = useState<string[]>([]);
   const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(-1);
+  const RouterHistory = useHistory();
 
   useEffect(() => {
     registerDomClickEvent();
@@ -37,8 +32,7 @@ const SearchBar = () => {
 
   /**
    * TODO:
-   * target.id === 'content'
-   * Text 결과로 새 페이지에 보여줘야함.
+   * Content : Router 수정 후 url 재수정해야합니다.
    */
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { target } = e;
@@ -48,14 +42,14 @@ const SearchBar = () => {
     } else if (target.id === 'remove') {
       const idx = Number(target.dataset.idx);
       let newHistory = [...history];
-
       newHistory.splice(idx, 1);
-
       setHistory(newHistory);
     } else if (target.id === 'clear') {
       setHistory([]);
     } else if (target.id === 'content') {
-      createNewHistory(target.innerText);
+      movePageBySearch(target.innerText);
+      RouterHistory.push(`/search`);
+      // RouterHistory.push(`/search?item=${target.innerText}`);
     } else return;
   };
 
@@ -67,15 +61,21 @@ const SearchBar = () => {
     });
   };
 
-  const createNewHistory = (value: string) => {
+  /**
+   * TODO:
+   * Router 수정 후 url 재수정해야합니다.
+   */
+  const movePageBySearch = (value: string) => {
     const newHistory = history.length === 10 ? [...history].slice(0, 9) : [...history];
     setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
     setShowWordList(false);
+    RouterHistory.push(`/search`);
+    // RouterHistory.push(`/search?item=${value}`);
   };
 
   const handleClickImg = () => {
-    checkLength(nameForSearch) && createNewHistory(nameForSearch);
+    checkLength(nameForSearch) && movePageBySearch(nameForSearch);
   };
 
   const checkLength = (value: string): boolean => {
@@ -126,7 +126,7 @@ const SearchBar = () => {
 
   const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
-      checkLength(e.currentTarget.value) && createNewHistory(e.currentTarget.value);
+      checkLength(e.currentTarget.value) && movePageBySearch(e.currentTarget.value);
       e.currentTarget.blur();
     }
   };

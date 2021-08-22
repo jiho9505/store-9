@@ -56,6 +56,9 @@ const App = () => {
           <Route exact path="/signupMethod">
             <SignupMethod />
           </Route>
+          <Route exact path="/search">
+            <ProductList />
+          </Route>
           <Route exact path="/total">
             <ProductList />
           </Route>
