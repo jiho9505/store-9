@@ -1,23 +1,17 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 
 import Input from '@/components/base/Input';
 import InputLabel from '@/components/base/InputLabel';
 
-import useValidate from '@/hooks/customHooks/useValidate';
-
 type Stage1Props = {
-  onBlur?(e: React.ChangeEvent<HTMLInputElement>): void;
-  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onBlur(e: ChangeEvent<HTMLInputElement>): void;
+  onChange(e: ChangeEvent<HTMLInputElement>): void;
   form: { orderName: string; phoneNumber: string; email: string };
-  error?: object;
+  error: { [key: string]: string };
 };
 
 const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
-  const { isValid: orderNameCheck, check: handleNameCheck } = useValidate(form.orderName);
-  const { isValid: phoneCheck, check: handlePhoneCheck } = useValidate(form.phoneNumber);
-  const { isValid: emailCheck, check: handleEmailCheck } = useValidate(form.email);
-
   return (
     <StageContainer>
       <InputLabel labelName="주문자 명" />
@@ -29,11 +23,6 @@ const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
         onChange={onChange}
         onBlur={onBlur}
         value={form.orderName}
-        validate={{
-          isValid: orderNameCheck,
-          onCheck: handleNameCheck,
-          message: '주문자 명을 입력해 주세요.',
-        }}
         error={error}
         placeholder="주문자명을 입력해 주세요."
       />
@@ -44,12 +33,9 @@ const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
         variant="outlined"
         size="large"
         onChange={onChange}
+        onBlur={onBlur}
         value={form.phoneNumber}
-        validate={{
-          isValid: phoneCheck,
-          onCheck: handlePhoneCheck,
-          message: '전화번호를 입력해 주세요',
-        }}
+        error={error}
         placeholder="전화번호를 입력해 주세요."
       />
       <InputLabel labelName="이메일" />
@@ -59,12 +45,9 @@ const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
         variant="outlined"
         size="large"
         onChange={onChange}
+        onBlur={onBlur}
         value={form.email}
-        validate={{
-          isValid: emailCheck,
-          onCheck: handleEmailCheck,
-          message: '이메일을 입력해 주세요.',
-        }}
+        error={error}
         placeholder="이메일을 입력해 주세요."
       />
     </StageContainer>

@@ -27,6 +27,9 @@ const validationSchema = {
   orderName: Validation().require('주문자명을 입력해 주세요.'),
   phoneNumber: Validation().require('휴대폰 번호를 입력해 주세요.'),
   email: Validation().require('이메일을 입력해 주세요.'),
+  recName: Validation().require('받는 사람이름을 입력해 주세요.'),
+  recPlace: Validation().require('받는 장소를 입력해 주세요.'),
+  recPhoneNumber: Validation().require('받는 사람 휴대폰 번호를 입력해 주세요.'),
 };
 
 const OrderForm = () => {
@@ -58,7 +61,14 @@ const OrderForm = () => {
         />
       );
     } else if (stage === 2) {
-      return <Stage2 onChange={onChange} form={{ recName, recPlace, recPhoneNumber }} />;
+      return (
+        <Stage2
+          onChange={onChange}
+          onBlur={onBlur}
+          form={{ recName, recPlace, recPhoneNumber }}
+          error={error}
+        />
+      );
     }
   };
 
