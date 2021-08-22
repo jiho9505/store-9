@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { NavLink } from '@/Router';
 import { categories, subCategories } from '@/static/constants';
@@ -7,6 +7,14 @@ import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common'
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
+
+  useEffect(() => {
+    document.addEventListener('mouseover', (e: Event) => {
+      const { target } = e;
+      if (!(target instanceof HTMLElement)) return;
+      if (!target.closest('#NavBorder')) setSubItems([]);
+    });
+  }, []);
 
   let timer: number = 0;
 
@@ -37,7 +45,7 @@ const Navigation = () => {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer id="NavBorder">
       <Menu>
         {categories.map(([category, path]) => (
           <Item key={category}>
