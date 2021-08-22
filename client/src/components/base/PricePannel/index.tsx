@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
+import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
+import useHistory from '@/hooks/customHooks/useHistory';
 
 type PricePannelProps = {
   productTotalPrice: number;
 };
 
 const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
+  const curLocation = useLocation();
+  const history = useHistory();
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
+
+  const handleClickOrderBtn = () => {
+    if (curLocation === '/cart') {
+      history.push('/order');
+    }
+  };
+
   return (
     <PricePannelContainer>
       <ProductTotalPrice>
@@ -23,7 +34,7 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
         <span>합계</span>
         <span>{(productTotalPrice + deliveryCost).toLocaleString()}원</span>
       </TotalPrice>
-      <OrderButton>주문하기</OrderButton>
+      <OrderButton onClick={handleClickOrderBtn}>주문하기</OrderButton>
     </PricePannelContainer>
   );
 };

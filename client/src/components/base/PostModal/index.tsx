@@ -3,12 +3,13 @@ import styled from '@emotion/styled';
 
 import Button from '../Button';
 import StarComponent from '@/components/base/Star';
+import ModalWrapper from '@/components/base/ModalWrapper';
 
 import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
-const PostModal = ({ item, handleClickForClose, title }) => {
+const PostModal = ({ item, onClose, title }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const PostModal = ({ item, handleClickForClose, title }) => {
 
     const result = isPassedValidation(title, content);
     if (result) return;
-    handleClickForClose();
+    onClose();
   };
 
   const createErrorMsg = () => {
@@ -58,61 +59,39 @@ const PostModal = ({ item, handleClickForClose, title }) => {
   };
 
   return (
-    <ModalContainer>
-      <Overlay onClick={handleClickForClose} />
-      <Modal>
-        <ModalHeader>
-          <GuideText>{title}</GuideText>
-          <i onClick={handleClickForClose} className="fas fa-times"></i>
-        </ModalHeader>
+    <ModalWrapper onClose={onClose} title={title}>
+      <ItemContainer>
+        <ItemImage src={item.image} />
+        <ItemName>{item.title}</ItemName>
+      </ItemContainer>
+      <Form>
+        {title === '상품 후기' && (
+          <ScoreContainer>
+            <Label>별점 : </Label>
+            <StarComponent score={starScore} handleClickStarIcon={handleClickStarIcon} />
+          </ScoreContainer>
+        )}
 
-        <ItemContainer>
-          <ItemImage src={item.image} />
-          <ItemName>{item.title}</ItemName>
-        </ItemContainer>
-        <Form>
-          {title === '상품 후기' && (
-            <ScoreContainer>
-              <Label>별점 : </Label>
-              <StarComponent score={starScore} handleClickStarIcon={handleClickStarIcon} />
-            </ScoreContainer>
-          )}
-
-          <Label>제목 : </Label>
-          <Title maxLength={30} ref={inputRef} required />
-          <Label>내용 : </Label>
-          <Content maxLength={550} ref={textAreaRef} required />
-          {showErrorMsg && <ErrorMsg>모든 값을 입력해주시기 바랍니다.</ErrorMsg>}
-          <ButtonContainer>
-            <Button
-              size="small"
-              value="등록하기"
-              type="submit"
-              theme="dark"
-              onClick={handleClickButton}
-            ></Button>
-          </ButtonContainer>
-        </Form>
-      </Modal>
-    </ModalContainer>
+        <Label>제목 : </Label>
+        <Title maxLength={30} ref={inputRef} required />
+        <Label>내용 : </Label>
+        <Content maxLength={550} ref={textAreaRef} required />
+        {showErrorMsg && <ErrorMsg>모든 값을 입력해주시기 바랍니다.</ErrorMsg>}
+        <ButtonContainer>
+          <Button
+            size="small"
+            value="등록하기"
+            type="submit"
+            theme="dark"
+            onClick={handleClickButton}
+          ></Button>
+        </ButtonContainer>
+      </Form>
+    </ModalWrapper>
   );
 };
 
 export default PostModal;
-
-const ModalContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 1.2rem;
-  background-color: rgba(0, 0, 0, 0.3);
-`;
 
 const ScoreContainer = styled.div`
   display: flex;
@@ -133,42 +112,6 @@ const ErrorMsg = styled.p`
   font-family: ${baeminFont};
   color: ${red1};
   font-size: 20px;
-`;
-const Overlay = styled.div`
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-`;
-
-const Modal = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 50px;
-  width: 700px;
-  height: 700px;
-  background: ${greyBg1};
-  border-radius: 0.5rem;
-  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid ${greyLine};
-  padding: 10px 0px;
-
-  i {
-    cursor: pointer;
-  }
-`;
-
-const GuideText = styled.h3`
-  font-family: ${baeminThickFont};
 `;
 
 const ItemContainer = styled.div`
