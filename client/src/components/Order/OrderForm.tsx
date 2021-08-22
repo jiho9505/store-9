@@ -33,7 +33,7 @@ const validationSchema = {
 };
 
 const OrderForm = () => {
-  const { form, onChange, onBlur, error } = useInput({
+  const { form, onChange, onBlur, check, error } = useInput({
     initialState: { ...stage1InitialForm, ...stage2InitialForm },
     validationSchema,
   });
@@ -43,6 +43,10 @@ const OrderForm = () => {
   const [stage, setStage] = useState(1);
 
   const handleClickNext = () => {
+    const pass = check('orderName', 'phoneNumber', 'email');
+    if (!pass) {
+      return;
+    }
     setStage((prev) => prev + 1);
   };
 
