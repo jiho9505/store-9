@@ -55,7 +55,7 @@ const SearchBar = () => {
     } else if (target.id === 'clear') {
       setHistory([]);
     } else if (target.id === 'content') {
-      console.log(target.innerText);
+      createNewHistory(target.innerText);
     } else return;
   };
 
