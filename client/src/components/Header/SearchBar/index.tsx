@@ -91,20 +91,26 @@ const SearchBar = () => {
     return true;
   };
 
+  const changeSearchName = (pos: 'ArrowUp' | 'ArrowDown') => {
+    if (recommendWords.length) {
+      let newIdx: number = 0;
+      if (pos === 'ArrowUp')
+        newIdx = idxForChoicedWord === 0 ? recommendWords.length - 1 : idxForChoicedWord - 1;
+      else if (pos === 'ArrowDown')
+        newIdx = idxForChoicedWord === recommendWords.length - 1 ? 0 : idxForChoicedWord + 1;
+      setNameForSearch(recommendWords[newIdx]);
+      setIdxForChoicedWord(newIdx);
+    }
+  };
+
   const handleKeyUpInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') return;
     if (e.code === 'ArrowUp') {
-      const newIdx: number =
-        idxForChoicedWord === 0 ? recommendWords.length - 1 : idxForChoicedWord - 1;
-      setNameForSearch(recommendWords[newIdx]);
-      setIdxForChoicedWord(newIdx);
+      changeSearchName('ArrowUp');
       return;
     }
     if (e.code === 'ArrowDown') {
-      const newIdx: number =
-        idxForChoicedWord === recommendWords.length - 1 ? 0 : idxForChoicedWord + 1;
-      setNameForSearch(recommendWords[newIdx]);
-      setIdxForChoicedWord(newIdx);
+      changeSearchName('ArrowDown');
       return;
     }
     const matchedWords = words
