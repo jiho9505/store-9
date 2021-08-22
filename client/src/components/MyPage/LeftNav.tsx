@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from 'react';
 import guguStyled from '@/core/styled';
 
-import { NavLink } from '@/Router';
+import { NavLink } from '@/core/Router';
 import { Like, Buy, Review, QnA, Cart } from '@/static/assets/svg';
 
 import { greyBg1, greyButton, normalRadius, primary1 } from '@/static/style/common';

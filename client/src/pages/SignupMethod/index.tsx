@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { Link } from '@/Router';
+import { Link } from '@/core/Router';
 import Button from '@/components/base/Button';
 
 const LOGIN_SUGGESTION_TEXT = '이미 배민문방구 회원이신가요?';

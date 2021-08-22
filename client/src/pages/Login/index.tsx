@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import { Link } from '@/Router';
+import { Link } from '@/core/Router';
 import Input from '@/components/base/Input';
 import useInput from '@/hooks/customHooks/useInput';
 import Button from '@/components/base/Button';
