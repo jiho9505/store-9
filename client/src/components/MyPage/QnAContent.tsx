@@ -1,8 +1,8 @@
 import { getDateFormat } from '@/utils/dateParse';
 import React, { useMemo } from 'react';
 
-import ListTable from '../base/ListTable';
-import Cell from '../base/Cell';
+import ListTable from '../common/ListTable';
+import Cell from '../common/Cell';
 
 type QnAContentProps = {
   questions: any;

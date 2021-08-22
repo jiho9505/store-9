@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 import { Link } from '@/core/Router';
-import Input from '@/components/base/Input';
+import Input from '@/components/common/Input';
 import useInput from '@/hooks/customHooks/useInput';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 
 const CAUTION_TEXT = '주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.';
 

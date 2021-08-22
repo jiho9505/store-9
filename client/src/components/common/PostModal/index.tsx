@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
-import StarComponent from '@/components/base/Star';
+import StarComponent from '@/components/common/Star';
 
 import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/style/common';
 

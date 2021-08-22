@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import guguStyled from '@/core/styled';
 
-import ListTable from '../base/ListTable';
-import Cell from '../base/Cell';
+import ListTable from '../common/ListTable';
+import Cell from '../common/Cell';
 
 type OrderContentProps = {
   orderProducts: any;

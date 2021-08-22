@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { baeminThickFont } from '@/static/style/common';
-import ItemLists from '@/components/base/ItemLists/ItemLists';
+import ItemLists from '@/components/common/ItemLists/ItemLists';
 import Datas from '@/dummy';
 
 const sampleData = [Datas[0], Datas[1], Datas[2]];

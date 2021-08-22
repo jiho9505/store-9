@@ -5,7 +5,7 @@ import BoardPost from '../BoardPost';
 import BoardHeader from '../BoardHeader';
 import BoardPageNumber from '../BoardPageNumber';
 import ModalPortal from '@/utils/portal';
-import PostModal from '../../base/PostModal';
+import PostModal from '../../common/PostModal';
 
 type ProductBoardProps = {
   title: string;

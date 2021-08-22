@@ -17,7 +17,7 @@ const Signup = React.lazy(() => import('@/pages/Signup'));
 const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import '@/static/assets/img/baeminFavicon.png';
-import Loading from './components/base/Loading';
+import Loading from './components/common/Loading';
 
 /**
  * FIXME:

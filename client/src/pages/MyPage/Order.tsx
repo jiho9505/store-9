@@ -3,7 +3,7 @@ import guguStyled from '@/core/styled';
 
 import useInput from '@/hooks/customHooks/useInput';
 
-import DurationFilter from '@/components/base/DurationFilter';
+import DurationFilter from '@/components/common/DurationFilter';
 import { OrderContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 

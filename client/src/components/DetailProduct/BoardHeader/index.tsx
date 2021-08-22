@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import Button from '../../base/Button';
+import Button from '../../common/Button';
 
 import { baeminFont } from '@/static/style/common';
 
