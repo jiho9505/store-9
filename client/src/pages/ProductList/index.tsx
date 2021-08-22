@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import ItemLists from '@/components/base/ItemLists/ItemLists';
-import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
+import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
 import Loading from '@/components/base/Loading';
 import useLocation from '@/hooks/customHooks/useLocation';
 import datas from '@/dummy';

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import OverViewContent from '../OverViewContent';
-import ZoomableImage from '@/components/base/ZoomableImage';
+import ZoomableImage from '../ZoomableImage';
 
 type OverviewProps = {
   info;

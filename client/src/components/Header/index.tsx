@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Link, NavLink } from '@/Router';
+import { Link, NavLink } from '@/core/Router';
 import { categories } from '@/static/constants';
 import { baeminFont, greyLine, normalContainerWidth } from '@/static/style/common';
 

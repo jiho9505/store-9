@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import styled from '@emotion/styled';
-import { Router, Route, Link } from './Router';
+import { Router, Route, Link } from './core/Router';
 
-const Header = React.lazy(() => import('@/components/base/Header'));
-const Footer = React.lazy(() => import('@/components/base/Footer'));
-const ButtonToMoveToTop = React.lazy(() => import('@/components/base/ButtonToMoveToTop'));
+const Header = React.lazy(() => import('@/components/Header'));
+const Footer = React.lazy(() => import('@/components/Footer'));
+const ButtonToMoveToTop = React.lazy(() => import('@/components/ButtonToMoveToTop'));
 const LoginPage = React.lazy(() => import('@/pages/Login'));
 const SignupMethod = React.lazy(() => import('@/pages/SignupMethod'));
 const Main = React.lazy(() => import('@/pages/Main'));

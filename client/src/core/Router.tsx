@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useMemo } from 'react';
 import styled from '@emotion/styled';
 
-import useLocation from './hooks/customHooks/useLocation';
+import useLocation from '../hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
 
 const history = window.history;
