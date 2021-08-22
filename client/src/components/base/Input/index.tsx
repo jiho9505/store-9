@@ -13,18 +13,20 @@ type InputProps = {
   required: boolean;
   size: inputSize;
   value: string;
-  type?: string;
   placeholder?: string;
   variant: inputVariant;
   validate?: validate;
+  error?: any;
   type?: string;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onBlur?(e: React.ChangeEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };
 
 const Input = ({
   name,
   required,
+  onBlur,
   onChange,
   size,
   value,
@@ -32,10 +34,12 @@ const Input = ({
   placeholder,
   variant,
   validate,
+  error,
   ...otherProps
 }: InputProps) => {
   const handleBlur = () => {
-    validate?.onCheck?.();
+    // validate?.onCheck?.();
+    console.log(error);
   };
 
   return (
@@ -46,13 +50,15 @@ const Input = ({
         type={type}
         required={required}
         onChange={onChange}
-        onBlur={handleBlur}
+        onBlur={onBlur}
         placeholder={placeholder || ''}
         variant={variant}
         valid={validate?.isValid}
+        error={error}
         {...otherProps}
       />
-      {validate?.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>}
+      {/* {validate?.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>} */}
+      {error?.[name] && <ErrorMessage>{error[name]}</ErrorMessage>}
     </InputContainer>
   );
 };
@@ -66,6 +72,7 @@ type InputContainerProps = {
 type InputVariantProps = {
   variant: inputVariant;
   valid?: boolean;
+  error?: any;
 };
 
 const getInputSize = (size: string) => {

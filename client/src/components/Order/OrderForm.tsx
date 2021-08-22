@@ -7,6 +7,7 @@ import Stage2 from './Stage2';
 import Button from '@/components/base/Button';
 
 import useInput from '@/hooks/customHooks/useInput';
+import Validation from '@/utils/validation';
 
 import { normalRadius } from '@/static/style/common';
 
@@ -22,10 +23,16 @@ const stage2InitialForm = {
   recPhoneNumber: '',
 };
 
+const validationSchema = {
+  orderName: Validation().require('주문자명을 입력해 주세요.'),
+  phoneNumber: Validation().require('휴대폰 번호를 입력해 주세요.'),
+  email: Validation().require('이메일을 입력해 주세요.'),
+};
+
 const OrderForm = () => {
-  const { form, onChange } = useInput({
-    ...stage1InitialForm,
-    ...stage2InitialForm,
+  const { form, onChange, onBlur, error } = useInput({
+    initialState: { ...stage1InitialForm, ...stage2InitialForm },
+    validationSchema,
   });
 
   const { orderName, phoneNumber, email, recName, recPlace, recPhoneNumber } = form;
@@ -42,7 +49,14 @@ const OrderForm = () => {
 
   const Forms = () => {
     if (stage === 1) {
-      return <Stage1 onChange={onChange} form={{ orderName, email, phoneNumber }} />;
+      return (
+        <Stage1
+          onChange={onChange}
+          onBlur={onBlur}
+          form={{ orderName, email, phoneNumber }}
+          error={error}
+        />
+      );
     } else if (stage === 2) {
       return <Stage2 onChange={onChange} form={{ recName, recPlace, recPhoneNumber }} />;
     }

@@ -7,11 +7,13 @@ import InputLabel from '@/components/base/InputLabel';
 import useValidate from '@/hooks/customHooks/useValidate';
 
 type Stage1Props = {
+  onBlur?(e: React.ChangeEvent<HTMLInputElement>): void;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
   form: { orderName: string; phoneNumber: string; email: string };
+  error?: object;
 };
 
-const Stage1 = ({ form, onChange }: Stage1Props) => {
+const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
   const { isValid: orderNameCheck, check: handleNameCheck } = useValidate(form.orderName);
   const { isValid: phoneCheck, check: handlePhoneCheck } = useValidate(form.phoneNumber);
   const { isValid: emailCheck, check: handleEmailCheck } = useValidate(form.email);
@@ -25,12 +27,14 @@ const Stage1 = ({ form, onChange }: Stage1Props) => {
         variant="outlined"
         size="large"
         onChange={onChange}
+        onBlur={onBlur}
         value={form.orderName}
         validate={{
           isValid: orderNameCheck,
           onCheck: handleNameCheck,
           message: '주문자 명을 입력해 주세요.',
         }}
+        error={error}
         placeholder="주문자명을 입력해 주세요."
       />
       <InputLabel labelName="전화번호" />
