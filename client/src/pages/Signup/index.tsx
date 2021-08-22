@@ -25,7 +25,9 @@ const SignupPage = () => {
     onAddressSearchClick,
     address: { address, postcode },
   } = useAddress();
-  const { form, onChange } = useInput(fromDefaultValue);
+  const { form, onChange } = useInput({
+    initialState: fromDefaultValue,
+  });
   const { id, password, passwordConfirm, name, email, phoneNumber, callNumber, detailAddress } =
     form;
 

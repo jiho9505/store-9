@@ -15,10 +15,12 @@ const LoginPage = () => {
     onChange,
     reset,
   } = useInput({
-    id: '',
-    password: '',
-    name: '',
-    orderNumber: '',
+    initialState: {
+      id: '',
+      password: '',
+      name: '',
+      orderNumber: '',
+    },
   });
 
   const onLoginClick = () => {
