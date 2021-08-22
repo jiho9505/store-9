@@ -1,14 +1,14 @@
-import React, { ChangeEvent } from 'react';
+import React, { FocusEvent, ChangeEvent } from 'react';
 import styled from '@emotion/styled';
 
 import Input from '@/components/base/Input';
 import InputLabel from '@/components/base/InputLabel';
 
 type Stage1Props = {
-  onBlur(e: ChangeEvent<HTMLInputElement>): void;
+  onBlur?(e: FocusEvent<HTMLInputElement>): void;
   onChange(e: ChangeEvent<HTMLInputElement>): void;
   form: { orderName: string; phoneNumber: string; email: string };
-  error: { [key: string]: string };
+  error?: { [key: string]: string };
 };
 
 const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
