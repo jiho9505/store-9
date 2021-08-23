@@ -10,7 +10,7 @@ import { baeminFont, greyLine, red1 } from '@/static/style/common';
 const timeToShowMsg: number = 2000;
 
 const PostModal = ({ item, onClose, title }) => {
-  const { title: reviewTitle, content, product } = item;
+  const { title: reviewTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -30,6 +30,7 @@ const PostModal = ({ item, onClose, title }) => {
     if (reviewTitle && content) {
       inputRef.current.value = reviewTitle;
       textAreaRef.current.value = content;
+      setStarScore(rate);
     }
   }, []);
 
