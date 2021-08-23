@@ -7,17 +7,23 @@ import '@/static/assets/img/circle.png';
 import { categories, subCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 
+const weightWhenSubItemsLengthOdd = 25;
+const weightWhenSubItemsLengthEven = -35;
+
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
 
   useEffect(() => {
-    document.addEventListener('mouseover', (e: Event) => {
+    const handleMouseOverOnDocument = (e: Event) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
       if (!target.closest('#NavBorder')) setSubItems([]);
-    });
+    };
+
+    document.addEventListener('mouseover', handleMouseOverOnDocument);
+    return () => document.removeEventListener('mouseover', handleMouseOverOnDocument);
   }, []);
 
   let timer: number = 0;
@@ -36,8 +42,8 @@ const Navigation = () => {
 
       const extraXposToRemove =
         newSubItems.length % 2
-          ? Math.floor(newSubItems.length / 2) * 100 + 25
-          : Math.floor(newSubItems.length / 2) * 100 - 35;
+          ? Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthOdd
+          : Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthEven;
 
       setSubItemXpos(itemXPos - extraXposToRemove);
       setSubItems(newSubItems);

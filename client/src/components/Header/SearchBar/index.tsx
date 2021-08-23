@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { nanoid } from 'nanoid';
 import { getRegExp } from 'korean-regexp';
@@ -23,7 +23,14 @@ const SearchBar = () => {
   const routerHistory = useHistory();
 
   useEffect(() => {
-    registerDomClickEvent();
+    const registerDomClickEvent = (e: Event) => {
+      const { target } = e;
+      if (!(target instanceof HTMLElement)) return;
+      if (!target.closest('#search')) setShowWordList(false);
+    };
+
+    document.addEventListener('click', registerDomClickEvent);
+    return () => document.removeEventListener('click', registerDomClickEvent);
   }, []);
 
   const handleFocusInput = () => {
@@ -52,14 +59,6 @@ const SearchBar = () => {
       // routerHistory.push(`/search?item=${target.innerText}`);
     } else return;
   };
-
-  const registerDomClickEvent = useCallback(() => {
-    document.addEventListener('click', (e) => {
-      const { target } = e;
-      if (!(target instanceof HTMLElement)) return;
-      if (!target.closest('#search')) setShowWordList(false);
-    });
-  }, []);
 
   /**
    * TODO:
