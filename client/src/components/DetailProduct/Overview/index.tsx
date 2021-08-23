@@ -24,8 +24,3 @@ const OverviewContainer = styled.div`
   margin-top: 50px;
   gap: 70px;
 `;
-
-const OverviewImage = styled.img`
-  max-width: 473px;
-  height: 585px;
-`;

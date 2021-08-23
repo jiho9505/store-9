@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { baemin, baeminFont, baeminThickFont, lightBlack } from '@/static/style/common';
 
-const filterName = ['추천순', '인기순', '최신순', '낮은가격순', '높은가격순'];
+const filterName: string[] = ['추천순', '인기순', '최신순', '높은가격순', '낮은가격순'];
 
 type ItemFilterBarProps = {
   handleFilter: (num: number) => void;
@@ -10,22 +10,22 @@ type ItemFilterBarProps = {
 };
 
 const ItemFilterBar = ({ handleFilter, totalProductCount }: ItemFilterBarProps) => {
-  const [index, setIndex] = useState(-1);
+  const [index, setIndex] = useState<number>(0);
 
-  const onClickFilter = (e: React.MouseEvent) => {
-    const { target } = e;
-    if (!(target instanceof HTMLElement)) return;
-    setIndex(Number(target.dataset.idx));
-    handleFilter(Number(target.dataset.idx));
+  const handleClickFilter = (e: React.MouseEvent<HTMLLIElement>) => {
+    const choicedIndex = Number(e.currentTarget.dataset.idx);
+    setIndex(choicedIndex);
+    handleFilter(choicedIndex);
   };
 
   const createFilter = () => {
     return filterName.map((itemName, idx) => (
       <Fliter
         key={`filter-item-${itemName}`}
-        onClick={onClickFilter}
+        onClick={handleClickFilter}
         active={index === idx}
         data-idx={idx}
+        itemLength={itemName.length}
       >
         {itemName}
       </Fliter>
@@ -52,7 +52,6 @@ const Container = styled.div`
 
 const ItemFilterContainer = styled.ul`
   display: flex;
-  gap: 40px;
 `;
 
 const TotalNumber = styled.span`
@@ -70,11 +69,14 @@ const Total = styled.span`
 
 type FilterProps = {
   active: boolean;
+  itemLength: number;
 };
 
 const Fliter = styled.li<FilterProps>`
+  text-align: center;
   color: ${(props) => (props.active ? baemin : lightBlack)};
   font-family: ${baeminFont};
   cursor: pointer;
   font-size: ${(props) => (props.active ? `18px` : `16px`)};
+  width: ${(props) => (props.itemLength === 3 ? `80px` : `100px`)};
 `;

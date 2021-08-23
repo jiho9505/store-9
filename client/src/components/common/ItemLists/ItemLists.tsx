@@ -77,7 +77,7 @@ const Item = styled.article`
 const ItemContainer = styled.section`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px 20px;
 `;
 
 export default ItemLists;

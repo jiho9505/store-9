@@ -38,10 +38,8 @@ const Carousel = () => {
    * Carousel 안에 버튼 클릭 시 해당 이미지로 이동합니다.
    * 그 후 자동으로 슬라이드 되는 기능을 3초간 막습니다.
    */
-  const onClickButton = (e: React.MouseEvent) => {
-    const { target } = e;
-    if (!(target instanceof HTMLElement)) return;
-    const nextIndex = Number(target.dataset.idx);
+  const handleClickButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const nextIndex = Number(e.currentTarget.dataset.idx);
     setIndex(nextIndex);
     setIsClickEventActive(true);
   };
@@ -53,10 +51,10 @@ const Carousel = () => {
         <SlideImage src="images/bannerImage2.gif" alt="second-banner-image" />
         <SlideImage src="images/bannerImage3.gif" alt="third-banner-image" />
       </ImageContainer>
-      <ButtonContainer onClick={onClickButton}>
-        <Button data-idx="1" active={index === 1}></Button>
-        <Button data-idx="2" active={index === 2}></Button>
-        <Button data-idx="3" active={index === 3}></Button>
+      <ButtonContainer>
+        <Button onClick={handleClickButton} data-idx="1" active={index === 1}></Button>
+        <Button onClick={handleClickButton} data-idx="2" active={index === 2}></Button>
+        <Button onClick={handleClickButton} data-idx="3" active={index === 3}></Button>
       </ButtonContainer>
     </CarouselContainer>
   );
@@ -72,6 +70,8 @@ type ButtonProps = {
 
 const CarouselContainer = styled.div`
   position: relative;
+  width: 100%;
+  overflow: hidden;
 `;
 
 const ImageContainer = styled.div<ImageProps>`
