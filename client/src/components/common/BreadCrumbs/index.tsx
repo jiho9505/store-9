@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 import useLocation from '@/hooks/customHooks/useLocation';
 
@@ -52,4 +52,4 @@ const Stage = styled.span<StageStyledComp>`
   color: ${(props) => (!props.isMatched ? greySpan : 'inherit')};
 `;
 
-export default BreadCrumbs;
+export default memo(BreadCrumbs);

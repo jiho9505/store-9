@@ -12,8 +12,9 @@ type ListTableProps = {
   header: Array<{ id: string; name: string; width?: string; rowSpan?: number }>;
   body: bodyType[];
   selectedItems?: Set<number>;
-  onCheck?: (id: number) => void;
-  onCheckAll?: (e) => void;
+  onClickRow?(): void;
+  onCheck?(id: number): void;
+  onCheckAll?(e): void;
 };
 
 const ListTable = ({
@@ -21,12 +22,17 @@ const ListTable = ({
   header,
   body,
   selectedItems,
+  onClickRow,
   onCheck,
   onCheckAll,
 }: ListTableProps) => {
   const tHeaderWidth = useMemo(() => {
     return header.map(({ width }) => (width ? width : '10%'));
   }, [header]);
+
+  const handleRowClick = () => {
+    onClickRow?.();
+  };
 
   return (
     <Table>
@@ -52,7 +58,7 @@ const ListTable = ({
       </thead>
       <tbody>
         {body.map(({ id, cells }) => (
-          <TableBodyRow key={id}>
+          <TableBodyRow key={id} onClick={handleRowClick}>
             {checkable && (
               <td>
                 <CheckBox
@@ -95,6 +101,10 @@ const TableHeaderCell = styled.th`
 
 const TableBodyRow = styled.tr`
   border-bottom: 1px solid ${greyBg1};
+  &:hover {
+    background-color: ${greyBg1};
+    cursor: pointer;
+  }
 `;
 
 const CheckBox = styled.input`
