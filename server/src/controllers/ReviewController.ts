@@ -3,8 +3,11 @@ import { getCustomRepository } from 'typeorm';
 import { ReviewRepository } from '../repositories/review_repository';
 import { JwtSignPayload } from '../utils/types';
 import constant from '../utils/constant';
-import { convertImageFilesToUrlArray } from '../../src/utils/review';
-import { UserRepository } from '../repositories/user_repositiory';
+import {
+  convertImagesToUrlString,
+  convertImageUrlStringToArray,
+  convertImageUrlStringToArrayAll,
+} from '../../src/utils/review';
 
 type ReviewProps = {
   title: string;
@@ -21,8 +24,9 @@ const ReviewController = {
 
       const reviewRepository = getCustomRepository(ReviewRepository);
       const reviews = await reviewRepository.getReviews(user.id);
+      const result = convertImageUrlStringToArrayAll(reviews);
 
-      res.json({ ok: true, reviews, message: constant.GET_REVIEW_SUCCEESS });
+      res.json({ ok: true, reviews: result, message: constant.GET_REVIEW_SUCCEESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }
@@ -34,7 +38,9 @@ const ReviewController = {
 
       const reviewRepository = getCustomRepository(ReviewRepository);
       const review = await reviewRepository.getReview(user_id, product_id);
-      res.json({ ok: true, review, message: constant.GET_REVIEW_SUCCESS });
+      const result = convertImageUrlStringToArray(review);
+
+      res.json({ ok: true, review: result, message: constant.GET_REVIEW_SUCCESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, message: err.message });
     }
@@ -50,7 +56,7 @@ const ReviewController = {
         content,
         product_id: Number(product_id),
         user_id,
-        images: convertImageFilesToUrlArray(images),
+        images: convertImagesToUrlString(images),
       };
 
       const reviewRepository = getCustomRepository(ReviewRepository);
@@ -80,7 +86,7 @@ const ReviewController = {
       const newReview = {
         title,
         content,
-        images: convertImageFilesToUrlArray(images),
+        images: convertImagesToUrlString(images),
       };
 
       const reviewRepository = getCustomRepository(ReviewRepository);

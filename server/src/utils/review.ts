@@ -1,4 +1,4 @@
-const convertImageFilesToUrlArray = (images) => {
+const convertImagesToUrlString = (images) => {
   return images
     .map((image) => {
       return image.filename + ';';
@@ -6,4 +6,17 @@ const convertImageFilesToUrlArray = (images) => {
     .reduce((acc, filename) => acc + filename, '');
 };
 
-export { convertImageFilesToUrlArray };
+const convertImageUrlStringToArray = (review) => {
+  const parsedImageArray = review.images.split(';');
+  parsedImageArray.pop();
+
+  const result = {
+    ...review,
+    images: parsedImageArray,
+  };
+  return result;
+};
+const convertImageUrlStringToArrayAll = (reviews) => {
+  return reviews.map((review) => convertImageUrlStringToArray(review));
+};
+export { convertImagesToUrlString, convertImageUrlStringToArray, convertImageUrlStringToArrayAll };
