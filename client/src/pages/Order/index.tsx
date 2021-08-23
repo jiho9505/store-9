@@ -5,8 +5,6 @@ import PricePannel from '@/components/common/PricePannel';
 import OrderStageHeader from '@/components/common/OrderStageHeader';
 import { OrderForm } from '@/components/Order';
 
-import { normalContainerWidth } from '@/static/style/common';
-
 const Order = () => {
   return (
     <OrderContainer>
@@ -20,13 +18,15 @@ const Order = () => {
 };
 
 const OrderContainer = styled.div`
-  width: ${normalContainerWidth};
+  width: 1050px;
   margin: 0 auto;
+  margin-top: 10px;
 `;
 
 const OrderBody = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 `;
 
 export default Order;

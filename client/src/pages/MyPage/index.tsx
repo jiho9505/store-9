@@ -8,7 +8,7 @@ import ReviewPage from './Reivew';
 import { Route } from '@/core/Router';
 import { LeftNav } from '@/components/MyPage';
 
-import { normalContainerWidth, baeminThickFont } from '@/static/style/common';
+import { normalContainerWidth, baeminThickFont, baeminFont } from '@/static/style/common';
 
 const MyPage = () => {
   return (
@@ -39,6 +39,8 @@ const MyPageContainer = guguStyled.div`
   width: ${normalContainerWidth};
   margin: 0 auto;
   padding: 40px 0 0 0;
+  justify-content: center;
+  
 `;
 
 const MyPageContentContiner = guguStyled.div`
@@ -54,6 +56,7 @@ const MyPageHeader = guguStyled.h2`
 const UserName = guguStyled.div`
   font-size: 20px;
   margin-bottom: 35px;
+  font-family: ${baeminFont};
 `;
 
 export default MyPage;

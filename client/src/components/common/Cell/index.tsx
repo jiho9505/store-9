@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { baeminFont } from '@/static/style/common';
 
 type CellProps = {
   textAlign: 'center' | 'left' | 'right';
@@ -19,6 +20,10 @@ const CellContainer = styled.div<CellContainerProps>`
   align-items: center;
   padding: 20px 0px;
   justify-content: ${({ textAlign }) => textAlign};
+
+  span {
+    font-family: ${baeminFont};
+  }
 `;
 
 Cell.defaultProps = {

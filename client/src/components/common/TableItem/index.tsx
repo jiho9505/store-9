@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import ModalPortal from '@/utils/portal';
 import ModalWrapper from '../ModalWrapper';
 
-import { greyLine, greySpan, normalRadius } from '@/static/style/common';
+import { baeminFont, greyLine, greySpan, normalRadius } from '@/static/style/common';
 import { OptionModal } from '@/components/Cart';
 
 const TableItem = ({ product }) => {
@@ -37,7 +37,7 @@ const TableItem = ({ product }) => {
       {activeModal && (
         <ModalPortal>
           <ModalWrapper onClose={handleCloseModal} title="옵션변경">
-            <OptionModal product={product} onClose={handleCloseModal}/>
+            <OptionModal product={product} onClose={handleCloseModal} />
           </ModalWrapper>
         </ModalPortal>
       )}
@@ -65,6 +65,7 @@ const ProductImg = styled.img`
 
 const ProductName = styled.span`
   font-size: 14px;
+  font-family: ${baeminFont};
 `;
 
 const ProductPriceInfo = styled.div`
@@ -87,6 +88,7 @@ const Button = styled.button`
   border-radius: ${normalRadius};
   color: ${greySpan};
   padding: 4px;
+  font-family: ${baeminFont};
 `;
 
 const ProductTotalPrice = styled.div`
