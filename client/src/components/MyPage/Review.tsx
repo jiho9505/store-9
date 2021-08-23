@@ -21,12 +21,13 @@ const tableHeader = [
 
 const ReviewContent = ({ reviews }: ReviewContentProps) => {
   const [activeModal, setActiveModal] = useState(false);
+  const [selectReview, setSelectReview] = useState([]);
 
   const tableBody = useMemo(() => {
-    return reviews.map((review) => {
+    return reviews.map((review, idx) => {
       const { id, title, date, product } = review;
       return {
-        id,
+        id: idx,
         cells: [
           { c: <Cell>{id}</Cell>, colSpan: 1 },
           { c: <Cell>{product.name}</Cell>, colSpan: 1 },
@@ -41,7 +42,8 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
     setActiveModal(false);
   };
 
-  const handleModalOpen = () => {
+  const handleModalOpen = (id) => {
+    setSelectReview(reviews[id]);
     setActiveModal(true);
   };
 
@@ -50,7 +52,7 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
       <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
       {activeModal && (
         <ModalPortal>
-          <PostModal item={reviews[0]} title="상품후기" onClose={handleModalClose} />
+          <PostModal item={selectReview} title="상품 후기" onClose={handleModalClose} />
         </ModalPortal>
       )}
     </RiviewContentContainer>

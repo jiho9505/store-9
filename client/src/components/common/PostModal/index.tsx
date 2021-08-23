@@ -10,8 +10,11 @@ import { baeminFont, greyLine, red1 } from '@/static/style/common';
 const timeToShowMsg: number = 2000;
 
 const PostModal = ({ item, onClose, title }) => {
+  const { title: reviewTitle, content, product } = item;
+
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
   const [starScore, setStarScore] = useState<number>(1);
 
@@ -21,6 +24,13 @@ const PostModal = ({ item, onClose, title }) => {
     return () => {
       clearTimeout(timeOutId);
     };
+  }, []);
+
+  useEffect(() => {
+    if (reviewTitle && content) {
+      inputRef.current.value = reviewTitle;
+      textAreaRef.current.value = content;
+    }
   }, []);
 
   /**
@@ -61,8 +71,8 @@ const PostModal = ({ item, onClose, title }) => {
   return (
     <ModalWrapper onClose={onClose} title={title}>
       <ItemContainer>
-        <ItemImage src={item.image} />
-        <ItemName>{item.title}</ItemName>
+        <ItemImage src={product.thumbnail} />
+        <ItemName>{product.name}</ItemName>
       </ItemContainer>
       <Form>
         {title === '상품 후기' && (
