@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Link } from '@/Router';
+import { Link } from '@/core/Router';
 
 import '@/static/assets/img/circle.png';
 
