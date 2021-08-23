@@ -3,6 +3,7 @@ import qs from 'qs';
 
 import { CustomAxiosRequestConfig } from './type';
 import { BaseResponseData } from '@shared/dtos/base/response';
+import { formatToDateFromResponse } from '@/utils/dateParse';
 
 export default class BaseApi {
   private instance: AxiosInstance;
@@ -24,6 +25,12 @@ export default class BaseApi {
         //로그인 체크
       }
       return config;
+    });
+
+    this.instance.interceptors.response.use((response) => {
+      response.data = formatToDateFromResponse(response.data);
+
+      return response;
     });
   }
 
