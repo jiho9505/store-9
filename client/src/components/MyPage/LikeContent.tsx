@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
-import ListTable from '../base/ListTable';
-import TableItem from '../base/TableItem';
+import ListTable from '../common/ListTable';
+import TableItem from '../common/TableItem';
 
 // api 확정되면 type 지정
 type LikeContentProps = {

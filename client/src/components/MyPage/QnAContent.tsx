@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import { getDashFormat } from '@/utils/dateParse';
+
+import ListTable from '../common/ListTable';
+import Cell from '../common/Cell';
+
+import { getDateFormat } from '@/utils/dateParse';
 
 import ModalPortal from '@/utils/portal';
-import PostModal from '../base/PostModal';
-import ModalWrapper from '../base/ModalWrapper';
-import ListTable from '../base/ListTable';
-import Cell from '../base/Cell';
+import PostModal from '../common/PostModal';
 
 type QnAContentProps = {
   questions: any;
@@ -33,7 +34,7 @@ const QnAContent = ({ questions }: QnAContentProps) => {
       return {
         id,
         cells: [
-          { c: <Cell>{getDashFormat(date)}</Cell>, colSpan: 1 },
+          { c: <Cell>{getDateFormat(date)}</Cell>, colSpan: 1 },
           { c: <Cell>{category}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
         ],

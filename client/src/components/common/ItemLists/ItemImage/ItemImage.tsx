@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Link } from '@/Router';
+import { Link } from '@/core/Router';
 
 type ImageProps = {
   quantity: number;

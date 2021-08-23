@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Stepper from './Stepper';
 import Stage1 from './Stage1';
 import Stage2 from './Stage2';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 
 import useInput from '@/hooks/customHooks/useInput';
 

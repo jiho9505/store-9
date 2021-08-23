@@ -17,7 +17,6 @@ type InputProps = {
   placeholder?: string;
   variant: inputVariant;
   validate?: validate;
-  type?: string;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };

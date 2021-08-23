@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import StarComponent from '@/components/base/Star';
+import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
 

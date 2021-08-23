@@ -3,7 +3,7 @@ import React from 'react';
 
 import { calculateDiscount } from '@/utils/calculateDiscount';
 import { baeminFont, red2 } from '@/static/style/common';
-import { Link } from '@/Router';
+import { Link } from '@/core/Router';
 
 type ContentProps = {
   item: {

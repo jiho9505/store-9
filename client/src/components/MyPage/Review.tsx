@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import guguStyled from '@/core/styled';
 
+import ListTable from '../common/ListTable';
+import Cell from '../common/Cell';
+import { getDateFormat } from '@/utils/dateParse';
+
 import ModalPortal from '@/utils/portal';
-import PostModal from '../base/PostModal';
-import ListTable from '../base/ListTable';
-import Cell from '../base/Cell';
-import { getDashFormat } from '@/utils/dateParse';
+import PostModal from '../common/PostModal';
 
 type ReviewContentProps = {
   reviews: any;
@@ -29,7 +30,7 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
         cells: [
           { c: <Cell>{id}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
-          { c: <Cell>{getDashFormat(date)}</Cell>, colSpan: 1 },
+          { c: <Cell>{getDateFormat(date)}</Cell>, colSpan: 1 },
           { c: <Cell>{writer}</Cell>, colSpan: 1 },
         ],
       };

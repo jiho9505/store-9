@@ -3,9 +3,9 @@ import guguStyled from '@/core/styled';
 
 import useInput from '@/hooks/customHooks/useInput';
 
-import DurationFilter from '@/components/base/DurationFilter';
+import DurationFilter from '@/components/common/DurationFilter';
 import { QnAContent } from '@/components/MyPage';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 
 const questions = [
   {

@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
-import StarComponent from '@/components/base/Star';
-import ModalWrapper from '@/components/base/ModalWrapper';
+import StarComponent from '@/components/common/Star';
+import ModalWrapper from '@/components/common/ModalWrapper';
 
-import { baeminFont, baeminThickFont, greyBg1, greyLine, red1 } from '@/static/style/common';
+import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
