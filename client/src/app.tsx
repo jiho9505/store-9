@@ -14,7 +14,7 @@ const Order = React.lazy(() => import('@/pages/Order'));
 const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
-const Callback = React.lazy(() => import('@/components/base/Callback'));
+const Callback = React.lazy(() => import('@/components/common/Callback'));
 const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import '@/static/assets/img/baeminFavicon.png';

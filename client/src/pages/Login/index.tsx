@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 import { Link } from '@/core/Router';
 import Input from '@/components/common/Input';
 import useInput from '@/hooks/customHooks/useInput';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 import AuthApi from '@/apis/AuthApi';
 import useHistory from '@/hooks/customHooks/useHistory';
 
