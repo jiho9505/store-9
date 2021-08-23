@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
-import ListTable from '../base/ListTable';
-import TableItem from '../base/TableItem';
+import ListTable from '../common/ListTable';
+import TableItem from '../common/TableItem';
 
 import { normalContainerWidth } from '@/static/style/common';
 
@@ -27,7 +27,7 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: Car
       return {
         id: cartProduct.productId,
         cells: [
-          { c: <TableItem cartProduct={cartProduct} />, colSpan: 3 },
+          { c: <TableItem product={cartProduct} />, colSpan: 3 },
           { c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div> },
         ],
       };

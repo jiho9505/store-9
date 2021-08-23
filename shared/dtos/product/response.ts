@@ -8,11 +8,14 @@ namespace ProductResponse {
     discountProducts: ProductSchema[];
   };
 
-  export type GetList = ProductSchema[];
-
-  export type GetDetail = ProductSchema & {
-    detail: ProductDetailSchema;
+  export type GetList = {
+    prodcuts: ProductSchema[];
+    totalCount: number;
   };
+
+  export type GetDetail = ProductSchema;
+
+  export type Create = ProductSchema;
 }
 
 export default ProductResponse;

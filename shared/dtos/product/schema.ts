@@ -12,13 +12,14 @@ export enum ProductSortBy {
 
 export interface ProductSchema {
   id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-  stock: number;
-  isLike: boolean;
-  category: CategorySchema;
-  badge: BadgeSchema;
+  name: string;
+  price?: number;
+  thumbnail?: string;
+  content?: string;
+  stock?: number;
+  isLike?: boolean;
+  category?: CategorySchema;
+  badge?: BadgeSchema;
   detail?: ProductDetailSchema;
   reviews?: ReviewSchema[];
   qnas?: QnASchema[];

@@ -30,7 +30,7 @@ const injectStyle = (rule) => {
 
 const getProperProps = (props: Object): Object => {
   return Object.keys(props).reduce((result, prop) => {
-    if (prop in HTMLElement.prototype) {
+    if (prop.toLocaleLowerCase() in HTMLElement.prototype) {
       return { ...result, [prop]: props[prop] };
     }
     return result;

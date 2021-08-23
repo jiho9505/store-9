@@ -1,10 +1,13 @@
 import { Router } from 'express';
 
 import ProductController from '../controllers/ProductController';
-import AuthMiddleware from '../middlewares/auth';
 
 const ProductRouter = Router();
 
-ProductRouter.post('/', AuthMiddleware.checkAdmin, ProductController.create);
+ProductRouter.get('/main', ProductController.getMain);
+ProductRouter.get('/list', ProductController.getList);
+ProductRouter.post('/', ProductController.create);
+ProductRouter.get('/:productId', ProductController.getDetail);
+ProductRouter.delete('/:productId', ProductController.remove);
 
 export default ProductRouter;

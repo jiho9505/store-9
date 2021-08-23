@@ -1,6 +1,5 @@
 import AuthRequest from '@shared/dtos/auth/request';
 import AuthResponse from '@shared/dtos/auth/response';
-import { AxiosRequestConfig } from 'axios';
 import BaseApi from './BaseApi';
 
 class AuthApi extends BaseApi {
@@ -8,8 +7,8 @@ class AuthApi extends BaseApi {
     return this.post<AuthResponse.Login>('/login', body);
   }
 
-  signup(body: AuthRequest.Signup, config?: AxiosRequestConfig) {
-    return this.post('/signup', body, config);
+  signup(body: AuthRequest.Signup) {
+    return this.post('/signup', body);
   }
 
   logout() {

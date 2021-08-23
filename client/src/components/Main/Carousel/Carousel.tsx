@@ -9,7 +9,6 @@ import { greyButton } from '@/static/style/common';
  * TODO:
  * 이미지 클릭 시 해당 상품으로 넘어가도록 추후 Link에 product id 달 것
  */
-
 const timeToChangeSlide = 3000;
 
 const Carousel = () => {
@@ -39,10 +38,8 @@ const Carousel = () => {
    * Carousel 안에 버튼 클릭 시 해당 이미지로 이동합니다.
    * 그 후 자동으로 슬라이드 되는 기능을 3초간 막습니다.
    */
-  const onClickButton = (e: React.MouseEvent) => {
-    const { target } = e;
-    if (!(target instanceof HTMLElement)) return;
-    const nextIndex = Number(target.dataset.idx);
+  const handleClickButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const nextIndex = Number(e.currentTarget.dataset.idx);
     setIndex(nextIndex);
     setIsClickEventActive(true);
   };
@@ -55,9 +52,9 @@ const Carousel = () => {
         <SlideImage src="images/bannerImage3.gif" alt="third-banner-image" />
       </ImageContainer>
       <ButtonContainer>
-        <Button onClick={onClickButton} data-idx="1" active={index === 1}></Button>
-        <Button onClick={onClickButton} data-idx="2" active={index === 2}></Button>
-        <Button onClick={onClickButton} data-idx="3" active={index === 3}></Button>
+        <Button onClick={handleClickButton} data-idx="1" active={index === 1}></Button>
+        <Button onClick={handleClickButton} data-idx="2" active={index === 2}></Button>
+        <Button onClick={handleClickButton} data-idx="3" active={index === 3}></Button>
       </ButtonContainer>
     </CarouselContainer>
   );
@@ -73,6 +70,8 @@ type ButtonProps = {
 
 const CarouselContainer = styled.div`
   position: relative;
+  width: 100%;
+  overflow: hidden;
 `;
 
 const ImageContainer = styled.div<ImageProps>`
@@ -87,6 +86,7 @@ const SlideImage = styled.img`
   width: 100%;
   cursor: pointer;
   opacity: 1;
+  object-fit: cover;
 `;
 
 const ButtonContainer = styled.div`

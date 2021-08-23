@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import isEmail from 'validator/lib/isEmail';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 
-import Input from '@/components/base/Input';
+import Input from '@/components/common/Input';
 import useAddress from '@/hooks/customHooks/useAddress';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 import { baeminFont, greyLine } from '@/static/style/common';
 import AuthApi from '@/apis/AuthApi';
 import useHistory from '@/hooks/customHooks/useHistory';

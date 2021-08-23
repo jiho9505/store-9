@@ -7,9 +7,14 @@ namespace OrderRequest {
     orderId: number;
   };
 
-  export type AddToCart = {
+  export type AddCartItem = {
     productId: number;
-    option: any;
+    amount: number;
+  };
+
+  export type UpdateCartItem = {
+    orderItemId: number;
+    amount: number;
   };
 
   export type GetList = {
@@ -17,7 +22,7 @@ namespace OrderRequest {
     end?: Date;
   };
 
-  export type DeleteCartItem = {
+  export type RemoveCartItem = {
     orderItemId: number;
   };
 }

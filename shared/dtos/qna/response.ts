@@ -1,7 +1,10 @@
 import { QnASchema } from './schema';
 
 namespace QnAResponse {
-  export type GetList = QnASchema[];
+  export type GetList = {
+    qnas: QnASchema[];
+    totalCount: number;
+  };
 
   export type Create = QnASchema;
 

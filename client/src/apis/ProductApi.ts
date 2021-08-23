@@ -1,6 +1,7 @@
+import BaseApi from './BaseApi';
+
 import ProductRequest from '@shared/dtos/product/request';
 import ProductResponse from '@shared/dtos/product/response';
-import BaseApi from './BaseApi';
 
 class ProductAPI extends BaseApi {
   getMain() {

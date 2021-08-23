@@ -1,6 +1,3 @@
-import { Optional } from '@shared/operators';
-import { UserSchema } from '../user/schema';
-
 namespace AuthRequest {
   export interface Login extends FormData {
     id?: string;
