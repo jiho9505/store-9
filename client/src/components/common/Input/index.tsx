@@ -5,7 +5,6 @@ import { greyLine, normalRadius, red2 } from '@/static/style/common';
 
 type inputSize = 'large' | 'medium' | 'small';
 type inputVariant = 'normal' | 'outlined';
-type validate = { isValid: boolean; onCheck(): void; message: string };
 
 type InputProps = {
   id?: string;
@@ -13,30 +12,28 @@ type InputProps = {
   required: boolean;
   size: inputSize;
   value: string;
-  type?: string;
   placeholder?: string;
   variant: inputVariant;
-  validate?: validate;
+  error?: any;
+  type?: string;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onBlur?(e: React.FocusEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };
 
 const Input = ({
   name,
   required,
+  onBlur,
   onChange,
   size,
   value,
   type,
   placeholder,
   variant,
-  validate,
+  error,
   ...otherProps
 }: InputProps) => {
-  const handleBlur = () => {
-    validate?.onCheck?.();
-  };
-
   return (
     <InputContainer size={size}>
       <CustomInput
@@ -45,13 +42,13 @@ const Input = ({
         type={type}
         required={required}
         onChange={onChange}
-        onBlur={handleBlur}
+        onBlur={onBlur}
         placeholder={placeholder || ''}
         variant={variant}
-        valid={validate?.isValid}
+        error={error}
         {...otherProps}
       />
-      {validate?.isValid === false && <ErrorMessage>{validate.message}</ErrorMessage>}
+      {error?.[name] && <ErrorMessage>{error[name]}</ErrorMessage>}
     </InputContainer>
   );
 };
@@ -65,6 +62,7 @@ type InputContainerProps = {
 type InputVariantProps = {
   variant: inputVariant;
   valid?: boolean;
+  error?: {};
 };
 
 const getInputSize = (size: string) => {
@@ -97,7 +95,7 @@ const CustomInput = styled.input<InputVariantProps>`
       ? `border: 1px solid ${greyLine};`
       : `border-bottom: 1px solid ${greyLine};`}
   border-radius: ${(props) => (props.variant === 'outlined' ? `${normalRadius}` : '0px')};
-  border-color: ${(props) => (props.valid === false ? `${red2}` : `${greyLine}`)};
+  border-color: ${({ error, name }) => (error?.[name] ? `${red2}` : `${greyLine}`)};
   font-size: 1rem;
 `;
 
