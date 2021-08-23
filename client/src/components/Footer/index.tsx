@@ -89,7 +89,7 @@ const FooterNav = styled.nav`
     font-family: ${baeminThickFont};
 
     &:not(:last-child) {
-      margin-right: 40px;
+      margin-right: 70px;
     }
   }
 `;

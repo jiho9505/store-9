@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import Input from '@/components/common/Input';
 import InputLabel from '@/components/common/InputLabel';
+import { baeminFont } from '@/static/style/common';
 
 type Stage2Props = {
   onChange(e: ChangeEvent<HTMLInputElement>): void;
@@ -57,6 +58,12 @@ const Stage2 = ({ form, onChange, error, onBlur }: Stage2Props) => {
 const StageContainer = styled.div`
   & div {
     margin-bottom: 30px;
+  }
+  Input {
+    font-family: ${baeminFont};
+  }
+  label {
+    font-family: ${baeminFont};
   }
 `;
 

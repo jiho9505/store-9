@@ -32,8 +32,10 @@ const orderedProducts = [
 
 const OrderPage = () => {
   const { form, onChange, onSetForm } = useInput({
-    start: '',
-    finish: getDateFormat(new Date()),
+    initialState: {
+      start: '',
+      finish: getDateFormat(new Date()),
+    },
   });
 
   return (

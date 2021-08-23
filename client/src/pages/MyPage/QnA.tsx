@@ -5,7 +5,7 @@ import useInput from '@/hooks/customHooks/useInput';
 
 import DurationFilter from '@/components/common/DurationFilter';
 import { QnAContent } from '@/components/MyPage';
-import Button from '@/components/common/Button';
+import { getDateFormat } from '@/utils/dateParse';
 
 const questions = [
   {
@@ -40,8 +40,10 @@ const questions = [
 
 const QnAPage = () => {
   const { form, onChange, onSetForm } = useInput({
-    start: '',
-    finish: '',
+    initialState: {
+      start: '',
+      finish: getDateFormat(new Date()),
+    },
   });
 
   return (

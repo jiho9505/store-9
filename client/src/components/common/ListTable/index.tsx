@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
-import { greyLine, normalRadius, greyBg1 } from '@/static/style/common';
+import { greyLine, normalRadius, greyBg1, baeminFont } from '@/static/style/common';
 
 type bodyType = {
   id: number;
@@ -93,6 +93,9 @@ const TableHeaderRow = styled.tr`
   height: 40px;
   background-color: ${greyBg1};
   border-bottom: 1px solid ${greyLine};
+  th {
+    font-family: ${baeminFont};
+  }
 `;
 
 const TableHeaderCell = styled.th`
@@ -101,6 +104,12 @@ const TableHeaderCell = styled.th`
 
 const TableBodyRow = styled.tr`
   border-bottom: 1px solid ${greyBg1};
+
+  td {
+    div {
+      font-family: ${baeminFont};
+    }
+  }
   &:hover {
     background-color: ${greyBg1};
     cursor: pointer;
