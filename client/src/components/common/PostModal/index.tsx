@@ -5,12 +5,13 @@ import Button from '../Button';
 import StarComponent from '@/components/common/Star';
 import ModalWrapper from '@/components/common/ModalWrapper';
 
+import ReviewApi from '@/apis/ReviewApi';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
 const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
-  const { title: reviewTitle, content, rate, product } = item;
+  const { id, title: reviewTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,7 +40,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
    * 아래 내용과 product userId 등 조합해서 post 요청 보내야합니다.
    * 그 후 mobx를 통해 상태 업뎃해서 상위부터 리렌더링 되게 하면 될것 같습니다.
    */
-  const handleClickButton = (e: React.MouseEvent) => {
+  const handleClickEnrollBtn = (e: React.MouseEvent) => {
     e.preventDefault();
     const title: string = inputRef.current.value;
     const content: string = textAreaRef.current.value;
@@ -47,6 +48,27 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
     const result = isPassedValidation(title, content);
     if (result) return;
     onClose();
+  };
+
+  const handleClickModifyBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const title: string = inputRef.current.value;
+    const content: string = textAreaRef.current.value;
+    const rate = starScore || 1;
+
+    if (isPassedValidation(title, content)) return;
+
+    try {
+      await ReviewApi.update(product.id, {
+        title: inputRef.current.value,
+        content: textAreaRef.current.value,
+        rate,
+        images: [],
+      });
+      onClose();
+    } catch (err) {
+      alert('리뷰수정에 실패했습니다.');
+    }
   };
 
   const createErrorMsg = () => {
@@ -77,7 +99,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
           value="등록하기"
           type="submit"
           theme="dark"
-          onClick={handleClickButton}
+          onClick={handleClickEnrollBtn}
         />
       );
     } else if (mode === 'MODIFY') {
@@ -87,7 +109,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
           value="수정하기"
           type="submit"
           theme="white"
-          onClick={() => console.log('a')}
+          onClick={handleClickModifyBtn}
         />
       );
     }
