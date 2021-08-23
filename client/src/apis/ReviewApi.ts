@@ -11,8 +11,8 @@ class ReviewApi extends BaseApi {
     return this.post<ReviewResponse.Create>('/', body, { isRequiredLogin: true });
   }
 
-  update(body: ReviewRequest.Update) {
-    return this.put<ReviewResponse.Update>('/', body, { isRequiredLogin: true });
+  update(id: number, body: ReviewRequest.Update) {
+    return this.put<ReviewResponse.Update>(`/${id}`, body, { isRequiredLogin: true });
   }
 
   remove({ reviewId }: ReviewRequest.Remove) {
