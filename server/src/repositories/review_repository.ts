@@ -4,7 +4,10 @@ import Review from '../entities/review';
 @EntityRepository(Review)
 export class ReviewRepository extends Repository<Review> {
   getReviews(user_id: number): Promise<Review[]> {
-    return this.find({ user_id });
+    return this.find({
+      relations: ['product'],
+      where: { user_id },
+    });
   }
   getReview(user_id: number, product_id: number): Promise<Review> {
     return this.findOne({ user_id, product_id });
