@@ -38,7 +38,7 @@ const Header = () => {
         <Navigation>
           {categories.map(([category, path], idx) => (
             <li key={idx}>
-              <CategoryLink to={path}>{category}</CategoryLink>
+              <CategoryLink to={`/goods?id=${idx}`}>{category}</CategoryLink>
             </li>
           ))}
         </Navigation>

@@ -3,20 +3,17 @@ import styled from '@emotion/styled';
 
 import useLocation from './hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { RouteList } from '@/static/constants';
 
 const history = window.history;
 
-// let success = false;
 const Router = ({ children }) => {
-  // console.log('start: -------------', children);
   const [curLocation, setLocation] = useState(window.location.pathname);
 
   useEffect(() => {
     History.prototype.push = (path) => {
       history.pushState('', '', path);
       setLocation(path);
-      // success = false;
     };
 
     const movePage = ({ target }) => {
@@ -38,7 +35,7 @@ const Router = ({ children }) => {
 
 const haveRouterParameter = (path: string, curLocation: string): boolean => {
   if (path.includes(':')) {
-    if (curLocation === '/') return false;
+    if (RouteList.has(curLocation)) return false;
     const curLocationLastSlashIdx = curLocation.lastIndexOf('/');
     const pathLastSlashIdx = path.lastIndexOf('/');
     const curLocationBeforeSlash = curLocation.slice(0, curLocationLastSlashIdx);
@@ -49,20 +46,20 @@ const haveRouterParameter = (path: string, curLocation: string): boolean => {
   return false;
 };
 
+const haveQueryString = (curLocation) => {
+  const idxOfQS = curLocation.indexOf('?');
+  return idxOfQS > -1 ? curLocation.slice(0, idxOfQS) : curLocation;
+};
+
 type RouteType = {
   exact?: boolean;
   path: string;
-  children: ReactJSXElement;
+  children;
 };
-const Route = ({ exact = false, path, children }: RouteType) => {
-  // console.log('children: ', children);
-  // console.log('success: ', success);
-  // console.log('path: ', path);
-  // if (success) return null;
-  // console.log('success-after: ', success);
 
-  const curLocation = useLocation();
-  // console.log('curLocation: ', curLocation);
+const Route = ({ exact = false, path, children }: RouteType) => {
+  let curLocation = useLocation();
+  curLocation = haveQueryString(curLocation);
 
   const isMatched = (): boolean => {
     if (exact) {
@@ -73,22 +70,13 @@ const Route = ({ exact = false, path, children }: RouteType) => {
       return curLocation.match(path)?.index === 0;
     }
   };
-  // console.log('isMatched: ', isMatched());
-
-  if (isMatched()) {
-    // success = true;
-    // console.log('success: ', success);
-
-    return children;
-  }
-  return null;
+  return isMatched() ? children : null;
 };
 
 const Link = ({ to, children, ...rest }) => {
   const { history } = useContext(HistoryContext);
 
   const handleClickLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
     history.push(to);
   };
 

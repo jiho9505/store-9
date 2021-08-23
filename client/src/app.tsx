@@ -49,37 +49,7 @@ const App = () => {
           <Route exact path="/signupMethod">
             <SignupMethod />
           </Route>
-          <Route exact path="/total">
-            <ProductList />
-          </Route>
-          <Route exact path="/suplies">
-            <ProductList />
-          </Route>
-          <Route exact path="/living">
-            <ProductList />
-          </Route>
-          <Route exact path="/books">
-            <ProductList />
-          </Route>
-          <Route exact path="/books/:id">
-            <ProductList />
-          </Route>
-          <Route exact path="/green">
-            <ProductList />
-          </Route>
-          <Route exact path="/smile-edition">
-            <ProductList />
-          </Route>
-          <Route exact path="/euljiro-edition">
-            <ProductList />
-          </Route>
-          <Route exact path="/baedal-friends">
-            <ProductList />
-          </Route>
-          <Route exact path="/present">
-            <ProductList />
-          </Route>
-          <Route exact path="/collaborate">
+          <Route exact path="/goods">
             <ProductList />
           </Route>
           <Route exact path="/detail">
