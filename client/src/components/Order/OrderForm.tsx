@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Stepper from './Stepper';
 import Stage1 from './Stage1';
 import Stage2 from './Stage2';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 
 import useInput from '@/hooks/customHooks/useInput';
+import Validation from '@/utils/validation';
 
 import { normalRadius } from '@/static/style/common';
 
@@ -22,10 +23,19 @@ const stage2InitialForm = {
   recPhoneNumber: '',
 };
 
+const validationSchema = {
+  orderName: Validation().require('주문자명을 입력해 주세요.'),
+  phoneNumber: Validation().require('휴대폰 번호를 입력해 주세요.'),
+  email: Validation().require('이메일을 입력해 주세요.'),
+  recName: Validation().require('받는 사람이름을 입력해 주세요.'),
+  recPlace: Validation().require('받는 장소를 입력해 주세요.'),
+  recPhoneNumber: Validation().require('받는 사람 휴대폰 번호를 입력해 주세요.'),
+};
+
 const OrderForm = () => {
-  const { form, onChange } = useInput({
-    ...stage1InitialForm,
-    ...stage2InitialForm,
+  const { form, onChange, onBlur, check, error } = useInput({
+    initialState: { ...stage1InitialForm, ...stage2InitialForm },
+    validationSchema,
   });
 
   const { orderName, phoneNumber, email, recName, recPlace, recPhoneNumber } = form;
@@ -33,6 +43,10 @@ const OrderForm = () => {
   const [stage, setStage] = useState(1);
 
   const handleClickNext = () => {
+    const pass = check('orderName', 'phoneNumber', 'email');
+    if (!pass) {
+      return;
+    }
     setStage((prev) => prev + 1);
   };
 
@@ -40,26 +54,37 @@ const OrderForm = () => {
     setStage((prev) => prev - 1);
   };
 
-  const forms = () => {
+  const Forms = () => {
     if (stage === 1) {
-      return <Stage1 onChange={onChange} form={{ orderName, email, phoneNumber }} />;
+      return (
+        <Stage1
+          onChange={onChange}
+          onBlur={onBlur}
+          form={{ orderName, email, phoneNumber }}
+          error={error}
+        />
+      );
     } else if (stage === 2) {
-      return <Stage2 onChange={onChange} form={{ recName, recPlace, recPhoneNumber }} />;
+      return (
+        <Stage2
+          onChange={onChange}
+          onBlur={onBlur}
+          form={{ recName, recPlace, recPhoneNumber }}
+          error={error}
+        />
+      );
     }
   };
 
-  return (
-    <OrderFormContainer>
-      <Stepper steps={2} curStep={stage} />
-      {forms()}
-      <PageAction>
-        {stage !== 1 && (
+  const FormButtons = () => {
+    if (stage === 1) {
+      return (
+        <Button size="small" theme="white" value="next" type="button" onClick={handleClickNext} />
+      );
+    } else if (stage === 2) {
+      return (
+        <>
           <Button size="small" theme="white" value="prev" type="button" onClick={handleClickPrev} />
-        )}
-        {stage !== 2 && (
-          <Button size="small" theme="white" value="next" type="button" onClick={handleClickNext} />
-        )}
-        {stage === 2 && (
           <Button
             size="small"
             theme="white"
@@ -67,7 +92,17 @@ const OrderForm = () => {
             type="button"
             onClick={() => console.log('a')}
           />
-        )}
+        </>
+      );
+    }
+  };
+
+  return (
+    <OrderFormContainer>
+      <Stepper steps={2} curStep={stage} />
+      {Forms()}
+      <PageAction>
+        <FormButtons />
       </PageAction>
     </OrderFormContainer>
   );

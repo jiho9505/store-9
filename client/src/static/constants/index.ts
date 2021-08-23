@@ -1,16 +1,3 @@
-export const categories = [
-  ['전체', '/total'],
-  ['문구', '/suplies'],
-  ['리빙', '/living'],
-  ['책', '/books'],
-  ['배민그린', '/green'],
-  ['ㅋㅋ 에디션', '/smile-edition'],
-  ['을지로 에디션', '/euljiro-edition'],
-  ['배달이 친구들', '/baedal-friends'],
-  ['선물세트', '/present'],
-  ['콜라보레이션', '/collaborate'],
-];
-
 const RouteListArray = [
   '/',
   '/login',
@@ -24,3 +11,41 @@ const RouteListArray = [
 ];
 
 export const RouteList = new Set(RouteListArray);
+
+export const categories = [
+  ['전체', '/total'],
+  ['문구', '/suplies'],
+  ['의류', '/living'],
+  ['책', '/books'],
+  ['에디션', '/green'],
+  ['세트', '/smile-edition'],
+];
+
+export const subCategories = [
+  { name: '필기', level: 2, parentName: '문구' },
+  { name: '노트', level: 2, parentName: '문구' },
+  { name: '기타', level: 2, parentName: '문구' },
+  { name: '소설', level: 2, parentName: '책' },
+  { name: '수필', level: 2, parentName: '책' },
+  { name: '시', level: 2, parentName: '책' },
+  { name: '에세이', level: 2, parentName: '책' },
+  { name: '잡지', level: 2, parentName: '책' },
+  { name: '양말', level: 2, parentName: '의류' },
+  { name: '신발', level: 2, parentName: '의류' },
+  { name: '속옷', level: 2, parentName: '의류' },
+  { name: 'ㅋㅋ에디션', level: 2, parentName: '에디션' },
+  { name: '을지로에디션', level: 2, parentName: '에디션' },
+  { name: '배달이친구들', level: 2, parentName: '에디션' },
+  { name: '콜라보레이션', level: 2, parentName: '에디션' },
+  { name: '선물세트', level: 2, parentName: '세트' },
+  { name: '혼밥세트', level: 2, parentName: '세트' },
+  { name: '커플세트', level: 2, parentName: '세트' },
+];
+
+// export const level1CategorySeed: CategorySeed[] = [
+//   { name: '문구', level: 1 },
+//   { name: '의류', level: 1 },
+//   { name: '책', level: 1 },
+//   { name: '에디션', level: 1 },
+//   { name: '세트', level: 1 },
+// ];

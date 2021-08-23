@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import styled from '@emotion/styled';
-import { Router, Route } from './Router';
+import { Router, Route } from './core/Router';
 
-const Header = React.lazy(() => import('@/components/base/Header'));
-const Footer = React.lazy(() => import('@/components/base/Footer'));
-const ButtonToMoveToTop = React.lazy(() => import('@/components/base/ButtonToMoveToTop'));
+const Header = React.lazy(() => import('@/components/Header'));
+const Footer = React.lazy(() => import('@/components/Footer'));
+const ButtonToMoveToTop = React.lazy(() => import('@/components/ButtonToMoveToTop'));
 const LoginPage = React.lazy(() => import('@/pages/Login'));
 const SignupMethod = React.lazy(() => import('@/pages/SignupMethod'));
 const Main = React.lazy(() => import('@/pages/Main'));
@@ -14,10 +14,11 @@ const Order = React.lazy(() => import('@/pages/Order'));
 const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
+const Callback = React.lazy(() => import('@/components/common/Callback'));
 const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import '@/static/assets/img/baeminFavicon.png';
-import Loading from './components/base/Loading';
+import Loading from './components/common/Loading';
 
 const App = () => {
   return (
@@ -60,6 +61,9 @@ const App = () => {
           </Route>
           <Route exact path="/:notfound">
             <NotFound />
+          </Route>
+          <Route exact path="/callback">
+            <Callback />
           </Route>
         </Router>
         <ButtonToMoveToTop />

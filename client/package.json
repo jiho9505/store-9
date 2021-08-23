@@ -15,9 +15,11 @@
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
+    "@babel/runtime": "^7.15.3",
     "@emotion/babel-plugin": "^11.3.0",
     "@svgr/webpack": "^5.5.0",
     "@types/react": "^17.0.16",
@@ -44,11 +46,15 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "korean-regexp": "^1.0.9",
     "murmurhash": "^2.0.0",
+    "axios": "^0.21.1",
+    "mobx": "^6.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sanitize-html": "^2.4.0",
     "validator": "^13.6.0",
-    "stylis": "^4.0.10"
+    "stylis": "^4.0.10",
+    "nanoid": "^3.1.25"
   }
 }

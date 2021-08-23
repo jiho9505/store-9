@@ -9,9 +9,11 @@ type Address = {
 const useAddress = (): { onAddressSearchClick(): void; address: Address } => {
   const [address, setAddress] = useState<Address>({ postcode: '', address: '' });
   const temp = <Address>{};
+  const width = 500;
+  const height = 600;
 
   const onAddressSearchClick = () => {
-    new window.daum.Postcode({
+    new daum.Postcode({
       oncomplete: function (data) {
         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
@@ -57,6 +59,8 @@ const useAddress = (): { onAddressSearchClick(): void; address: Address } => {
         // document.getElementById('sample6_detailAddress').focus();
         setAddress(temp);
       },
+      width,
+      height,
     }).open();
   };
 

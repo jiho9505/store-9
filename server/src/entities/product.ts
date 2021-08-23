@@ -1,43 +1,41 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { DateBasicEntity } from './base_entity';
 import Like from './like';
-import ProductDetail from './product-detail';
+import ProductDetail from './product_detail';
 import QnA from './qna';
 import Discount from './discount';
-import User from './user';
 import Review from './review';
 import Category from './category';
 
 @Entity({ name: 'products' })
-class Product extends DateBaseModel {
+class Product extends DateBasicEntity {
   @Column()
   name: string;
 
   @Column({ type: 'decimal' })
   price: number;
 
-  @Column()
-  thumbnail: string;
+  @Column({ nullable: true })
+  thumbnail?: string;
 
-  @Column({ type: 'decimal' })
-  stock: number;
-
-  @Column()
+  @Column({ nullable: true })
   content: string;
 
+  @Column({ type: 'decimal', nullable: true, default: 0 })
+  stock?: number;
+
+  @Column()
+  category_id: number;
+
   @ManyToOne((type) => Category, (category) => category.products)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @OneToOne((type) => ProductDetail, (productDatail) => productDatail.product)
-  @JoinColumn()
   detail: ProductDetail;
 
   @OneToOne((type) => Discount, (discount) => discount.product)
-  @JoinColumn()
   discount: Discount;
-
-  @ManyToOne((type) => User, (user) => user.id)
-  user: User;
 
   @OneToMany((type) => Like, (like) => like.product)
   likes: Like[];

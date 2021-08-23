@@ -1,21 +1,17 @@
-import React from 'react';
+import React, { ChangeEvent, FocusEvent } from 'react';
 import styled from '@emotion/styled';
 
-import Input from '@/components/base/Input';
-import InputLabel from '@/components/base/InputLabel';
-
-import useValidate from '@/hooks/customHooks/useValidate';
+import Input from '@/components/common/Input';
+import InputLabel from '@/components/common/InputLabel';
 
 type Stage2Props = {
-  onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+  onChange(e: ChangeEvent<HTMLInputElement>): void;
+  onBlur?(e: FocusEvent<HTMLInputElement>): void;
   form: { recName: string; recPlace: string; recPhoneNumber: string };
+  error?: { [key: string]: string };
 };
 
-const Stage2 = ({ form, onChange }: Stage2Props) => {
-  const { isValid: recNameCheck, check: handleNameCheck } = useValidate(form.recName);
-  const { isValid: recPlaceCheck, check: handlePlaceCheck } = useValidate(form.recPlace);
-  const { isValid: recPhoneCheck, check: handlePhoneCheck } = useValidate(form.recPhoneNumber);
-
+const Stage2 = ({ form, onChange, error, onBlur }: Stage2Props) => {
   return (
     <StageContainer>
       <InputLabel labelName="받을실 분" />
@@ -25,12 +21,9 @@ const Stage2 = ({ form, onChange }: Stage2Props) => {
         variant="outlined"
         size="large"
         onChange={onChange}
+        onBlur={onBlur}
         value={form.recName}
-        validate={{
-          isValid: recNameCheck,
-          onCheck: handleNameCheck,
-          message: '받을실 분을 입력해 주세요.',
-        }}
+        error={error}
         placeholder="받을실 분을 입력해 주세요."
       />
       <InputLabel labelName="받으실 곳" />
@@ -40,27 +33,21 @@ const Stage2 = ({ form, onChange }: Stage2Props) => {
         variant="outlined"
         size="large"
         onChange={onChange}
+        onBlur={onBlur}
         value={form.recPlace}
-        validate={{
-          isValid: recPlaceCheck,
-          onCheck: handlePlaceCheck,
-          message: '받으실 곳을 입력해 주세요.',
-        }}
+        error={error}
         placeholder="받으실 곳을 입력해 주세요."
       />
       <InputLabel labelName="휴대폰" />
       <Input
-        name="recPhonenumber"
+        name="recPhoneNumber"
         required
         variant="outlined"
         size="large"
         onChange={onChange}
+        onBlur={onBlur}
         value={form.recPhoneNumber}
-        validate={{
-          isValid: recPhoneCheck,
-          onCheck: handlePhoneCheck,
-          message: '휴대폰 번호를 입력해 주세요.',
-        }}
+        error={error}
         placeholder="휴대폰 번호를 입력해 주세요."
       />
     </StageContainer>

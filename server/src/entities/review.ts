@@ -1,16 +1,10 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { DateBasicEntity } from './base_entity';
 import Product from './product';
 import User from './user';
 
 @Entity({ name: 'reviews' })
-class Review extends DateBaseModel {
-  @ManyToOne((type) => User, (user) => user.reviews)
-  user: User;
-
-  @ManyToOne((type) => Product, (product) => product.reviews)
-  product: Product;
-
+class Review extends DateBasicEntity {
   @Column()
   title: string;
 
@@ -19,6 +13,20 @@ class Review extends DateBaseModel {
 
   @Column()
   images: string;
+
+  @Column()
+  user_id: number;
+
+  @Column()
+  product_id: number;
+
+  @ManyToOne((type) => User, (user) => user.reviews)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @ManyToOne((type) => Product, (product) => product.reviews)
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 }
 
 export default Review;

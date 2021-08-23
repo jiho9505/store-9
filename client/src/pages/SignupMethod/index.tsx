@@ -1,33 +1,23 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { Link } from '@/Router';
-import Button from '@/components/base/Button';
+import { Link } from '@/core/Router';
+import Button from '@/components/common/Button';
 
 const LOGIN_SUGGESTION_TEXT = '이미 배민문방구 회원이신가요?';
+const githubAuthUrl = 'https://github.com/login/oauth/authorize';
+const CLIENT_ID = '79b5ee470c52ef9c3eac';
 
 const SignupMethod = () => {
-  const onSignupClick = () => {};
-
-  const onGithubSignupClick = () => {};
-
   return (
     <SignupMethodContainer>
       <SignupButtonContainer>
-        <Button
-          onClick={onSignupClick}
-          theme="normal"
-          size="xlarge"
-          value="배민 문방구로 회원가입"
-          type="button"
-        />
-        <Button
-          onClick={onGithubSignupClick}
-          theme="github"
-          size="large"
-          value="Github로 회원가입"
-          type="button"
-        />
+        <Link to="/signup">
+          <Button theme="normal" size="xlarge" value="배민 문방구로 회원가입" type="button" />
+        </Link>
+        <a href={`${githubAuthUrl}?client_id=${CLIENT_ID}`}>
+          <Button theme="github" size="large" value="Github로 회원가입" type="button" />
+        </a>
         <LoginSuggestionText>
           {LOGIN_SUGGESTION_TEXT} <Link to="/login">로그인</Link>
         </LoginSuggestionText>

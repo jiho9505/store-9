@@ -5,7 +5,14 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types", "@types"]
   },
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "../shared/**/*", "test/**/*"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true
+  }
 }

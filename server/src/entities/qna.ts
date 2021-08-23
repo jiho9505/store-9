@@ -1,27 +1,35 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { DateBasicEntity } from './base_entity';
 import Product from './product';
 import User from './user';
 
 @Entity({ name: 'qnas' })
-class QnA extends DateBaseModel {
-  @ManyToOne((type) => User, (user) => user.qnas)
-  user: User;
-
-  @ManyToOne((type) => Product, (product) => product.id)
-  product: Product;
-
+class QnA extends DateBasicEntity {
   @Column()
   title: string;
 
   @Column()
   content: string;
 
-  @Column()
+  @Column({ nullable: true, default: false })
   isPrivate: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   images: string;
+
+  @Column()
+  user_id: number;
+
+  @Column()
+  product_id: number;
+
+  @ManyToOne((type) => User, (user) => user.qnas)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @ManyToOne((type) => Product, (product) => product.id)
+  @JoinColumn({ name: 'product_id' })
+  product: Product;
 }
 
 export default QnA;

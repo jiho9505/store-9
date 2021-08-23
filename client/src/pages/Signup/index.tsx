@@ -1,62 +1,56 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import isEmail from 'validator/lib/isEmail';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 
-import Input from '@/components/base/Input';
-import useInput from '@/hooks/customHooks/useInput';
+import Input from '@/components/common/Input';
 import useAddress from '@/hooks/customHooks/useAddress';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 import { baeminFont, greyLine } from '@/static/style/common';
-
-const fromDefaultValue = {
-  id: '',
-  password: '',
-  passwordConfirm: '',
-  name: '',
-  email: '',
-  phoneNumber: '',
-  callNumber: '',
-  detailAddress: '',
-};
+import AuthApi from '@/apis/AuthApi';
+import useHistory from '@/hooks/customHooks/useHistory';
 
 const SignupPage = () => {
   const {
     onAddressSearchClick,
     address: { address, postcode },
   } = useAddress();
-  const { form, onChange } = useInput(fromDefaultValue);
-  const { id, password, passwordConfirm, name, email, phoneNumber, callNumber, detailAddress } =
-    form;
-
-  const preventInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-  };
+  const history = useHistory();
+  const signUpFormRef = useRef<HTMLFormElement>(null);
+  // global store로 변경 예정
+  const getGithubLoginId = () => localStorage.getItem('loginId');
+  const isGithubLogin = !!getGithubLoginId();
 
   const isFormValid = (data) => {
-    const { id, password, passwordConfirm, name, email, phoneNumber } = data;
-
-    // show error message if not passed
-    if (!validation.isId(id)) return false;
-    if (!validation.isPassword(password)) return false;
-    if (!validation.checkPwdConfirm(password, passwordConfirm)) return false;
-    if (!validation.isName(name)) return false;
-    if (!validation.isEmail(email)) return false;
-    if (!validation.isPhoneNumber(phoneNumber)) return false;
+    for (const [inputName, inputValue] of data.entries()) {
+      if (inputName === 'confirmPassword') {
+        if (!validation[inputName](inputValue, data.get('password'))) {
+          return false;
+        }
+        continue;
+      }
+      if (!validation[inputName](inputValue)) {
+        return false;
+      }
+    }
     return true;
   };
 
-  const onSignupFormSubmit = (e) => {
-    // validation
+  const onSignupFormSubmit = async (e) => {
     e.preventDefault();
+    const form = new FormData(signUpFormRef.current);
     if (!isFormValid(form)) {
       return;
+    }
+    const data = await AuthApi.signup(form);
+    if (data.ok) {
+      history.push('/login');
     }
   };
 
   return (
     <SignupPageContainer>
-      <SignupForm onSubmit={onSignupFormSubmit}>
+      <SignupForm onSubmit={onSignupFormSubmit} ref={signUpFormRef} encType="multipart/form-data">
         <SignupList>
           <ListItem>
             <Label htmlFor="id">아이디</Label>
@@ -67,70 +61,50 @@ const SignupPage = () => {
                 variant="outlined"
                 size="large"
                 name="id"
-                onChange={onChange}
+                readOnly={isGithubLogin}
                 type="text"
-                value={id}
+                defaultValue={isGithubLogin ? getGithubLoginId() : ''}
               />
             </InputContainer>
           </ListItem>
-          <ListItem>
-            <Label htmlFor="password">비밀번호</Label>
-            <InputContainer>
-              <Input
-                id="password"
-                required
-                variant="outlined"
-                size="medium"
-                name="password"
-                onChange={onChange}
-                type="password"
-                value={password}
-              />
-            </InputContainer>
-          </ListItem>
-          <ListItem>
-            <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
-            <InputContainer>
-              <Input
-                id="passwordConfirm"
-                required
-                variant="outlined"
-                size="medium"
-                name="passwordConfirm"
-                onChange={onChange}
-                type="password"
-                value={passwordConfirm}
-              />
-            </InputContainer>
-          </ListItem>
+          {!isGithubLogin && (
+            <>
+              <ListItem>
+                <Label htmlFor="password">비밀번호</Label>
+                <InputContainer>
+                  <Input
+                    id="password"
+                    variant="outlined"
+                    size="medium"
+                    name="password"
+                    type="password"
+                  />
+                </InputContainer>
+              </ListItem>
+              <ListItem>
+                <Label htmlFor="confirmPassword">비밀번호 확인</Label>
+                <InputContainer>
+                  <Input
+                    id="confirmPassword"
+                    variant="outlined"
+                    size="medium"
+                    name="confirmPassword"
+                    type="password"
+                  />
+                </InputContainer>
+              </ListItem>
+            </>
+          )}
           <ListItem>
             <Label htmlFor="name">이름</Label>
             <InputContainer>
-              <Input
-                id="name"
-                required
-                variant="outlined"
-                size="large"
-                name="name"
-                onChange={onChange}
-                type="text"
-                value={name}
-              />
+              <Input id="name" variant="outlined" size="large" name="name" type="text" />
             </InputContainer>
           </ListItem>
           <ListItem>
             <Label htmlFor="email">이메일</Label>
             <InputContainer>
-              <Input
-                id="email"
-                required
-                variant="outlined"
-                size="medium"
-                name="email"
-                onChange={onChange}
-                type="email"
-                value={email}
-              />
+              <Input id="email" variant="outlined" size="medium" name="email" type="email" />
             </InputContainer>
           </ListItem>
           <ListItem>
@@ -138,13 +112,10 @@ const SignupPage = () => {
             <InputContainer>
               <Input
                 id="phoneNumber"
-                required
                 variant="outlined"
                 size="small"
                 name="phoneNumber"
-                onChange={onChange}
                 type="text"
-                value={phoneNumber}
                 placeholder="- 없이 입력하세요"
               />
             </InputContainer>
@@ -154,13 +125,10 @@ const SignupPage = () => {
             <InputContainer>
               <Input
                 id="callNumber"
-                required={false}
                 variant="outlined"
                 size="large"
                 name="callNumber"
-                onChange={onChange}
                 type="text"
-                value={callNumber}
                 placeholder="- 없이 입력하세요"
               />
             </InputContainer>
@@ -170,15 +138,13 @@ const SignupPage = () => {
             <InputContainer>
               <AddressContainer>
                 <Input
-                  required
+                  readOnly
                   variant="outlined"
                   size="small"
                   name="postcode"
-                  onChange={onChange}
                   type="text"
                   value={postcode}
                   placeholder="우편번호 입력"
-                  onKeyPress={preventInput}
                 />
                 <Button
                   size="xsmall"
@@ -189,24 +155,19 @@ const SignupPage = () => {
                 />
               </AddressContainer>
               <Input
-                required
+                readOnly
                 variant="outlined"
                 size="large"
-                name="address"
-                onChange={onChange}
+                name="address1"
                 type="text"
                 value={address}
-                onKeyPress={preventInput}
               />
               <Input
                 id="address"
-                required
                 variant="outlined"
                 size="large"
-                name="detailAddress"
-                onChange={onChange}
+                name="address2"
                 type="text"
-                value={detailAddress}
                 placeholder="상세주소 입력"
               />
             </InputContainer>
@@ -221,29 +182,38 @@ const SignupPage = () => {
 export default SignupPage;
 
 const validation = {
-  isId: function (id: string): boolean {
+  id: function (id: string): boolean {
     return id.length > 5;
   },
-  isEmail: function (email: string): boolean {
+  email: function (email: string): boolean {
     return isEmail(email);
   },
-  isPassword: function (password: string): boolean {
+  password: function (password: string): boolean {
     return password.length > 5;
   },
-  checkPwdConfirm: function (password: string, confirmPassword: string): boolean {
+  confirmPassword: function (password: string, confirmPassword: string): boolean {
     return password === confirmPassword;
   },
-  isName: function (name: string): boolean {
+  name: function (name: string): boolean {
     const numRegex = /\d/;
     const isNumberIncluded = numRegex.test(name);
     if (isNumberIncluded) return false;
     return true;
   },
-  isPhoneNumber: function (phoneNumber: string): boolean {
+  phoneNumber: function (phoneNumber: string): boolean {
     return isMobilePhone(phoneNumber, 'ko-KR');
   },
-  isCallNumber: function (): boolean {
+  callNumber: function (): boolean {
     // TODO: validation logic 필요한가
+    return true;
+  },
+  postcode: function (): boolean {
+    return true;
+  },
+  address1: function (): boolean {
+    return true;
+  },
+  address2: function (): boolean {
     return true;
   },
 };
