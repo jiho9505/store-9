@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { NavLink } from '@/Router';
+import { Link, NavLink } from '@/Router';
+
+import '@/static/assets/img/circle.png';
+
 import { categories, subCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
+  const [choicedItemName, setChoicedItemName] = useState<string>('');
 
   useEffect(() => {
     document.addEventListener('mouseover', (e: Event) => {
@@ -20,7 +24,7 @@ const Navigation = () => {
 
   const handleMouseOverLink = (e: React.ChangeEvent<HTMLAnchorElement>) => {
     const waitTime = new Promise((resolve) => {
-      timer = setTimeout(resolve, 200);
+      timer = setTimeout(resolve, 150);
     });
 
     const itemName = e.currentTarget.innerText;
@@ -37,6 +41,7 @@ const Navigation = () => {
 
       setSubItemXpos(itemXPos - extraXposToRemove);
       setSubItems(newSubItems);
+      setChoicedItemName(itemName);
     });
   };
 
@@ -56,12 +61,15 @@ const Navigation = () => {
             >
               {category}
             </CategoryLink>
+            {choicedItemName === category && <CircleBorder src="images/circle.png" />}
           </Item>
         ))}
       </Menu>
       <SubMenu dist={subItemXpos}>
         {subItems.map((subItem) => (
-          <SubItem key={subItem.name}>{subItem.name}</SubItem>
+          <Link to="/total">
+            <SubItem key={subItem.name}>{subItem.name}</SubItem>
+          </Link>
         ))}
       </SubMenu>
     </NavigationContainer>
@@ -74,12 +82,20 @@ type SubMenuProps = {
   dist: number;
 };
 
+const CircleBorder = styled.img`
+  position: absolute;
+  left: -7px;
+  top: -15px;
+  width: 110px;
+  height: 80px;
+`;
+
 const SubItem = styled.li`
   width: 100px;
   text-align: center;
   cursor: pointer;
   font-size: 13px;
-  padding: 0px 0px 15px 0px;
+  padding: 10px 0px 20px 0px;
   font-family: ${baeminFont};
   &:hover {
     color: ${baemin};
@@ -101,9 +117,10 @@ const Menu = styled.ul`
 `;
 
 const Item = styled.li`
-  width: 80px;
+  width: 100px;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 const CategoryLink = styled(NavLink)`
@@ -113,7 +130,5 @@ const CategoryLink = styled(NavLink)`
   font-size: 16px;
   padding: 0 10px 0;
   font-family: ${baeminFont};
-  &:hover {
-    color: ${baemin};
-  }
+  z-index: 1;
 `;
