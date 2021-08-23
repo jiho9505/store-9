@@ -1,0 +1,268 @@
+{
+    "data": [
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 쟁반",
+            "price": "90,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/322/322_main_024.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210610/1_152301.png",
+                "https://store.baemin.com/data/editor/goods/210610/ad75609531d47b0afc21a272a00ebd44_152302.gif",
+                "https://store.baemin.com/data/editor/goods/210610/504bfa8fabb314632932de56ffce3802_152302.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/8e05df250d3ae6a9da0f1f4602ddf71e_152303.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/ccc930966404add9a45bc1fc87dca237_152303.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3ccbe00885114aa8326a1cbf4d63400e_152303.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/035b193cddce519f9dcacd7ef76174b6_152304.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/f147a9cd0df3534f28036a39d5497a61_152304.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/c4464c69acaae262a66b4db65efebeb8_152304.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/31657d874a8214fef27d15bdc2b99439_152618.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/580f932bf03aa9c7b7b0acfaeccc4051_152448.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/f17f66fe9d342502a0b6d73031700b4b_152448.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 은수저",
+            "price": "120,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/321/321_main_095.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210610/1(1)_152854.png",
+                "https://store.baemin.com/data/editor/goods/210610/2_152855.gif",
+                "https://store.baemin.com/data/editor/goods/210610/3_01_152856.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_02_152856.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_03_152856.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_01_152857.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_02_152857.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_03_152857.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_01_152857.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_02_152858.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_03_152952.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 목장갑. 위잉 뚝딱",
+            "price": "6,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/312/312_main_028.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201028/cccdf717d39ee73aaf98603244680963_105228.jpg",
+                "https://store.baemin.com/data/editor/goods/201028/9c9675fbf9c6fb4f6ccc27b89aec9f31_150134.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 일회용캬메라. 잘 나왔다",
+            "price": "품절",
+            "image": "https://store.baemin.com/data/goods/20/10/44/311/311_main_055.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201028/8dccbe91add6cabb9ca4d498421281d8_145712.jpg",
+                "https://store.baemin.com/data/editor/goods/201028/09c3f50be91a196047dce203742dbc61_105126.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 뱃지. 장인",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/320/320_main_050.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0be3ca565a5ee2b3eaffeb740a802c46_185057.png",
+                "https://store.baemin.com/data/editor/goods/201104/3709d277be112cd1b28e1aa955abd4ca_125418.gif",
+                "https://store.baemin.com/data/editor/goods/210610/e26821d0655c3893593f71552c9e41e8_152801.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/c3f04542e161985bdb688fc95a514724_152808.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/08c845e893ed976cff9b4e7088663fc2_152815.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/9898673d1f5357fa7628c585382f9a44_152825.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/14f064d5170afe070932f87efbc68244_152831.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/9b3a48192a8d8fc043b9659a1e0ccd57_152844.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 뱃지. 사장",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/319/319_main_049.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0be3ca565a5ee2b3eaffeb740a802c46_184939.png",
+                "https://store.baemin.com/data/editor/goods/201104/3709d277be112cd1b28e1aa955abd4ca_125342.gif",
+                "https://store.baemin.com/data/editor/goods/210610/2dacc38aeb2b6260089ab5268666f332_154247.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/f2a8e603eb7e6cda5cf2cb057213d8a6_154256.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/dc27ed4639e8ce433fa533456cd376af_154315.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/7ac9a9a46167ed0e5e2794bc74e5d1ea_154309.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/110b5ed1d00117f689b8141e9db8b621_154323.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 마스킹테이프. 십메다 줄자",
+            "price": "4,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/314/314_main_010.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0%25281%2529_181624.png",
+                "https://store.baemin.com/data/editor/goods/201103/4b70b09bc6701e0b19166e8b869e8b79_181632.png",
+                "https://store.baemin.com/data/editor/goods/201103/aa5ba599c811f47a5d623dd19d5af500_181640.png"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 연필. 사각사각",
+            "price": "2,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/310/310_main_04.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201027/e5702a3ce086323e7cbb0ab0d1c3e18a_195450.jpg",
+                "https://store.baemin.com/data/editor/goods/210122/4c6918cc12ab28e67f1769ad97f25bc6_141754.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 뱃지. 셔터",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/317/317_main_083.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0be3ca565a5ee2b3eaffeb740a802c46_184511.png",
+                "https://store.baemin.com/data/editor/goods/201103/b55cd8893f576376caaed7b4da149fbd_184520.gif",
+                "https://store.baemin.com/data/editor/goods/210610/5dbadfd053cbede03f2af087f050e024_153828.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5a1cc2911c02baa55754a827a407aa6d_153834.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/bbe7b181ecaf07a7c71e3f42ad1643ec_153840.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4646176075277881e4f52fae9762f73c_153847.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/d47ea2b3079f47212b23845b25b3e5cc_153856.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 뱃지. 페인트통",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/318/318_main_032.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0be3ca565a5ee2b3eaffeb740a802c46_184632.png",
+                "https://store.baemin.com/data/editor/goods/201103/b55cd8893f576376caaed7b4da149fbd_184639.gif",
+                "https://store.baemin.com/data/editor/goods/210610/3a42ef71c57903fbd11180b421a765a3_154043.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/47f18a34dc6e799c017129b05e0e0396_154050.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/446e6362a689ee42faf93bb8869fa86c_154056.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1d86ce203edb11613538961e6a2dba07_154101.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/faa3fcf838ca32dad38a49b26e45e68e_154108.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 뱃지. 바퀴",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/316/316_main_090.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0be3ca565a5ee2b3eaffeb740a802c46_184409.png",
+                "https://store.baemin.com/data/editor/goods/201103/b55cd8893f576376caaed7b4da149fbd_184416.gif",
+                "https://store.baemin.com/data/editor/goods/210610/942fa90fa9f7f33f7b0827a9b28e4163_153501.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/791fc0c8944b72f55ca8748a61aea805_153508.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4d3cdc2196690f7b29047e85b534d0c1_153519.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/90a9e536562fb05b4ba498d6890c9830_153525.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/32339fd03b7b7b8124bc32de6c3a5bb4_153531.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로에서 만든 뱃지. 고양이",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/20/10/44/315/315_main_096.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201103/0be3ca565a5ee2b3eaffeb740a802c46_184308.png",
+                "https://store.baemin.com/data/editor/goods/201103/b55cd8893f576376caaed7b4da149fbd_184316.gif",
+                "https://store.baemin.com/data/editor/goods/210610/493afbc49805e195ca90205ba26f0a42_154403.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/cba4aa2b9068cc02ce078058b2d06fe5_154413.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/971d019b7bd46232518a82651842d031_154426.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/6053ba9289c7d64308d0636fc35706fb_154432.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/ff4dec39e7367a49d5c13e57766f796b_154439.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 사진 엽서. 파노라마형",
+            "price": "1,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/325/325_main_074.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210610/0_151210.png",
+                "https://store.baemin.com/data/editor/goods/210610/1_01_151210.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1_02_151211.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1_03_151211.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/2_01_151211.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/2_02_151212.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_01_151212.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_02_151212.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_01_151213.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_02_151213.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_03_151624.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_01_151359.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_02_151359.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 사진 엽서. 정사각형",
+            "price": "1,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/324/324_main_095.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210610/0._151936.png",
+                "https://store.baemin.com/data/editor/goods/210610/1_01_151937.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1_02_151937.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1_03_151937.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/2_01_151938.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/2_02_151938.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_01_151938.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_02_151939.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_01_151939.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_02_151939.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_03_152000.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_01_152000.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_02_152001.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        },
+        {
+            "discount_rate": null,
+            "title": "을지로 사진 엽서",
+            "price": "1,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/323/323_main_09.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210610/0_150453.png",
+                "https://store.baemin.com/data/editor/goods/210610/1_01_150454.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1_02_150454.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/1_03_150454.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/2_01_150455.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/2_02_150455.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_01_150455.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3_02_150456.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_01_150456.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_02_150456.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/4_03_150545.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_01_150546.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/5_02_150546.jpg"
+            ],
+            "is_green": false,
+            "category_id": "018"
+        }
+    ]
+}

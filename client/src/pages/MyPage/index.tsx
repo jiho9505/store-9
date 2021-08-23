@@ -5,7 +5,7 @@ import LikePage from './Like';
 import OrderPage from './Order';
 import QnAPage from './QnA';
 import ReviewPage from './Reivew';
-import { Route } from '@/Router';
+import { Route } from '@/core/Router';
 import { LeftNav } from '@/components/MyPage';
 
 import { normalContainerWidth, baeminThickFont } from '@/static/style/common';

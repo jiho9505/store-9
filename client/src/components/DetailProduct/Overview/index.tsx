@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import OverViewContent from '../OverViewContent';
-import ZoomableImage from '@/components/base/ZoomableImage';
+import ZoomableImage from '../ZoomableImage';
 
 type OverviewProps = {
   info;
@@ -23,9 +23,4 @@ const OverviewContainer = styled.div`
   display: flex;
   margin-top: 50px;
   gap: 70px;
-`;
-
-const OverviewImage = styled.img`
-  max-width: 473px;
-  height: 585px;
 `;

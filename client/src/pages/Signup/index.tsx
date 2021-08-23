@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import isEmail from 'validator/lib/isEmail';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 
-import Input from '@/components/base/Input';
+import Input from '@/components/common/Input';
 import useInput from '@/hooks/customHooks/useInput';
 import useAddress from '@/hooks/customHooks/useAddress';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 import { baeminFont, greyLine } from '@/static/style/common';
 
 const fromDefaultValue = {
@@ -25,7 +25,9 @@ const SignupPage = () => {
     onAddressSearchClick,
     address: { address, postcode },
   } = useAddress();
-  const { form, onChange } = useInput(fromDefaultValue);
+  const { form, onChange } = useInput({
+    initialState: fromDefaultValue,
+  });
   const { id, password, passwordConfirm, name, email, phoneNumber, callNumber, detailAddress } =
     form;
 

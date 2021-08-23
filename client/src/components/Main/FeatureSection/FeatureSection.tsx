@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import ItemLists from '@/components/base/ItemLists/ItemLists';
+import ItemLists from '@/components/common/ItemLists/ItemLists';
 
 import { baeminFont, normalContainerWidth } from '@/static/style/common';
 

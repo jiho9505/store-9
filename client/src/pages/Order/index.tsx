@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import PricePannel from '@/components/base/PricePannel';
-import OrderStageHeader from '@/components/base/OrderStageHeader';
+import PricePannel from '@/components/common/PricePannel';
+import OrderStageHeader from '@/components/common/OrderStageHeader';
 import { OrderForm } from '@/components/Order';
 
 import { normalContainerWidth } from '@/static/style/common';
