@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { DateBasicEntity } from './base_entity';
 import Like from './like';
 import Order from './order';
 import QnA from './qna';
@@ -13,9 +13,12 @@ export enum User_Role {
 }
 
 @Entity({ name: 'users' })
-class User extends DateBaseModel {
+class User extends DateBasicEntity {
   @Column({ type: 'enum', enum: User_Role })
   role: User_Role;
+
+  @Column({ unique: true })
+  login_id: string;
 
   @Column({ unique: true })
   email: string;

@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { DateBaseModel } from './base-model';
+import { DateBasicEntity } from './base_entity';
 import Product from './product';
 import User from './user';
 
 @Entity({ name: 'likes' })
-class Like extends DateBaseModel {
+class Like extends DateBasicEntity {
   @Column()
   user_id!: number;
 
