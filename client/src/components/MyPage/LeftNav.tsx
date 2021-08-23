@@ -4,7 +4,7 @@ import guguStyled from '@/core/styled';
 import { NavLink } from '@/core/Router';
 import { Like, Buy, Review, QnA, Cart } from '@/static/assets/svg';
 
-import { greyBg1, greyButton, normalRadius, primary1 } from '@/static/style/common';
+import { baeminFont, greyBg1, greyButton, primary1 } from '@/static/style/common';
 
 const LeftNav = () => {
   const navMenus = useMemo(() => {
@@ -54,16 +54,19 @@ const LeftNav = () => {
 const LeftNavContainer = guguStyled.div`
   width: 200px;
   height: fit-content;
-  border-radius: ${normalRadius};
+  border-radius: 18px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  padding: 10px 0;
+  padding: 20px 10px;
   margin-right: 40px;
 `;
 
 const SubNavTitle = guguStyled.h4`
   color: ${greyButton};
   margin-left: 10px;
+  font-family: ${baeminFont};
+  margin-bottom: 10px;
+  font-size: 19px;
 `;
 
 const SubNavList = guguStyled.ul`
@@ -83,16 +86,23 @@ const SubNavLink = guguStyled(NavLink)`
   display: flex;
   height: 40px;
   align-items: center;
+  font-size: 15px;
+
+  span {
+    font-family: ${baeminFont};
+  }
+
 `;
 
 const getIconStyle = () => {
   return `
-    height: 80%;
-    width: 15%;
+    height: 90%;
+    width: 12%;
     margin: 0 10px 0px 20px;
     & path {
       fill: ${primary1};
     }
+
   `;
 };
 

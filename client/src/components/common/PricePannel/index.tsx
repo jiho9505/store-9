@@ -54,16 +54,27 @@ const PricePannelContainer = styled.div`
 const ProductTotalPrice = styled.div`
   display: flex;
   justify-content: space-between;
+
+  span {
+    font-family: ${baeminFont};
+  }
 `;
 
 const DeliveryTotalPrice = styled.div`
   display: flex;
   justify-content: space-between;
+  span {
+    font-family: ${baeminFont};
+  }
 `;
 
 const TotalPrice = styled.div`
   display: flex;
   justify-content: space-between;
+
+  span {
+    font-family: ${baeminFont};
+  }
 `;
 
 const OrderButton = styled.button`

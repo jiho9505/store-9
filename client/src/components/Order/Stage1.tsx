@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import Input from '@/components/common/Input';
 import InputLabel from '@/components/common/InputLabel';
+import { baeminFont } from '@/static/style/common';
 
 type Stage1Props = {
   onBlur?(e: FocusEvent<HTMLInputElement>): void;
@@ -57,6 +58,12 @@ const Stage1 = ({ form, onChange, onBlur, error }: Stage1Props) => {
 const StageContainer = styled.div`
   & div {
     margin-bottom: 30px;
+  }
+  Input {
+    font-family: ${baeminFont};
+  }
+  label {
+    font-family: ${baeminFont};
   }
 `;
 
