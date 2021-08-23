@@ -10,7 +10,7 @@ class Order extends DateBasicEntity {
   @Column({ type: 'enum', enum: OrderStatus })
   status!: OrderStatus;
 
-  @Column()
+  @Column({ default: false, nullable: true })
   hasShippingCharge: boolean;
 
   @Column()

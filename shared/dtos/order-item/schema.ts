@@ -2,8 +2,8 @@ import { ProductSchema } from '../product/schema';
 
 export interface OrderItemSchema<Option = any> {
   id: number;
-  orderId: number;
+  orderId?: number;
   amount: number;
-  option: Option;
+  option?: Option;
   product?: ProductSchema;
 }
