@@ -50,6 +50,7 @@ const SignupPage = () => {
 
   return (
     <SignupPageContainer>
+      {/* <SignUpTitle>배민 문방구 회원 가입</SignUpTitle> */}
       <SignupForm onSubmit={onSignupFormSubmit} ref={signUpFormRef} encType="multipart/form-data">
         <SignupList>
           <ListItem>
@@ -217,7 +218,7 @@ const validation = {
     return true;
   },
 };
-
+const signUpTitleSize = '2rem';
 const signupPageHeight = '800px';
 const signupFormMargin = '100px';
 const signupListItemPadding = '15px';
@@ -228,8 +229,14 @@ const SignupPageContainer = styled.section`
   width: 100%;
   height: ${signupPageHeight};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const SignUpTitle = styled.div`
+  font-size: ${signUpTitleSize};
+  text-align: center;
 `;
 
 const SignupForm = styled.form`
