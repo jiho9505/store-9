@@ -10,3 +10,17 @@ export const categories = [
   ['선물세트', '/present'],
   ['콜라보레이션', '/collaborate'],
 ];
+
+const RouteListArray = [
+  '/',
+  '/login',
+  '/cart',
+  '/order',
+  '/mypage',
+  '/signupMethod',
+  '/goods',
+  '/detail',
+  '/signup',
+];
+
+export const RouteList = new Set(RouteListArray);
