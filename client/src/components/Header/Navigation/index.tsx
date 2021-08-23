@@ -9,6 +9,13 @@ import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common'
 
 const weightWhenSubItemsLengthEven = -50;
 
+/**
+ * TODO:
+ * 쿼리스트링 id가 가르키는 메뉴명을 동그라미
+ * state도 추가
+ * 아래의 주석단 부분에 로직 추가
+ * 해야합니다.
+ */
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
@@ -18,7 +25,11 @@ const Navigation = () => {
     const handleMouseOverOnDocument = (e: Event) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
-      if (!target.closest('#NavBorder')) setSubItems([]);
+      if (!target.closest('#NavBorder')) {
+        setSubItems([]);
+        setMouseOverdItemName('');
+        // 쿼리스트링 id가 가르키는 메뉴명을 동그라미 추가
+      }
     };
 
     document.addEventListener('mouseover', handleMouseOverOnDocument);
@@ -46,6 +57,7 @@ const Navigation = () => {
 
       setSubItemXpos(itemXPos - extraXposToRemove);
       setSubItems(newSubItems);
+      // 쿼리스트링 id가 가르키는 메뉴명을 동그라미 해제
       setMouseOverdItemName(itemName);
     });
   };
