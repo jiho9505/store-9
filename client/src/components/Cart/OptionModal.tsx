@@ -3,7 +3,7 @@ import guguStyled from '@/core/styled';
 import { greyLine } from '@/static/style/common';
 
 import StockSelectorComponent from '../DetailProduct/StockSelector';
-import Button from '../base/Button';
+import Button from '../common/Button';
 
 type OptionModalProps = {
   product: any;
