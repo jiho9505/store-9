@@ -1,0 +1,465 @@
+{
+    "data": [
+        {
+            "discount_rate": null,
+            "title": "세븐일레븐X배민. 저칼로리 아이스크림 3종",
+            "price": "전국 세븐일레븐에서 만나요!",
+            "image": "https://store.baemin.com/data/goods/21/08/31/352/352_main_060.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210805/989d40213e3b3f53ed3f7bfd970fae79_133138.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/fd71fd6223ca7c681783a4584cdf110f_133138.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/aec43e67e83bb39c0557d18b383a35f8_133138.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/cff482db2db42c3003c287ff94282fd4_133139.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/e75a8d975f2ca995c77cc27c0fba2e17_133139.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/47c140ab1c79cbceeb294e3d5975b305_133140.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/835765a02547f3ca6f3c6166253b2a39_133140.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/cd7f9a8983971d6cca3f029c392cf9f4_133141.jpg",
+                "https://store.baemin.com/data/editor/goods/210805/5769e3296f5296e24bfba773ba4a7feb_133141.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "업사이클링 명함케이스. 맥주짠",
+            "price": "16,900",
+            "image": "https://store.baemin.com/data/goods/21/05/19/344/344_main_07.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210510/69b57f38bd0e89bb57a25b43e38e4950_170120.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/edfbfcc2fc81e1b94ee21ad839632ca2_170121.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/75be0f82c85d5efa60d197913f98c703_170121.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/8cfbaae99f39c4d2fcff322c1e7abd42_170122.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/55f3bb2d0225427893d5a0076693b704_170122.jpg"
+            ],
+            "is_green": true,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "업사이클링 스탠드그립 세트. 맥주",
+            "price": "18,900",
+            "image": "https://store.baemin.com/data/goods/21/05/19/343/343_main_0100.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210510/ba249a5923be68750eb9e054794df404_163104.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/605f196f3f817746e7b9d268cef4de15_163105.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/5ea4db383a9696c60864b33a96c90bc8_163106.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/871116a8a9fa2a15f147c389ebe1b5d6_163106.jpg",
+                "https://store.baemin.com/data/editor/goods/210510/5ff83c16cf60cb91c6ea6d289e814e39_163107.jpg"
+            ],
+            "is_green": true,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": "20%",
+            "title": "스웨거X배민. 룸 스프레이 집중",
+            "price": "15,200",
+            "image": "https://store.baemin.com/data/goods/21/03/12/338/338_main_084.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210330/354aa6adaa0ea8819e456bac777efe04_154547.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "립볶이에디션",
+            "price": "2020년 겨울. 롬앤X배민",
+            "image": "https://store.baemin.com/data/goods/20/12/50/334/334_main_093.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201216/cff643b23668b21a24aa6841dcda56ee_144150.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/80257c4b2de7cd5eb1eb3bb49ca6584f_175211.gif",
+                "https://store.baemin.com/data/editor/goods/201216/cf7e7ef79f0f93b13649a79511ca8de3_143931.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "자투리 비누. 예쁘지는 않지만 사랑스러워",
+            "price": "2020년 가을. 한아조X배민",
+            "image": "https://store.baemin.com/data/goods/20/10/42/309/309_main_032.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201019/a5132382afe5a50c635effd389e1f0f2_195733.png",
+                "https://store.baemin.com/data/editor/goods/201019/6efe95871e5bc68e4faced7734b4ea7a_195734.png",
+                "https://store.baemin.com/data/editor/goods/201019/dad7e5745e9a0386f7cb16ebf7a455d4_195735.png",
+                "https://store.baemin.com/data/editor/goods/201019/17a0b835cd12b0893a97dfb21b18e939_195737.png"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "세븐일레븐X배민. 주문하신 커피 5종",
+            "price": "전국 세븐일레븐에서 만나요!",
+            "image": "https://store.baemin.com/data/goods/18/06/14/140/140_main_095.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210224/2e10ed7c97639aff1d59106bfe6152fb_173935.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "미니언즈X배달의민족. 혼밥식기세트",
+            "price": "2019 겨울. 한정판 출시",
+            "image": "https://store.baemin.com/data/goods/19/12/50/244/244_main_040.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/191212/23d3d8e6e47f09e4c00d29bf65357c4e_160051.png",
+                "https://store.baemin.com/data/editor/goods/191212/0c660e93b68c67759fcfa737fb1419cd_160118.png"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "세븐일레븐X배달의민족. 눈물나는젤리",
+            "price": "2019 여름. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/19/09/20/189/1568959712561s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/39db972181b45526.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "오뚜기X배달의민족. 사골곰탕",
+            "price": "2019 봄. 한정판 출시",
+            "image": "https://store.baemin.com/data/goods/19/04/30/175/1556617064338s0.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/9f9fdbe06a2a5801.png",
+                "https://store.baemin.com/data/editor/goods/308dfe67cdf9ab5e.gif",
+                "https://store.baemin.com/data/editor/goods/275a48480f17e12e.gif",
+                "https://store.baemin.com/data/editor/goods/7b0c409110fa1c79.png",
+                "https://store.baemin.com/data/editor/goods/c64af0069f6b014a.gif",
+                "https://store.baemin.com/data/editor/goods/59de289ed62693d9.gif",
+                "https://store.baemin.com/data/editor/goods/c09532e50397469b.gif",
+                "https://store.baemin.com/data/editor/goods/8615ef731f24376c.png",
+                "https://store.baemin.com/data/editor/goods/c404fcca04bed18b.gif",
+                "https://store.baemin.com/data/editor/goods/164ea3ca41a95a8b.png",
+                "https://store.baemin.com/data/editor/goods/f9a34ccf2a5bc75e.gif"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "배달이 팝업북. 버거나라 삼남매",
+            "price": "2019 봄. 한정판 출시",
+            "image": "https://store.baemin.com/data/goods/19/02/26/170/1551156188454s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/27fcb32d54db78e2.jpg",
+                "https://store.baemin.com/data/editor/goods/0698c431b8f527f2.gif",
+                "https://store.baemin.com/data/editor/goods/8abbdc4df8b94743.jpg",
+                "https://store.baemin.com/data/editor/goods/6ad4bc0c91d2eff3.jpg",
+                "https://store.baemin.com/data/editor/goods/dbb803780d529805.jpg",
+                "https://store.baemin.com/data/editor/goods/9d7b68d96d77ca61.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "장기하와 얼굴들. 마스킹테이프 세트",
+            "price": "5,500",
+            "image": "https://store.baemin.com/data/goods/18/12/24/164/1545626001129s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/1f47822e007907c0.gif",
+                "https://store.baemin.com/data/editor/goods/0f0987cd6f2b5333.jpg",
+                "https://store.baemin.com/data/editor/goods/1af82f66d2f7ba41.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "장기하와 얼굴들. 노트 세트 (5개입)",
+            "price": "12,000",
+            "image": "https://store.baemin.com/data/goods/18/12/24/162/1545623910787s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/77b09fafdc5caf4e.jpg",
+                "https://store.baemin.com/data/editor/goods/3062b279e52bb3cd.jpg",
+                "https://store.baemin.com/data/editor/goods/bee8ad34a5fa8a09.jpg",
+                "https://store.baemin.com/data/editor/goods/48adfd25a37f95a7.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "돈봉투. 새해 복 (화이트/블랙)",
+            "price": "장기하와 얼굴들X배달의민족",
+            "image": "https://store.baemin.com/data/goods/18/12/24/163/154562439316s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/fe25fd7f27d9bae1.gif",
+                "https://store.baemin.com/data/editor/goods/bdfed6ab0820fdea.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "이게 다 넛때문이야. 선물세트",
+            "price": "2018 겨울. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/18/12/04/160/1543895732155s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/1f134d658f29cb7f.gif",
+                "https://store.baemin.com/data/editor/goods/1625591aa870e555.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "넛때문이야. 캐슈넛",
+            "price": "2018 겨울. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/19/10/43/216/216_main_093.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/191025/6fb0ef9c00dae6b8309ab4a379415428_124743.png",
+                "https://store.baemin.com/data/editor/goods/191025/573cd978ac5fc69da245cd94e5cc0ecc_124831.png"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "넛때문이야. 호두",
+            "price": "2018 겨울. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/19/10/43/215/215_main_019.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/191025/6fb0ef9c00dae6b8309ab4a379415428_124649.png",
+                "https://store.baemin.com/data/editor/goods/191025/265fa74f9569c1b226091020ed56585b_124701.png"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "넛때문이야. 아몬드",
+            "price": "2018 겨울. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/18/03/30/129/129_main_048.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/191025/6fb0ef9c00dae6b8309ab4a379415428_124438.png",
+                "https://store.baemin.com/data/editor/goods/191025/a52cacba1b9d9c80b0d04ca43bc786e3_124521.png"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "치약. 이빨청춘",
+            "price": "2080X배달의민족",
+            "image": "https://store.baemin.com/data/goods/18/03/14/124/1520990332717s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/d45f01790ef31ec2.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "칫솔. 이쓸 때 잘해",
+            "price": "2080X배달의민족",
+            "image": "https://store.baemin.com/data/goods/18/03/14/125/152098656239s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/45a7c6a24a6de917.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "이빨청춘 칫솔치약세트",
+            "price": "2080X배달의민족",
+            "image": "https://store.baemin.com/data/goods/17/09/20/115/1505894096643s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/934a63ef26dcdcd2.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "씻고자자 목욕선물세트",
+            "price": "애경X배달의민족",
+            "image": "https://store.baemin.com/data/goods/18/08/22/149/1534900245733s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/58b6d83d82ba3e5c.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "목욕감 목욕선물세트",
+            "price": "애경X배달의민족",
+            "image": "https://store.baemin.com/data/goods/17/09/06/114/1504658954650s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/8ac49e1de5ce88ed.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "세븐일레븐X배달의민족. 얼음땡",
+            "price": "2018 여름. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/18/05/15/138/1526364002569s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/77967854473d6116.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "더부스X배달의민족. 치믈리에일 맥주잔",
+            "price": "2018 여름. 한정판 출시",
+            "image": "https://store.baemin.com/data/goods/18/10/26/157/154052629322s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/f87cd3488965278d.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "더부스X배달의민족. 치믈리에일",
+            "price": "치킨과 가장 잘 어울리는 맥주!",
+            "image": "https://store.baemin.com/data/goods/18/10/11/155/1539245309914s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/228fda25e66f329e.jpg",
+                "https://store.baemin.com/data/editor/goods/9dc7dda26d4e2d7b.jpg",
+                "https://store.baemin.com/data/editor/goods/b07ce5616a6d42a6.jpg",
+                "https://store.baemin.com/data/editor/goods/b45019b2318da714.jpg",
+                "https://store.baemin.com/data/editor/goods/77a837ed15b7fb9b.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "세븐일레븐X배달의민족. 웃기는젤리",
+            "price": "2018 봄. 세븐일레븐 출시",
+            "image": "https://store.baemin.com/data/goods/18/03/21/126/1521610177757s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/30b34bc5e8bc6ba2.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "똑똑똑 실내홥니다",
+            "price": "무한도전 양세형X배달의민족",
+            "image": "https://store.baemin.com/data/goods/18/01/23/123/1519207176925s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/ce45c5f65df4610d.jpg",
+                "https://store.baemin.com/data/editor/goods/3e20d7e370bd2388.jpg",
+                "https://store.baemin.com/data/editor/goods/000f83846f97ee30.jpg",
+                "https://store.baemin.com/data/editor/goods/367245aa1d0ff916.jpg",
+                "https://store.baemin.com/data/editor/goods/98453cc02641b131.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "CU X 배달의민족. 여행용세트",
+            "price": "2017 가을. 전국 CU 출시",
+            "image": "https://store.baemin.com/data/goods/17/09/20/116/1505883312980s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/2bbfc1b5c1fa295f.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "CU X 배달의민족. 방한용품 8종",
+            "price": "2017 겨울. 전국 CU 출시",
+            "image": "https://store.baemin.com/data/goods/17/11/27/120/120_main_070.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/acbca85a15719f89.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "오늘은 불닭볶음면이 땡긴다",
+            "price": "불닭볶음면 X 배달의민족",
+            "image": "https://store.baemin.com/data/goods/17/08/30/113/1504083183466s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/93641b7696e34bd3.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "락앤락 X 배달의민족. 용기가 필요해",
+            "price": "2017 봄. 락앤락몰 한정판",
+            "image": "https://store.baemin.com/data/goods/17/05/24/100/149562731616s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/3194f18d4d9ad24d.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "축구공. 뻥",
+            "price": "2017 만우절 한정판",
+            "image": "https://store.baemin.com/data/goods/17/03/24/94/1490874634454s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/f434fad7e747ed9a.jpg",
+                "https://store.baemin.com/data/editor/goods/c7a0c6b5ffac35b7.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "난방비 걱정없는. 핫팩 세트",
+            "price": "2016 겨울. CU 출시",
+            "image": "https://store.baemin.com/data/goods/19/01/15/165/1547527494644s0.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/2e4449f6478464d3.jpg",
+                "https://store.baemin.com/data/editor/goods/231c38e1e77dd2a5.jpg",
+                "https://store.baemin.com/data/editor/goods/9b68d7a9c9c9f1e8.jpg",
+                "https://store.baemin.com/data/editor/goods/6c103279f99fcafd.jpg",
+                "https://store.baemin.com/data/editor/goods/d4ca3076bec24c3b.gif",
+                "https://store.baemin.com/data/editor/goods/9e88989f0385d9a5.jpg",
+                "https://store.baemin.com/data/editor/goods/9d00b8eb2d1736fc.jpg",
+                "https://store.baemin.com/data/editor/goods/84d3f5b789db583c.jpg",
+                "https://store.baemin.com/data/editor/goods/7dfd67817c7f3b31.jpg",
+                "https://store.baemin.com/data/editor/goods/4615040525a99640.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "CU X 배달의민족. 붙이는 핫팩",
+            "price": "2016 겨울. CU 출시",
+            "image": "https://store.baemin.com/data/goods/16/11/02/85/1478094011370s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/668acbb63b02bfb1.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        },
+        {
+            "discount_rate": null,
+            "title": "CU X 배달의민족. 흔드는 핫팩",
+            "price": "2016 겨울. CU 출시",
+            "image": "https://store.baemin.com/data/goods/16/11/01/84/1478095059841s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/2288c9080a89f70f.jpg"
+            ],
+            "is_green": false,
+            "category_id": "012"
+        }
+    ]
+}

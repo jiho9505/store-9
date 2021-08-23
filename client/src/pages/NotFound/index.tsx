@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { baemin, baeminFont, red1 } from '@/static/style/common';
-import { Link } from '@/Router';
+import { Link } from '@/core/Router';
 import '@/static/assets/img/notfound.gif';
 
 const NotFound = () => {

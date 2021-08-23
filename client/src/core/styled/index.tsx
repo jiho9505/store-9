@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, forwardRef, useEffect } from 'react';
 import { generateAlphabeticName, createStyleRule, getProperProps } from './util';
 import { tags } from './tag';
 
@@ -8,13 +8,7 @@ const classList = new Set<string>();
 const guguStyled =
   (Tag: string | ReturnType<typeof guguStyled>) =>
   (strings: TemplateStringsArray, ...exprs: any[]) => {
-    const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
-
-    const getPrevClassName = () => {
-      return uniqueClassName;
-    };
-
-    const NewComponent = (props) => {
+    const NewComponent: any = forwardRef<HTMLElement>((props, ref) => {
       const interpolateStyle = useMemo(() => {
         return exprs.reduce(
           (styles, expr, idx) => {
@@ -24,21 +18,22 @@ const guguStyled =
           },
           [strings[0]]
         );
-      }, [strings, exprs]);
+      }, [props]);
 
       let prevClassName = '';
-      let property = {};
+      let property = { ...props, ref };
       if (typeof Tag === 'function') {
-        prevClassName = Tag.getPrevClassName();
+        prevClassName = Tag.getPrevClassName?.();
       } else {
         const properProps = getProperProps(props);
-        property = Object.keys(properProps).length === 0 ? props : properProps;
+        property =
+          Object.keys(properProps).length === 0 ? { ...property } : { ...properProps, ref };
       }
 
-      if (!classList.has(uniqueClassName)) {
-        createStyleRule(uniqueClassName, interpolateStyle);
-        classList.add(uniqueClassName);
-      }
+      const uniqueClassName = `gugusc-${generateAlphabeticName(++counter)}`;
+
+      createStyleRule(uniqueClassName, interpolateStyle);
+      classList.add(uniqueClassName);
 
       const combinedClassName = prevClassName
         ? `${prevClassName} ${uniqueClassName}`
@@ -49,8 +44,7 @@ const guguStyled =
           {props?.children}
         </Tag>
       );
-    };
-    NewComponent.getPrevClassName = getPrevClassName;
+    });
     return NewComponent;
   };
 

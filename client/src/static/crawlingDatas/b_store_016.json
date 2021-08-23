@@ -1,0 +1,162 @@
+{
+    "data": [
+        {
+            "discount_rate": "63%",
+            "title": "떡볶이 키트.떡볶이가 필요해",
+            "price": "11,000",
+            "image": "https://store.baemin.com/data/goods/20/12/51/335/335_main_083.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210527/0ce61799bd0ed71aeccd8eb40afb38e5_142745.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/ccac9f724ecd7ef4fcec68651e2d71d9_142905.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/3c7b2f078d7d96255e0d015ada22de22_142906.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/9aa782086119f012352a8ffa8675df5e_142906.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/d4e3a1819354968967243966032e118c_142906.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/d3fbaea266c6f0f4fb04552def584ab5_142906.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/d3e6faffc4491458b24dd4f647798bc5_142907.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/33f1e50a66a32fd70e261011a632a6b6_142907.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/5769e3296f5296e24bfba773ba4a7feb_142908.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/aba7d5a9708bf6e1478714ed5904c028_142908.jpg",
+                "https://store.baemin.com/data/editor/goods/210527/7ae0a54f976d7cb86e349b9f8fe970f6_142908.jpg"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": null,
+            "title": "효자손. 혼자서도 잘해요",
+            "price": "12,900",
+            "image": "https://store.baemin.com/data/goods/18/08/29/151/1535532179269s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210617/d3193c7584153f69b53f3862b044b290_173737.jpg",
+                "https://store.baemin.com/data/editor/goods/210617/44207d048ff4418102c6bee34da59178_173737.jpg",
+                "https://store.baemin.com/data/editor/goods/210617/2f1b9f036022ac70bc83ae8bcd668e3f_173738.jpg",
+                "https://store.baemin.com/data/editor/goods/210617/8d010d4682757aae3342e0fbdacdf879_173738.jpg"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": null,
+            "title": "잘나가요 세트",
+            "price": "15,000",
+            "image": "https://store.baemin.com/data/goods/20/01/03/247/247_main_062.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200203/0f9f77a68a7ff6884eed48fbc88dd3ee_161842.png"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": "5%",
+            "title": "ㅋㅋ골고루 양말 세트",
+            "price": "26,000",
+            "image": "https://store.baemin.com/data/goods/20/06/24/283/283_main_045.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200615/1_150958.gif",
+                "https://store.baemin.com/data/editor/goods/200615/2_151012.png",
+                "https://store.baemin.com/data/editor/goods/200615/3_151031.png",
+                "https://store.baemin.com/data/editor/goods/200615/4_151049.png"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": null,
+            "title": "맥주짠 세트",
+            "price": "10,900",
+            "image": "https://store.baemin.com/data/goods/18/04/30/134/134_main_072.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200714/171af6dd244b656f61be88445b5a551a_153626.jpg"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": null,
+            "title": "볼펜세트. 어머 펜이에요~",
+            "price": "3,500",
+            "image": "https://store.baemin.com/data/goods/19/01/18/166/154780651448s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210623/dabba18b5c0fccf2e6bdc8ec93501490_103255.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/0d5a4095992004d5ae48509470ed32f3_103300.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/e097edf104348c725ecdc106021b509d_103306.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/d7b1e5baa3a86b83cbbe2b86d905b03c_103313.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/9fdf17191f46267959af592629f1402b_103320.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/b5ecc4e59a4ae75770b629573e9936b2_103326.jpg"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": "9%",
+            "title": "미니갑티슈 세트. 티었슈?",
+            "price": "8,000",
+            "image": "https://store.baemin.com/data/goods/20/07/27/286/286_main_041.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210610/301fb3f5c8ee29d9c80d0322100debf2_145631.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/ccac9f724ecd7ef4fcec68651e2d71d9_145631.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/3c7b2f078d7d96255e0d015ada22de22_145632.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/9aa782086119f012352a8ffa8675df5e_145632.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/d4e3a1819354968967243966032e118c_145632.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/d3fbaea266c6f0f4fb04552def584ab5_145633.jpg",
+                "https://store.baemin.com/data/editor/goods/210610/d3e6faffc4491458b24dd4f647798bc5_145633.jpg",
+                "https://store.baemin.com/data/editor/goods/200703/47a55443f33aa7027e93efec8a343e02_173458.png"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": "5%",
+            "title": "ㅋㅋ안 보이는 양말 세트",
+            "price": "19,000",
+            "image": "https://store.baemin.com/data/goods/20/06/24/284/284_main_039.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200615/1_151241.gif",
+                "https://store.baemin.com/data/editor/goods/200615/2_151253.png",
+                "https://store.baemin.com/data/editor/goods/200615/3_151303.gif",
+                "https://store.baemin.com/data/editor/goods/200615/4_151316.png",
+                "https://store.baemin.com/data/editor/goods/200615/5_151329.png"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": "5%",
+            "title": "왼발오른발 양말 세트",
+            "price": "26,000",
+            "image": "https://store.baemin.com/data/goods/20/06/24/285/285_main_086.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200615/1_151427.gif",
+                "https://store.baemin.com/data/editor/goods/200615/2_151438.png",
+                "https://store.baemin.com/data/editor/goods/200615/3_151456.png",
+                "https://store.baemin.com/data/editor/goods/200615/4_151518.png"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        },
+        {
+            "discount_rate": null,
+            "title": "누가 나 좀 말려줘요. 수건세트",
+            "price": "25,000",
+            "image": "https://store.baemin.com/data/goods/19/02/21/169/1550741975582s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210623/82df1b212a8343801ff24863424cce46_103354.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/ed4f50e4afaf73b5b3ed49ff7b8d21bd_103400.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/fa3fbaa4eb5be3478682cfd3bc2ec37b_103405.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/cf0fc259b501024df32b4dcb19cfbfda_103412.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/286c2b0b89868bea71b65d80e5d44431_103418.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/67b4bd2a1c5f6098c5f4d565213f569c_103425.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/51263e7aa6864a0b97b3cd61f9ae8d70_103433.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/1572224ec42c60c945268ddc3d9a17a5_103440.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/7a49e49d5fb5eea44848289dcd353c05_103449.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/24357943079f1a9f9387a2bd39c9e105_103457.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/c91a8fe1ca18ef10dbd86ed2a6bc1e34_103505.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/256767a74e9164be772cde31fcc42764_103513.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/43bcf68d6db73b7a7faa7d76879f6703_103526.jpg",
+                "https://store.baemin.com/data/editor/goods/210623/69b3fe9dce2c7f5b8c672a872bfa0644_103533.jpg"
+            ],
+            "is_green": false,
+            "category_id": "016"
+        }
+    ]
+}

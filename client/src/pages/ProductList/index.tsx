@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-import ItemLists from '@/components/base/ItemLists/ItemLists';
-import ItemFilterBar from '@/components/base/ItemFilterBar/ItemFilterBar';
-import Loading from '@/components/base/Loading';
+import ItemLists from '@/components/common/ItemLists/ItemLists';
+import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
+import Loading from '@/components/common/Loading';
 import useLocation from '@/hooks/customHooks/useLocation';
 import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
@@ -66,7 +66,7 @@ const ProductList = () => {
 
   // let qs = window.location.search;
 
-  const handleFilter = (index) => {
+  const handleFilter = (index: number) => {
     const newFilter = { ...filter, productFilter: index };
     setFilter(newFilter);
   };

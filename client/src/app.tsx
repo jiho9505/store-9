@@ -1,21 +1,24 @@
 import React, { Suspense } from 'react';
 import styled from '@emotion/styled';
-import { Router, Route, Link } from './Router';
+import { Router, Route, Link } from './core/Router';
 
-const Header = React.lazy(() => import('@/components/base/Header'));
-const Footer = React.lazy(() => import('@/components/base/Footer'));
-const ButtonToMoveToTop = React.lazy(() => import('@/components/base/ButtonToMoveToTop'));
+const Header = React.lazy(() => import('@/components/Header'));
+const Footer = React.lazy(() => import('@/components/Footer'));
+const ButtonToMoveToTop = React.lazy(() => import('@/components/ButtonToMoveToTop'));
 const LoginPage = React.lazy(() => import('@/pages/Login'));
 const SignupMethod = React.lazy(() => import('@/pages/SignupMethod'));
 const Main = React.lazy(() => import('@/pages/Main'));
 const ProductList = React.lazy(() => import('@/pages/ProductList'));
 const CartPage = React.lazy(() => import('@/pages/Cart'));
 const Order = React.lazy(() => import('@/pages/Order'));
+const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
 const Callback = React.lazy(() => import('@/components/base/Callback'));
+const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import '@/static/assets/img/baeminFavicon.png';
+import Loading from './components/common/Loading';
 
 /**
  * FIXME:
@@ -24,7 +27,13 @@ import '@/static/assets/img/baeminFavicon.png';
 const App = () => {
   return (
     <PageContainer>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <LoadingContainer>
+            <Loading size="big"></Loading>
+          </LoadingContainer>
+        }
+      >
         <Router>
           <Header />
           <Route exact path="/">
@@ -39,11 +48,17 @@ const App = () => {
           <Route exact path="/order">
             <Order />
           </Route>
+          <Route path="/mypage">
+            <MyPage />
+          </Route>
           <Route exact path="/product/:id">
             <ProductPage />
           </Route>
           <Route exact path="/signupMethod">
             <SignupMethod />
+          </Route>
+          <Route exact path="/search">
+            <ProductList />
           </Route>
           <Route exact path="/total">
             <ProductList />
@@ -75,6 +90,9 @@ const App = () => {
           <Route exact path="/collaborate">
             <ProductList />
           </Route>
+          <Route exact path="/detail">
+            <DetailProduct />
+          </Route>
           <Route exact path="/notfound">
             <NotFound />
           </Route>
@@ -96,6 +114,11 @@ const PageContainer = styled.div`
   min-width: 1450px;
 `;
 
+const LoadingContainer = styled.div`
+  position: absolute;
+  left: 45%;
+  top: 35%;
+`;
 const ProductPage = () => {
   return <div>This is Product Page</div>;
 };

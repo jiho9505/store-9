@@ -1,0 +1,39 @@
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+
+import Detail from '@/components/DetailProduct/Detail';
+import Overview from '@/components/DetailProduct/Overview';
+import { normalContainerWidth } from '@/static/style/common';
+import Datas from '@/dummy';
+
+const sampleData = Datas[0];
+
+const DetailProduct = () => {
+  window.scrollTo({ top: 0 });
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    setProduct(sampleData);
+  }, []);
+
+  return (
+    <WholeContainer>
+      <DetailProductContainer>
+        <Overview info={product}></Overview>
+        <Detail info={product}></Detail>
+      </DetailProductContainer>
+    </WholeContainer>
+  );
+};
+
+const WholeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const DetailProductContainer = styled.div`
+  width: ${normalContainerWidth};
+`;
+export default DetailProduct;

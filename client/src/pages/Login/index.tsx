@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import { Link } from '@/Router';
-import Input from '@/components/base/Input';
+import { Link } from '@/core/Router';
+import Input from '@/components/common/Input';
 import useInput from '@/hooks/customHooks/useInput';
 import Button from '@/components/base/Button';
 import AuthApi from '@/apis/AuthApi';
@@ -23,10 +23,12 @@ const LoginPage = () => {
     onChange,
     reset,
   } = useInput({
-    id: '',
-    password: '',
-    name: '',
-    orderNumber: '',
+    initialState: {
+      id: '',
+      password: '',
+      name: '',
+      orderNumber: '',
+    },
   });
 
   const callback = () => {};
