@@ -14,9 +14,9 @@ type ReviewContentProps = {
 
 const tableHeader = [
   { id: 'id', name: '번호', width: '10%' },
+  { id: 'productName', name: '제품명', width: '10%' },
   { id: 'title', name: '제목', width: '70%' },
   { id: 'date', name: '날짜', width: '10%' },
-  { id: 'writer', name: '작성자', width: '10%' },
 ];
 
 const ReviewContent = ({ reviews }: ReviewContentProps) => {
@@ -24,18 +24,18 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
 
   const tableBody = useMemo(() => {
     return reviews.map((review) => {
-      const { id, title, date, writer } = review;
+      const { id, title, date, product } = review;
       return {
         id,
         cells: [
           { c: <Cell>{id}</Cell>, colSpan: 1 },
+          { c: <Cell>{product.name}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
           { c: <Cell>{getDateFormat(date)}</Cell>, colSpan: 1 },
-          { c: <Cell>{writer}</Cell>, colSpan: 1 },
         ],
       };
     });
-  }, []);
+  }, [reviews]);
 
   const handleModalClose = () => {
     setActiveModal(false);

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ReviewContent } from '@/components/MyPage';
+
+import ReviewApi from '@/apis/ReviewApi';
 
 const reviews = [
   {
@@ -34,6 +36,13 @@ const reviews = [
 ];
 
 const ReviewPage = () => {
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const result = await ReviewApi.getList();
+      setReviews(result.reviews);
+    })();
+  }, []);
   return <ReviewContent reviews={reviews} />;
 };
 
