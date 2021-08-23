@@ -34,15 +34,7 @@ const Router = ({ children }) => {
 };
 
 const haveRouterParameter = (path: string, curLocation: string): boolean => {
-  if (path.includes(':')) {
-    if (RouteList.has(curLocation)) return false;
-    const curLocationLastSlashIdx = curLocation.lastIndexOf('/');
-    const pathLastSlashIdx = path.lastIndexOf('/');
-    const curLocationBeforeSlash = curLocation.slice(0, curLocationLastSlashIdx);
-    const pathBeforeSlash = path.slice(0, pathLastSlashIdx);
-
-    return curLocationBeforeSlash === pathBeforeSlash;
-  }
+  if (path.includes(':')) return RouteList.has(curLocation) ? false : true;
   return false;
 };
 
@@ -76,7 +68,7 @@ const Route = ({ exact = false, path, children }: RouteType) => {
 const Link = ({ to, children, ...rest }) => {
   const { history } = useContext(HistoryContext);
 
-  const handleClickLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleClickLink = () => {
     history.push(to);
   };
 
