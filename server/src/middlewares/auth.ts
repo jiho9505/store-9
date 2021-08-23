@@ -1,16 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import { getCustomRepository } from 'typeorm';
 import dotenv from 'dotenv';
-import multer from 'multer';
 
 import { UserRepository } from '../repositories/user_repositiory';
 import jwt from '../utils/jwt';
 import constant from '../utils/constant';
 import { getAccessToken } from '../utils/auth';
 import { api } from '../api';
+import { JwtSignPayload } from 'src/utils/types';
 
-const upload = multer();
 dotenv.config();
+
+type JwtVerifyResult = {
+  ok: boolean;
+  decoded?: JwtSignPayload;
+  err?: string;
+};
 
 const AuthMiddleware = {
   checkLogin: async (req: Request, res: Response, next: NextFunction) => {
@@ -18,11 +23,13 @@ const AuthMiddleware = {
       const { AUTH_TOKEN: token } = req.signedCookies;
 
       if (!token) {
-        res.status(constant.STATUS_NO_AUTHORIZED).json({ ok: false, message: constant.NO_TOKEN });
+        res
+          .status(constant.STATUS_NO_AUTHORIZED)
+          .json({ ok: false, message: constant.LOGIN_REQUIRED });
         return;
       }
 
-      const { ok, decoded, err } = jwt.verify(token);
+      const { ok, decoded, err }: JwtVerifyResult = jwt.verify(token);
       if (!ok) {
         res.status(constant.STATUS_NO_AUTHORIZED).json({ ok: false, message: err });
         return;
@@ -33,7 +40,7 @@ const AuthMiddleware = {
       if (!result) {
         res
           .status(constant.STATUS_NO_AUTHORIZED)
-          .json({ ok: false, message: constant.USER_NOT_EXIST });
+          .json({ ok: false, message: constant.NOT_VALID_TOKEN });
         return;
       }
       res.locals.user = decoded;
@@ -77,7 +84,6 @@ const AuthMiddleware = {
       // next(err.message);
     }
   },
-  dataUpload: upload.fields([]),
   checkAdmin: () => {},
 };
 

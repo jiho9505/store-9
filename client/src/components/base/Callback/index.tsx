@@ -19,7 +19,15 @@ const Callback = () => {
   useEffect(() => {
     const qs = new URLSearchParams(window.location.search);
     const code: string = qs.get('code');
+    const error: string = qs.get('error');
     const codeData = { code };
+
+    if (error === 'access_denied' || error) {
+      // 취소 눌렀을때
+      history.go(-2);
+      // window.history.go(-2);
+      return;
+    }
     const requestGithubLogin = async () => {
       const {
         data: { id, isNotJoined },
