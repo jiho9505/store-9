@@ -18,7 +18,7 @@ const durationFilter = [
   { type: 'year', value: 1, content: '1년' },
 ];
 
-type Form = { start: string; finish: string };
+type Form = { [key: string]: string };
 
 type DurationFilterProps = {
   form: Form;
