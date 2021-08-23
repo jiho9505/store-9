@@ -1,0 +1,153 @@
+{
+    "data": [
+        {
+            "discount_rate": null,
+            "title": "요모포켓X배달이친구들 독고배달이 포켓",
+            "price": "64,000",
+            "image": "https://store.baemin.com/data/goods/20/12/50/330/330_main_060.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201210/43ab4a59f9f98f3d575df5857a3dc156_103338.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/8936edb9eda16442621a04fbcf3329ba_103432.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/7d2dbef29f268b0bfcfa972a54a2a73d_103437.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "요모포켓X배달이친구들 메이배달이 포켓",
+            "price": "64,000",
+            "image": "https://store.baemin.com/data/goods/20/12/50/332/332_main_079.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201210/972e59f327bba2701f003debefb3c169_110708.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/8f8c301b1abb15a079d8548d1228be88_110711.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/b16dad744ee0c90e02928c78a1794f82_110711.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "요모포켓X배달이친구들 엉클배달이 포켓",
+            "price": "64,000",
+            "image": "https://store.baemin.com/data/goods/20/12/50/333/333_main_032.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201210/4a93be911288f162c2f8cb7f4914ed77_110925.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/8490de579dcfdd79f76f66d4c742953d_110926.jpg",
+                "https://store.baemin.com/data/editor/goods/201210/4cf5ab09bec4b8417454a075cce94f1d_110926.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "포스터. 메이배달이",
+            "price": "2,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/302/302_main_018.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/95a206bfdd656d77a355d69544081cbe_154326.png"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "포스터. 왕배달이",
+            "price": "2,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/304/304_main_06.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/f630590cb8e92278f8819f4c6e8a5aac_154132.png"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "포스터. 봉다리배달이",
+            "price": "2,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/303/303_main_036.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/463a74dc04a2023f8c02d658f3303bee_154251.png"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "포스터. 냥이배달이",
+            "price": "2,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/301/301_main_02.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/260afc5805600c7cb55fab0de5c9034d_154359.png"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "포스터. 독고배달이",
+            "price": "2,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/300/300_main_066.png",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/002403c7fbbcfdb9dd0728c98239be01_154446.png"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "피규어. 왕배달이",
+            "price": "3,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/299/299_main_031.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/502da33c73ec57b52d0bc8a283ccb182_105540.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "피규어. 엉클배달이",
+            "price": "3,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/298/298_main_082.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200727/34b33de59cc7937635e59a84588e9525_141745.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "피규어. 메이배달이",
+            "price": "3,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/297/297_main_068.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/d7b5be5ad732ee78389967368c1ae92c_105031.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "피규어. 냥이배달이",
+            "price": "3,000",
+            "image": "https://store.baemin.com/data/goods/20/07/30/296/296_main_069.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/701a75565dacde3a34e787a2e71738e9_104856.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        },
+        {
+            "discount_rate": null,
+            "title": "피규어. 독고배달이",
+            "price": "품절",
+            "image": "https://store.baemin.com/data/goods/20/07/30/294/294_main_09.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/200724/53b4712c08298723cfd61e936c084d23_104722.jpg"
+            ],
+            "is_green": false,
+            "category_id": "017"
+        }
+    ]
+}

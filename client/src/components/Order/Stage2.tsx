@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import Input from '@/components/base/Input';
-import InputLabel from '@/components/base/InputLabel';
+import Input from '@/components/common/Input';
+import InputLabel from '@/components/common/InputLabel';
 
 import useValidate from '@/hooks/customHooks/useValidate';
 

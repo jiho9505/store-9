@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
-import ListTable from '../base/ListTable';
-import TableItem from '../base/TableItem';
+import ListTable from '../common/ListTable';
+import TableItem from '../common/TableItem';
 
 import { normalContainerWidth } from '@/static/style/common';
 

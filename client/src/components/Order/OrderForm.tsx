@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 
 import Stepper from './Stepper';
 import Stage1 from './Stage1';
 import Stage2 from './Stage2';
-import Button from '@/components/base/Button';
+import Button from '@/components/common/Button';
 
 import useInput from '@/hooks/customHooks/useInput';
 
@@ -40,7 +40,7 @@ const OrderForm = () => {
     setStage((prev) => prev - 1);
   };
 
-  const forms = () => {
+  const Forms = () => {
     if (stage === 1) {
       return <Stage1 onChange={onChange} form={{ orderName, email, phoneNumber }} />;
     } else if (stage === 2) {
@@ -48,18 +48,15 @@ const OrderForm = () => {
     }
   };
 
-  return (
-    <OrderFormContainer>
-      <Stepper steps={2} curStep={stage} />
-      {forms()}
-      <PageAction>
-        {stage !== 1 && (
+  const FormButtons = () => {
+    if (stage === 1) {
+      return (
+        <Button size="small" theme="white" value="next" type="button" onClick={handleClickNext} />
+      );
+    } else if (stage === 2) {
+      return (
+        <>
           <Button size="small" theme="white" value="prev" type="button" onClick={handleClickPrev} />
-        )}
-        {stage !== 2 && (
-          <Button size="small" theme="white" value="next" type="button" onClick={handleClickNext} />
-        )}
-        {stage === 2 && (
           <Button
             size="small"
             theme="white"
@@ -67,7 +64,17 @@ const OrderForm = () => {
             type="button"
             onClick={() => console.log('a')}
           />
-        )}
+        </>
+      );
+    }
+  };
+
+  return (
+    <OrderFormContainer>
+      <Stepper steps={2} curStep={stage} />
+      {Forms()}
+      <PageAction>
+        <FormButtons />
       </PageAction>
     </OrderFormContainer>
   );

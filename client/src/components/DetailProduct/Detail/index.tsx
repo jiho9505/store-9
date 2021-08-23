@@ -5,7 +5,7 @@ import DetailTab from '../DetailTab';
 import DetailInfo from '../DetailInfo';
 import ShipInfo from '../ShipInfo';
 import ReplaceItemInfo from '../ReplaceItemInfo';
-import ProductBoard from '@/components/base/ProductBoard';
+import ProductBoard from '../Board';
 
 const Detail = ({ info }) => {
   const detailInfoPosition = useRef<HTMLDivElement>(null);

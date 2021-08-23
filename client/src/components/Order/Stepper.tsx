@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 import { primary1, white, greySpan } from '@/static/style/common';
 
@@ -57,4 +57,4 @@ const Step = styled.div<StepProps>`
   align-items: flex-end;
 `;
 
-export default Stepper;
+export default memo(Stepper);

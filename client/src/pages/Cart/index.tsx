@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { normalContainerWidth, greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { CartContent } from '@/components/Cart';
-import PricePannel from '@/components/base/PricePannel';
-import OrderStageHeader from '@/components/base/OrderStageHeader';
+import PricePannel from '@/components/common/PricePannel';
+import OrderStageHeader from '@/components/common/OrderStageHeader';
 
 const cartProducts = [
   {
@@ -101,7 +101,7 @@ const Button = styled.button`
   border: 1px solid ${greyLine};
   border-radius: ${normalRadius};
   color: ${greySpan};
-  &:first-child {
+  &:first-of-type {
     margin-right: 10px;
   }
 `;

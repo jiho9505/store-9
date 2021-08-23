@@ -1,0 +1,311 @@
+{
+    "data": [
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.17 Icecream",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/21/08/32/353/353_main_038.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162335.jpg",
+                "https://store.baemin.com/data/editor/goods/210810/301fb3f5c8ee29d9c80d0322100debf2_150338.jpg",
+                "https://store.baemin.com/data/editor/goods/210810/ccac9f724ecd7ef4fcec68651e2d71d9_150339.jpg",
+                "https://store.baemin.com/data/editor/goods/210810/3c7b2f078d7d96255e0d015ada22de22_150339.jpg",
+                "https://store.baemin.com/data/editor/goods/210810/9aa782086119f012352a8ffa8675df5e_150340.jpg",
+                "https://store.baemin.com/data/editor/goods/210810/d4e3a1819354968967243966032e118c_150340.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.16 Namul",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/21/06/22/345/345_main_083.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162335.jpg",
+                "https://store.baemin.com/data/editor/goods/210602/96d16feff258163a7d1cf16c59f8e651_112624.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.15 Egg",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/21/03/12/336/336_main_022.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162445.jpg",
+                "https://store.baemin.com/data/editor/goods/210323/c08654a262d29242720c8d36eb2ce2c8_101011.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": null,
+            "title": "키크니. 별일 없이 산다 (특별 패키지)",
+            "price": "26,000",
+            "image": "https://store.baemin.com/data/goods/20/10/44/313/313_main_02.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/201028/3b2b00d815f31402177d27b6893f1b58_161329.jpg",
+                "https://store.baemin.com/data/editor/goods/201028/9bf6b3bb14a9750756c1a10d122a51a2_161349.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.14 Beer",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/20/11/47/328/328_main_077.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162624.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/f7dd7da856d2a9e827ca286187d11639_144131.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/ddf5dab6939f6146d551b9fd40634842_144141.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/aa2dbf879aa796a0de494b5906228473_144151.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/daab514312a45f829246b948fb3fca32_144202.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/249b6d523e92cf8b72433af9c9151fa4_144213.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F 파운드:",
+            "price": "16,200",
+            "image": "https://store.baemin.com/data/goods/20/08/33/306/306_main_084.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162710.jpg",
+                "https://store.baemin.com/data/editor/goods/200821/f5e9ee3c1634ec56178c39d7e85cef9b_125133.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.13 Clam",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/20/04/15/265/265_main_068.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162744.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/c6b9d0814d83150a67232bd8b62f04d4_135627.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/43124c60e31d838c7ccbdc91e94502ac_135628.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/a364b4c05bb89963d452a104c368088d_135628.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/4ac0f132e7d659e12ca7feaebc582aeb_135629.jpg",
+                "https://store.baemin.com/data/editor/goods/210607/8872ab9e4526f8e9bc74e1ed6ea38b09_143659.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.12 Kimchi",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/20/02/06/252/252_main_05.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162815.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/7a2d1b5bb62b9ecd63be29c9b6bdde16_170412.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.11 Bean",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/19/11/48/235/235_main_017.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162856.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/6b805bc3d217f46195d70acfd45926d5_170156.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "치슐랭가이드",
+            "price": "11,520",
+            "image": "https://store.baemin.com/data/goods/18/07/12/147/1531355583867s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/0ad3730867ef81ba.jpg",
+                "https://store.baemin.com/data/editor/goods/e4a9757b5cc7aef8.jpg",
+                "https://store.baemin.com/data/editor/goods/b01bbb58754c2618.jpg",
+                "https://store.baemin.com/data/editor/goods/5e6c219626c3db38.jpg",
+                "https://store.baemin.com/data/editor/goods/796fde10dfdfd685.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F 아트 북",
+            "price": "42,300",
+            "image": "https://store.baemin.com/data/goods/19/07/26/186/1564130548140s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163028.jpg",
+                "https://store.baemin.com/data/editor/goods/8e7706db8dbc4ae2.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.10 Berry",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/19/09/27/190/1569566207339s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162927.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/26f6444ba9c7f9c8d9c4ed5fba6f80b9_165902.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.09 Curry",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/19/08/01/187/1564650618591s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_162957.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/3424ed9fb55a1895eba798382c92d121_165040.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.08 Honey",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/19/05/30/176/1559197774497s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163101.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/b5e1c4420911682248840550f63944b7_164804.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.07 Vinegar",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/19/03/28/173/1553735347220s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163128.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/69a60c25ac63aff1c9bfc7b27fd88872_164301.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.06 Chocolate",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/19/01/29/168/1548752697484s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163155.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/f459b7d67e2fcc03e353c09c9efab5d2_164044.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.05 Rice",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/18/11/29/159/1543454717388s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163226.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/edaaece218674494f78c9981dd10dafe_163818.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.04 Tomato",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/18/09/28/153/1538119069730s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163254.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/20aa86a96e7010541ca9ce28ce9ef825_163514.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.03 chicken",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/18/07/31/148/1532999660816s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163319.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/23a831016b740422996a573e906654cd_163305.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.02 cheese",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/18/05/21/139/1526881936633s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163348.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/61f3e5ad2b264dd3503192aac02bba3f_154939.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": "10%",
+            "title": "매거진F No.01 salt",
+            "price": "13,500",
+            "image": "https://store.baemin.com/data/goods/18/05/03/135/1525336025950s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/210702/8a146b0cb968c4422efab7c355c37b28_163411.jpg",
+                "https://store.baemin.com/data/editor/goods/200605/f5df6605bd4456817ab1bbc8ef77628a_170719.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": null,
+            "title": "매거진F No.01 salt 스페셜 패키지",
+            "price": "2018 첫번째 매거진F 한정판",
+            "image": "https://store.baemin.com/data/goods/18/03/25/127/1521949862948s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/2fd3206a3f5f6c58.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": null,
+            "title": "배달이 팝업북. 버거나라 삼남매",
+            "price": "2019 봄. 한정판 출시",
+            "image": "https://store.baemin.com/data/goods/19/02/26/170/1551156188454s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/27fcb32d54db78e2.jpg",
+                "https://store.baemin.com/data/editor/goods/0698c431b8f527f2.gif",
+                "https://store.baemin.com/data/editor/goods/8abbdc4df8b94743.jpg",
+                "https://store.baemin.com/data/editor/goods/6ad4bc0c91d2eff3.jpg",
+                "https://store.baemin.com/data/editor/goods/dbb803780d529805.jpg",
+                "https://store.baemin.com/data/editor/goods/9d7b68d96d77ca61.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        },
+        {
+            "discount_rate": null,
+            "title": "배민다움",
+            "price": "전국 서점 13,500원 할인판매중",
+            "image": "https://store.baemin.com/data/goods/17/06/09/102/1497000757665s0.jpg",
+            "content_urls": [
+                "https://store.baemin.com/data/editor/goods/dda77ad9b2296ef6.jpg",
+                "https://store.baemin.com/data/editor/goods/0ff59be720244657.jpg",
+                "https://store.baemin.com/data/editor/goods/25e20f217e4766d4.jpg"
+            ],
+            "is_green": false,
+            "category_id": "014"
+        }
+    ]
+}
