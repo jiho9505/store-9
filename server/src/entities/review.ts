@@ -14,10 +14,10 @@ class Review extends DateBasicEntity {
   @Column()
   images: string;
 
-  @Column()
+  @Column({ unique: true })
   user_id: number;
 
-  @Column()
+  @Column({ unique: true })
   product_id: number;
 
   @ManyToOne((type) => User, (user) => user.reviews)
