@@ -39,6 +39,7 @@ const ImgContainer = styled.div`
   overflow: hidden;
   width: 900px;
   height: 330px;
+  border-radius: 18px;
 `;
 
 const GiftContainer = styled.div`
@@ -53,7 +54,7 @@ const GiftContainer = styled.div`
 const Img = styled.img`
   cursor: pointer;
   transition: transform 0.2s ease;
-  border-radius: 18px;
+  height: 100%;
   &:hover {
     transform: scale(1.1);
   }
