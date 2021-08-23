@@ -92,8 +92,6 @@ const setStyle = (props) => {
 };
 
 const ActiveLink = styled.a<StyledComponentProps>`
-  border-bottom: ${(props) => (props.isActive ? `2px solid #2AC1BC` : '')};
-  color: ${(props) => (props.isActive ? '#2AC1BC' : 'inherit')};
   font-weight: ${(props) => (props.isActive ? 'bold' : 'normal')};
   margin-bottom: ${(props) => (props.isActive ? '-1px' : '0px')};
   ${(props) => {
