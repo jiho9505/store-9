@@ -18,7 +18,9 @@ const AuthMiddleware = {
       const { AUTH_TOKEN: token } = req.signedCookies;
 
       if (!token) {
-        res.status(constant.STATUS_NO_AUTHORIZED).json({ ok: false, message: constant.NO_TOKEN });
+        res
+          .status(constant.STATUS_NO_AUTHORIZED)
+          .json({ ok: false, message: constant.LOGIN_REQUIRED });
         return;
       }
 
