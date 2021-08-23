@@ -7,8 +7,7 @@ import '@/static/assets/img/circle.png';
 import { categories, subCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 
-const weightWhenSubItemsLengthOdd = 25;
-const weightWhenSubItemsLengthEven = -35;
+const weightWhenSubItemsLengthEven = -50;
 
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
@@ -42,7 +41,7 @@ const Navigation = () => {
 
       const extraXposToRemove =
         newSubItems.length % 2
-          ? Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthOdd
+          ? Math.floor(newSubItems.length / 2) * 100
           : Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthEven;
 
       setSubItemXpos(itemXPos - extraXposToRemove);
