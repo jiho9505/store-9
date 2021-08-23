@@ -3,10 +3,10 @@ import guguStyled from '@/core/styled';
 
 import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
-import { getDateFormat } from '@/utils/dateParse';
-
 import ModalPortal from '@/utils/portal';
 import PostModal from '../common/PostModal';
+
+import { getDateFormat } from '@/utils/dateParse';
 
 type ReviewContentProps = {
   reviews: any;

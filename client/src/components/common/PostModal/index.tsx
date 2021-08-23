@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { observer } from 'mobx-react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
@@ -6,12 +7,13 @@ import StarComponent from '@/components/common/Star';
 import ModalWrapper from '@/components/common/ModalWrapper';
 
 import ReviewApi from '@/apis/ReviewApi';
+import RefreshStore from '@/stores/RefreshStore';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
 const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
-  const { id, title: reviewTitle, content, rate, product } = item;
+  const { title: reviewTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -66,6 +68,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
         images: [],
       });
       onClose();
+      RefreshStore.refresh();
     } catch (err) {
       alert('리뷰수정에 실패했습니다.');
     }
@@ -140,7 +143,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
   );
 };
 
-export default PostModal;
+export default observer(PostModal);
 
 const ScoreContainer = styled.div`
   display: flex;
