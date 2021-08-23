@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Link, NavLink } from '@/Router';
+import { Link } from '@/Router';
 
 import '@/static/assets/img/circle.png';
 
@@ -10,7 +10,7 @@ import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common'
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
-  const [choicedItemName, setChoicedItemName] = useState<string>('');
+  const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
 
   useEffect(() => {
     document.addEventListener('mouseover', (e: Event) => {
@@ -41,7 +41,7 @@ const Navigation = () => {
 
       setSubItemXpos(itemXPos - extraXposToRemove);
       setSubItems(newSubItems);
-      setChoicedItemName(itemName);
+      setMouseOverdItemName(itemName);
     });
   };
 
@@ -61,14 +61,14 @@ const Navigation = () => {
             >
               {category}
             </CategoryLink>
-            {choicedItemName === category && <CircleBorder src="images/circle.png" />}
+            {mouseOverdItemName === category && <CircleBorder src="images/circle.png" />}
           </Item>
         ))}
       </Menu>
       <SubMenu dist={subItemXpos}>
         {subItems.map((subItem) => (
-          <Link to="/total">
-            <SubItem key={subItem.name}>{subItem.name}</SubItem>
+          <Link to="/total" key={subItem.name}>
+            <SubItem>{subItem.name}</SubItem>
           </Link>
         ))}
       </SubMenu>
@@ -123,7 +123,7 @@ const Item = styled.li`
   position: relative;
 `;
 
-const CategoryLink = styled(NavLink)`
+const CategoryLink = styled(Link)`
   height: 55px;
   display: flex;
   align-items: center;
