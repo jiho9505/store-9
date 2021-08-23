@@ -117,8 +117,6 @@ namespace ProductController {
 
       const result = await getCustomRepository(ProductRepository).delete(productId);
 
-      console.log(result);
-
       res.json({ ok: result.affected > 0 });
     } catch (e) {
       console.error(e);
