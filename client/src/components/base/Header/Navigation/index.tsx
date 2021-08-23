@@ -127,8 +127,10 @@ const CategoryLink = styled(NavLink)`
   height: 55px;
   display: flex;
   align-items: center;
+  justify-content: center;
   font-size: 16px;
   padding: 0 10px 0;
   font-family: ${baeminFont};
   z-index: 1;
+  width: 100%;
 `;
