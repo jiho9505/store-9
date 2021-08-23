@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Link, NavLink } from '@/core/Router';
-import { categories } from '@/static/constants';
+import { Link } from '@/core/Router';
+
+import Navigation from './Navigation';
+
 import { baeminFont, greyLine, normalContainerWidth } from '@/static/style/common';
 
 import SearchBar from './SearchBar';
@@ -32,13 +34,7 @@ const Header = () => {
           </LogoLink>
           <SearchBar />
         </SearchHeader>
-        <Navigation>
-          {categories.map(([category, path], idx) => (
-            <li key={idx}>
-              <CategoryLink to={path}>{category}</CategoryLink>
-            </li>
-          ))}
-        </Navigation>
+        <Navigation />
       </HeaderContainer>
     </>
   );
@@ -72,7 +68,7 @@ const ShortCut = styled.li`
 const HeaderContainer = styled.div`
   min-width: 1450px;
   border-top: 1px solid ${greyLine};
-  border-bottom: 1px solid ${greyLine}; ;
+  border-bottom: 1px solid ${greyLine};
 `;
 
 const SearchHeader = styled.div`
@@ -95,22 +91,6 @@ const LogoLink = styled(Link)`
 const Logo = styled.img`
   margin-top: 15px;
   width: 100%;
-`;
-
-const Navigation = styled.ul`
-  width: ${normalContainerWidth};
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const CategoryLink = styled(NavLink)`
-  height: 55px;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  padding: 0 10px 0;
-  font-family: ${baeminFont};
 `;
 
 export default Header;
