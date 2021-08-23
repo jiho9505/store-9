@@ -9,7 +9,7 @@ import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
-const PostModal = ({ item, onClose, title }) => {
+const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
   const { title: reviewTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,6 +69,30 @@ const PostModal = ({ item, onClose, title }) => {
     setStarScore(score);
   };
 
+  const Buttons = () => {
+    if (mode === 'ENROLL') {
+      return (
+        <Button
+          size="small"
+          value="등록하기"
+          type="submit"
+          theme="dark"
+          onClick={handleClickButton}
+        />
+      );
+    } else if (mode === 'MODIFY') {
+      return (
+        <Button
+          size="small"
+          value="수정하기"
+          type="submit"
+          theme="white"
+          onClick={() => console.log('a')}
+        />
+      );
+    }
+  };
+
   return (
     <ModalWrapper onClose={onClose} title={title}>
       <ItemContainer>
@@ -88,15 +112,7 @@ const PostModal = ({ item, onClose, title }) => {
         <Label>내용 : </Label>
         <Content maxLength={550} ref={textAreaRef} required />
         {showErrorMsg && <ErrorMsg>모든 값을 입력해주시기 바랍니다.</ErrorMsg>}
-        <ButtonContainer>
-          <Button
-            size="small"
-            value="등록하기"
-            type="submit"
-            theme="dark"
-            onClick={handleClickButton}
-          ></Button>
-        </ButtonContainer>
+        <ButtonContainer>{Buttons()}</ButtonContainer>
       </Form>
     </ModalWrapper>
   );

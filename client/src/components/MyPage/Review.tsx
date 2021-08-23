@@ -52,7 +52,12 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
       <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
       {activeModal && (
         <ModalPortal>
-          <PostModal item={selectReview} title="상품 후기" onClose={handleModalClose} />
+          <PostModal
+            item={selectReview}
+            title="상품 후기"
+            mode="MODIFY"
+            onClose={handleModalClose}
+          />
         </ModalPortal>
       )}
     </RiviewContentContainer>
