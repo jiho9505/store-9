@@ -44,7 +44,7 @@ const App = () => {
           <Route exact path="/order">
             <Order />
           </Route>
-          <Route exact path="/mypage">
+          <Route path="/mypage">
             <MyPage />
           </Route>
           <Route exact path="/signupMethod">
@@ -59,11 +59,11 @@ const App = () => {
           <Route exact path="/signup">
             <Signup />
           </Route>
-          <Route exact path="/:notfound">
-            <NotFound />
-          </Route>
           <Route exact path="/callback">
             <Callback />
+          </Route>
+          <Route exact path="/:notfound">
+            <NotFound />
           </Route>
         </Router>
         <ButtonToMoveToTop />
