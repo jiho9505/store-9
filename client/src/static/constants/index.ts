@@ -8,6 +8,11 @@ const RouteListArray = [
   '/goods',
   '/detail',
   '/signup',
+  '/callback',
+  '/mypage/review',
+  '/mypage/like',
+  '/mypage/order',
+  '/mypage/QnA',
 ];
 
 export const RouteList = new Set(RouteListArray);
