@@ -1,10 +1,12 @@
+import { ProductSchema } from '../product/schema';
+
 export interface QnASchema {
   id: number;
-  userId: number;
-  productId: number;
+  userId?: number;
+  product?: ProductSchema;
   title: string;
   content: string;
-  isPrivate: boolean;
-  images: string[];
-  createdAt: string;
+  isPrivate?: boolean;
+  images?: string;
+  createdAt?: Date;
 }

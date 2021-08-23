@@ -4,30 +4,30 @@ import BaseApi from './BaseApi';
 
 class OrderApi extends BaseApi {
   getList(params: OrderRequest.GetList) {
-    return this.get<OrderResponse.getList>('/', { params, isRequiredLogin: true });
+    return this.get<OrderResponse.GetList>('/', { params, isRequiredLogin: true });
   }
 
   order(body: OrderRequest.Order) {
     return this.post('/', body, { isRequiredLogin: true });
   }
 
-  cancle({ orderId }: OrderRequest.Cancel) {
+  cancel({ orderId }: OrderRequest.Cancel) {
     return this.delete(`/${orderId}`, { isRequiredLogin: true });
   }
 
   getCart() {
-    return this.get<OrderResponse.getCart>('/carts', { isRequiredLogin: true });
+    return this.get<OrderResponse.GetCart>('/carts', { isRequiredLogin: true });
   }
 
-  addToCart(body: OrderRequest.AddToCart) {
-    return this.post('/carts', body, { isRequiredLogin: true });
+  addCartItem(body: OrderRequest.AddCartItem) {
+    return this.post<OrderResponse.AddCartItem>('/carts', body, { isRequiredLogin: true });
   }
 
-  updateCart(body) {
+  updateCartItem(body: OrderRequest.UpdateCartItem) {
     return this.put('/carts', body, { isRequiredLogin: true });
   }
 
-  deleteCartItem({ orderItemId }: OrderRequest.DeleteCartItem) {
+  removeCartItem({ orderItemId }: OrderRequest.RemoveCartItem) {
     return this.delete(`/carts/${orderItemId}`, { isRequiredLogin: true });
   }
 }

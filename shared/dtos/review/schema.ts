@@ -5,5 +5,5 @@ export interface ReviewSchema {
   title: string;
   content: string;
   images: string[];
-  createdAt?: string;
+  createdAt?: Date;
 }

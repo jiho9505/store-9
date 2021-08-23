@@ -11,9 +11,9 @@ export enum OrderStatus {
 
 export interface OrderSchema {
   id: number;
-  userId: number;
+  userId?: number;
   status: OrderStatus;
-  isReviewed: boolean;
+  isReviewed?: boolean;
   orderItems: OrderItemSchema[];
-  createdAt?: string;
+  createdAt?: Date;
 }

@@ -1,19 +1,23 @@
-import ProductRequest from '@shared/dtos/product/request';
-import ProductResponse from '@shared/dtos/product/response';
+import QnARequest from '@shared/dtos/qna/request';
+import QnAResponse from '@shared/dtos/qna/response';
 import BaseApi from './BaseApi';
 
-class ProductAPI extends BaseApi {
-  getMain() {
-    return this.get<ProductResponse.GetMain>('/');
+class QnaApi extends BaseApi {
+  getList() {
+    return this.get<QnAResponse.GetList>('/', { isRequiredLogin: true });
   }
 
-  getList(params: ProductRequest.GetList) {
-    return this.get<ProductResponse.GetList>('/', { params });
+  create(body: QnARequest.Create) {
+    return this.post<QnAResponse.Create>('/', body, { isRequiredLogin: true });
   }
 
-  getDetail({ productId }: ProductRequest.GetDetail) {
-    return this.get<ProductResponse.GetDetail>(`/${productId}`);
+  update(body: QnARequest.Update) {
+    return this.put<QnAResponse.Update>('/', body, { isRequiredLogin: true });
+  }
+
+  remove({ qnaId }: QnARequest.Remove) {
+    return this.delete(`/${qnaId}`, { isRequiredLogin: true });
   }
 }
 
-export default new ProductAPI('products');
+export default new QnaApi('qnas');
