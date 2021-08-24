@@ -37,10 +37,6 @@ const SearchBar = () => {
     setShowWordList(true);
   };
 
-  /**
-   * TODO:
-   * Content : Router 수정 후 url 재수정해야합니다.
-   */
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
@@ -55,22 +51,16 @@ const SearchBar = () => {
       setHistory([]);
     } else if (target.id === 'content') {
       movePageBySearch(target.innerText);
-      routerHistory.push(`/search`);
-      // routerHistory.push(`/search?item=${target.innerText}`);
+      routerHistory.push(`/goods?word=${target.innerText}`);
     } else return;
   };
 
-  /**
-   * TODO:
-   * Router 수정 후 url 재수정해야합니다.
-   */
   const movePageBySearch = (value: string) => {
     const newHistory = history.length === 10 ? [...history].slice(0, 9) : [...history];
     setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
     setShowWordList(false);
-    routerHistory.push(`/search`);
-    // routerHistory.push(`/search?item=${value}`);
+    routerHistory.push(`/goods?word=${value}`);
   };
 
   const handleClickImg = () => {
