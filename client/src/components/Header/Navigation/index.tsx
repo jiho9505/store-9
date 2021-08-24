@@ -28,8 +28,8 @@ const Navigation = () => {
       if (!target.closest('#NavBorder')) {
         setSubItems([]);
         setMouseOverdItemName('');
-        getQueryStringValue('id')
-          ? setMatchedItemIdToURL(Number(getQueryStringValue('id')))
+        getQueryStringValue('categoryId')
+          ? setMatchedItemIdToURL(Number(getQueryStringValue('categoryId')))
           : setMatchedItemIdToURL(-1);
       }
     };
@@ -53,7 +53,7 @@ const Navigation = () => {
 
     waitTime.then(() => {
       if (!timer) return;
-      const newSubItems = subCategories.filter((item) => item.parentId === id);
+      const newSubItems = subCategories.filter((item) => item.parent_id === id);
 
       const extraXposToRemove =
         newSubItems.length % 2
@@ -79,7 +79,7 @@ const Navigation = () => {
             <CategoryLink
               onMouseOver={handleMouseOverLink}
               onMouseOut={handleMouseOutLink}
-              to={`/goods?id=${category.id}`}
+              to={`/goods?categoryId=${category.id}`}
               data-id={category.id}
             >
               {category.name}
@@ -92,7 +92,7 @@ const Navigation = () => {
       </Menu>
       <SubMenu dist={subItemXpos}>
         {subItems.map((subItem) => (
-          <Link to={`/goods?id=${subItem.id}`} key={subItem.name}>
+          <Link to={`/goods?categoryId=${subItem.id}`} key={subItem.name}>
             <SubItem>{subItem.name}</SubItem>
           </Link>
         ))}
