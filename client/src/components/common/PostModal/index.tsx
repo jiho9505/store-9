@@ -12,7 +12,19 @@ import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
-const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
+type PostModalProps = {
+  item: { [key: string]: any };
+  onClose(): void;
+  title: string;
+  formType: { form: 'REVIEW' | 'QNA'; mode: 'ENROLL' | 'MODIFY' };
+};
+
+const PostModal = ({
+  item,
+  onClose,
+  title,
+  formType = { form: 'REVIEW', mode: 'ENROLL' },
+}: PostModalProps) => {
   const { title: reviewTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,6 +107,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
   };
 
   const Buttons = () => {
+    const { mode } = formType;
     if (mode === 'ENROLL') {
       return (
         <Button
