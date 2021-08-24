@@ -27,8 +27,10 @@ const tableHeader = [
  */
 
 const QnAContent = ({ questions }: QnAContentProps) => {
-  const [activeModal, setActiveModal] = useState(false);
   const { qnas, totalCount } = questions;
+
+  const [activeModal, setActiveModal] = useState(false);
+  const [selectedQna, setSelectedQna] = useState({});
 
   const tableBody = useMemo(() => {
     return (qnas || []).map((question, idx) => {
@@ -49,7 +51,8 @@ const QnAContent = ({ questions }: QnAContentProps) => {
     setActiveModal(false);
   };
 
-  const handleModalOpen = () => {
+  const handleModalOpen = (id) => {
+    setSelectedQna(qnas[id]);
     setActiveModal(true);
   };
 
@@ -58,7 +61,12 @@ const QnAContent = ({ questions }: QnAContentProps) => {
       <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
       {activeModal && (
         <ModalPortal>
-          <PostModal item={questions[0]} onClose={handleModalClose} title="문의하기" />
+          <PostModal
+            item={selectedQna}
+            onClose={handleModalClose}
+            title="문의하기"
+            formType={{ form: 'QNA', mode: 'MODIFY' }}
+          />
         </ModalPortal>
       )}
     </>

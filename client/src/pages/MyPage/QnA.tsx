@@ -1,45 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
 
 import guguStyled from '@/core/styled';
 import useInput from '@/hooks/customHooks/useInput';
 import QnaApi from '@/apis/QnaApi';
+import RefreshStore from '@/stores/RefreshStore';
 
 import DurationFilter from '@/components/common/DurationFilter';
 import { QnAContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
-const questions = [
-  {
-    id: 1,
-    date: new Date(),
-    category: '문구',
-    title: '저기요....',
-    content: '이거 얼마에요?',
-    productId: 5,
-    name: '똑똑똑 실내홥니다',
-    quantity: 1,
-    price: 6000,
-    totalPrice: 6000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-  {
-    id: 2,
-    date: new Date(),
-    cateogry: '완구',
-    title: '계세요?...',
-    content: '이건 뭐죠?',
-    productId: 3,
-    name: 'ㅋㅋ 슬리퍼',
-    quantity: 2,
-    price: 12000,
-    totalPrice: 24000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-];
-
 const QnAPage = () => {
+  const { refreshComponent } = RefreshStore;
   const [questions, setQuestions] = useState({});
 
   useEffect(() => {
@@ -47,7 +19,7 @@ const QnAPage = () => {
       const questions = await QnaApi.getList();
       setQuestions(questions.data);
     })();
-  }, []);
+  }, [refreshComponent]);
 
   const { form, onChange, onSetForm } = useInput({
     initialState: {
@@ -66,4 +38,4 @@ const QnAPage = () => {
 
 const QnAPageContainer = guguStyled.div``;
 
-export default QnAPage;
+export default observer(QnAPage);
