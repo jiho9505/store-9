@@ -46,8 +46,8 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 
   const handleClickReviewBtn = (idx) => (e) => {
     e.stopPropagation();
-    const { thumbnail, name } = orderProducts[idx];
-    setSelectedProduct({ product: { thumbnail, name } });
+    const { thumbnail, name, product_id } = orderProducts[idx];
+    setSelectedProduct({ product: { id: product_id, thumbnail, name } });
     handleOpenModal();
   };
 

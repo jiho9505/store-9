@@ -14,6 +14,7 @@ const timeToShowMsg: number = 2000;
 
 const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
   const { title: reviewTitle, content, rate, product } = item;
+  const { refresh } = RefreshStore;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -42,14 +43,26 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
    * 아래 내용과 product userId 등 조합해서 post 요청 보내야합니다.
    * 그 후 mobx를 통해 상태 업뎃해서 상위부터 리렌더링 되게 하면 될것 같습니다.
    */
-  const handleClickEnrollBtn = (e: React.MouseEvent) => {
+  const handleClickEnrollBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
     const title: string = inputRef.current.value;
     const content: string = textAreaRef.current.value;
 
     const result = isPassedValidation(title, content);
     if (result) return;
-    onClose();
+
+    try {
+      await ReviewApi.create(product.id, {
+        title,
+        content,
+        rate: starScore,
+        images: [],
+      });
+      onClose();
+      refresh();
+    } catch (err) {
+      alert('리뷰등록에 실패했습니다.');
+    }
   };
 
   const handleClickModifyBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -68,7 +81,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
         images: [],
       });
       onClose();
-      RefreshStore.refresh();
+      refresh();
     } catch (err) {
       alert('리뷰수정에 실패했습니다.');
     }
