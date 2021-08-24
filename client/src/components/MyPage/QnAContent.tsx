@@ -27,9 +27,10 @@ const tableHeader = [
 
 const QnAContent = ({ questions }: QnAContentProps) => {
   const [activeModal, setActiveModal] = useState(false);
+  const { qnas, totalCount } = questions;
 
   const tableBody = useMemo(() => {
-    return questions.map((question) => {
+    return (qnas || []).map((question) => {
       const { id, date, category, title } = question;
       return {
         id,

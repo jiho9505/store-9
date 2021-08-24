@@ -1,7 +1,8 @@
-import React from 'react';
-import guguStyled from '@/core/styled';
+import React, { useEffect, useState } from 'react';
 
+import guguStyled from '@/core/styled';
 import useInput from '@/hooks/customHooks/useInput';
+import QnaApi from '@/apis/QnaApi';
 
 import DurationFilter from '@/components/common/DurationFilter';
 import { QnAContent } from '@/components/MyPage';
@@ -39,6 +40,15 @@ const questions = [
 ];
 
 const QnAPage = () => {
+  const [questions, setQuestions] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      const questions = await QnaApi.getList();
+      setQuestions(questions.data);
+    })();
+  }, []);
+
   const { form, onChange, onSetForm } = useInput({
     initialState: {
       start: '',
