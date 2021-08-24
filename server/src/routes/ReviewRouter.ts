@@ -12,7 +12,12 @@ ReviewRouter.get('/', ReviewController.getUserReviews);
 ReviewRouter.get('/:productId', ReviewController.getProductUserReview);
 ReviewRouter.post('/:productId', FileMiddleware.dataUpload, ReviewController.createUserReview);
 ReviewRouter.use('/:productId', ReviewMiddleware.checkReviewExist);
-ReviewRouter.put('/:productId', FileMiddleware.dataUpload, ReviewController.updateUserReview);
-ReviewRouter.delete('/:productId', ReviewController.deleteUserReview);
+ReviewRouter.delete('/:productId', FileMiddleware.dataDelete, ReviewController.deleteUserReview);
+ReviewRouter.put(
+  '/:productId',
+  FileMiddleware.dataDelete,
+  FileMiddleware.dataUpload,
+  ReviewController.updateUserReview
+);
 
 export default ReviewRouter;

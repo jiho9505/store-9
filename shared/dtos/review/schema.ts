@@ -1,9 +1,9 @@
 export interface ReviewSchema {
   id: number;
-  userId: number;
-  productId: number;
+  user_id: number;
+  product_id: number;
   title: string;
   content: string;
   images: string[];
-  createdAt?: Date;
+  created_at?: Date;
 }
