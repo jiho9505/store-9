@@ -7,8 +7,8 @@ class ReviewApi extends BaseApi {
     return this.get<ReviewResponse.GetList>('/', { isRequiredLogin: true });
   }
 
-  create(body: ReviewRequest.Create) {
-    return this.post<ReviewResponse.Create>('/', body, { isRequiredLogin: true });
+  create(id: number, body: ReviewRequest.Create) {
+    return this.post<ReviewResponse.Create>(`/${id}`, body, { isRequiredLogin: true });
   }
 
   update(id: number, body: ReviewRequest.Update) {
