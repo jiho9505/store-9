@@ -9,6 +9,7 @@ import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common'
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 const weightWhenSubItemsLengthEven = -50;
+const timeToMoveOtherMenu = 150;
 
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
@@ -44,7 +45,7 @@ const Navigation = () => {
 
   const handleMouseOverLink = (e: React.ChangeEvent<HTMLAnchorElement>) => {
     const waitTime = new Promise((resolve) => {
-      timer = setTimeout(resolve, 150);
+      timer = setTimeout(resolve, timeToMoveOtherMenu);
     });
 
     const id = Number(e.currentTarget.dataset.id);
