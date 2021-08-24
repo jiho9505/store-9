@@ -8,6 +8,7 @@ import useInput from '@/hooks/customHooks/useInput';
 import Button from '@/components/common/Button';
 import AuthApi from '@/apis/AuthApi';
 import useHistory from '@/hooks/customHooks/useHistory';
+import AuthStore from '@/stores/AuthStore';
 
 const CAUTION_TEXT = '주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.';
 const githubAuthUrl = 'https://github.com/login/oauth/authorize';
@@ -37,8 +38,8 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const form = new FormData(loginInputFormRef.current);
-      const data = await AuthApi.login(form);
-      if (data.ok) {
+      const ok = await AuthStore.login(form);
+      if (ok) {
         history.push('/');
       }
     } catch (err) {

@@ -4,11 +4,12 @@ import AuthRequest from '@shared/dtos/auth/request';
 import { makeAutoObservable } from 'mobx';
 import { BaseStore } from './BaseStore';
 
-class AuthStore extends BaseStore {
+class AuthStore {
   myInfo: UserModel;
+  isLoading: boolean = false;
+  isError: boolean;
 
   constructor() {
-    super();
     makeAutoObservable(this);
   }
 
