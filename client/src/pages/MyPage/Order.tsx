@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import guguStyled from '@/core/styled';
 
 import useInput from '@/hooks/customHooks/useInput';
+import OrderApi from '@/apis/OrderApi';
 
 import DurationFilter from '@/components/common/DurationFilter';
 import { OrderContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
-const orderedProducts = [
+const orderedProductsT = [
   {
     productId: 5,
     name: '똑똑똑 실내홥니다',
@@ -31,12 +32,21 @@ const orderedProducts = [
 ];
 
 const OrderPage = () => {
+  const [orderedProducts, setOrderedProducts] = useState([]);
   const { form, onChange, onSetForm } = useInput({
     initialState: {
       start: '',
       finish: getDateFormat(new Date()),
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      const result = await OrderApi.getList();
+      console.log(result);
+      setOrderedProducts(result);
+    })();
+  }, []);
 
   return (
     <OrderPageContainer>
