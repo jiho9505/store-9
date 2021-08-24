@@ -10,17 +10,18 @@ import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
+const initCategoryData = [{ name: '전체', level: 1, id: 0, parent_id: null }];
 
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(initCategoryData);
   const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
-    setCategories(testCategories);
+    setCategories([...categories, ...testCategories]);
     setSubCategories(testSubCategories);
 
     const handleMouseOverOnDocument = (e: Event) => {

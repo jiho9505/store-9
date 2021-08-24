@@ -18,7 +18,6 @@ const RouteListArray = [
 export const RouteList = new Set(RouteListArray);
 
 export const testCategories = [
-  { name: '전체', level: 1, id: 0, parent_id: null },
   { name: '문구', level: 1, id: 2, parent_id: null },
   { name: '의류', level: 1, id: 3, parent_id: null },
   { name: '책', level: 1, id: 1, parent_id: null },
