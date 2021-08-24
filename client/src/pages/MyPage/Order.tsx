@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import guguStyled from '@/core/styled';
@@ -11,7 +11,7 @@ import { OrderContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
 const OrderPage = () => {
-  const { refreshToken } = RefreshStore;
+  const { refreshToken, refresh } = RefreshStore;
   const [orderedProducts, setOrderedProducts] = useState([]);
   const { form, onChange, onSetForm } = useInput({
     initialState: {
@@ -22,14 +22,36 @@ const OrderPage = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await OrderApi.getList();
-      setOrderedProducts(result);
+      const orderProducts = await getOrderProducts(form.start, form.finish);
+      setOrderedProducts(orderProducts);
     })();
   }, [refreshToken]);
 
+  const getOrderProducts = useCallback(async (startDate, endDate) => {
+    const query: { start?: string; end?: string } = {};
+    if (startDate && endDate) {
+      query.start = startDate;
+      query.end = endDate;
+    }
+    return await OrderApi.getList(query);
+  }, []);
+
+  const handleSubmitFilter = async () => {
+    const { start, finish } = form;
+    if (!start || !finish) {
+      return;
+    }
+    refresh();
+  };
+
   return (
     <OrderPageContainer>
-      <DurationFilter form={form} onChange={onChange} onSetForm={onSetForm} />
+      <DurationFilter
+        form={form}
+        onChange={onChange}
+        onSetForm={onSetForm}
+        onClick={handleSubmitFilter}
+      />
       <OrderContent orderProducts={orderedProducts} />
     </OrderPageContainer>
   );

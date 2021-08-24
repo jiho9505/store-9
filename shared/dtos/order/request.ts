@@ -18,8 +18,8 @@ namespace OrderRequest {
   };
 
   export type GetList = {
-    start?: Date;
-    end?: Date;
+    start?: string;
+    end?: string;
   };
 
   export type RemoveCartItem = {
