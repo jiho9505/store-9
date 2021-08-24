@@ -6,20 +6,15 @@ import '@/static/assets/img/circle.png';
 
 import { categories, subCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
+import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 const weightWhenSubItemsLengthEven = -50;
 
-/**
- * TODO:
- * 쿼리스트링 id가 가르키는 메뉴명을 동그라미
- * state도 추가
- * 아래의 주석단 부분에 로직 추가
- * 해야합니다.
- */
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
+  const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
 
   useEffect(() => {
     const handleMouseOverOnDocument = (e: Event) => {
@@ -28,12 +23,16 @@ const Navigation = () => {
       if (!target.closest('#NavBorder')) {
         setSubItems([]);
         setMouseOverdItemName('');
-        // 쿼리스트링 id가 가르키는 메뉴명을 동그라미 추가
+        getQueryStringValue('id')
+          ? setMatchedItemIdToURL(Number(getQueryStringValue('id')))
+          : setMatchedItemIdToURL(-1);
       }
     };
 
     document.addEventListener('mouseover', handleMouseOverOnDocument);
-    return () => document.removeEventListener('mouseover', handleMouseOverOnDocument);
+    return () => {
+      document.removeEventListener('mouseover', handleMouseOverOnDocument);
+    };
   }, []);
 
   let timer: number = 0;
@@ -43,12 +42,13 @@ const Navigation = () => {
       timer = setTimeout(resolve, 150);
     });
 
+    const id = Number(e.currentTarget.dataset.id);
     const itemName = e.currentTarget.innerText;
     const itemXPos = e.currentTarget.getBoundingClientRect().x;
 
     waitTime.then(() => {
       if (!timer) return;
-      const newSubItems = subCategories.filter((item) => item.parentName === itemName);
+      const newSubItems = subCategories.filter((item) => item.parentId === id);
 
       const extraXposToRemove =
         newSubItems.length % 2
@@ -57,8 +57,8 @@ const Navigation = () => {
 
       setSubItemXpos(itemXPos - extraXposToRemove);
       setSubItems(newSubItems);
-      // 쿼리스트링 id가 가르키는 메뉴명을 동그라미 해제
       setMouseOverdItemName(itemName);
+      setMatchedItemIdToURL(-1);
     });
   };
 
@@ -69,22 +69,25 @@ const Navigation = () => {
   return (
     <NavigationContainer id="NavBorder">
       <Menu>
-        {categories.map(([category, path]) => (
-          <Item key={category}>
+        {categories.map((category) => (
+          <Item key={category.name}>
             <CategoryLink
               onMouseOver={handleMouseOverLink}
               onMouseOut={handleMouseOutLink}
-              to={path}
+              to={`/goods?id=${category.id}`}
+              data-id={category.id}
             >
-              {category}
+              {category.name}
             </CategoryLink>
-            {mouseOverdItemName === category && <CircleBorder src="images/circle.png" />}
+            {(mouseOverdItemName === category.name || matchedItemIdToURL === category.id) && (
+              <CircleBorder src="images/circle.png" />
+            )}
           </Item>
         ))}
       </Menu>
       <SubMenu dist={subItemXpos}>
         {subItems.map((subItem) => (
-          <Link to="/total" key={subItem.name}>
+          <Link to={`/goods?id=${subItem.id}`} key={subItem.name}>
             <SubItem>{subItem.name}</SubItem>
           </Link>
         ))}
