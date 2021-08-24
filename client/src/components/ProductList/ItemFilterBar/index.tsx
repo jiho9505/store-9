@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { baemin, baeminFont, baeminThickFont, lightBlack } from '@/static/style/common';
+import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 const filterName: string[] = ['추천순', '인기순', '최신순', '높은가격순', '낮은가격순'];
 
@@ -32,10 +33,23 @@ const ItemFilterBar = ({ handleFilter, totalProductCount }: ItemFilterBarProps) 
     ));
   };
 
+  const createSearchWordName = () => {
+    return (
+      getQueryStringValue('word') && (
+        <WordContainer>
+          <span> 검색 결과 :</span> <SearchWord> {getQueryStringValue('word')}</SearchWord>
+        </WordContainer>
+      )
+    );
+  };
+
   return (
     <Container>
       <Total>
-        총 <TotalNumber> {totalProductCount}</TotalNumber> 개
+        <div>
+          총 <TotalNumber> {totalProductCount}</TotalNumber> 개
+        </div>
+        {createSearchWordName()}
       </Total>
       <ItemFilterContainer>{createFilter()}</ItemFilterContainer>
     </Container>
@@ -60,11 +74,29 @@ const TotalNumber = styled.span`
   font-size: 18px;
 `;
 
-const Total = styled.span`
+const Total = styled.div`
   color: ${lightBlack};
-  font-size: 14px;
+  font-size: 15px;
 
+  div {
+    font-family: ${baeminFont};
+  }
+`;
+
+const WordContainer = styled.div`
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+
+  span {
+    font-family: ${baeminFont};
+  }
+`;
+
+const SearchWord = styled.span`
+  font-size: 18px;
   font-family: ${baeminFont};
+  margin-left: 5px;
 `;
 
 type FilterProps = {
