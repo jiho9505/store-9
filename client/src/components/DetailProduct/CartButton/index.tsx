@@ -1,8 +1,11 @@
-import { baeminFont, greyLine } from '@/static/style/common';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
-import React from 'react';
+
+import { baeminFont, greyLine } from '@/static/style/common';
+import { ProductContext } from '@/hooks/context';
 
 const Cart = () => {
+  const { info } = useContext(ProductContext);
   /**
    * TODO:
    * POST (userid,productid,stock ...etc)

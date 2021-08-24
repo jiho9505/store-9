@@ -1,23 +1,21 @@
-import { greyLine } from '@/static/style/common';
+import React, { useState, useContext } from 'react';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+
+import { greyLine } from '@/static/style/common';
+import { ProductContext } from '@/hooks/context';
 
 const Like = () => {
+  const { info, handleClickLikeButton } = useContext(ProductContext);
+
   /**
-   * 유저의 like 여부 필요
+   * info에서 유저의 like 여부 필요
+   * useState 필요 X
    */
   const [isIconActive, setIsIconActive] = useState(false);
-  const handleClickIcon = () => {
-    // if (isIconActive) {
-    //   // delete Like
-    // } else {
-    //   // Post Like
-    // }
-    setIsIconActive(!isIconActive);
-  };
+
   return (
     <LikeContainer>
-      <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickIcon}></i>
+      <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickLikeButton}></i>
     </LikeContainer>
   );
 };
