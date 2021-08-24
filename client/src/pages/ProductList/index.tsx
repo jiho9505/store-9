@@ -4,34 +4,21 @@ import styled from '@emotion/styled';
 import ItemLists from '@/components/common/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
 import Loading from '@/components/common/Loading';
-import useLocation from '@/hooks/customHooks/useLocation';
+
 import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
+import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 /**
- * @params categoryId
- * url pathname에 따라 key value 식으로 정해줄 것
- * 하위 category search로 얻어 낼 것
- *
+ * TODO:
  * @params productFilter
- * -1 일때 필터 선택 x
- * 0 추천순
- * 1 인기순
- * 2 최신순
- * 3 낮은 가격 순
- * 4 높은 가격 순
- * 서버에서 처리할 것
+ * 필터의 인덱스로 key value 매칭을 통해
+ * 변환 후 인자로 넣어 보낸다.
+ * 컨트롤러에 대부분 있어서 Filter 간단할듯?
+ *
  * TODO:
  * api를 이용해 데이터 호출
  * categoryId , pagenation , filter , intersectionObserver 고려
- *
- * TODO:
- * ItemFilterBar Total Number 관리 어떻게 할지 회의
- * 1. 전체 렝스를 들고온다.
- *
- * TODO:
- * Category table에서 부모 카테고리, 자식 카테고리 다 이렇게 하나씩만 생긴다면
- * 그럼 CategoryId를 State로 관리할것
  */
 const ProductList = () => {
   const [filter, setFilter] = useState({
@@ -40,11 +27,10 @@ const ProductList = () => {
     productFilterIndex: -1,
     categoryId: 0,
   });
-  const [totalProductCount, setTotalProductCount] = useState(0);
+  const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState(true);
-  const currPath = useLocation();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState<boolean>(true);
 
   /**
    * TODO:
@@ -53,18 +39,16 @@ const ProductList = () => {
    * setTotalProductCount()
    * setFilter() : skip = skip + limit
    *
-   * DB에서 stock > 0 이상만 부르기
-   * 가져온 데이터가 0일때 stock = 0 요청
+   * 가져온 데이터가 0일때 스탑
    */
   useEffect(() => {
     setProduct(datas);
-  }, [filter]);
+    setIsActiveInfiniteScroll(true);
+  }, [getQueryStringValue('word'), getQueryStringValue('categoryId'), filter]);
 
   useEffect(() => {
     setTotalProductCount(datas.length);
-  }, []);
-
-  // let qs = window.location.search;
+  }, [getQueryStringValue('word'), getQueryStringValue('categoryId')]);
 
   const handleFilter = (index: number) => {
     const newFilter = { ...filter, productFilter: index };
@@ -72,6 +56,7 @@ const ProductList = () => {
   };
 
   const observeTag = () => {
+    if (!isActiveInfiniteScroll) return;
     const observerCallback = (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
@@ -119,6 +104,8 @@ const ProductList = () => {
   );
 };
 
+export default ProductList;
+
 const WholeContainer = styled.div`
   width: 100vw;
   display: flex;
@@ -133,5 +120,3 @@ const ElementContainer = styled.div`
   flex-direction: column;
   gap: 40px;
 `;
-
-export default ProductList;
