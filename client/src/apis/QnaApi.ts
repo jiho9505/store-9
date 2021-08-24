@@ -3,8 +3,8 @@ import QnAResponse from '@shared/dtos/qna/response';
 import BaseApi from './BaseApi';
 
 class QnaApi extends BaseApi {
-  getList() {
-    return this.get<QnAResponse.GetList>('/', { isRequiredLogin: true });
+  getList(params = {}) {
+    return this.get<QnAResponse.GetList>('/', { isRequiredLogin: true, ...params });
   }
 
   create(body: QnARequest.Create) {
