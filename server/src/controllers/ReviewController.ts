@@ -15,6 +15,7 @@ type ReviewProps = {
   product_id: number;
   user_id: number;
   images: string;
+  rate: number;
 };
 
 const ReviewController = {
@@ -47,15 +48,16 @@ const ReviewController = {
   },
   createUserReview: async (req: Request, res: Response) => {
     try {
-      const { title, content } = req.body;
+      const { title, content, rate } = req.body;
       const product_id = Number(req.params.productId);
-      const images = req.files;
+      const images = req.files || [];
       const user_id = res.locals.user.id;
       const review: ReviewProps = {
         title,
         content,
         product_id: Number(product_id),
         user_id,
+        rate,
         images: convertImagesToUrlString(images),
       };
 
@@ -70,6 +72,7 @@ const ReviewController = {
       await reviewRepository.createReview(review);
       res.json({ ok: true, message: constant.CREATE_REVIEW_SUCCESS });
     } catch (err) {
+      console.log(err.message);
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }
   },

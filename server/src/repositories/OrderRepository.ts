@@ -18,7 +18,7 @@ export default class OrderRepository extends Repository<Order> {
   }) {
     console.log('a');
     const result = this.query(`
-      SELECT o.*, p.id as proudct_id, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
+      SELECT o.*, p.id as product_id, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
       FROM orders o
       LEFT JOIN order_items oi ON o.id = oi.order_id
       LEFT JOIN products p ON oi.product_id = p.id
