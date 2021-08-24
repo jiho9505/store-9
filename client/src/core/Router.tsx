@@ -46,7 +46,7 @@ const haveQueryString = (curLocation) => {
 type RouteType = {
   exact?: boolean;
   path: string;
-  children;
+  children: unknown;
 };
 
 const Route = ({ exact = false, path, children }: RouteType) => {
