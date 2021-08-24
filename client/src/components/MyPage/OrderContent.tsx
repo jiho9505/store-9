@@ -4,6 +4,7 @@ import guguStyled from '@/core/styled';
 import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
 import { getDateFormat } from '@/utils/dateParse';
+import { greyBg1, greyButton } from '@/static/style/common';
 
 type OrderContentProps = {
   orderProducts: any;
@@ -25,10 +26,14 @@ const ProductInfoCell = ({ thunbNail, name }) => {
   );
 };
 
-const ProdcutImg = guguStyled.img`
-  width: 50px;
-  margin-right: 10px;
-`;
+const ReviewButton = ({ isReviewed }) => {
+  const buttonName = isReviewed ? '작성완료' : '리뷰작성';
+  return (
+    <Cell>
+      <Button isReview={isReviewed}>{buttonName}</Button>
+    </Cell>
+  );
+};
 
 const OrderContent = ({ orderProducts }: OrderContentProps) => {
   const tableBody = useMemo(() => {
@@ -47,7 +52,7 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
             ),
             colSpan: 1,
           },
-          { c: <Cell>{is_reviewed ? '리뷰작성' : '작성완료'}</Cell>, colSpan: 1 },
+          { c: <ReviewButton isReviewed={is_reviewed} />, colSpan: 1 },
         ],
       };
     });
@@ -61,5 +66,17 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 };
 
 const OrderContentContainer = guguStyled.div``;
+
+const ProdcutImg = guguStyled.img`
+  width: 50px;
+  margin-right: 10px;
+`;
+
+const Button = guguStyled.button`
+  padding: 5px;
+  border-radius: 5px;
+  border: ${({ isReview }) => (isReview ? `1px solid ${greyButton};` : `1px solid black;`)}
+  color: ${({ isReview }) => (isReview ? greyButton : 'black')}
+`;
 
 export default OrderContent;
