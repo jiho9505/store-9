@@ -1,10 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import guguStyled from '@/core/styled';
 
+import ModalPortal from '@/utils/portal';
+import PostModal from '../common/PostModal';
 import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
+
 import { getDateFormat } from '@/utils/dateParse';
-import { greyBg1, greyButton } from '@/static/style/common';
+import { greyButton } from '@/static/style/common';
 
 type OrderContentProps = {
   orderProducts: any;
@@ -26,21 +29,33 @@ const ProductInfoCell = ({ thunbNail, name }) => {
   );
 };
 
-const ReviewButton = ({ isReviewed }) => {
+const ReviewButton = ({ isReviewed, onClick }) => {
   const buttonName = isReviewed ? '작성완료' : '리뷰작성';
   return (
     <Cell>
-      <Button isReview={isReviewed}>{buttonName}</Button>
+      <Button isReview={isReviewed} onClick={isReviewed ? null : onClick}>
+        {buttonName}
+      </Button>
     </Cell>
   );
 };
 
 const OrderContent = ({ orderProducts }: OrderContentProps) => {
+  const [activeModal, setActiveModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
+
+  const handleClickReviewBtn = (idx) => (e) => {
+    e.stopPropagation();
+    const { thumbnail, name } = orderProducts[idx];
+    setSelectedProduct({ product: { thumbnail, name } });
+    handleOpenModal();
+  };
+
   const tableBody = useMemo(() => {
-    return orderProducts.map((orderProduct) => {
-      const { id, created_at, name, price, amount, thumbnail, is_reviewed } = orderProduct;
+    return orderProducts.map((orderProduct, idx) => {
+      const { created_at, name, price, amount, thumbnail, is_reviewed } = orderProduct;
       return {
-        id,
+        id: idx,
         cells: [
           { c: <Cell>{getDateFormat(created_at)}</Cell>, colSpan: 1 },
           { c: <ProductInfoCell thunbNail={thumbnail} name={name} />, colSpan: 1 },
@@ -52,15 +67,31 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
             ),
             colSpan: 1,
           },
-          { c: <ReviewButton isReviewed={is_reviewed} />, colSpan: 1 },
+          {
+            c: <ReviewButton isReviewed={is_reviewed} onClick={handleClickReviewBtn(idx)} />,
+            colSpan: 1,
+          },
         ],
       };
     });
   }, [orderProducts]);
 
+  const handleCloseModal = () => {
+    setActiveModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setActiveModal(true);
+  };
+
   return (
     <OrderContentContainer>
       <ListTable header={tableHeader} body={tableBody} />
+      {activeModal && (
+        <ModalPortal>
+          <PostModal title="상품 후기" item={selectedProduct} onClose={handleCloseModal} />
+        </ModalPortal>
+      )}
     </OrderContentContainer>
   );
 };
