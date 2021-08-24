@@ -1,14 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 
 class RefreshStore {
-  refreshToken: number = 0;
+  refreshComponent: number = 0;
 
   constructor() {
     makeAutoObservable(this);
   }
 
   refresh = () => {
-    this.refreshToken++;
+    this.refreshComponent++;
   };
 }
 
