@@ -18,7 +18,7 @@ export default class OrderRepository extends Repository<Order> {
   }) {
     const result = this.query(`
       SELECT o.*
-      FROM orders o
+      FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id LEFT JOIN products p ON oi.product_id = p.id
       WHERE o.user_id = ${userId} 
       AND o.status != '${OrderStatus.IN_CART}'
       ORDER BY updated_at DESC
