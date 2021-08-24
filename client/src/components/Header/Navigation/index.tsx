@@ -4,7 +4,7 @@ import { Link } from '@/core/Router';
 
 import '@/static/assets/img/circle.png';
 
-import { categories, subCategories } from '@/static/constants';
+import { testCategories, testSubCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
@@ -15,8 +15,13 @@ const Navigation = () => {
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
+    setCategories(testCategories);
+    setSubCategories(testSubCategories);
+
     const handleMouseOverOnDocument = (e: Event) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
