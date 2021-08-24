@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
-import { greyLine, normalRadius, greyBg1 } from '@/static/style/common';
+import { greyLine, normalRadius, greyBg1, baeminFont } from '@/static/style/common';
 
 type bodyType = {
   id: number;
@@ -12,7 +12,7 @@ type ListTableProps = {
   header: Array<{ id: string; name: string; width?: string; rowSpan?: number }>;
   body: bodyType[];
   selectedItems?: Set<number>;
-  onClickRow?(): void;
+  onClickRow?(id: number): void;
   onCheck?(id: number): void;
   onCheckAll?(e): void;
 };
@@ -30,8 +30,8 @@ const ListTable = ({
     return header.map(({ width }) => (width ? width : '10%'));
   }, [header]);
 
-  const handleRowClick = () => {
-    onClickRow?.();
+  const handleRowClick = (id) => () => {
+    onClickRow?.(id);
   };
 
   return (
@@ -58,7 +58,7 @@ const ListTable = ({
       </thead>
       <tbody>
         {body.map(({ id, cells }) => (
-          <TableBodyRow key={id} onClick={handleRowClick}>
+          <TableBodyRow key={id} onClick={handleRowClick(id)}>
             {checkable && (
               <td>
                 <CheckBox
@@ -93,6 +93,9 @@ const TableHeaderRow = styled.tr`
   height: 40px;
   background-color: ${greyBg1};
   border-bottom: 1px solid ${greyLine};
+  th {
+    font-family: ${baeminFont};
+  }
 `;
 
 const TableHeaderCell = styled.th`
@@ -101,6 +104,12 @@ const TableHeaderCell = styled.th`
 
 const TableBodyRow = styled.tr`
   border-bottom: 1px solid ${greyBg1};
+
+  td {
+    div {
+      font-family: ${baeminFont};
+    }
+  }
   &:hover {
     background-color: ${greyBg1};
     cursor: pointer;

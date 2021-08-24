@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import useLocation from '../hooks/customHooks/useLocation';
 import { HistoryContext } from '@/hooks/context';
+import { RouteList } from '@/static/constants';
 
 const history = window.history;
 
@@ -32,17 +33,35 @@ const Router = ({ children }) => {
   );
 };
 
-const Route = ({ exact = false, path, children }) => {
-  const curLocation = useLocation();
+const haveRouterParameter = (path: string, curLocation: string): boolean => {
+  if (path.includes(':')) return RouteList.has(curLocation) ? false : true;
+  return false;
+};
+
+const haveQueryString = (curLocation) => {
+  const idxOfQS = curLocation.indexOf('?');
+  return idxOfQS > -1 ? curLocation.slice(0, idxOfQS) : curLocation;
+};
+
+type RouteType = {
+  exact?: boolean;
+  path: string;
+  children;
+};
+
+const Route = ({ exact = false, path, children }: RouteType) => {
+  let curLocation = useLocation();
+  curLocation = haveQueryString(curLocation);
 
   const isMatched = (): boolean => {
     if (exact) {
+      const result = haveRouterParameter(path, curLocation);
+      if (result) return true;
       return path === curLocation;
     } else {
       return curLocation.match(path)?.index === 0;
     }
   };
-
   return isMatched() ? children : null;
 };
 

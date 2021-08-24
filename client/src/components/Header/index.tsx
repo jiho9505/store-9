@@ -4,7 +4,7 @@ import { Link } from '@/core/Router';
 
 import Navigation from './Navigation';
 
-import { baeminFont, greyLine, normalContainerWidth } from '@/static/style/common';
+import { baeminFont, greyLine, greySpan, normalContainerWidth } from '@/static/style/common';
 
 import SearchBar from './SearchBar';
 
@@ -62,6 +62,8 @@ const ShortCut = styled.li`
 
   a {
     font-family: ${baeminFont};
+    color: ${greySpan};
+    font-size: 14px;
   }
 `;
 

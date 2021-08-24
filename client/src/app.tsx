@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import styled from '@emotion/styled';
-import { Router, Route, Link } from './core/Router';
+import { Router, Route } from './core/Router';
 
 const Header = React.lazy(() => import('@/components/Header'));
 const Footer = React.lazy(() => import('@/components/Footer'));
@@ -20,10 +20,6 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 import '@/static/assets/img/baeminFavicon.png';
 import Loading from './components/common/Loading';
 
-/**
- * FIXME:
- * 추후 여러 경로가 동일 컴포넌트 가리키는 것에 대한 처리 필요
- */
 const App = () => {
   return (
     <PageContainer>
@@ -51,56 +47,23 @@ const App = () => {
           <Route path="/mypage">
             <MyPage />
           </Route>
-          <Route exact path="/product/:id">
-            <ProductPage />
-          </Route>
           <Route exact path="/signupMethod">
             <SignupMethod />
           </Route>
-          <Route exact path="/search">
-            <ProductList />
-          </Route>
-          <Route exact path="/total">
-            <ProductList />
-          </Route>
-          <Route exact path="/suplies">
-            <ProductList />
-          </Route>
-          <Route exact path="/living">
-            <ProductList />
-          </Route>
-          <Route exact path="/books">
-            <ProductList />
-          </Route>
-          <Route exact path="/green">
-            <ProductList />
-          </Route>
-          <Route exact path="/smile-edition">
-            <ProductList />
-          </Route>
-          <Route exact path="/euljiro-edition">
-            <ProductList />
-          </Route>
-          <Route exact path="/baedal-friends">
-            <ProductList />
-          </Route>
-          <Route exact path="/present">
-            <ProductList />
-          </Route>
-          <Route exact path="/collaborate">
+          <Route exact path="/goods">
             <ProductList />
           </Route>
           <Route exact path="/detail">
             <DetailProduct />
-          </Route>
-          <Route exact path="/notfound">
-            <NotFound />
           </Route>
           <Route exact path="/signup">
             <Signup />
           </Route>
           <Route exact path="/callback">
             <Callback />
+          </Route>
+          <Route exact path="/:notfound">
+            <NotFound />
           </Route>
         </Router>
         <ButtonToMoveToTop />
@@ -119,8 +82,5 @@ const LoadingContainer = styled.div`
   left: 45%;
   top: 35%;
 `;
-const ProductPage = () => {
-  return <div>This is Product Page</div>;
-};
 
 export default App;

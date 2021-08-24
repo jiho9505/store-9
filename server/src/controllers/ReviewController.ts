@@ -76,8 +76,8 @@ const ReviewController = {
   },
   updateUserReview: async (req: Request, res: Response) => {
     try {
-      const { title, content } = req.body;
-      const images = req.files;
+      const { title, content, rate } = req.body;
+      const images = req.files || [];
       const product_id = Number(req.params.productId);
       const user_id = res.locals.user.id;
       const oldReviewCondition = {
@@ -87,6 +87,7 @@ const ReviewController = {
       const newReview = {
         title,
         content,
+        rate,
         images: convertImagesToUrlString(images),
       };
 

@@ -46,15 +46,16 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "korean-regexp": "^1.0.9",
-    "murmurhash": "^2.0.0",
     "axios": "^0.21.1",
+    "korean-regexp": "^1.0.9",
     "mobx": "^6.3.2",
+    "mobx-react": "^7.2.0",
+    "murmurhash": "^2.0.0",
+    "nanoid": "^3.1.25",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sanitize-html": "^2.4.0",
-    "validator": "^13.6.0",
     "stylis": "^4.0.10",
-    "nanoid": "^3.1.25"
+    "validator": "^13.6.0"
   }
 }
