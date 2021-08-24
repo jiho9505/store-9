@@ -18,6 +18,7 @@ const constant = {
   GET_REVIEW_SUCCESS: '유저의 리뷰를 불러왔습니다.',
   REVIEW_DUPLICATE: '이미 리뷰를 작성하셨습니다',
   REVIEW_NOT_EXIST: '작성하신 리뷰가 존재하지 않습니다.',
+  S3_SAVE_ERROR: 'S3 업로드에 실패했습니다',
 
   GET_TOKEN_URL: `https://github.com/login/oauth/access_token`,
   GET_USER_INFO_URL: `https://api.github.com/user`,
