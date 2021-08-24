@@ -6,3 +6,12 @@ type historyContextType = {
 };
 
 export const HistoryContext = createContext<historyContextType>({ curLocation: '/' });
+
+type ProductContextType = {
+  info?: Info;
+  handleClickLikeButton?: () => void;
+  handleClickReviewRegisterBtn?: () => void;
+  handleClickQnARegisterBtn?: () => void;
+};
+
+export const ProductContext = createContext<ProductContextType>({});
