@@ -28,6 +28,7 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
         {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
         <StarContainer>
           <StarComponent score={5} />
+          <span>352</span>
         </StarContainer>
         <LikeContainer>
           <i className="fas fa-heart"></i>
@@ -66,6 +67,15 @@ const LikeContainer = styled.div`
 const StarContainer = styled.div`
   margin-top: 8px;
   font-size: 12px;
+  color: ${red1};
+  font-size: 13px;
+  i {
+    margin-bottom: 2px;
+  }
+
+  span {
+    margin-left: 5px;
+  }
 `;
 
 const EndPositionTag = styled.div``;
