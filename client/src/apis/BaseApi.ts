@@ -28,7 +28,7 @@ export default class BaseApi {
     });
 
     this.instance.interceptors.response.use((response) => {
-      response.data = formatToDateFromResponse(response.data);
+      // response.data = formatToDateFromResponse(response.data);
 
       return response;
     });

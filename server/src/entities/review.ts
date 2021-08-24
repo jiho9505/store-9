@@ -20,6 +20,9 @@ class Review extends DateBasicEntity {
   @Column({ unique: true })
   product_id: number;
 
+  @Column()
+  rate: number;
+
   @ManyToOne((type) => User, (user) => user.reviews)
   @JoinColumn({ name: 'user_id' })
   user: User;

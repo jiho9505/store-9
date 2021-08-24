@@ -34,10 +34,12 @@ const useInput = <TFields extends inputInfoType>(inputInfo: TFields) => {
       [name]: sanitizeHtml(value),
     }));
 
-    setError((prev) => ({
-      ...prev,
-      [name]: validationSchema[name].isValid(value),
-    }));
+    if (validationSchema) {
+      setError((prev) => ({
+        ...prev,
+        [name]: validationSchema[name].isValid(value),
+      }));
+    }
   }, []);
 
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
