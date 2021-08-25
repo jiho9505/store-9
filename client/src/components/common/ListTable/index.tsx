@@ -12,7 +12,7 @@ type ListTableProps = {
   header: Array<{ id: string; name: string; width?: string; rowSpan?: number }>;
   body: bodyType[];
   selectedItems?: Set<number>;
-  onClickRow?(): void;
+  onClickRow?(id: number): void;
   onCheck?(id: number): void;
   onCheckAll?(e): void;
 };
@@ -30,8 +30,8 @@ const ListTable = ({
     return header.map(({ width }) => (width ? width : '10%'));
   }, [header]);
 
-  const handleRowClick = () => {
-    onClickRow?.();
+  const handleRowClick = (id) => () => {
+    onClickRow?.(id);
   };
 
   return (
@@ -58,7 +58,7 @@ const ListTable = ({
       </thead>
       <tbody>
         {body.map(({ id, cells }) => (
-          <TableBodyRow key={id} onClick={handleRowClick}>
+          <TableBodyRow key={id} onClick={handleRowClick(id)}>
             {checkable && (
               <td>
                 <CheckBox

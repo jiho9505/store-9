@@ -1,36 +1,18 @@
-import React from 'react';
-import guguStyled from '@/core/styled';
+import React, { useEffect, useState, useCallback } from 'react';
+import { observer } from 'mobx-react';
 
+import guguStyled from '@/core/styled';
+import RefreshStore from '@/stores/RefreshStore';
 import useInput from '@/hooks/customHooks/useInput';
+import OrderApi from '@/apis/OrderApi';
 
 import DurationFilter from '@/components/common/DurationFilter';
 import { OrderContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
-const orderedProducts = [
-  {
-    productId: 5,
-    name: '똑똑똑 실내홥니다',
-    createdAt: new Date('2021-11-11'),
-    quantity: 1,
-    price: 6000,
-    totalPrice: 6000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-  {
-    productId: 3,
-    name: 'ㅋㅋ 슬리퍼',
-    createdAt: new Date('2021-10-11'),
-    quantity: 2,
-    price: 12000,
-    totalPrice: 24000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-];
-
 const OrderPage = () => {
+  const { refreshToken, refresh } = RefreshStore;
+  const [orderedProducts, setOrderedProducts] = useState([]);
   const { form, onChange, onSetForm } = useInput({
     initialState: {
       start: '',
@@ -38,9 +20,38 @@ const OrderPage = () => {
     },
   });
 
+  useEffect(() => {
+    (async () => {
+      const orderProducts = await getOrderProducts(form.start, form.finish);
+      setOrderedProducts(orderProducts);
+    })();
+  }, [refreshToken]);
+
+  const getOrderProducts = useCallback(async (startDate, endDate) => {
+    const query: { start?: string; end?: string } = {};
+    if (startDate && endDate) {
+      query.start = startDate;
+      query.end = endDate;
+    }
+    return await OrderApi.getList(query);
+  }, []);
+
+  const handleSubmitFilter = async () => {
+    const { start, finish } = form;
+    if (!start || !finish) {
+      return;
+    }
+    refresh();
+  };
+
   return (
     <OrderPageContainer>
-      <DurationFilter form={form} onChange={onChange} onSetForm={onSetForm} />
+      <DurationFilter
+        form={form}
+        onChange={onChange}
+        onSetForm={onSetForm}
+        onSubmit={handleSubmitFilter}
+      />
       <OrderContent orderProducts={orderedProducts} />
     </OrderPageContainer>
   );
@@ -48,4 +59,4 @@ const OrderPage = () => {
 
 const OrderPageContainer = guguStyled.div``;
 
-export default OrderPage;
+export default observer(OrderPage);
