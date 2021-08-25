@@ -52,6 +52,7 @@ const ReviewController = {
       const product_id = Number(req.params.productId);
       const images = req.files || [];
       const user_id = res.locals.user.id;
+
       const review: ReviewProps = {
         title,
         content,

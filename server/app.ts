@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser(env.auth.cookieSecret));
 app.use(express.static('public'));
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(morgan(env.isDev ? 'dev' : 'combine'));

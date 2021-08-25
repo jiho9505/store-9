@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
+import { env } from '../config/env';
 
 import constant from './constant';
 import { JwtSignPayload } from './types';
 
-const key = process.env.JWT_KEY;
+const key = env.auth.jwtKey;
 
 export default {
   sign: (payload: JwtSignPayload) => {
