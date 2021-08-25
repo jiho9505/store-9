@@ -2,9 +2,39 @@ import { OrderItemSchema } from '../order-item/schema';
 import { OrderSchema } from './schema';
 
 namespace OrderResponse {
-  export type GetList = OrderSchema[];
+  export type GetList = {
+    id: number;
+    orderItems: {
+      id: number;
+      productName: string;
+      thumbnail: string;
+      price: number;
+      amount: number;
+      isReviewed: null | number;
+    }[];
+    updatedAt: Date;
+  }[];
 
-  export type GetCart = OrderSchema;
+  export type GetCart = {
+    order: {
+      id: number;
+      orderItems: {
+        id: number;
+        amount: number;
+        product: {
+          id: number;
+          name: string;
+          price: string;
+          thumbnail: string;
+        };
+      }[];
+    };
+  };
+
+  export type Order = {
+    totalPrice: number;
+    hasShippingCharging: boolean;
+  };
 
   export type AddCartItem = OrderItemSchema;
 }

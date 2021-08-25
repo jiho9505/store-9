@@ -5,6 +5,8 @@ namespace UserReqeust {
     productId: number;
   };
 
+  export type getLikeList = {};
+
   export type CreateAddress = AddressSchema;
 
   export type UpdateAddress = AddressSchema;
