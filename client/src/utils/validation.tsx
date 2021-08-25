@@ -1,3 +1,6 @@
+import isEmail from 'validator/lib/isEmail';
+import isMobilePhone from 'validator/lib/isMobilePhone';
+
 function Validation() {
   if (!(this instanceof Validation)) {
     return new Validation();
@@ -36,3 +39,40 @@ Validation.prototype.isValid = function (value) {
 };
 
 export default Validation;
+
+export const signupValidation = {
+  id: function (id: string): boolean {
+    return id.length > 2;
+  },
+  email: function (email: string): boolean {
+    return isEmail(email);
+  },
+  password: function (password: string): boolean {
+    return password.length > 2;
+  },
+  confirmPassword: function (password: string, confirmPassword: string): boolean {
+    return password === confirmPassword;
+  },
+  name: function (name: string): boolean {
+    const numRegex = /\d/;
+    const isNumberIncluded = numRegex.test(name);
+    if (isNumberIncluded) return false;
+    return true;
+  },
+  phoneNumber: function (phoneNumber: string): boolean {
+    return isMobilePhone(phoneNumber, 'ko-KR');
+  },
+  callNumber: function (): boolean {
+    // TODO: validation logic 필요한가
+    return true;
+  },
+  postcode: function (postcode: string): boolean {
+    return postcode.length > 0;
+  },
+  address1: function (address1: string): boolean {
+    return address1.length > 0;
+  },
+  address2: function (): boolean {
+    return true;
+  },
+};
