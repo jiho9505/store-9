@@ -11,7 +11,7 @@ import { OrderContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
 const OrderPage = () => {
-  const { refreshToken, refresh } = RefreshStore;
+  const { refreshComponent, refresh } = RefreshStore;
   const [orderedProducts, setOrderedProducts] = useState([]);
   const { form, onChange, onSetForm } = useInput({
     initialState: {
@@ -22,26 +22,33 @@ const OrderPage = () => {
 
   useEffect(() => {
     (async () => {
-      const orderProducts = await getOrderProducts(form.start, form.finish);
-      setOrderedProducts(orderProducts);
+      await getOrderProducts();
     })();
-  }, [refreshToken]);
+  }, [refreshComponent]);
 
-  const getOrderProducts = useCallback(async (startDate, endDate) => {
-    const query: { start?: string; end?: string } = {};
-    if (startDate && endDate) {
-      query.start = startDate;
-      query.end = endDate;
-    }
-    return await OrderApi.getList(query);
-  }, []);
+  const getOrderProducts = useCallback(
+    async (startDate?: string, endDate?: string, page?: number) => {
+      const query: { start?: string; end?: string; page?: number } = {};
+      if (startDate && endDate) {
+        query.start = startDate;
+        query.end = endDate;
+      }
+      if (page) {
+        query.page = page;
+      }
+      const orderProducts = await OrderApi.getList(query);
+      console.log(orderProducts);
+      setOrderedProducts(orderProducts);
+    },
+    []
+  );
 
   const handleSubmitFilter = async () => {
     const { start, finish } = form;
     if (!start || !finish) {
       return;
     }
-    refresh();
+    getOrderProducts(start, finish);
   };
 
   return (
