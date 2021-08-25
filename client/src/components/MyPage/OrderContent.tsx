@@ -89,7 +89,12 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
       <ListTable header={tableHeader} body={tableBody} />
       {activeModal && (
         <ModalPortal>
-          <PostModal title="상품 후기" item={selectedProduct} onClose={handleCloseModal} />
+          <PostModal
+            title="상품 후기"
+            item={selectedProduct}
+            onClose={handleCloseModal}
+            formType={{ form: 'REVIEW', mode: 'ENROLL' }}
+          />
         </ModalPortal>
       )}
     </OrderContentContainer>

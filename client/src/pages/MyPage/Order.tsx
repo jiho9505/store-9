@@ -50,7 +50,7 @@ const OrderPage = () => {
         form={form}
         onChange={onChange}
         onSetForm={onSetForm}
-        onClick={handleSubmitFilter}
+        onSubmit={handleSubmitFilter}
       />
       <OrderContent orderProducts={orderedProducts} />
     </OrderPageContainer>

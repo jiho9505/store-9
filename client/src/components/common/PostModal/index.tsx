@@ -26,6 +26,7 @@ const PostModal = ({
   title,
   formType = { form: 'REVIEW', mode: 'ENROLL' },
 }: PostModalProps) => {
+  const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
