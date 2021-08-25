@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { observer } from 'mobx-react';
 
 import UserApi from '@/apis/UserApi';
 import guguStyled from '@/core/styled';
+import RefreshStore from '@/stores/RefreshStore';
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { LikeContent } from '@/components/MyPage';
 
 const LikePage = () => {
+  const { refresh, refreshComponent } = RefreshStore;
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
   const [likes, setLikes] = useState([]);
 
   useEffect(() => {
     (async () => {
       const result = await UserApi.getLikeList();
-      console.log(result.data.likes);
+      setSelectedProducts(new Set());
       setLikes(result.data.likes);
     })();
-  }, []);
+  }, [refreshComponent]);
 
   const handleClickCheckbox = (id) => {
     if (selectedProducts.has(id)) {
       setSelectedProducts((prev) => {
-        // prev.delete(id);
         const newSet = new Set(prev);
         newSet.delete(id);
         return newSet;
@@ -46,6 +48,7 @@ const LikePage = () => {
 
     try {
       await UserApi.unlike({ data: { ids: [...selectedProducts] } });
+      refresh();
     } catch (err) {
       console.log(err);
       alert('찜 목록 삭제에 실패했습니다.');
@@ -84,4 +87,4 @@ const Button = guguStyled.button`
   }
 `;
 
-export default LikePage;
+export default observer(LikePage);
