@@ -18,10 +18,10 @@ const UserController = {
 
   deleteLike: async (req: Request, res: Response) => {
     try {
-      const { reviewId } = req.params;
+      const { ids } = req.body;
       const user: JwtSignPayload = res.locals.user;
       const likeRepository = getCustomRepository(LikeRepository);
-      await likeRepository.deleteLike(user.id, Number(reviewId));
+      await likeRepository.deleteLike(user.id, ids);
       res.json({ ok: true, message: constant.DELETE_REVIEW_SUCCESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });

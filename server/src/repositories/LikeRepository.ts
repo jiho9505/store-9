@@ -14,7 +14,13 @@ export class LikeRepository extends Repository<Like> {
       .getManyAndCount();
   }
 
-  deleteLike(user_id: number, like_id: number) {
-    return this.delete({ id: like_id, user_id });
+  deleteLike(user_id: number, ids: number[]) {
+    console.log(ids);
+    return this.createQueryBuilder()
+      .delete()
+      .from(Like)
+      .where('id = :user_id', { user_id })
+      .where('id IN (:ids)', { ids })
+      .execute();
   }
 }
