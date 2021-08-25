@@ -8,14 +8,13 @@ import BoardPageNumber from '../BoardPageNumber';
 import ModalPortal from '@/utils/portal';
 import PostModal from '../../common/PostModal';
 
-import { requireLoginMsg } from '@/static/constants';
+import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 import { ProductContext } from '@/hooks/context';
 
+const requireBuyHistoryMsg = '구매한 상품에 한해서 작성이 가능합니다.';
 type ProductBoardProps = {
   title: string;
 };
-type MessageModeType = 'success' | 'fail';
-const showErrorMsgTime = 1500;
 
 /**
  * TODO:
@@ -32,7 +31,6 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   const [showContent, setShowContent] = useState([]);
   const [showMessage, setshowMessage] = useState<boolean>(false);
   const [messageContent, setMessageContent] = useState<string>('');
-  const [messageMode, setMessageMode] = useState<MessageModeType>('fail');
 
   let timer: number = 0;
 
@@ -41,20 +39,20 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const createMsg = (mode: MessageModeType, title: string) => {
+  const createMsg = (title: string) => {
     setshowMessage(true);
-    setMessageMode(mode);
+
     setMessageContent(title);
     timer = setTimeout(() => {
       setshowMessage(false);
     }, showErrorMsgTime);
   };
 
-  const viewMsgByUserStatus = (mode) => {
+  const viewMsgByUserStatus = (mode: string) => {
     if (mode === 'notlogin') {
-      createMsg('fail', requireLoginMsg);
+      createMsg(requireLoginMsg);
     } else if (mode === 'notbuy') {
-      createMsg('fail', '구매한 상품에 한해서 작성이 가능합니다.');
+      createMsg(requireBuyHistoryMsg);
     }
   };
 
@@ -75,12 +73,12 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
    * post 후 store 업데이트 후 전체 새로운 데이터를 가져와야합니다.
    *
    * User login 유무 파악해서 처리 다르게 해야합니다
-   * 구매한 사람만 쓸 수 있게 예외처리 해야합니다.
+   * 구매한 사람만 쓸 수 있게 예외처리 해야합니다. (우선순위 뒤)
    *
    * title이 문의냐 후기냐에 따라 if 분기문 작성
    */
   const handleClickButton = () => {
-    viewMsgByUserStatus('notbuy');
+    viewMsgByUserStatus('notlogin');
     // setIsActiveModal(true);
   };
 
@@ -121,7 +119,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       )}
       {showMessage && (
         <ModalPortal>
-          <Message text={messageContent} mode={messageMode} />
+          <Message text={messageContent} mode="fail" />
         </ModalPortal>
       )}
     </ProductBoardContainer>
