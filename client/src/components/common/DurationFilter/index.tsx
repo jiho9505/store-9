@@ -27,6 +27,7 @@ type DurationFilterProps = {
   onSetForm(obj: Form): void;
 };
 
+
 const DurationFilter = ({ form, onSubmit, onChange, onSetForm }: DurationFilterProps) => {
   const [curActiveFilter, setActiveFilter] = useState<string>('');
 
