@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from '@emotion/styled';
 
+import Message from '@/components/common/Message';
 import BoardPost from '../BoardPost';
 import BoardHeader from '../BoardHeader';
 import BoardPageNumber from '../BoardPageNumber';
 import ModalPortal from '@/utils/portal';
 import PostModal from '../../common/PostModal';
 
+import { requireLoginMsg } from '@/static/constants';
 import { ProductContext } from '@/hooks/context';
 
 type ProductBoardProps = {
   title: string;
 };
+type MessageModeType = 'success' | 'fail';
+const showErrorMsgTime = 1500;
 
 /**
  * TODO:
@@ -26,15 +30,34 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   const [pageEnd, setPageEnd] = useState(10);
   const [isActiveModal, setIsActiveModal] = useState(false);
   const [showContent, setShowContent] = useState([]);
+  const [showMessage, setshowMessage] = useState<boolean>(false);
+  const [messageContent, setMessageContent] = useState<string>('');
+  const [messageMode, setMessageMode] = useState<MessageModeType>('fail');
+
+  let timer: number = 0;
 
   useEffect(() => {
     setPostInfoDatas(postDummyDatas.slice(pageStart, pageEnd));
+    return () => clearTimeout(timer);
   }, []);
 
-  /**
-   * page Number를 클릭해줌으로써
-   * 게시글 리스트와 페이지 넘버 color가 바뀐다.
-   */
+  const createMsg = (mode: MessageModeType, title: string) => {
+    setshowMessage(true);
+    setMessageMode(mode);
+    setMessageContent(title);
+    timer = setTimeout(() => {
+      setshowMessage(false);
+    }, showErrorMsgTime);
+  };
+
+  const viewMsgByUserStatus = (mode) => {
+    if (mode === 'notlogin') {
+      createMsg('fail', requireLoginMsg);
+    } else if (mode === 'notbuy') {
+      createMsg('fail', '구매한 상품에 한해서 작성이 가능합니다.');
+    }
+  };
+
   const handleClickNumber = (e: React.MouseEvent<HTMLLIElement>) => {
     const newPageNumber = Number(e.currentTarget.dataset.idx);
     const newStartPoint = newPageNumber * 10;
@@ -47,8 +70,18 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     setShowContent([]);
   };
 
+  /**
+   * TODO:
+   * post 후 store 업데이트 후 전체 새로운 데이터를 가져와야합니다.
+   *
+   * User login 유무 파악해서 처리 다르게 해야합니다
+   * 구매한 사람만 쓸 수 있게 예외처리 해야합니다.
+   *
+   * title이 문의냐 후기냐에 따라 if 분기문 작성
+   */
   const handleClickButton = () => {
-    setIsActiveModal(true);
+    viewMsgByUserStatus('notbuy');
+    // setIsActiveModal(true);
   };
 
   const handleClickForClose = () => {
@@ -84,6 +117,11 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       {isActiveModal && (
         <ModalPortal>
           <PostModal onClose={handleClickForClose} title={title} item={info}></PostModal>
+        </ModalPortal>
+      )}
+      {showMessage && (
+        <ModalPortal>
+          <Message text={messageContent} mode={messageMode} />
         </ModalPortal>
       )}
     </ProductBoardContainer>
