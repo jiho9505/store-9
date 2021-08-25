@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import guguStyled from '@/core/styled';
+import React, { useState, useEffect } from 'react';
 
+import UserApi from '@/apis/UserApi';
+import guguStyled from '@/core/styled';
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { LikeContent } from '@/components/MyPage';
@@ -28,6 +29,15 @@ const likeProducts = [
 
 const LikePage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const result = await UserApi.getLikeList();
+      console.log(result.data.likes);
+      setLikes(result.data.likes);
+    })();
+  }, []);
 
   const handleClickCheckbox = (id) => {
     if (selectedProducts.has(id)) {
@@ -55,15 +65,11 @@ const LikePage = () => {
   return (
     <LikePageContainer>
       <LikeContent
-        likeProducts={likeProducts}
+        likeProducts={likes}
         onCheck={handleClickCheckbox}
         onCheckAll={handleToggleSelectAllBtn}
         selectedProduct={selectedProducts}
       />
-      <SelectProductAction>
-        <Button>선택상품 삭제</Button>
-        <Button>장바구니에 담기</Button>
-      </SelectProductAction>
     </LikePageContainer>
   );
 };
