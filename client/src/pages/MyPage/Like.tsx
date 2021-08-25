@@ -55,6 +55,15 @@ const LikePage = () => {
     }
   };
 
+  const handleAddLike = async () => {
+    try {
+      const result = await UserApi.like({ productId: 4 });
+      refresh();
+    } catch (err) {
+      alert('추가 실패');
+    }
+  };
+
   return (
     <LikePageContainer>
       <LikeContent
@@ -65,6 +74,7 @@ const LikePage = () => {
       />
       <SelectProductAction>
         <Button onClick={handleClickDeleteBtn}>선택상품 삭제</Button>
+        <Button onClick={handleAddLike}>추가 테스트</Button>
       </SelectProductAction>
     </LikePageContainer>
   );
