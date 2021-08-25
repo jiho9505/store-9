@@ -9,5 +9,6 @@ UserRouter.use(AuthMiddleware.checkLogin);
 
 UserRouter.get('/');
 UserRouter.get('/likes', UserController.getLikeLists);
+UserRouter.delete('/likes/:reviewId', UserController.deleteLike);
 
 export default UserRouter;

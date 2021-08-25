@@ -13,4 +13,8 @@ export class LikeRepository extends Repository<Like> {
       .offset(page * size)
       .getManyAndCount();
   }
+
+  deleteLike(user_id: number, like_id: number) {
+    return this.delete({ id: like_id, user_id });
+  }
 }
