@@ -13,9 +13,10 @@ type QnAContentProps = {
 };
 
 const tableHeader = [
-  { id: 'qnaDate', name: '문의날짜', width: '15%' },
-  { id: 'category', name: '카테고리', width: '15%' },
-  { id: 'title', name: '제목', width: '85%' },
+  { id: 'id', name: '번호', width: '10%' },
+  { id: 'productName', name: '제품명', width: '10%' },
+  { id: 'title', name: '문의명', width: '70%' },
+  { id: 'qnaDate', name: '문의날짜', width: '10%' },
 ];
 
 /**
@@ -26,17 +27,21 @@ const tableHeader = [
  */
 
 const QnAContent = ({ questions }: QnAContentProps) => {
+  const { qnas, totalCount } = questions;
+
   const [activeModal, setActiveModal] = useState(false);
+  const [selectedQna, setSelectedQna] = useState({});
 
   const tableBody = useMemo(() => {
-    return questions.map((question) => {
-      const { id, date, category, title } = question;
+    return (qnas || []).map((question, idx) => {
+      const { id, date, title, product } = question;
       return {
-        id,
+        id: idx,
         cells: [
-          { c: <Cell>{getDateFormat(date)}</Cell>, colSpan: 1 },
-          { c: <Cell>{category}</Cell>, colSpan: 1 },
+          { c: <Cell>{id}</Cell>, colSpan: 1 },
+          { c: <Cell>{product.name}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
+          { c: <Cell>{getDateFormat(date)}</Cell> },
         ],
       };
     });
@@ -46,7 +51,8 @@ const QnAContent = ({ questions }: QnAContentProps) => {
     setActiveModal(false);
   };
 
-  const handleModalOpen = () => {
+  const handleModalOpen = (id) => {
+    setSelectedQna(qnas[id]);
     setActiveModal(true);
   };
 
@@ -55,7 +61,12 @@ const QnAContent = ({ questions }: QnAContentProps) => {
       <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
       {activeModal && (
         <ModalPortal>
-          <PostModal item={questions[0]} onClose={handleModalClose} title="문의하기" />
+          <PostModal
+            item={selectedQna}
+            onClose={handleModalClose}
+            title="문의하기"
+            formType={{ form: 'QNA', mode: 'MODIFY' }}
+          />
         </ModalPortal>
       )}
     </>

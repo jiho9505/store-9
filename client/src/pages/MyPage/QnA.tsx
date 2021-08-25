@@ -1,44 +1,18 @@
-import React from 'react';
-import guguStyled from '@/core/styled';
+import React, { useEffect, useState, useCallback } from 'react';
+import { observer } from 'mobx-react';
 
+import guguStyled from '@/core/styled';
 import useInput from '@/hooks/customHooks/useInput';
+import QnaApi from '@/apis/QnaApi';
+import RefreshStore from '@/stores/RefreshStore';
 
 import DurationFilter from '@/components/common/DurationFilter';
 import { QnAContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
-const questions = [
-  {
-    id: 1,
-    date: new Date(),
-    category: '문구',
-    title: '저기요....',
-    content: '이거 얼마에요?',
-    productId: 5,
-    name: '똑똑똑 실내홥니다',
-    quantity: 1,
-    price: 6000,
-    totalPrice: 6000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-  {
-    id: 2,
-    date: new Date(),
-    cateogry: '완구',
-    title: '계세요?...',
-    content: '이건 뭐죠?',
-    productId: 3,
-    name: 'ㅋㅋ 슬리퍼',
-    quantity: 2,
-    price: 12000,
-    totalPrice: 24000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-];
-
 const QnAPage = () => {
+  const { refreshComponent, refresh } = RefreshStore;
+  const [questions, setQuestions] = useState({});
   const { form, onChange, onSetForm } = useInput({
     initialState: {
       start: '',
@@ -46,9 +20,37 @@ const QnAPage = () => {
     },
   });
 
+  useEffect(() => {
+    (async () => {
+      const questions = await getQnas(form.start, form.finish);
+      setQuestions(questions.data);
+    })();
+  }, [refreshComponent]);
+
+  const getQnas = useCallback(async (startDate, endDate) => {
+    const query: { params?: { [key: string]: string } } = {};
+    if (startDate && endDate) {
+      query.params = { startDate, endDate };
+    }
+    return await QnaApi.getList(query);
+  }, []);
+
+  const handleSubmitDate = async () => {
+    const { start, finish } = form;
+    if (!start || !finish) {
+      return;
+    }
+    refresh();
+  };
+
   return (
     <QnAPageContainer>
-      <DurationFilter form={form} onChange={onChange} onSetForm={onSetForm} />
+      <DurationFilter
+        form={form}
+        onChange={onChange}
+        onSetForm={onSetForm}
+        onSubmit={handleSubmitDate}
+      />
       <QnAContent questions={questions} />
     </QnAPageContainer>
   );
@@ -56,4 +58,4 @@ const QnAPage = () => {
 
 const QnAPageContainer = guguStyled.div``;
 
-export default QnAPage;
+export default observer(QnAPage);

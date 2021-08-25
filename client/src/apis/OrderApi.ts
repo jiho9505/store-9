@@ -3,16 +3,12 @@ import OrderRequest from '@shared/dtos/order/request';
 import BaseApi from './BaseApi';
 
 class OrderApi extends BaseApi {
-  getList(params: OrderRequest.GetList) {
+  getList(params: OrderRequest.GetList = {} ) {
     return this.get<OrderResponse.GetList>('/', { params, isRequiredLogin: true });
   }
 
   order(body: OrderRequest.Order) {
     return this.post('/', body, { isRequiredLogin: true });
-  }
-
-  cancel({ orderId }: OrderRequest.Cancel) {
-    return this.delete(`/${orderId}`, { isRequiredLogin: true });
   }
 
   getCart() {

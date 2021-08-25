@@ -41,7 +41,7 @@ const Header = () => {
       <HeaderContainer>
         <SearchHeader>
           <LogoLink to="/">
-            <Logo src="images/logo.png" />
+            <Logo src={LOGO} />
           </LogoLink>
           <SearchBar />
         </SearchHeader>

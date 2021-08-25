@@ -14,10 +14,10 @@ class Review extends DateBasicEntity {
   @Column()
   images: string;
 
-  @Column({ unique: true })
+  @Column()
   user_id: number;
 
-  @Column({ unique: true })
+  @Column()
   product_id: number;
 
   @Column()

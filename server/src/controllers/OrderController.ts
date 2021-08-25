@@ -8,12 +8,12 @@ namespace OrderController {
     req,
     res
   ) => {
+    const { start, end } = req.query;
     try {
-      const result = await getCustomRepository(OrderRepository).getList({ userId: 1 });
-
+      const result = await getCustomRepository(OrderRepository).getList({ userId: 1, start, end });
       res.send(result);
     } catch (e) {
-      console.error(e);
+      console.error(e.message);
 
       res.status(500).json({ ok: false });
     }
