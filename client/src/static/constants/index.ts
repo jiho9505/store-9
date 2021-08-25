@@ -1,3 +1,5 @@
+export const requireLoginMsg = '로그인이 필요한 기능입니다.';
+
 const RouteListArray = [
   '/',
   '/login',
