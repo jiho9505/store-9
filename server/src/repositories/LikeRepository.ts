@@ -3,7 +3,7 @@ import Like from '../entities/like';
 
 @EntityRepository(Like)
 export class LikeRepository extends Repository<Like> {
-  getLikes(user_id: number, size: number = 20, page: number = 0) {
+  getLikes(user_id: number, page: number = 0, size: number = 5) {
     return this.createQueryBuilder('l')
       .leftJoinAndSelect('l.product', 'product')
       .select(['l.id', 'l.product_id'])
