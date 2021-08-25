@@ -2,9 +2,16 @@ import { QnASchema } from './schema';
 
 namespace QnAResponse {
   export type GetList = {
-    qnas: QnASchema[];
+    qnas: {
+      id: number;
+      productThumbnail: string;
+      productName: string;
+      title: string;
+      content: string;
+      createdAt: Date;
+    }[];
     totalCount: number;
-  };
+  }[];
 
   export type Create = QnASchema;
 
