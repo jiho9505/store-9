@@ -6,11 +6,12 @@ import Message from '@/components/common/Message';
 import { greyLine } from '@/static/style/common';
 import { ProductContext } from '@/hooks/context';
 import ModalPortal from '@/utils/portal';
-import { requireLoginMsg } from '@/static/constants';
+import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 
 type MessageModeType = 'success' | 'fail';
 type LikeModeType = 'notlogin' | 'add' | 'remove';
-const showErrorMsgTime = 1500;
+const addLikeMsg = '관심목록에 추가하였습니다.';
+const removeLikeMsg = '관심목록에서 제거하였습니다.';
 
 const Like = () => {
   const { info } = useContext(ProductContext);
@@ -39,9 +40,9 @@ const Like = () => {
     if (mode === 'notlogin') {
       createMsg('fail', requireLoginMsg);
     } else if (mode === 'add') {
-      createMsg('success', '관심목록에 추가하였습니다.');
+      createMsg('success', addLikeMsg);
     } else if (mode === 'remove') {
-      createMsg('success', '관심목록에 제거하였습니다.');
+      createMsg('success', removeLikeMsg);
     }
   };
 
@@ -54,8 +55,14 @@ const Like = () => {
    * 여기서 분기문 쓰면 됩니다.
    */
   const handleClickBtn = () => {
-    viewMsgByUserStatus('add');
-    setIsIconActive(true);
+    // 로그인 안했을때 먼저 처리
+    if (isIconActive) {
+      viewMsgByUserStatus('remove');
+      setIsIconActive(false);
+    } else if (!isIconActive) {
+      viewMsgByUserStatus('add');
+      setIsIconActive(true);
+    }
   };
 
   return (
