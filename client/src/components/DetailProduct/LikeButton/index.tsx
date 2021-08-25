@@ -23,7 +23,7 @@ const Like = () => {
 
   useEffect(() => {
     // setIsIconActive(info.userLiked)
-    clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, []);
 
   const createMsg = (mode: MessageModeType, title: string) => {
