@@ -22,11 +22,12 @@ type Form = { [key: string]: string };
 
 type DurationFilterProps = {
   form: Form;
+  onSubmit?(): void;
   onChange(e: ChangeEvent<HTMLInputElement>): void;
   onSetForm(obj: Form): void;
 };
 
-const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
+const DurationFilter = ({ form, onSubmit, onChange, onSetForm }: DurationFilterProps) => {
   const [curActiveFilter, setActiveFilter] = useState<string>('');
 
   const handleClickButton = (type, value, content) => (e: MouseEvent<HTMLDivElement>) => {
@@ -79,13 +80,7 @@ const DurationFilter = ({ form, onChange, onSetForm }: DurationFilterProps) => {
           ))}
         </DurationButtons>
       </FilterContainer>
-      <Button
-        size="small"
-        type="button"
-        theme="white"
-        onClick={() => console.log('a')}
-        value="검색"
-      />
+      <Button size="small" type="button" theme="white" onClick={onSubmit} value="검색" />
     </DurationFilterContainer>
   );
 };
