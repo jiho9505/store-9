@@ -50,11 +50,17 @@ const DetailProduct = () => {
    *
    * User login 유무 파악해서 처리 다르게 해야합니다
    */
-  const handleClickLikeButton = () => {
-    /**
-     * 로그인 안됐을때
-     */
-    createMsg('fail', requireLoginMsg);
+
+  type LikeModeType = 'notlogin' | 'add' | 'remove';
+
+  const handleClickLikeButton = (mode: LikeModeType) => {
+    if (mode === 'notlogin') {
+      createMsg('fail', requireLoginMsg);
+    } else if (mode === 'add') {
+      createMsg('success', '관심목록에 추가하였습니다.');
+    } else if (mode === 'remove') {
+      createMsg('success', '관심목록에 제거하였습니다.');
+    }
   };
 
   /**
