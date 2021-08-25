@@ -22,6 +22,9 @@ const convertImageUrlStringToArray = (review: Review): ReviewResponse.Create => 
 
   const result = {
     ...review,
+    userId: review.user_id,
+    productId: review.product_id,
+    createdAt: review.created_at,
     images: parsedImageArray,
   };
   return result;
