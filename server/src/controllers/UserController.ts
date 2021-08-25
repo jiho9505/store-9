@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, Like } from 'typeorm';
 import { LikeRepository } from '../repositories/LikeRepository';
 import { JwtSignPayload } from '../utils/types';
 import constant from '../utils/constant';
@@ -14,6 +14,20 @@ const UserController = {
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }
+  },
+
+  createLike: async (req: Request, res: Response) => {
+    try {
+      const { productId } = req.body;
+      const user: JwtSignPayload = res.locals.user;
+
+      const likeRepository = getCustomRepository(LikeRepository);
+      const likeExist = await likeRepository.getLike(user.id, productId);
+
+      if (likeExist) {
+        res.status(constant.STATUS_CONFLICT).json({ ok: false, message: constant.LIKE_DUPLICATE });
+      }
+    } catch (err) {}
   },
 
   deleteLike: async (req: Request, res: Response) => {

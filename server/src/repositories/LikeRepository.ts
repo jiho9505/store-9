@@ -14,6 +14,10 @@ export class LikeRepository extends Repository<Like> {
       .getManyAndCount();
   }
 
+  getLike(user_id: number, product_id: number) {
+    return this.findOne({ user_id, product_id });
+  }
+
   deleteLike(user_id: number, ids: number[]) {
     console.log(ids);
     return this.createQueryBuilder()
