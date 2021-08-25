@@ -1,17 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { observer } from 'mobx-react';
 import styled from '@emotion/styled';
 
 import Button from '../Button';
 import StarComponent from '@/components/common/Star';
 import ModalWrapper from '@/components/common/ModalWrapper';
 
+import ReviewApi from '@/apis/ReviewApi';
+import QnaApi from '@/apis/QnaApi';
+import RefreshStore from '@/stores/RefreshStore';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
-const PostModal = ({ item, onClose, title }) => {
+type PostModalProps = {
+  item: { [key: string]: any };
+  onClose(): void;
+  title: string;
+  formType: { form: 'REVIEW' | 'QNA'; mode: 'ENROLL' | 'MODIFY' };
+};
+
+const PostModal = ({
+  item,
+  onClose,
+  title,
+  formType = { form: 'REVIEW', mode: 'ENROLL' },
+}: PostModalProps) => {
+  const { refresh } = RefreshStore;
+  const { id, title: formTitle, content, rate, product } = item;
+
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
   const [starScore, setStarScore] = useState<number>(1);
 
@@ -23,19 +43,78 @@ const PostModal = ({ item, onClose, title }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (formTitle && content) {
+      inputRef.current.value = formTitle;
+      textAreaRef.current.value = content;
+      setStarScore(rate);
+    }
+  }, []);
+
   /**
    * TODO:
    * 아래 내용과 product userId 등 조합해서 post 요청 보내야합니다.
    * 그 후 mobx를 통해 상태 업뎃해서 상위부터 리렌더링 되게 하면 될것 같습니다.
    */
-  const handleClickButton = (e: React.MouseEvent) => {
+  const handleClickEnrollBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
     const title: string = inputRef.current.value;
     const content: string = textAreaRef.current.value;
 
     const result = isPassedValidation(title, content);
     if (result) return;
-    onClose();
+
+    try {
+      await ReviewApi.create(product.id, {
+        title,
+        content,
+        rate: starScore,
+        images: [],
+      });
+      onClose();
+      refresh();
+    } catch (err) {
+      alert('리뷰등록에 실패했습니다.');
+    }
+  };
+
+  const handleClickModifyBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const { form } = formType;
+    const title: string = inputRef.current.value;
+    const content: string = textAreaRef.current.value;
+    const rate = starScore || 1;
+
+    if (isPassedValidation(title, content)) return;
+
+    const modifyAction = { fn: null, msg: '' };
+    if (form === 'REVIEW') {
+      modifyAction.fn = async () =>
+        await ReviewApi.update(product.id, {
+          title: inputRef.current.value,
+          content: textAreaRef.current.value,
+          rate,
+          images: [],
+        });
+      modifyAction.msg = '리뷰수정에 실패했습니다.';
+    } else if (form === 'QNA') {
+      modifyAction.fn = async () => {
+        await QnaApi.update({
+          id,
+          content,
+          title,
+        });
+      };
+      modifyAction.msg = 'QNA 수정에 실패했습니다.';
+    }
+
+    try {
+      await modifyAction.fn();
+      onClose();
+      refresh();
+    } catch (err) {
+      alert(modifyAction.msg);
+    }
   };
 
   const createErrorMsg = () => {
@@ -58,11 +137,36 @@ const PostModal = ({ item, onClose, title }) => {
     setStarScore(score);
   };
 
+  const Buttons = () => {
+    const { mode } = formType;
+    if (mode === 'ENROLL') {
+      return (
+        <Button
+          size="small"
+          value="등록하기"
+          type="submit"
+          theme="dark"
+          onClick={handleClickEnrollBtn}
+        />
+      );
+    } else if (mode === 'MODIFY') {
+      return (
+        <Button
+          size="small"
+          value="수정하기"
+          type="submit"
+          theme="white"
+          onClick={handleClickModifyBtn}
+        />
+      );
+    }
+  };
+
   return (
     <ModalWrapper onClose={onClose} title={title}>
       <ItemContainer>
-        <ItemImage src={item.image} />
-        <ItemName>{item.title}</ItemName>
+        <ItemImage src={product.thumbnail} />
+        <ItemName>{product.name}</ItemName>
       </ItemContainer>
       <Form>
         {title === '상품 후기' && (
@@ -77,21 +181,13 @@ const PostModal = ({ item, onClose, title }) => {
         <Label>내용 : </Label>
         <Content maxLength={550} ref={textAreaRef} required />
         {showErrorMsg && <ErrorMsg>모든 값을 입력해주시기 바랍니다.</ErrorMsg>}
-        <ButtonContainer>
-          <Button
-            size="small"
-            value="등록하기"
-            type="submit"
-            theme="dark"
-            onClick={handleClickButton}
-          ></Button>
-        </ButtonContainer>
+        <ButtonContainer>{Buttons()}</ButtonContainer>
       </Form>
     </ModalWrapper>
   );
 };
 
-export default PostModal;
+export default observer(PostModal);
 
 const ScoreContainer = styled.div`
   display: flex;

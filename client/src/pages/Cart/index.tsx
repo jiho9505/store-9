@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { normalContainerWidth, greyLine, greySpan, normalRadius } from '@/static/style/common';
+import {
+  normalContainerWidth,
+  greyLine,
+  greySpan,
+  normalRadius,
+  baeminFont,
+} from '@/static/style/common';
 
 import { CartContent } from '@/components/Cart';
 import PricePannel from '@/components/common/PricePannel';
@@ -93,7 +99,11 @@ const CartFooter = styled.div`
   margin-top: 30px;
 `;
 
-const SelectProductAction = styled.div``;
+const SelectProductAction = styled.div`
+  Button {
+    font-family: ${baeminFont};
+  }
+`;
 
 const Button = styled.button`
   width: 120px;

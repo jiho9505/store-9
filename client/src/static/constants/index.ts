@@ -1,3 +1,22 @@
+const RouteListArray = [
+  '/',
+  '/login',
+  '/cart',
+  '/order',
+  '/mypage',
+  '/signupMethod',
+  '/goods',
+  '/detail',
+  '/signup',
+  '/callback',
+  '/mypage/review',
+  '/mypage/like',
+  '/mypage/order',
+  '/mypage/QnA',
+];
+
+export const RouteList = new Set(RouteListArray);
+
 export const categories = [
   ['전체', '/total'],
   ['문구', '/suplies'],

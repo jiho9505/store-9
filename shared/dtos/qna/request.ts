@@ -1,11 +1,25 @@
 import { QnASchema } from './schema';
 
 namespace QnARequest {
-  export type Create = Pick<QnASchema, 'title' | 'content' | 'images' | 'isPrivate'> & {
-    product_id: number;
+  export type GetList = {
+    startDate?: Date;
+    endDate?: Date;
+    size?: number;
+    page?: number;
   };
 
-  export type Update = Pick<QnASchema, 'id' | 'title' | 'content' | 'images' | 'isPrivate'>;
+  export type Create = {
+    title: string;
+    content: string;
+    isPrivate?: boolean;
+  };
+
+  export type Update = {
+    qnaId: number;
+    title: string;
+    content: string;
+    isPrivate?: boolean;
+  };
 
   export type Remove = { qnaId: number };
 }

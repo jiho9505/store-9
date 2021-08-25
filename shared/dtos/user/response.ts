@@ -1,11 +1,18 @@
 import { AddressSchema } from '../address/schema';
-import { ProductSchema } from '../product/schema';
-import { UserSchema } from './schema';
 
 namespace UserResponse {
-  export type GetMyInfo = UserSchema & {};
+  export type GetMyInfo = {
+    username: string;
+    loginId: string;
+    address: string;
+  };
 
-  export type GetLikes = ProductSchema[];
+  export type GetLikeList = {
+    id: number;
+    name: string;
+    thumbnail: string;
+    price: string;
+  }[];
 
   export type GetAddress = AddressSchema[];
 

@@ -4,11 +4,11 @@ import { Link } from '@/core/Router';
 
 import Navigation from './Navigation';
 
-import { baeminFont, greyLine, normalContainerWidth } from '@/static/style/common';
+import { baeminFont, greyLine, greySpan, normalContainerWidth } from '@/static/style/common';
 
 import SearchBar from './SearchBar';
 
-import '@/static/assets/img/logo.png';
+import LOGO from '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
 
 const shortCuts = [
@@ -30,7 +30,7 @@ const Header = () => {
       <HeaderContainer>
         <SearchHeader>
           <LogoLink to="/">
-            <Logo src="images/logo.png" />
+            <Logo src={LOGO} />
           </LogoLink>
           <SearchBar />
         </SearchHeader>
@@ -62,6 +62,8 @@ const ShortCut = styled.li`
 
   a {
     font-family: ${baeminFont};
+    color: ${greySpan};
+    font-size: 14px;
   }
 `;
 

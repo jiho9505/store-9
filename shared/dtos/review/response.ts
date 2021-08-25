@@ -1,11 +1,18 @@
 import { ReviewSchema } from './schema';
 
 namespace ReviewResponse {
-  export type GetList = ReviewSchema[];
-
-  export type Create = ReviewSchema;
-
-  export type Update = ReviewSchema;
+  export type GetList = {
+    reviews: {
+      id: number;
+      productThumbnail: string;
+      productName: string;
+      rate: number;
+      title: string;
+      content: string;
+      createdAt: Date;
+    }[];
+    totalCount: number;
+  }[];
 }
 
 export default ReviewResponse;

@@ -5,9 +5,6 @@ import Product from './product';
 @Entity({ name: 'categories' })
 class Category extends BasicEntity {
   @Column()
-  level: number;
-
-  @Column()
   name: string;
 
   @Column({ nullable: true })

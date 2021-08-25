@@ -13,6 +13,24 @@ class Order extends DateBasicEntity {
   @Column({ default: false, nullable: true })
   hasShippingCharge: boolean;
 
+  @Column({ nullable: true })
+  buyerName: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  email: string;
+
+  @Column({ nullable: true })
+  receiverName: string;
+
+  @Column({ nullable: true })
+  receiverAddress: string;
+
+  @Column({ nullable: true })
+  receiverPhone: string;
+
   @Column()
   user_id: number;
 
