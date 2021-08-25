@@ -26,6 +26,7 @@ const ImageContainer = styled.div`
   height: 350px;
   margin-bottom: 12px;
   overflow: hidden;
+  border-radius: 10px;
 `;
 
 const ProductImg = styled.img`
