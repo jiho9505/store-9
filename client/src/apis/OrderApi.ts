@@ -11,10 +11,6 @@ class OrderApi extends BaseApi {
     return this.post('/', body, { isRequiredLogin: true });
   }
 
-  cancel({ orderId }: OrderRequest.Cancel) {
-    return this.delete(`/${orderId}`, { isRequiredLogin: true });
-  }
-
   getCart() {
     return this.get<OrderResponse.GetCart>('/carts', { isRequiredLogin: true });
   }

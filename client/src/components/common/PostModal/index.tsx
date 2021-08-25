@@ -7,14 +7,26 @@ import StarComponent from '@/components/common/Star';
 import ModalWrapper from '@/components/common/ModalWrapper';
 
 import ReviewApi from '@/apis/ReviewApi';
+import QnaApi from '@/apis/QnaApi';
 import RefreshStore from '@/stores/RefreshStore';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
 const timeToShowMsg: number = 2000;
 
-const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
-  const { title: reviewTitle, content, rate, product } = item;
-  const { refresh } = RefreshStore;
+type PostModalProps = {
+  item: { [key: string]: any };
+  onClose(): void;
+  title: string;
+  formType: { form: 'REVIEW' | 'QNA'; mode: 'ENROLL' | 'MODIFY' };
+};
+
+const PostModal = ({
+  item,
+  onClose,
+  title,
+  formType = { form: 'REVIEW', mode: 'ENROLL' },
+}: PostModalProps) => {
+  const { id, title: formTitle, content, rate, product } = item;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -31,8 +43,8 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
   }, []);
 
   useEffect(() => {
-    if (reviewTitle && content) {
-      inputRef.current.value = reviewTitle;
+    if (formTitle && content) {
+      inputRef.current.value = formTitle;
       textAreaRef.current.value = content;
       setStarScore(rate);
     }
@@ -67,23 +79,40 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
 
   const handleClickModifyBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const { form } = formType;
     const title: string = inputRef.current.value;
     const content: string = textAreaRef.current.value;
     const rate = starScore || 1;
 
     if (isPassedValidation(title, content)) return;
 
+    const modifyAction = { fn: null, msg: '' };
+    if (form === 'REVIEW') {
+      modifyAction.fn = async () =>
+        await ReviewApi.update(product.id, {
+          title: inputRef.current.value,
+          content: textAreaRef.current.value,
+          rate,
+          images: [],
+        });
+      modifyAction.msg = '리뷰수정에 실패했습니다.';
+    } else if (form === 'QNA') {
+      modifyAction.fn = async () => {
+        await QnaApi.update({
+          id,
+          content,
+          title,
+        });
+      };
+      modifyAction.msg = 'QNA 수정에 실패했습니다.';
+    }
+
     try {
-      await ReviewApi.update(product.id, {
-        title: inputRef.current.value,
-        content: textAreaRef.current.value,
-        rate,
-        images: [],
-      });
+      await modifyAction.fn();
       onClose();
       refresh();
     } catch (err) {
-      alert('리뷰수정에 실패했습니다.');
+      alert(modifyAction.msg);
     }
   };
 
@@ -108,6 +137,7 @@ const PostModal = ({ item, onClose, title, mode = 'ENROLL' }) => {
   };
 
   const Buttons = () => {
+    const { mode } = formType;
     if (mode === 'ENROLL') {
       return (
         <Button

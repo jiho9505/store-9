@@ -1,10 +1,18 @@
 namespace OrderRequest {
-  export type Order = {
-    orderId: number;
+  export type GetList = {
+    startDate?: Date;
+    endDate?: Date;
+    page?: number;
+    size?: number;
   };
 
-  export type Cancel = {
-    orderId: number;
+  export type Order = {
+    buyerName: string;
+    phone: string;
+    email: string;
+    receiverName: string;
+    receiverAddress: string;
+    receiverPhone: string;
   };
 
   export type AddCartItem = {

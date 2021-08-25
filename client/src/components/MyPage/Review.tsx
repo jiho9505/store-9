@@ -21,7 +21,7 @@ const tableHeader = [
 
 const ReviewContent = ({ reviews }: ReviewContentProps) => {
   const [activeModal, setActiveModal] = useState(false);
-  const [selectReview, setSelectReview] = useState([]);
+  const [selectReview, setSelectReview] = useState({});
 
   const tableBody = useMemo(() => {
     return reviews.map((review, idx) => {
@@ -55,7 +55,7 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
           <PostModal
             item={selectReview}
             title="상품 후기"
-            mode="MODIFY"
+            formType={{ form: 'REVIEW', mode: 'MODIFY' }}
             onClose={handleModalClose}
           />
         </ModalPortal>
