@@ -9,6 +9,7 @@ type StarComponentProps = {
 };
 
 const StarComponent = ({ score, handleClickStarIcon }: StarComponentProps) => {
+  score = Math.round(4.1);
   const createStar = () => {
     return arrForTotalStarLength.map((value, idx) => (
       <Star
