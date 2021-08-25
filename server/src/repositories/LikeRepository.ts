@@ -18,6 +18,11 @@ export class LikeRepository extends Repository<Like> {
     return this.findOne({ user_id, product_id });
   }
 
+  createLike(likeData) {
+    const newLike = this.create({ ...likeData });
+    return this.save(newLike);
+  }
+
   deleteLike(user_id: number, ids: number[]) {
     console.log(ids);
     return this.createQueryBuilder()

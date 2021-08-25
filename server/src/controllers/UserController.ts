@@ -18,16 +18,22 @@ const UserController = {
 
   createLike: async (req: Request, res: Response) => {
     try {
-      const { productId } = req.body;
+      const { productId } = req.params;
       const user: JwtSignPayload = res.locals.user;
 
       const likeRepository = getCustomRepository(LikeRepository);
-      const likeExist = await likeRepository.getLike(user.id, productId);
+      const likeExist = await likeRepository.getLike(user.id, Number(productId));
 
       if (likeExist) {
         res.status(constant.STATUS_CONFLICT).json({ ok: false, message: constant.LIKE_DUPLICATE });
+        return;
       }
-    } catch (err) {}
+      await likeRepository.createLike({ user_id: user.id, product_id: productId });
+      res.json({ ok: true, message: constant.CREATE_LIKE_SUCCESS });
+    } catch (err) {
+      console.log(err.message);
+      res.status(constant.STATUS_SERVER_ERROR).json({ ok: false });
+    }
   },
 
   deleteLike: async (req: Request, res: Response) => {
