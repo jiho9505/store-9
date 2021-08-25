@@ -69,8 +69,9 @@ const ShortCut = styled.li`
 
 const HeaderContainer = styled.div`
   min-width: 1450px;
-  border-top: 1px solid ${greyLine};
-  border-bottom: 1px solid ${greyLine};
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 30px;
 `;
 
 const SearchHeader = styled.div`

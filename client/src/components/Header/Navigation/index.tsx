@@ -92,13 +92,17 @@ const Navigation = () => {
           </Item>
         ))}
       </Menu>
-      <SubMenu dist={subItemXpos}>
-        {subItems.map((subItem) => (
-          <Link to={`/goods?categoryId=${subItem.id}`} key={subItem.name}>
-            <SubItem>{subItem.name}</SubItem>
-          </Link>
-        ))}
-      </SubMenu>
+      {subItems && (
+        <SubMenuContainer>
+          <SubMenu dist={subItemXpos}>
+            {subItems.map((subItem) => (
+              <Link to={`/goods?categoryId=${subItem.id}`} key={subItem.name}>
+                <SubItem>{subItem.name}</SubItem>
+              </Link>
+            ))}
+          </SubMenu>
+        </SubMenuContainer>
+      )}
     </NavigationContainer>
   );
 };
@@ -108,6 +112,15 @@ export default Navigation;
 type SubMenuProps = {
   dist: number;
 };
+
+const SubMenuContainer = styled.div`
+  z-index: 1;
+  background-color: white;
+  position: absolute;
+  left: 0px;
+  bottom: -44px;
+  width: 100%;
+`;
 
 const CircleBorder = styled.img`
   position: absolute;
@@ -129,7 +142,9 @@ const SubItem = styled.li`
   }
 `;
 
-const NavigationContainer = styled.div``;
+const NavigationContainer = styled.div`
+  position: relative;
+`;
 
 const SubMenu = styled.ul<SubMenuProps>`
   display: flex;
