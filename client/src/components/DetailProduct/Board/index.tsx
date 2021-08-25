@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import BoardPost from '../BoardPost';
@@ -7,16 +7,19 @@ import BoardPageNumber from '../BoardPageNumber';
 import ModalPortal from '@/utils/portal';
 import PostModal from '../../common/PostModal';
 
+import { ProductContext } from '@/hooks/context';
+
 type ProductBoardProps = {
   title: string;
-  item;
 };
+
 /**
  * TODO:
  * 데이터 생성시 상위에서
  * 데이터 받아온 후  postInfoDatas  업데이트 해야합니다.
  */
-const ProductBoard = ({ title, item }: ProductBoardProps) => {
+const ProductBoard = ({ title }: ProductBoardProps) => {
+  const { info } = useContext(ProductContext);
   const [pageNumber, setPageNumber] = useState(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
   const [pageStart, setPageStart] = useState(0);
@@ -80,7 +83,7 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
       />
       {isActiveModal && (
         <ModalPortal>
-          <PostModal onClose={handleClickForClose} title={title} item={item}></PostModal>
+          <PostModal onClose={handleClickForClose} title={title} item={info}></PostModal>
         </ModalPortal>
       )}
     </ProductBoardContainer>

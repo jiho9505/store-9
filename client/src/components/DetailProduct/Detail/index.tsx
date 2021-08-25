@@ -7,7 +7,7 @@ import ShipInfo from '../ShipInfo';
 import ReplaceItemInfo from '../ReplaceItemInfo';
 import ProductBoard from '../Board';
 
-const Detail = ({ info }) => {
+const Detail = () => {
   const detailInfoPosition = useRef<HTMLDivElement>(null);
   const shipInfoPosition = useRef<HTMLDivElement>(null);
   const replaceItemInfoPosition = useRef<HTMLDivElement>(null);
@@ -15,11 +15,11 @@ const Detail = ({ info }) => {
   const qnaPosition = useRef<HTMLDivElement>(null);
 
   const TabItems = [
-    <DetailInfo images={info.content_urls}></DetailInfo>,
+    <DetailInfo></DetailInfo>,
     <ShipInfo />,
     <ReplaceItemInfo />,
-    <ProductBoard title="상품 후기" item={info} />,
-    <ProductBoard title="상품 문의" item={info} />,
+    <ProductBoard title="상품 후기" />,
+    <ProductBoard title="상품 문의" />,
   ];
 
   const refItems = [
