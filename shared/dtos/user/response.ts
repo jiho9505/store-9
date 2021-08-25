@@ -8,11 +8,17 @@ namespace UserResponse {
   };
 
   export type GetLikeList = {
-    id: number;
-    name: string;
-    thumbnail: string;
-    price: string;
-  }[];
+    likes: {
+      id: number;
+      product_id: number;
+      product: {
+        name: string;
+        price: string;
+        thumbnamil: string;
+      };
+    }[];
+    totalCount: number;
+  };
 
   export type GetAddress = AddressSchema[];
 
