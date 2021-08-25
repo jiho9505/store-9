@@ -16,7 +16,7 @@ const UserController = {
     }
   },
 
-  createLike: async (req: Request, res: Response) => {
+  toggleLike: async (req: Request, res: Response) => {
     try {
       const { productId } = req.params;
       const user: JwtSignPayload = res.locals.user;
@@ -25,7 +25,8 @@ const UserController = {
       const likeExist = await likeRepository.getLike(user.id, Number(productId));
 
       if (likeExist) {
-        res.status(constant.STATUS_CONFLICT).json({ ok: false, message: constant.LIKE_DUPLICATE });
+        await likeRepository.deleteLike(user.id, [likeExist.id]);
+        res.json({ ok: true, message: constant.DELETE_REVIEW_SUCCESS });
         return;
       }
       await likeRepository.createLike({ user_id: user.id, product_id: productId });
