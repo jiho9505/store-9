@@ -6,27 +6,6 @@ import { greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { LikeContent } from '@/components/MyPage';
 
-const likeProducts = [
-  {
-    productId: 5,
-    name: '똑똑똑 실내홥니다',
-    quantity: 1,
-    price: 6000,
-    totalPrice: 6000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-  {
-    productId: 3,
-    name: 'ㅋㅋ 슬리퍼',
-    quantity: 2,
-    price: 12000,
-    totalPrice: 24000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-];
-
 const LikePage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
   const [likes, setLikes] = useState([]);
@@ -54,11 +33,22 @@ const LikePage = () => {
 
   const handleToggleSelectAllBtn = (e) => {
     const { target } = e;
-    const likeProductId = likeProducts.map(({ productId }) => productId);
+    const likeProductId = likes.map(({ id }) => id);
     if (target.checked) {
       setSelectedProducts(new Set(likeProductId));
     } else {
       setSelectedProducts(new Set());
+    }
+  };
+
+  const handleClickDeleteBtn = async () => {
+    if (selectedProducts.size === 0) return;
+
+    try {
+      await UserApi.unlike({ data: { ids: [...selectedProducts] } });
+    } catch (err) {
+      console.log(err);
+      alert('찜 목록 삭제에 실패했습니다.');
     }
   };
 
@@ -70,6 +60,9 @@ const LikePage = () => {
         onCheckAll={handleToggleSelectAllBtn}
         selectedProduct={selectedProducts}
       />
+      <SelectProductAction>
+        <Button onClick={handleClickDeleteBtn}>선택상품 삭제</Button>
+      </SelectProductAction>
     </LikePageContainer>
   );
 };

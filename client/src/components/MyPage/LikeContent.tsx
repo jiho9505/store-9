@@ -3,7 +3,6 @@ import React, { useMemo } from 'react';
 import guguStyled from '@/core/styled';
 
 import ListTable from '../common/ListTable';
-import TableItem from '../common/TableItem';
 import Cell from '../common/Cell';
 
 // api 확정되면 type 지정
@@ -15,9 +14,8 @@ type LikeContentProps = {
 };
 
 const tableHeader = [
-  { id: 'productName', name: '상품명/옵션', width: '70%' },
-  { id: 'price', name: '상품금액', width: '10%' },
-  { id: 'total', name: '삭제', width: '10%' },
+  { id: 'productName', name: '상품명/옵션', width: '60%' },
+  { id: 'price', name: '상품금액', width: '20%' },
 ];
 
 const ProductInfoCell = ({ thumbNail, name }) => {
@@ -41,14 +39,7 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
               c: <ProductInfoCell thumbNail={product.thumbnail} name={product.name} />,
               colSpan: 1,
             },
-            { c: <Cell>{Number(product.price).toLocaleString()}원</Cell> },
-            {
-              c: (
-                <Cell>
-                  <button>삭제</button>
-                </Cell>
-              ),
-            },
+            { c: <Cell>{Number(product.price).toLocaleString()}원</Cell>, colSpan: 1 },
           ],
         };
       }),
