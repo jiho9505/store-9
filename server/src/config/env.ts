@@ -25,4 +25,18 @@ export const env = {
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT,
   },
+  aws: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secrectAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+    bucket: process.env.AWS_BUCKET_NAME,
+  },
+  github: {
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+  },
+  auth: {
+    jwtKey: process.env.JWT_KEY,
+    cookieSecret: process.env.COOKIE_SECRET,
+  },
 };
