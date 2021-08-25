@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 
-import { UserRepository } from '../repositories/user_repositiory';
+import { UserRepository } from '../repositories/UserRepositiory';
 import AuthRequest from '../../../shared/dtos/auth/request';
 import jwt from '../utils/jwt';
 import constant from '../utils/constant';
