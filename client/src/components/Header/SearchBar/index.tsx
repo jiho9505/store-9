@@ -5,11 +5,13 @@ import { getRegExp } from 'korean-regexp';
 
 import WordList from '../WordList';
 
+import RefreshStore from '@/stores/RefreshStore';
 import words from '@/static/constants/words';
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 import useHistory from '@/hooks/customHooks/useHistory';
+import '@/static/assets/img/search.png';
 
 const timeToShowError = 2000;
 
@@ -21,6 +23,7 @@ const SearchBar = () => {
   const [recommendWords, setRecommendWords] = useState<string[]>([]);
   const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(-1);
   const routerHistory = useHistory();
+  const { refresh } = RefreshStore;
 
   useEffect(() => {
     const registerDomClickEvent = (e: Event) => {
@@ -37,10 +40,6 @@ const SearchBar = () => {
     setShowWordList(true);
   };
 
-  /**
-   * TODO:
-   * Content : Router 수정 후 url 재수정해야합니다.
-   */
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
@@ -55,22 +54,17 @@ const SearchBar = () => {
       setHistory([]);
     } else if (target.id === 'content') {
       movePageBySearch(target.innerText);
-      routerHistory.push(`/search`);
-      // routerHistory.push(`/search?item=${target.innerText}`);
+      routerHistory.push(`/goods?word=${target.innerText}`);
     } else return;
   };
 
-  /**
-   * TODO:
-   * Router 수정 후 url 재수정해야합니다.
-   */
   const movePageBySearch = (value: string) => {
     const newHistory = history.length === 10 ? [...history].slice(0, 9) : [...history];
     setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
     setShowWordList(false);
-    routerHistory.push(`/search`);
-    // routerHistory.push(`/search?item=${value}`);
+    refresh();
+    routerHistory.push(`/goods?word=${value}`);
   };
 
   const handleClickImg = () => {

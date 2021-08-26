@@ -72,6 +72,7 @@ const CarouselContainer = styled.div`
   position: relative;
   width: 100%;
   overflow: hidden;
+  transform: translateY(-30px);
 `;
 
 const ImageContainer = styled.div<ImageProps>`

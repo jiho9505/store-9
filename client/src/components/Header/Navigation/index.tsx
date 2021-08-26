@@ -4,51 +4,60 @@ import { Link } from '@/core/Router';
 
 import '@/static/assets/img/circle.png';
 
-import { categories, subCategories } from '@/static/constants';
+import RefreshStore from '@/stores/RefreshStore';
+import { testCategories, testSubCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
+import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 const weightWhenSubItemsLengthEven = -50;
+const timeToMoveOtherMenu = 150;
+const initCategoryData = [{ name: '전체', level: 1, id: 0, parent_id: null }];
 
-/**
- * TODO:
- * 쿼리스트링 id가 가르키는 메뉴명을 동그라미
- * state도 추가
- * 아래의 주석단 부분에 로직 추가
- * 해야합니다.
- */
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
+  const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
+  const [categories, setCategories] = useState(initCategoryData);
+  const [subCategories, setSubCategories] = useState([]);
+  const { refresh } = RefreshStore;
 
   useEffect(() => {
+    setCategories([...categories, ...testCategories]);
+    setSubCategories(testSubCategories);
+
     const handleMouseOverOnDocument = (e: Event) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
       if (!target.closest('#NavBorder')) {
         setSubItems([]);
         setMouseOverdItemName('');
-        // 쿼리스트링 id가 가르키는 메뉴명을 동그라미 추가
+        getQueryStringValue('categoryId')
+          ? setMatchedItemIdToURL(Number(getQueryStringValue('categoryId')))
+          : setMatchedItemIdToURL(-1);
       }
     };
 
     document.addEventListener('mouseover', handleMouseOverOnDocument);
-    return () => document.removeEventListener('mouseover', handleMouseOverOnDocument);
+    return () => {
+      document.removeEventListener('mouseover', handleMouseOverOnDocument);
+    };
   }, []);
 
   let timer: number = 0;
 
   const handleMouseOverLink = (e: React.ChangeEvent<HTMLAnchorElement>) => {
     const waitTime = new Promise((resolve) => {
-      timer = setTimeout(resolve, 150);
+      timer = setTimeout(resolve, timeToMoveOtherMenu);
     });
 
+    const id = Number(e.currentTarget.dataset.id);
     const itemName = e.currentTarget.innerText;
     const itemXPos = e.currentTarget.getBoundingClientRect().x;
 
     waitTime.then(() => {
       if (!timer) return;
-      const newSubItems = subCategories.filter((item) => item.parentName === itemName);
+      const newSubItems = subCategories.filter((item) => item.parent_id === id);
 
       const extraXposToRemove =
         newSubItems.length % 2
@@ -57,8 +66,8 @@ const Navigation = () => {
 
       setSubItemXpos(itemXPos - extraXposToRemove);
       setSubItems(newSubItems);
-      // 쿼리스트링 id가 가르키는 메뉴명을 동그라미 해제
       setMouseOverdItemName(itemName);
+      setMatchedItemIdToURL(-1);
     });
   };
 
@@ -66,29 +75,45 @@ const Navigation = () => {
     timer = 0;
   };
 
+  const handleClickLink = () => {
+    refresh();
+  };
+
   return (
     <NavigationContainer id="NavBorder">
       <Menu>
-        {categories.map(([category, path]) => (
-          <Item key={category}>
+        {categories.map((category) => (
+          <Item key={category.name}>
             <CategoryLink
+              onClick={handleClickLink}
               onMouseOver={handleMouseOverLink}
               onMouseOut={handleMouseOutLink}
-              to={path}
+              to={`/goods?categoryId=${category.id}`}
+              data-id={category.id}
             >
-              {category}
+              {category.name}
             </CategoryLink>
-            {mouseOverdItemName === category && <CircleBorder src="images/circle.png" />}
+            {(mouseOverdItemName === category.name || matchedItemIdToURL === category.id) && (
+              <CircleBorder src="images/circle.png" />
+            )}
           </Item>
         ))}
       </Menu>
-      <SubMenu dist={subItemXpos}>
-        {subItems.map((subItem) => (
-          <Link to="/total" key={subItem.name}>
-            <SubItem>{subItem.name}</SubItem>
-          </Link>
-        ))}
-      </SubMenu>
+      {subItems && (
+        <SubMenuContainer>
+          <SubMenu dist={subItemXpos}>
+            {subItems.map((subItem) => (
+              <Link
+                to={`/goods?categoryId=${subItem.id}`}
+                onClick={handleClickLink}
+                key={subItem.name}
+              >
+                <SubItem>{subItem.name}</SubItem>
+              </Link>
+            ))}
+          </SubMenu>
+        </SubMenuContainer>
+      )}
     </NavigationContainer>
   );
 };
@@ -98,6 +123,15 @@ export default Navigation;
 type SubMenuProps = {
   dist: number;
 };
+
+const SubMenuContainer = styled.div`
+  z-index: 1;
+  background-color: white;
+  position: absolute;
+  left: 0px;
+  bottom: -44px;
+  width: 100%;
+`;
 
 const CircleBorder = styled.img`
   position: absolute;
@@ -119,7 +153,9 @@ const SubItem = styled.li`
   }
 `;
 
-const NavigationContainer = styled.div``;
+const NavigationContainer = styled.div`
+  position: relative;
+`;
 
 const SubMenu = styled.ul<SubMenuProps>`
   display: flex;
