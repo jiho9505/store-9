@@ -28,7 +28,7 @@ const UserController = {
       ]);
 
       if (likeExist) {
-        await likeRepository.deleteLike(user.id, [likeExist.id]);
+        await likeRepository.deleteLike(user.id, [likeExist[0].id]);
         res.json({ ok: true, message: constant.DELETE_REVIEW_SUCCESS });
         return;
       }
