@@ -23,7 +23,9 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
     if (curLocation === '/cart') {
       history.push('/order');
     } else if (curLocation === '/order') {
-      await OrderApi.order({ id: 1, ...form });
+      const paresedData = JSON.parse(localStorage.getItem('cartInfo'));
+      const { cartId, product } = paresedData;
+      await OrderApi.order({ id: cartId, ...form, selectedItem: Object.values(product) });
     }
   };
 
