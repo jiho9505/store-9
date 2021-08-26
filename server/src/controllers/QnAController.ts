@@ -41,7 +41,7 @@ namespace QnAController {
 
   export const create: RouteHandler<QnARequest.Create, QnAResponse.Create> = async (req, res) => {
     try {
-      const { userId = 1 } = res.locals;
+      const userId = res.locals?.user?.id || 1;
 
       const { title, content, productId, images = '' } = req.body;
 
