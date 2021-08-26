@@ -7,12 +7,15 @@ import QnaApi from '@/apis/QnaApi';
 import RefreshStore from '@/stores/RefreshStore';
 
 import DurationFilter from '@/components/common/DurationFilter';
+import Pagination from '@/components/common/Pagination';
 import { QnAContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
 const QnAPage = () => {
   const { refreshComponent, refresh } = RefreshStore;
-  const [questions, setQuestions] = useState({});
+  const [questions, setQuestions] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [curPage, setCurPage] = useState(1);
   const { form, onChange, onSetForm } = useInput({
     initialState: {
       start: '',
@@ -22,17 +25,21 @@ const QnAPage = () => {
 
   useEffect(() => {
     (async () => {
-      const questions = await getQnas(form.start, form.finish);
-      setQuestions(questions.data);
+      await getQnas(form.start, form.finish);
     })();
   }, [refreshComponent]);
 
-  const getQnas = useCallback(async (startDate, endDate) => {
-    const query: { params?: { [key: string]: string } } = {};
+  const getQnas = useCallback(async (startDate, endDate, page = 0) => {
+    let query: { startDate?: string; endDate?: string; page?: number } = {};
     if (startDate && endDate) {
-      query.params = { startDate, endDate };
+      query = { startDate, endDate };
     }
-    return await QnaApi.getList(query);
+    query.page = page;
+    const questions = await QnaApi.getList(query);
+    const { data } = questions;
+    setQuestions(data.qnas);
+    setTotalCount(data.totalCount);
+    setCurPage(page + 1);
   }, []);
 
   const handleSubmitDate = async () => {
@@ -40,7 +47,13 @@ const QnAPage = () => {
     if (!start || !finish) {
       return;
     }
-    refresh();
+    await getQnas(start, finish);
+  };
+
+  const handleChangePage = async (page: number) => {
+    const { start, finish } = form;
+    await getQnas(start, finish, page - 1);
+    setCurPage(page);
   };
 
   return (
@@ -52,6 +65,7 @@ const QnAPage = () => {
         onSubmit={handleSubmitDate}
       />
       <QnAContent questions={questions} />
+      <Pagination totalCount={totalCount} curPage={curPage} onChange={handleChangePage} />
     </QnAPageContainer>
   );
 };
