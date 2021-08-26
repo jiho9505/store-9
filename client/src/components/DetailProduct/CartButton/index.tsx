@@ -8,16 +8,17 @@ import { ProductContext } from '@/hooks/context';
 import ModalPortal from '@/utils/portal';
 import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 
-type MessageModeType = 'success' | 'fail';
 type CartModeType = 'notlogin' | 'add';
+
 const addCartMsg = '장바구니에 추가하였습니다.';
 
 const Cart = () => {
   const { info } = useContext(ProductContext);
-  const [showMessage, setshowMessage] = useState<boolean>(false);
-  const [messageContent, setMessageContent] = useState<string>('');
-  const [messageMode, setMessageMode] = useState<MessageModeType>('fail');
-
+  const [message, setMessage] = useState<Message>({
+    showMessage: false,
+    messageContent: '',
+    messageMode: 'fail',
+  });
   let timer: number = 0;
 
   useEffect(() => {
@@ -32,15 +33,13 @@ const Cart = () => {
    */
   const handleClickText = () => {
     viewMsgByUserStatus('add');
-    // history.push('/cart');
   };
 
   const createMsg = (mode: MessageModeType, title: string) => {
-    setshowMessage(true);
-    setMessageMode(mode);
-    setMessageContent(title);
+    setMessage({ showMessage: true, messageContent: title, messageMode: mode });
+
     timer = setTimeout(() => {
-      setshowMessage(false);
+      setMessage({ ...message, showMessage: false });
     }, showErrorMsgTime);
   };
 
@@ -55,14 +54,16 @@ const Cart = () => {
   return (
     <CartContainer onClick={handleClickText}>
       <span>장바구니</span>
-      {showMessage && (
+      {message.showMessage && (
         <ModalPortal>
-          <Message text={messageContent} mode={messageMode} />
+          <Message text={message.messageContent} mode={message.messageMode} />
         </ModalPortal>
       )}
     </CartContainer>
   );
 };
+
+export default Cart;
 
 const CartContainer = styled.div`
   display: flex;
@@ -77,5 +78,3 @@ const CartContainer = styled.div`
     font-family: ${baeminFont};
   }
 `;
-
-export default Cart;

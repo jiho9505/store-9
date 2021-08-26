@@ -20,14 +20,16 @@ type ProductBoardProps = {
 
 const ProductBoard = ({ title }: ProductBoardProps) => {
   const { info } = useContext(ProductContext);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState<number>(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
-  const [pageStart, setPageStart] = useState(0);
-  const [pageEnd, setPageEnd] = useState(10);
-  const [isActiveModal, setIsActiveModal] = useState(false);
-  const [showContent, setShowContent] = useState([]);
-  const [showMessage, setshowMessage] = useState<boolean>(false);
-  const [messageContent, setMessageContent] = useState<string>('');
+  const [pageStart, setPageStart] = useState<number>(0);
+  const [pageEnd, setPageEnd] = useState<number>(10);
+  const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
+  const [showContent, setShowContent] = useState<number[]>([]);
+  const [message, setMessage] = useState<Message>({
+    showMessage: false,
+    messageContent: '',
+  });
   const { products } = DetailProductStore;
 
   let timer: number = 0;
@@ -38,11 +40,9 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   }, []);
 
   const createMsg = (title: string) => {
-    setshowMessage(true);
-
-    setMessageContent(title);
+    setMessage({ showMessage: true, messageContent: title });
     timer = setTimeout(() => {
-      setshowMessage(false);
+      setMessage({ ...message, showMessage: false });
     }, showErrorMsgTime);
   };
 
@@ -125,9 +125,9 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
           />
         </ModalPortal>
       )}
-      {showMessage && (
+      {message.showMessage && (
         <ModalPortal>
-          <Message text={messageContent} mode="fail" />
+          <Message text={message.messageContent} mode="fail" />
         </ModalPortal>
       )}
     </ProductBoardContainer>

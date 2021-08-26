@@ -8,7 +8,6 @@ import { ProductContext } from '@/hooks/context';
 import ModalPortal from '@/utils/portal';
 import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 
-type MessageModeType = 'success' | 'fail';
 type LikeModeType = 'notlogin' | 'add' | 'remove';
 const addLikeMsg = '관심목록에 추가하였습니다.';
 const removeLikeMsg = '관심목록에서 제거하였습니다.';
@@ -16,10 +15,11 @@ const removeLikeMsg = '관심목록에서 제거하였습니다.';
 const Like = () => {
   const { info } = useContext(ProductContext);
   const [isIconActive, setIsIconActive] = useState(false);
-  const [showMessage, setshowMessage] = useState<boolean>(false);
-  const [messageContent, setMessageContent] = useState<string>('');
-  const [messageMode, setMessageMode] = useState<MessageModeType>('fail');
-
+  const [message, setMessage] = useState<Message>({
+    showMessage: false,
+    messageContent: '',
+    messageMode: 'fail',
+  });
   let timer: number = 0;
 
   useEffect(() => {
@@ -28,11 +28,10 @@ const Like = () => {
   }, []);
 
   const createMsg = (mode: MessageModeType, title: string) => {
-    setshowMessage(true);
-    setMessageMode(mode);
-    setMessageContent(title);
+    setMessage({ showMessage: true, messageContent: title, messageMode: mode });
+
     timer = setTimeout(() => {
-      setshowMessage(false);
+      setMessage({ ...message, showMessage: false });
     }, showErrorMsgTime);
   };
 
@@ -68,14 +67,16 @@ const Like = () => {
   return (
     <LikeContainer>
       <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickBtn}></i>
-      {showMessage && (
+      {message.showMessage && (
         <ModalPortal>
-          <Message text={messageContent} mode={messageMode} />
+          <Message text={message.messageContent} mode={message.messageMode} />
         </ModalPortal>
       )}
     </LikeContainer>
   );
 };
+
+export default Like;
 
 const LikeContainer = styled.div`
   display: flex;
@@ -89,5 +90,3 @@ const LikeContainer = styled.div`
     font-size: 25px;
   }
 `;
-
-export default Like;
