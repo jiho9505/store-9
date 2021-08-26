@@ -48,9 +48,8 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
     e.stopPropagation();
     const [parentIdx, childIdx] = idx.split('_');
     const { orderItems } = orderProducts[parentIdx];
-    const { id, thumbnail, productName } = orderItems[childIdx];
-
-    setSelectedProduct({ product: { id, thumbnail, productName } });
+    const { productId, thumbnail, productName } = orderItems[childIdx];
+    setSelectedProduct({ product: { id: productId, thumbnail, productName } });
     handleOpenModal();
   };
 
