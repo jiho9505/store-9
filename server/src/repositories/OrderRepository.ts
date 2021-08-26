@@ -35,9 +35,19 @@ export default class OrderRepository extends Repository<Order> {
       OFFSET ${page * size}
     `);
 
-    const totalCount = await this.count({ where: { user_id: userId } });
+    const totalCount = await this.query(`
+      SELECT count(joi.id) AS count 
+      FROM orders o
+      LEFT JOIN (
+        SELECT *
+        FROM order_items
+      ) joi
+      ON o.id = joi.order_id
+      WHERE o.user_id = ${userId}
+      GROUP BY o.user_id
+    `);
 
-    return { orders, totalCount };
+    return { orders, totalCount: Number(totalCount[0].count) };
   }
 
   order({
