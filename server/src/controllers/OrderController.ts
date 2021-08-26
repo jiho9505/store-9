@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+import { JwtSignPayload } from '../utils/types';
 import OrderRequest from '../../../shared/dtos/order/request';
 import OrderResponse from '../../../shared/dtos/order/response';
 import OrderRepository from '../repositories/OrderRepository';
@@ -8,10 +9,52 @@ namespace OrderController {
     req,
     res
   ) => {
-    const { start, end } = req.query;
+    // const { start, end } = req.query;
+    const user: JwtSignPayload = res.locals.user;
+    const { startDate, endDate, size, page } = req.query;
     try {
-      const result = await getCustomRepository(OrderRepository).getList({ userId: 1, start, end });
-      res.send(result);
+      // const result = await getCustomRepository(OrderRepository).getList({ userId: 1, start, end });
+      // console.log(result);
+      // res.send(result);
+      const results = await getCustomRepository(OrderRepository).getList({
+        userId: user.id,
+        start: startDate,
+        end: endDate,
+        size,
+        page,
+      });
+
+      const data = results.reduce((acc, cur) => {
+        const lastOrder = acc[acc.length - 1];
+
+        if (lastOrder?.id === cur.id) {
+          lastOrder.orderItems.push({
+            productName: cur.name,
+            thumbnail: cur.thumbnail,
+            price: cur.price,
+            amount: cur.amount,
+            isReviewed: cur.is_reviewed,
+          });
+
+          return acc;
+        } else {
+          return acc.concat({
+            id: cur.id,
+            updatedAt: cur.updated_at,
+            orderItems: [
+              {
+                productName: cur.name,
+                thumbnail: cur.thumbnail,
+                price: cur.price,
+                amount: cur.amount,
+                isReviewed: cur.is_reviewed,
+              },
+            ],
+          });
+        }
+      }, []);
+
+      res.json({ ok: true, data });
     } catch (e) {
       console.error(e.message);
 

@@ -7,11 +7,11 @@ import OrderItem from '../entities/order_item';
 export default class OrderRepository extends Repository<Order> {
   getList({
     userId,
-    status = OrderStatus.PURCHASING_COMPLETE,
-    page = 0,
-    size = 20,
     start = new Date(0),
     end = new Date(),
+    size = 20,
+    page = 0,
+    status = OrderStatus.PURCHASING_COMPLETE,
   }: {
     userId: number;
     status?: OrderStatus;
