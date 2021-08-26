@@ -4,7 +4,7 @@ import OrderItemModel from './OrderItemModel';
 
 export default class OrderModel implements OrderSchema {
   id: number;
-  userId: number;
+  userId?: number;
   isReviewed: boolean;
   orderItems: OrderItemModel[];
   status: OrderStatus;
