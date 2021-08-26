@@ -19,6 +19,7 @@ type ItemListsProps = {
 /**
  * TODO:
  * API 연동 후 값 동적으로 넣어야 합니다.
+ * 별점과 라이크는 0이어도 띄우고 옆에 개수를 나타낸다.
  */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
