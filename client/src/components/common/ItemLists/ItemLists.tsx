@@ -8,7 +8,8 @@ import StarComponent from '../Star';
 
 import '@/static/assets/img/sampleItem.jpeg';
 import '@/static/assets/img/soldout.png';
-import { red1 } from '@/static/style/common';
+import EMPTY from '@/static/assets/img/empty.png';
+import { baeminFont, greySpan, red1 } from '@/static/style/common';
 
 type ItemListsProps = {
   observeTag?: () => void;
@@ -21,21 +22,28 @@ type ItemListsProps = {
  */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
-    return products.map((item, idx) => (
-      <Item key={idx} className="item">
-        <ItemImage productImage={item.image} quantity={item.quantity}></ItemImage>
-        <ItemContent item={item}></ItemContent>
-        {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
-        <StarContainer>
-          <StarComponent score={5} />
-          <span>352</span>
-        </StarContainer>
-        <LikeContainer>
-          <i className="fas fa-heart"></i>
-          <span>777</span>
-        </LikeContainer>
-      </Item>
-    ));
+    return products.length > 0 ? (
+      products.map((item, idx) => (
+        <Item key={idx} className="item">
+          <ItemImage productImage={item.image} quantity={item.quantity}></ItemImage>
+          <ItemContent item={item}></ItemContent>
+          {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
+          <StarContainer>
+            <StarComponent score={5} />
+            <span>352</span>
+          </StarContainer>
+          <LikeContainer>
+            <i className="fas fa-heart"></i>
+            <span>777</span>
+          </LikeContainer>
+        </Item>
+      ))
+    ) : (
+      <EmptyContainer>
+        <img src={EMPTY} />
+        <EmptyMessage>해당 제품이 없습니다...</EmptyMessage>
+      </EmptyContainer>
+    );
   };
 
   useEffect(() => {
@@ -51,6 +59,21 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
     </>
   );
 };
+
+const EmptyMessage = styled.span`
+  color: ${greySpan};
+  font-size: 20px;
+  font-family: ${baeminFont};
+`;
+
+const EmptyContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 80px;
+`;
 
 const LikeContainer = styled.div`
   margin-top: 4px;
