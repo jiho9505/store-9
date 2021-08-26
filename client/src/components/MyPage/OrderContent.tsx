@@ -20,10 +20,10 @@ const tableHeader = [
   { id: 'review', name: '리뷰작성', width: '15%' },
 ];
 
-const ProductInfoCell = ({ thunbNail, name }) => {
+const ProductInfoCell = ({ thumbNail, name }) => {
   return (
     <Cell textAlign="left">
-      <ProdcutImg src={thunbNail} />
+      <ProdcutImg referrerPolicy="no-referrer" src={thumbNail} />
       <span>{name}</span>
     </Cell>
   );
@@ -46,35 +46,13 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 
   const handleClickReviewBtn = (idx) => (e) => {
     e.stopPropagation();
-    const { thumbnail, name, product_id } = orderProducts[idx];
-    setSelectedProduct({ product: { id: product_id, thumbnail, name } });
+    const [parentIdx, childIdx] = idx.split('_');
+    const { orderItems } = orderProducts[parentIdx];
+    const { id, thumbnail, productName } = orderItems[childIdx];
+
+    setSelectedProduct({ product: { id, thumbnail, productName } });
     handleOpenModal();
   };
-
-  const tableBody = useMemo(() => {
-    return orderProducts.map((orderProduct, idx) => {
-      const { created_at, name, price, amount, thumbnail, is_reviewed } = orderProduct;
-      return {
-        id: idx,
-        cells: [
-          { c: <Cell>{getDateFormat(created_at)}</Cell>, colSpan: 1 },
-          { c: <ProductInfoCell thunbNail={thumbnail} name={name} />, colSpan: 1 },
-          {
-            c: (
-              <Cell>
-                {Number(price).toLocaleString()}원/{amount}개
-              </Cell>
-            ),
-            colSpan: 1,
-          },
-          {
-            c: <ReviewButton isReviewed={is_reviewed} onClick={handleClickReviewBtn(idx)} />,
-            colSpan: 1,
-          },
-        ],
-      };
-    });
-  }, [orderProducts]);
 
   const handleCloseModal = () => {
     setActiveModal(false);
@@ -83,6 +61,40 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
   const handleOpenModal = () => {
     setActiveModal(true);
   };
+
+  const tableBody = useMemo(() => {
+    const result = [];
+    orderProducts.forEach((orderProduct, idx) => {
+      const { id, updatedAt, orderItems } = orderProduct;
+      orderItems.forEach((orderItem, sub_idx) => {
+        const { productName, thumbnail, price, isReviewed, amount } = orderItem;
+        result.push({
+          id: `${idx}_${sub_idx}`,
+          cells: [
+            { c: <Cell>{getDateFormat(updatedAt)}</Cell>, colSpan: 1 },
+            { c: <ProductInfoCell thumbNail={thumbnail} name={productName} />, colSpan: 1 },
+            {
+              c: (
+                <Cell>
+                  {Number(price).toLocaleString()}원/{amount}개
+                </Cell>
+              ),
+            },
+            {
+              c: (
+                <ReviewButton
+                  isReviewed={isReviewed}
+                  onClick={handleClickReviewBtn(`${idx}_${sub_idx}`)}
+                />
+              ),
+              colSpan: 1,
+            },
+          ],
+        });
+      });
+    });
+    return result;
+  }, [orderProducts]);
 
   return (
     <OrderContentContainer>

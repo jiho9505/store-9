@@ -37,8 +37,8 @@ const OrderPage = () => {
         query.page = page;
       }
       const orderProducts = await OrderApi.getList(query);
-      console.log(orderProducts);
-      setOrderedProducts(orderProducts);
+      console.log(orderProducts.data);
+      setOrderedProducts(orderProducts.data);
     },
     []
   );
