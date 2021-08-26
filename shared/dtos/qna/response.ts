@@ -4,11 +4,15 @@ namespace QnAResponse {
   export type GetList = {
     qnas: {
       id: number;
-      thumbnail: string;
-      name: string;
       title: string;
       content: string;
       createdAt: Date;
+      product: {
+        id: number;
+        name: string;
+        price: number;
+        thumbnail: string;
+      };
     }[];
     totalCount: number;
   };
