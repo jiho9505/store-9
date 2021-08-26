@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
+import { FormContext } from '@/hooks/context';
+
+import OrderApi from '@/apis/OrderApi';
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
 import useHistory from '@/hooks/customHooks/useHistory';
 
@@ -10,13 +13,17 @@ type PricePannelProps = {
 };
 
 const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
+  const { form } = useContext(FormContext) || {};
+
   const curLocation = useLocation();
   const history = useHistory();
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
 
-  const handleClickOrderBtn = () => {
+  const handleClickOrderBtn = async () => {
     if (curLocation === '/cart') {
       history.push('/order');
+    } else if (curLocation === '/order') {
+      await OrderApi.order({ id: 1, ...form });
     }
   };
 
