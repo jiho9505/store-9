@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { baeminFont, greyBg1, red1 } from '@/static/style/common';
 
-type Mode = 'success' | 'fail';
+type Mode = 'success' | 'fail' | 'caution';
 type MessageProps = {
   children?: React.ReactNode;
   mode: Mode;
@@ -24,8 +24,14 @@ const Message = ({ text, children, mode }: MessageProps) => {
     } else if (mode === 'fail') {
       return (
         <FailContainer>
-          <i className="fas fa-exclamation-triangle"></i>
+          <i className="fas fa-exclamation-circle"></i>
         </FailContainer>
+      );
+    } else if (mode === 'caution') {
+      return (
+        <CautionContainer>
+          <i className="fas fa-exclamation-triangle"></i>
+        </CautionContainer>
       );
     }
   };
@@ -95,5 +101,12 @@ const FailContainer = styled.div`
   i {
     margin-right: 10px;
     color: ${red1};
+  }
+`;
+
+const CautionContainer = styled.div`
+  i {
+    margin-right: 10px;
+    color: #fcf003;
   }
 `;
