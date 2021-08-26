@@ -31,7 +31,7 @@ const Input = ({
   size,
   value,
   type,
-  placeholder,
+  placeholder = '',
   variant,
   error,
   ...otherProps
@@ -45,7 +45,7 @@ const Input = ({
         required={required}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder={placeholder || ''}
+        placeholder={placeholder}
         variant={variant}
         error={error}
         {...otherProps}
