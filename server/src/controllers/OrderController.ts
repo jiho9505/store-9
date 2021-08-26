@@ -69,9 +69,9 @@ namespace OrderController {
   export const order: RouteHandler<OrderRequest.Order> = async (req, res) => {
     try {
       // login check
-      const { id = 1 } = res.locals.user;
+      const userId = res.locals?.user?.id || 1;
 
-      const result = await getCustomRepository(OrderRepository).order({ userId: id, ...req.body });
+      const result = await getCustomRepository(OrderRepository).order({ userId, ...req.body });
 
       res.json({ ok: result.affected > 0 });
     } catch (e) {
@@ -87,9 +87,9 @@ namespace OrderController {
   ) => {
     try {
       // login check
-      const { id = 1 } = res.locals.user;
+      const userId = res.locals?.user?.id || 1;
 
-      const order = await getCustomRepository(OrderRepository).getCart({ userId: id });
+      const order = await getCustomRepository(OrderRepository).getCart({ userId });
 
       res.json({
         ok: true,
@@ -116,7 +116,7 @@ namespace OrderController {
 
   export const addCartItem: RouteHandler<OrderRequest.AddCartItem> = async (req, res) => {
     try {
-      const { userId = 1 } = res.locals;
+      const userId = res.locals?.user?.id || 1;
       const { productId, amount } = req.body;
 
       await getCustomRepository(OrderRepository).addCartItem({
