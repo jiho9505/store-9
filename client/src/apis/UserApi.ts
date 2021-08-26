@@ -15,6 +15,10 @@ class UserApi extends BaseApi {
     return this.post(`/likes/${productId}`, {}, { isRequiredLogin: true });
   }
 
+  likeMany({ productId }: UserReqeust.Likes) {
+    return this.post(`/likes/many/${productId}`, {}, { isRequiredLogin: true });
+  }
+
   unlike(ids) {
     return this.delete(`/likes`, ids, { isRequiredLogin: true });
   }
