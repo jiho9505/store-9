@@ -25,7 +25,7 @@ const QnAPage = () => {
 
   useEffect(() => {
     (async () => {
-      await getQnas(form.start, form.finish);
+      await getQnas(form.start, form.finish, curPage - 1);
     })();
   }, [refreshComponent]);
 

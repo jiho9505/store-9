@@ -77,10 +77,10 @@ namespace QnAController {
 
   export const update: RouteHandler<QnARequest.Update, QnAResponse.Update> = async (req, res) => {
     try {
-      const { id, title, content, images = '/' } = req.body;
+      const { qnaId, title, content, images = '/' } = req.body;
 
       const result = await getCustomRepository(QnARepository).updateQnA({
-        qnaId: id,
+        qnaId,
         content,
         title,
         images,

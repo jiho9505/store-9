@@ -12,7 +12,7 @@ class QnaApi extends BaseApi {
   }
 
   update(body: QnARequest.Update) {
-    return this.put<QnAResponse.Update>(`/${body.qnaId}`, body, { isRequiredLogin: true });
+    return this.put<QnAResponse.Update>('/', body, { isRequiredLogin: true });
   }
 
   remove({ qnaId }: QnARequest.Remove) {

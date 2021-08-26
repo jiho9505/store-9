@@ -28,6 +28,7 @@ const PostModal = ({
 }: PostModalProps) => {
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
+  console.log(product);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -100,7 +101,7 @@ const PostModal = ({
     } else if (form === 'QNA') {
       modifyAction.fn = async () => {
         await QnaApi.update({
-          id,
+          qnaId: id,
           content,
           title,
         });
