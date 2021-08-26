@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+
 import { baemin, baeminFont, baeminThickFont, lightBlack } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 const filterName: string[] = ['추천순', '인기순', '최신순', '높은가격순', '낮은가격순'];
 
 type ItemFilterBarProps = {
-  handleFilter: (num: number) => void;
+  handleFilter: (num: string) => void;
   totalProductCount: number;
 };
 
@@ -16,7 +17,7 @@ const ItemFilterBar = ({ handleFilter, totalProductCount }: ItemFilterBarProps) 
   const handleClickFilter = (e: React.MouseEvent<HTMLLIElement>) => {
     const choicedIndex = Number(e.currentTarget.dataset.idx);
     setIndex(choicedIndex);
-    handleFilter(choicedIndex);
+    handleFilter(e.currentTarget.dataset.idx);
   };
 
   const createFilter = () => {
