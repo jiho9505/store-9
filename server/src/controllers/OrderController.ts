@@ -10,18 +10,19 @@ namespace OrderController {
     res
   ) => {
     // login check 해야함
-    const { id = 1 } = res.locals.user;
-    const { startDate, endDate, size, page } = req.query;
     try {
+      const userId = res.locals?.user?.id || 1;
+      const { startDate, endDate, size, page } = req.query;
+
       const results = await getCustomRepository(OrderRepository).getList({
-        userId: id,
+        userId,
         startDate,
         endDate,
         size,
         page,
       });
 
-      const data = results.reduce((acc, cur) => {
+      const orders = results.orders.reduce((acc, cur) => {
         const lastOrder = acc[acc.length - 1];
 
         if (lastOrder?.id === cur.id) {
@@ -51,7 +52,13 @@ namespace OrderController {
         }
       }, []);
 
-      res.json({ ok: true, data });
+      res.json({
+        ok: true,
+        data: {
+          orders,
+          totalCount: results.totalCount,
+        },
+      });
     } catch (e) {
       console.error(e.message);
 

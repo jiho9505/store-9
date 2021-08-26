@@ -1,19 +1,21 @@
 import { OrderItemSchema } from '../order-item/schema';
-import { OrderSchema } from './schema';
 
 namespace OrderResponse {
   export type GetList = {
-    id: number;
-    orderItems: {
+    totalCount: number;
+    orders: {
       id: number;
-      productName: string;
-      thumbnail: string;
-      price: number;
-      amount: number;
-      isReviewed: null | number;
+      orderItems: {
+        id: number;
+        productName: string;
+        thumbnail: string;
+        price: number;
+        amount: number;
+        isReviewed: null | number;
+      }[];
+      updatedAt: Date;
     }[];
-    updatedAt: Date;
-  }[];
+  };
 
   export type GetCart = {
     id: number;

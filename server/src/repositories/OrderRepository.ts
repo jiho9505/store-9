@@ -5,7 +5,7 @@ import OrderItem from '../entities/order_item';
 
 @EntityRepository(Order)
 export default class OrderRepository extends Repository<Order> {
-  getList({
+  async getList({
     userId,
     page = 0,
     size = 20,
@@ -22,10 +22,10 @@ export default class OrderRepository extends Repository<Order> {
     const start = new Date(new Date(startDate).setHours(0, 0, 0, 0)).toISOString().slice(0, 10);
     const end = new Date(new Date(endDate).setHours(23, 59, 59, 59)).toISOString().slice(0, 10);
 
-    const result = this.query(`
+    const orders = await this.query(`
       SELECT o.id, o.updated_at, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
       FROM orders o
-      LEFT JOIN order_items oi ON o.id = oi.order_id
+      INNER JOIN order_items oi ON o.id = oi.order_id
       LEFT JOIN products p ON oi.product_id = p.id
       LEFT JOIN reviews r ON r.product_id = p.id
       WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${start}' AND '${end}'
@@ -35,7 +35,9 @@ export default class OrderRepository extends Repository<Order> {
       OFFSET ${page * size}
     `);
 
-    return result;
+    const totalCount = await this.count({ where: { user_id: userId } });
+
+    return { orders, totalCount };
   }
 
   order({
