@@ -36,7 +36,7 @@ namespace OrderController {
 
           return acc;
         } else {
-          return acc.concat({
+          acc.push({
             id: cur.id,
             updatedAt: cur.updated_at,
             orderItems: [
@@ -49,6 +49,8 @@ namespace OrderController {
               },
             ],
           });
+
+          return acc;
         }
       }, []);
 
