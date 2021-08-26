@@ -117,7 +117,12 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       />
       {isActiveModal && (
         <ModalPortal>
-          <PostModal onClose={handleClickForClose} title={title} item={info}></PostModal>
+          <PostModal
+            onClose={handleClickForClose}
+            title={title}
+            item={info}
+            formType={{ form: title === '상품 후기' ? 'REVIEW' : 'QNA', mode: 'ENROLL' }}
+          />
         </ModalPortal>
       )}
       {showMessage && (
