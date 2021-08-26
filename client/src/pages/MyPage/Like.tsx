@@ -79,7 +79,7 @@ const LikePage = () => {
     }
   };
 
-  const handlePageChange = async (page: number) => {
+  const handleChangePage = async (page: number) => {
     await getLikeList(page);
   };
 
@@ -95,7 +95,7 @@ const LikePage = () => {
         <Button onClick={handleClickDeleteBtn}>선택상품 삭제</Button>
         <Button onClick={handleAddLike}>추가 테스트</Button>
       </SelectProductAction>
-      <Pagination totalCount={totalCount} onChange={handlePageChange} curPage={curPage} />
+      <Pagination totalCount={totalCount} onChange={handleChangePage} curPage={curPage} />
     </LikePageContainer>
   );
 };

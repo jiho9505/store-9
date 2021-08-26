@@ -32,7 +32,7 @@ const OrderPage = () => {
   }, [refreshComponent]);
 
   const getOrderProducts = useCallback(
-    async (startDate?: string, endDate?: string, page: number = 0) => {
+    async (startDate: string, endDate: string, page: number = 0) => {
       const query: { startDate?: string; endDate?: string; page?: number } = {};
       if (startDate && endDate) {
         query.startDate = startDate;
@@ -45,6 +45,7 @@ const OrderPage = () => {
       const { data } = orderProducts;
       setOrderedProducts(data.orders);
       setTotalCount(data.totalCount);
+      setCurPage(page + 1);
     },
     []
   );
@@ -57,10 +58,9 @@ const OrderPage = () => {
     getOrderProducts(start, finish, 0);
   };
 
-  const handlePageChange = async (page: number) => {
+  const handleChangePage = async (page: number) => {
     const { start, finish } = form;
     await getOrderProducts(start, finish, page - 1);
-    setCurPage(page);
   };
 
   return (
@@ -72,7 +72,7 @@ const OrderPage = () => {
         onSubmit={handleSubmitFilter}
       />
       <OrderContent orderProducts={orderedProducts} />
-      <Pagination totalCount={totalCount} curPage={curPage} onChange={handlePageChange} />
+      <Pagination totalCount={totalCount} curPage={curPage} onChange={handleChangePage} />
     </OrderPageContainer>
   );
 };
