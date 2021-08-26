@@ -9,7 +9,7 @@ import { normalContainerWidth } from '@/static/style/common';
 // api 확정되면 type 지정
 type CartContentProps = {
   cartProducts: any;
-  selectedProduct: Set<number>;
+  selectedItems: Set<number>;
   onCheck: (id: number) => void;
   onCheckAll: (e) => void;
 };
@@ -21,14 +21,21 @@ const tableHeader = [
   { id: 'delivery', name: '배송비', width: '10%', rowSpan: 6 },
 ];
 
-const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: CartContentProps) => {
+const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedItems }: CartContentProps) => {
   const tableBody = useMemo(() => {
     return cartProducts.map((cartProduct) => {
+      const productTotal = cartProduct.amount * cartProduct.product.price;
       return {
-        id: cartProduct.productId,
+        id: cartProduct.id,
         cells: [
-          { c: <TableItem product={cartProduct} />, colSpan: 3 },
-          { c: <div style={{ textAlign: 'center', fontSize: '14px' }}>2,500 원</div> },
+          { c: <TableItem cartProduct={cartProduct} />, colSpan: 3 },
+          {
+            c: (
+              <div style={{ textAlign: 'center', fontSize: '14px' }}>
+                {productTotal >= 30000 ? '0' : '2,500'} 원
+              </div>
+            ),
+          },
         ],
       };
     });
@@ -43,7 +50,7 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedProduct }: Car
           checkable={true}
           header={tableHeader}
           body={tableBody}
-          selectedItems={selectedProduct}
+          selectedItems={selectedItems}
           onCheck={onCheck}
           onCheckAll={onCheckAll}
         />
