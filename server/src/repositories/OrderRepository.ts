@@ -7,11 +7,10 @@ import OrderItem from '../entities/order_item';
 export default class OrderRepository extends Repository<Order> {
   async getList({
     userId,
+    page = 0,
+    size = 20,
     startDate = new Date(0),
     endDate = new Date(),
-    size = 5,
-    page = 0,
-    status = OrderStatus.PURCHASING_COMPLETE,
   }: {
     userId: number;
     status?: OrderStatus;
@@ -58,18 +57,37 @@ export default class OrderRepository extends Repository<Order> {
       .whereInIds(orderId)
       .execute();
 
-    return result;
+    return { orders, totalCount: Number(totalCount[0].count) };
   }
 
-  async cancel({ orderId }: { orderId: number }) {
-    const order = await this.createQueryBuilder('o')
-      .whereInIds(orderId)
-      .andWhere(`o.status = '${OrderStatus.BEFORE_PAYEMNT}'`)
-      .getOne();
-
+  order({
+    userId,
+    buyerName,
+    phone,
+    email,
+    receiverName,
+    receiverAddress,
+    receiverPhone,
+  }: {
+    userId: number;
+    buyerName: string;
+    phone: string;
+    email: string;
+    receiverName: string;
+    receiverAddress: string;
+    receiverPhone: string;
+  }) {
     const result = this.createQueryBuilder()
-      .update({ status: OrderStatus.IN_CART })
-      .whereEntity(order)
+      .update({
+        status: OrderStatus.PURCHASING_COMPLETE,
+        buyerName,
+        phone,
+        email,
+        receiverName,
+        receiverAddress,
+        receiverPhone,
+      })
+      .where(`user_id = ${userId}`)
       .execute();
 
     return result;

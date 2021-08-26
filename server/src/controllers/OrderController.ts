@@ -65,25 +65,66 @@ namespace OrderController {
     }
   };
 
-  export const order: RouteHandler<OrderRequest.Order> = async (req, res) => {
-    try {
-      const { orderId } = req.body;
+      const results = await getCustomRepository(OrderRepository).getList({
+        userId,
+        startDate,
+        endDate,
+        size,
+        page,
+      });
 
-      const result = await getCustomRepository(OrderRepository).order({ orderId });
+      const orders = results.orders.reduce((acc, cur) => {
+        const lastOrder = acc[acc.length - 1];
 
-      res.json({ ok: result.affected > 0 });
+        if (lastOrder?.id === cur.id) {
+          lastOrder.orderItems.push({
+            productName: cur.name,
+            thumbnail: cur.thumbnail,
+            price: cur.price,
+            amount: cur.amount,
+            isReviewed: cur.is_reviewed,
+          });
+
+          return acc;
+        } else {
+          acc.push({
+            id: cur.id,
+            updatedAt: cur.updated_at,
+            orderItems: [
+              {
+                productName: cur.name,
+                thumbnail: cur.thumbnail,
+                price: cur.price,
+                amount: cur.amount,
+                isReviewed: cur.is_reviewed,
+              },
+            ],
+          });
+
+          return acc;
+        }
+      }, []);
+
+      res.json({
+        ok: true,
+        data: {
+          orders,
+          totalCount: results.totalCount,
+        },
+      });
     } catch (e) {
-      console.error(e);
+      console.error(e.message);
 
       res.status(500).json({ ok: false });
     }
   };
 
-  export const cancel: RouteHandler<OrderRequest.Cancel> = async (req, res) => {
+  export const order: RouteHandler<OrderRequest.Order> = async (req, res) => {
     try {
-      const { orderId } = req.params;
+      // login check
+      const userId = res.locals?.user?.id || 1;
 
-      const result = await getCustomRepository(OrderRepository).cancel({ orderId });
+      const result = await getCustomRepository(OrderRepository).order({ userId, ...req.body });
 
       res.json({ ok: result.affected > 0 });
     } catch (e) {
@@ -98,7 +139,8 @@ namespace OrderController {
     res
   ) => {
     try {
-      const { userId = 1 } = res.locals;
+      // login check
+      const userId = res.locals?.user?.id || 1;
 
       const order = await getCustomRepository(OrderRepository).getCart({ userId });
       if (!order) {
@@ -108,20 +150,17 @@ namespace OrderController {
       res.json({
         ok: true,
         data: {
-          order: {
-            id: order.id,
-            status: order.status,
-            orderItems: order.items.map((orderItem) => ({
-              id: orderItem.id,
-              amount: orderItem.amount,
-              product: {
-                id: orderItem.product.id,
-                name: orderItem.product.name,
-                price: orderItem.product.price,
-                thumbnail: orderItem.product.thumbnail,
-              },
-            })),
-          },
+          id: order.id,
+          orderItems: order.items.map((orderItem) => ({
+            id: orderItem.id,
+            amount: orderItem.amount,
+            product: {
+              id: orderItem.product.id,
+              name: orderItem.product.name,
+              price: orderItem.product.price,
+              thumbnail: orderItem.product.thumbnail,
+            },
+          })),
         },
       });
     } catch (e) {
@@ -133,7 +172,7 @@ namespace OrderController {
 
   export const addCartItem: RouteHandler<OrderRequest.AddCartItem> = async (req, res) => {
     try {
-      const { userId = 1 } = res.locals;
+      const userId = res.locals?.user?.id || 1;
       const { productId, amount } = req.body;
 
       await getCustomRepository(OrderRepository).addCartItem({

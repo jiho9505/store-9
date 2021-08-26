@@ -24,12 +24,7 @@ namespace OrderRequest {
     orderItemId: number;
     amount: number;
   };
-
-  // export type GetList = {
-  //   start?: string;
-  //   end?: string;
-  // };
-
+  
   export type RemoveCartItem = {
     orderItemId: number[];
   };
