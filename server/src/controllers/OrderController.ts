@@ -8,9 +8,13 @@ namespace OrderController {
     req,
     res
   ) => {
-    const { start, end } = req.query;
+    const { startDate, endDate } = req.query;
     try {
-      const result = await getCustomRepository(OrderRepository).getList({ userId: 1, start, end });
+      const result = await getCustomRepository(OrderRepository).getList({
+        userId: 1,
+        startDate,
+        endDate,
+      });
       res.send(result);
     } catch (e) {
       console.error(e.message);
@@ -55,22 +59,27 @@ namespace OrderController {
       const { userId = 1 } = res.locals;
 
       const order = await getCustomRepository(OrderRepository).getCart({ userId });
-
+      if (!order) {
+        res.json({ ok: true, data: {} });
+        return;
+      }
       res.json({
         ok: true,
         data: {
-          id: order.id,
-          status: order.status,
-          orderItems: order.items.map((orderItem) => ({
-            id: orderItem.id,
-            amount: orderItem.amount,
-            product: {
-              id: orderItem.product.id,
-              name: orderItem.product.name,
-              price: orderItem.product.price,
-              thumbnail: orderItem.product.thumbnail,
-            },
-          })),
+          order: {
+            id: order.id,
+            status: order.status,
+            orderItems: order.items.map((orderItem) => ({
+              id: orderItem.id,
+              amount: orderItem.amount,
+              product: {
+                id: orderItem.product.id,
+                name: orderItem.product.name,
+                price: orderItem.product.price,
+                thumbnail: orderItem.product.thumbnail,
+              },
+            })),
+          },
         },
       });
     } catch (e) {
@@ -119,8 +128,10 @@ namespace OrderController {
   export const removeCartItem: RouteHandler<OrderRequest.RemoveCartItem> = async (req, res) => {
     try {
       const { orderItemId } = req.params;
-
-      const result = await getCustomRepository(OrderRepository).removeCartItem({ orderItemId });
+      const orderItemIdArray = `${orderItemId}`.split(',').map(Number);
+      const result = await getCustomRepository(OrderRepository).removeCartItem({
+        orderItemId: orderItemIdArray,
+      });
 
       res.json({ ok: result.affected > 0 });
     } catch (e) {
