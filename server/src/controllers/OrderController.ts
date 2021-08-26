@@ -9,22 +9,18 @@ namespace OrderController {
     req,
     res
   ) => {
-    // const { start, end } = req.query;
     const user: JwtSignPayload = res.locals.user;
     const { startDate, endDate, size, page } = req.query;
     try {
-      // const result = await getCustomRepository(OrderRepository).getList({ userId: 1, start, end });
-      // console.log(result);
-      // res.send(result);
       const results = await getCustomRepository(OrderRepository).getList({
         userId: user.id,
-        start: startDate,
-        end: endDate,
+        startDate,
+        endDate,
         size,
         page,
       });
 
-      const data = results.reduce((acc, cur) => {
+      const orders = results.orders.reduce((acc, cur) => {
         const lastOrder = acc[acc.length - 1];
 
         if (lastOrder?.id === cur.id) {
@@ -54,7 +50,13 @@ namespace OrderController {
         }
       }, []);
 
-      res.json({ ok: true, data });
+      res.json({
+        ok: true,
+        data: {
+          orders,
+          totalCount: results.totalCount,
+        },
+      });
     } catch (e) {
       console.error(e.message);
 
