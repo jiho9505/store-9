@@ -9,6 +9,7 @@ import Loading from '@/components/common/Loading';
 import RefreshStore from '@/stores/RefreshStore';
 import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
+import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 /**
  * TODO:
@@ -21,40 +22,51 @@ import { normalContainerWidth } from '@/static/style/common';
  * api를 이용해 데이터 호출
  * categoryId , pagenation , filter , intersectionObserver 고려
  */
+
+type ProductSortBy = 'RECOMMEND' | 'BEST' | 'NEW' | 'LOW_PRICE' | 'HIGH_PRICE';
+const sortByObj = {
+  0: 'RECOMMEND',
+  1: 'BEST',
+  2: 'NEW',
+  3: 'LOW_PRICE',
+  4: 'HIGH_PRICE',
+};
+const size = 20;
+
 const ProductList = () => {
-  const [filter, setFilter] = useState({
-    skip: 0,
-    limit: 20,
-    productFilterIndex: -1,
-    categoryId: 0,
-  });
+  const [sortBy, setSortBy] = useState<ProductSortBy>('RECOMMEND');
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState<boolean>(true);
+  const [page, setPage] = useState(0);
   const { refreshComponent } = RefreshStore;
+
+  const filter = {
+    page,
+    size,
+    sortBy,
+    categoryId: getQueryStringValue('categoryId'),
+    searchQuery: getQueryStringValue('word'),
+  };
 
   /**
    * TODO:
-   * api 요청 (let url 과 Filter 이용)
-   * setProduct()
-   * setTotalProductCount()
-   * setFilter() : skip = skip + limit
-   *
-   * 가져온 데이터가 0일때 스탑
+   * api 요청
    */
   useEffect(() => {
     setProduct(datas);
+    setTotalProductCount(datas.length);
     setIsActiveInfiniteScroll(true);
-  }, [refreshComponent, filter]);
+    setPage(0);
+  }, [refreshComponent, sortBy]);
 
   useEffect(() => {
-    setTotalProductCount(datas.length);
+    setSortBy('RECOMMEND');
   }, [refreshComponent]);
 
-  const handleFilter = (index: number) => {
-    const newFilter = { ...filter, productFilter: index };
-    setFilter(newFilter);
+  const handleFilter = (index: string) => {
+    setSortBy(sortByObj[index]);
   };
 
   const observeTag = () => {
@@ -70,10 +82,10 @@ const ProductList = () => {
             setIsLoading(false);
           }, 2000);
           /*
-            const data = await api 요청
+            const data = await ProductApi.getList(filter);
             if (data.success) {
               if (data.length > 0) {
-                setSkip
+                setPage(page+1)
                 setProduct([...product,...data])
               } else {
                 setIsActiveInfiniteScroll(false)
