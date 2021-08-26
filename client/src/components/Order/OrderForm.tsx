@@ -12,35 +12,14 @@ import Validation from '@/utils/validation';
 
 import { normalRadius } from '@/static/style/common';
 
-const stage1InitialForm = {
-  orderName: '',
-  phoneNumber: '',
-  email: '',
-};
-
-const stage2InitialForm = {
-  recName: '',
-  recPlace: '',
-  recPhoneNumber: '',
-};
-
-const validationSchema = {
-  orderName: Validation().require('주문자명을 입력해 주세요.'),
-  phoneNumber: Validation().require('휴대폰 번호를 입력해 주세요.'),
-  email: Validation().require('이메일을 입력해 주세요.'),
-  recName: Validation().require('받는 사람이름을 입력해 주세요.'),
-  recPlace: Validation().require('받는 장소를 입력해 주세요.'),
-  recPhoneNumber: Validation().require('받는 사람 휴대폰 번호를 입력해 주세요.'),
-};
-
 const OrderForm = () => {
   const { form, error, onChange, onBlur, check } = useContext(FormContext);
-  const { orderName, phoneNumber, email, recName, recPlace, recPhoneNumber } = form;
+  const { buyerName, phone, email, receiverName, receiverAddress, receiverPhone } = form;
 
   const [stage, setStage] = useState(1);
 
   const handleClickNext = () => {
-    const pass = check('orderName', 'phoneNumber', 'email');
+    const pass = check('buyerName', 'phone', 'email');
     if (!pass) {
       return;
     }
@@ -57,7 +36,7 @@ const OrderForm = () => {
         <Stage1
           onChange={onChange}
           onBlur={onBlur}
-          form={{ orderName, email, phoneNumber }}
+          form={{ buyerName, email, phone }}
           error={error}
         />
       );
@@ -66,7 +45,7 @@ const OrderForm = () => {
         <Stage2
           onChange={onChange}
           onBlur={onBlur}
-          form={{ recName, recPlace, recPhoneNumber }}
+          form={{ receiverName, receiverAddress, receiverPhone }}
           error={error}
         />
       );
