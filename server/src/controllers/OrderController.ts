@@ -91,7 +91,7 @@ namespace OrderController {
 
       const order = await getCustomRepository(OrderRepository).getCart({ userId });
       if (!order) {
-        res.json({ ok: true, data: {} as any });
+        res.json({ ok: true, data: { id: 0, orderItems: [] } as any });
         return;
       }
       res.json({
