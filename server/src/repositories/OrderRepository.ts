@@ -87,6 +87,7 @@ export default class OrderRepository extends Repository<Order> {
       .execute();
 
     const deletedProducts = await this._removeExceptCartItem(selectedItem);
+
     await this._addCartItems(userId, deletedProducts);
 
     return result;
@@ -143,11 +144,11 @@ export default class OrderRepository extends Repository<Order> {
     const order = await OrderItem.find({ where: { id: In(orderItemId) } });
 
     const deletedProducts = await OrderItem.find({
-      where: { order_id: order[0].id, id: Not(In(orderItemId)) },
+      where: { order_id: order[0]['order_id'], id: Not(In([4])) },
     });
     const result = await OrderItem.remove(deletedProducts);
 
-    return result;
+    return deletedProducts;
   }
 
   async _checkCart(userId: number) {
