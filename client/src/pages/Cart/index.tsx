@@ -19,14 +19,21 @@ import UserApi from '@/apis/UserApi';
 const CartPage = () => {
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [cartProducts, setCartProducts] = useState([]);
+  const [curCartId, setCurCartId] = useState(0);
   const [error, setError] = useState('');
   const { refresh, refreshComponent } = RefreshStore;
+
+  useEffect(() => {
+    localStorage.clear();
+    localStorage.setItem('cartInfo', JSON.stringify({ cartId: curCartId, product: {} }));
+  }, [curCartId]);
 
   useEffect(() => {
     const getCartItems = async () => {
       try {
         const { data } = await OrderApi.getCart();
         setCartProducts(data.orderItems);
+        setCurCartId(data.id);
       } catch (err) {
         setError(err.message);
       }
@@ -34,13 +41,31 @@ const CartPage = () => {
     getCartItems();
   }, [refreshComponent]);
 
+  const addProductInLocalStorage = (id) => {
+    const cartInfo = localStorage.getItem('cartInfo');
+    const parsedCartInfo = JSON.parse(cartInfo).product;
+    parsedCartInfo[id] = id;
+    localStorage.setItem(
+      'cartInfo',
+      JSON.stringify({ cartId: curCartId, product: parsedCartInfo })
+    );
+  };
+
+  const removeProductInLocalStorage = (id) => {
+    const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
+    delete cartInfo.product[id];
+    localStorage.setItem('cartInfo', JSON.stringify({ ...cartInfo }));
+  };
+
   const handleClickCheckbox = (id) => {
     if (selectedItems.has(id)) {
+      removeProductInLocalStorage(id);
       setSelectedItems((prev) => {
         prev.delete(id);
         return new Set(prev);
       });
     } else {
+      addProductInLocalStorage(id);
       setSelectedItems((prev) => new Set(prev.add(id)));
     }
   };
