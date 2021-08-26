@@ -1,4 +1,5 @@
-import { getCustomRepository } from 'typeorm';
+import { CustomRepositoryDoesNotHaveEntityError, getCustomRepository } from 'typeorm';
+import { JwtSignPayload } from '../utils/types';
 import OrderRequest from '../../../shared/dtos/order/request';
 import OrderResponse from '../../../shared/dtos/order/response';
 import OrderRepository from '../repositories/OrderRepository';
@@ -8,14 +9,55 @@ namespace OrderController {
     req,
     res
   ) => {
-    const { startDate, endDate } = req.query;
+    const user: JwtSignPayload = res.locals.user;
+    const { startDate, endDate, size, page } = req.query;
     try {
-      const result = await getCustomRepository(OrderRepository).getList({
-        userId: 1,
+      const results = await getCustomRepository(OrderRepository).getList({
+        userId: user.id,
         startDate,
         endDate,
+        size,
+        page,
       });
-      res.send(result);
+      const orders = results.orders.reduce((acc, cur) => {
+        const lastOrder = acc[acc.length - 1];
+
+        if (lastOrder?.id === cur.id) {
+          lastOrder.orderItems.push({
+            productId: cur.product_id,
+            productName: cur.name,
+            thumbnail: cur.thumbnail,
+            price: cur.price,
+            amount: cur.amount,
+            isReviewed: cur.is_reviewed,
+          });
+
+          return acc;
+        } else {
+          return acc.concat({
+            id: cur.id,
+            updatedAt: cur.updated_at,
+            orderItems: [
+              {
+                productId: cur.product_id,
+                productName: cur.name,
+                thumbnail: cur.thumbnail,
+                price: cur.price,
+                amount: cur.amount,
+                isReviewed: cur.is_reviewed,
+              },
+            ],
+          });
+        }
+      }, []);
+
+      res.json({
+        ok: true,
+        data: {
+          orders,
+          totalCount: results.totalCount,
+        },
+      });
     } catch (e) {
       console.error(e.message);
 

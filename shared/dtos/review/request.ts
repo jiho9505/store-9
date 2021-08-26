@@ -1,7 +1,7 @@
 namespace ReviewRequest {
   export type Create = Pick<ReviewSchema, 'title' | 'content' | 'images' | 'rate'>;
 
-  export type getList = {
+  export type GetList = {
     size?: number;
     page?: number;
   };

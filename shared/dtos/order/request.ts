@@ -1,7 +1,7 @@
 namespace OrderRequest {
   export type GetList = {
-    startDate?: Date;
-    endDate?: Date;
+    startDate?: string;
+    endDate?: string;
     page?: number;
     size?: number;
   };

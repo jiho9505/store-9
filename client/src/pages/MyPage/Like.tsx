@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import UserApi from '@/apis/UserApi';
@@ -7,19 +7,34 @@ import RefreshStore from '@/stores/RefreshStore';
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { LikeContent } from '@/components/MyPage';
+import Pagination from '@/components/common/Pagination';
 
 const LikePage = () => {
   const { refresh, refreshComponent } = RefreshStore;
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
   const [likes, setLikes] = useState([]);
+  const [curPage, setCurPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const result = await UserApi.getLikeList();
-      setSelectedProducts(new Set());
-      setLikes(result.data.likes);
+      await getLikeList();
+      setCurPage(1);
     })();
   }, [refreshComponent]);
+
+  const getLikeList = useCallback(async (page?: number) => {
+    const query: { params?: { page: number } } = {};
+    if (page) {
+      query.params = { page };
+    }
+    const result = await UserApi.getLikeList(query);
+    const { data } = result;
+    setSelectedProducts(new Set());
+    setLikes(data.likes);
+    setTotalCount(data.totalCount);
+    setCurPage(page);
+  }, []);
 
   const handleClickCheckbox = (id) => {
     if (selectedProducts.has(id)) {
@@ -64,6 +79,10 @@ const LikePage = () => {
     }
   };
 
+  const handleChangePage = async (page: number) => {
+    await getLikeList(page);
+  };
+
   return (
     <LikePageContainer>
       <LikeContent
@@ -76,6 +95,7 @@ const LikePage = () => {
         <Button onClick={handleClickDeleteBtn}>선택상품 삭제</Button>
         <Button onClick={handleAddLike}>추가 테스트</Button>
       </SelectProductAction>
+      <Pagination totalCount={totalCount} onChange={handleChangePage} curPage={curPage} />
     </LikePageContainer>
   );
 };

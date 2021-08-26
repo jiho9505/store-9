@@ -8,9 +8,12 @@ import { filterExistItem } from '../utils/user';
 const UserController = {
   getLikeLists: async (req: Request, res: Response) => {
     try {
+      const { page } = req.query;
+      const curPage = page || 1;
+
       const user: JwtSignPayload = res.locals.user;
       const likeRepository = getCustomRepository(LikeRepository);
-      const [likes, totalCount] = await likeRepository.getLikes(user.id);
+      const [likes, totalCount] = await likeRepository.getLikes(user.id, Number(curPage) - 1);
       res.json({ ok: true, data: { likes, totalCount }, message: constant.GET_LIKE_SUCCESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
