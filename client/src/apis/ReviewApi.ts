@@ -3,8 +3,8 @@ import ReviewResponse from '@shared/dtos/review/response';
 import ReviewRequest from '@shared/dtos/review/request';
 
 class ReviewApi extends BaseApi {
-  getList() {
-    return this.get<ReviewResponse.GetList>('/', { isRequiredLogin: true });
+  getList(params: ReviewRequest.GetList = {}) {
+    return this.get<ReviewResponse.GetList>('/', { params, isRequiredLogin: true });
   }
 
   create(id: number, body: ReviewRequest.Create) {

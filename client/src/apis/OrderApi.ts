@@ -3,7 +3,7 @@ import OrderRequest from '@shared/dtos/order/request';
 import BaseApi from './BaseApi';
 
 class OrderApi extends BaseApi {
-  getList(params: OrderRequest.GetList = {} ) {
+  getList(params: OrderRequest.GetList = {}) {
     return this.get<OrderResponse.GetList>('/', { params, isRequiredLogin: true });
   }
 
@@ -12,19 +12,19 @@ class OrderApi extends BaseApi {
   }
 
   getCart() {
-    return this.get<OrderResponse.GetCart>('/carts', { isRequiredLogin: true });
+    return this.get<OrderResponse.GetCart>('/cart', { isRequiredLogin: true });
   }
 
   addCartItem(body: OrderRequest.AddCartItem) {
-    return this.post<OrderResponse.AddCartItem>('/carts', body, { isRequiredLogin: true });
+    return this.post<OrderResponse.AddCartItem>('/cart', body, { isRequiredLogin: true });
   }
 
   updateCartItem(body: OrderRequest.UpdateCartItem) {
-    return this.put('/carts', body, { isRequiredLogin: true });
+    return this.put('/cart', body, { isRequiredLogin: true });
   }
 
   removeCartItem({ orderItemId }: OrderRequest.RemoveCartItem) {
-    return this.delete(`/carts/${orderItemId}`, { isRequiredLogin: true });
+    return this.delete(`/cart/${orderItemId}`, { isRequiredLogin: true });
   }
 }
 

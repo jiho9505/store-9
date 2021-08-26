@@ -8,12 +8,13 @@ namespace QnAController {
   export const getList: RouteHandler<null, QnAResponse.GetList> = async (req, res) => {
     try {
       const { userId = 1 } = res.locals;
-      const { startDate, endDate } = req.query;
+      const { startDate, endDate, page } = req.query;
 
       const [qnas, totalCount] = await getCustomRepository(QnARepository).getList({
         userId,
         startDate,
         endDate,
+        page,
       });
 
       res.json({
@@ -65,10 +66,10 @@ namespace QnAController {
 
   export const update: RouteHandler<QnARequest.Update, QnAResponse.Update> = async (req, res) => {
     try {
-      const { id, title, content, images = '/' } = req.body;
+      const { qnaId, title, content, images = '/' } = req.body;
 
       const result = await getCustomRepository(QnARepository).updateQnA({
-        qnaId: id,
+        qnaId,
         content,
         title,
         images,

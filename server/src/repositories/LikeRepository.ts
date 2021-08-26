@@ -1,9 +1,14 @@
 import { DeleteResult, EntityRepository, Repository, UpdateResult } from 'typeorm';
 import Like from '../entities/like';
 
+type LikeData = {
+  user_id: number;
+  product_id: number;
+};
+
 @EntityRepository(Like)
 export class LikeRepository extends Repository<Like> {
-  getLikes(user_id: number, size: number = 20, page: number = 0) {
+  getLikes(user_id: number, page: number = 0, size: number = 5) {
     return this.createQueryBuilder('l')
       .leftJoinAndSelect('l.product', 'product')
       .select(['l.id', 'l.product_id'])
@@ -14,12 +19,12 @@ export class LikeRepository extends Repository<Like> {
       .getManyAndCount();
   }
 
-  getLike(user_id: number, product_id: number) {
-    return this.findOne({ user_id, product_id });
+  getLike(likeData: LikeData[]) {
+    return this.find({ where: likeData });
   }
 
-  createLike(likeData) {
-    const newLike = this.create({ ...likeData });
+  createLike(likeData: LikeData[]) {
+    const newLike = this.create(likeData);
     return this.save(newLike);
   }
 

@@ -3,8 +3,8 @@ import QnAResponse from '@shared/dtos/qna/response';
 import BaseApi from './BaseApi';
 
 class QnaApi extends BaseApi {
-  getList(params = {}) {
-    return this.get<QnAResponse.GetList>('/', { isRequiredLogin: true, ...params });
+  getList(params: QnARequest.GetList = {}) {
+    return this.get<QnAResponse.GetList>('/', { params, isRequiredLogin: true });
   }
 
   create(body: QnARequest.Create) {
@@ -12,7 +12,7 @@ class QnaApi extends BaseApi {
   }
 
   update(body: QnARequest.Update) {
-    return this.put<QnAResponse.Update>(`/${body.qnaId}`, body, { isRequiredLogin: true });
+    return this.put<QnAResponse.Update>('/', body, { isRequiredLogin: true });
   }
 
   remove({ qnaId }: QnARequest.Remove) {

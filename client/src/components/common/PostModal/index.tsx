@@ -118,7 +118,7 @@ const PostModal = ({
     } else if (form === 'QNA') {
       modifyAction.fn = async () => {
         await QnaApi.update({
-          id,
+          qnaId: id,
           content,
           title,
         });
