@@ -1,5 +1,3 @@
-import { ProductDetailSchema, ProductSchema } from './schema';
-
 namespace ProductResponse {
   export interface MainProduct {
     productId: number;
@@ -47,7 +45,6 @@ namespace ProductResponse {
       id: number;
       title: string;
       content: string;
-      rate: string;
       username: string;
       createdAt: Date;
       isPrivate?: boolean;
@@ -56,7 +53,6 @@ namespace ProductResponse {
       //random하게 추출
       productId: number;
       name: string;
-      isLike: boolean;
       reviewAverageRate: number;
       reviewCount: number;
       likeCount: number;

@@ -27,21 +27,19 @@ const tableHeader = [
  */
 
 const QnAContent = ({ questions }: QnAContentProps) => {
-  const { qnas, totalCount } = questions;
-
   const [activeModal, setActiveModal] = useState(false);
   const [selectedQna, setSelectedQna] = useState({});
 
   const tableBody = useMemo(() => {
-    return (qnas || []).map((question, idx) => {
-      const { id, date, title, product } = question;
+    return questions.map((question, idx) => {
+      const { id, createdAt, title, product } = question;
       return {
         id: idx,
         cells: [
           { c: <Cell>{id}</Cell>, colSpan: 1 },
           { c: <Cell>{product.name}</Cell>, colSpan: 1 },
           { c: <Cell>{title}</Cell>, colSpan: 1 },
-          { c: <Cell>{getDateFormat(date)}</Cell> },
+          { c: <Cell>{getDateFormat(createdAt)}</Cell> },
         ],
       };
     });
@@ -52,7 +50,7 @@ const QnAContent = ({ questions }: QnAContentProps) => {
   };
 
   const handleModalOpen = (id) => {
-    setSelectedQna(qnas[id]);
+    setSelectedQna(questions[id]);
     setActiveModal(true);
   };
 

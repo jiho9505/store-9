@@ -1,7 +1,7 @@
 namespace OrderRequest {
   export type GetList = {
-    startDate?: Date;
-    endDate?: Date;
+    startDate?: string;
+    endDate?: string;
     page?: number;
     size?: number;
   };
@@ -24,12 +24,7 @@ namespace OrderRequest {
     orderItemId: number;
     amount: number;
   };
-
-  // export type GetList = {
-  //   start?: string;
-  //   end?: string;
-  // };
-
+  
   export type RemoveCartItem = {
     orderItemId: number[];
   };

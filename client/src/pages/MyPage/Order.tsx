@@ -7,12 +7,16 @@ import useInput from '@/hooks/customHooks/useInput';
 import OrderApi from '@/apis/OrderApi';
 
 import DurationFilter from '@/components/common/DurationFilter';
+import Pagination from '@/components/common/Pagination';
 import { OrderContent } from '@/components/MyPage';
 import { getDateFormat } from '@/utils/dateParse';
 
 const OrderPage = () => {
-  const { refreshToken, refresh } = RefreshStore;
+  const { refreshComponent, refresh } = RefreshStore;
+
   const [orderedProducts, setOrderedProducts] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [curPage, setCurPage] = useState(1);
   const { form, onChange, onSetForm } = useInput({
     initialState: {
       start: '',
@@ -22,26 +26,41 @@ const OrderPage = () => {
 
   useEffect(() => {
     (async () => {
-      const orderProducts = await getOrderProducts(form.start, form.finish);
-      setOrderedProducts(orderProducts);
+      const { start, finish } = form;
+      await getOrderProducts(start, finish, curPage - 1);
     })();
-  }, [refreshToken]);
+  }, [refreshComponent]);
 
-  const getOrderProducts = useCallback(async (startDate, endDate) => {
-    const query: { start?: string; end?: string } = {};
-    if (startDate && endDate) {
-      query.start = startDate;
-      query.end = endDate;
-    }
-    return await OrderApi.getList(query);
-  }, []);
+  const getOrderProducts = useCallback(
+    async (startDate: string, endDate: string, page: number = 0) => {
+      const query: { startDate?: string; endDate?: string; page?: number } = {};
+      if (startDate && endDate) {
+        query.startDate = startDate;
+        query.endDate = endDate;
+      }
+      if (page) {
+        query.page = page;
+      }
+      const orderProducts = await OrderApi.getList(query);
+      const { data } = orderProducts;
+      setOrderedProducts(data.orders);
+      setTotalCount(data.totalCount);
+      setCurPage(page + 1);
+    },
+    []
+  );
 
   const handleSubmitFilter = async () => {
     const { start, finish } = form;
     if (!start || !finish) {
       return;
     }
-    refresh();
+    getOrderProducts(start, finish, 0);
+  };
+
+  const handleChangePage = async (page: number) => {
+    const { start, finish } = form;
+    await getOrderProducts(start, finish, page - 1);
   };
 
   return (
@@ -53,6 +72,7 @@ const OrderPage = () => {
         onSubmit={handleSubmitFilter}
       />
       <OrderContent orderProducts={orderedProducts} />
+      <Pagination totalCount={totalCount} curPage={curPage} onChange={handleChangePage} />
     </OrderPageContainer>
   );
 };

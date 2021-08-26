@@ -12,7 +12,7 @@ namespace ReviewResponse {
       createdAt: Date;
     }[];
     totalCount: number;
-  }[];
+  };
   export interface Create extends ReviewSchema {}
 }
 
