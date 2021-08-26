@@ -1,8 +1,7 @@
 import { NextFunction, Request, MiddlewareResponse } from 'express';
-import Review from 'src/entities/review';
 import { getCustomRepository } from 'typeorm';
 
-import { ReviewRepository } from '../repositories/review_repository';
+import { ReviewRepository } from '../repositories/ReviewRepository';
 import constant from '../utils/constant';
 
 const ReviewMiddleware = {

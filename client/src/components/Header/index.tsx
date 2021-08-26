@@ -1,29 +1,40 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 import { Link } from '@/core/Router';
+import AuthStore from '@/stores/AuthStore';
 
 import Navigation from './Navigation';
+import SearchBar from './SearchBar';
 
 import { baeminFont, greyLine, greySpan, normalContainerWidth } from '@/static/style/common';
 
-import SearchBar from './SearchBar';
-
-import LOGO from '@/static/assets/img/logo.png';
+import '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
 
-const shortCuts = [
-  { name: '로그인', path: '/login' },
-  { name: '마이페이지', path: '/mypage' },
-  { name: '장바구니', path: '/cart' },
-];
-
 const Header = () => {
+  const shortCuts = [
+    AuthStore.isLogined
+      ? { name: '로그아웃', path: '/logout' }
+      : { name: '로그인', path: '/login' },
+    { name: '마이페이지', path: '/mypage' },
+    { name: '장바구니', path: '/cart' },
+  ];
+
+  const onLogoutClick = (e) => {
+    AuthStore.logout();
+  };
+
   return (
     <>
       <ShortCuts>
         {shortCuts.map(({ name, path }) => (
           <ShortCut key={path}>
-            <Link to={path}>{name}</Link>
+            {name === '로그아웃' ? (
+              <LogoutBtn onClick={onLogoutClick}>{name}</LogoutBtn>
+            ) : (
+              <Link to={path}>{name}</Link>
+            )}
           </ShortCut>
         ))}
       </ShortCuts>
@@ -60,12 +71,18 @@ const ShortCut = styled.li`
     color: ${greyLine};
   }
 
-  a {
+  a,
+  div {
     font-family: ${baeminFont};
     color: ${greySpan};
     font-size: 14px;
   }
+  div {
+    cursor: pointer;
+  }
 `;
+
+const LogoutBtn = styled.div``;
 
 const HeaderContainer = styled.div`
   min-width: 1450px;
@@ -95,4 +112,4 @@ const Logo = styled.img`
   width: 100%;
 `;
 
-export default Header;
+export default observer(Header);

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Router, Route } from './core/Router';
 
@@ -19,8 +19,12 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import '@/static/assets/img/baeminFavicon.png';
 import Loading from './components/common/Loading';
+import AuthStore from './stores/AuthStore';
 
 const App = () => {
+  useEffect(() => {
+    AuthStore.check();
+  }, []);
   return (
     <PageContainer>
       <Suspense

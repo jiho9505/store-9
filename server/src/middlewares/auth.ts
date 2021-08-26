@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, MiddlewareResponse } from 'express';
 import { getCustomRepository } from 'typeorm';
 import dotenv from 'dotenv';
 
-import { UserRepository } from '../repositories/user_repositiory';
+import { UserRepository } from '../repositories/UserRepositiory';
 import jwt from '../utils/jwt';
 import constant from '../utils/constant';
 import { getAccessToken } from '../utils/auth';

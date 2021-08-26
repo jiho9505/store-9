@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { ReviewRepository } from '../repositories/review_repository';
+import { ReviewRepository } from '../repositories/ReviewRepository';
 import { JwtSignPayload } from '../utils/types';
 import constant from '../utils/constant';
 import {
