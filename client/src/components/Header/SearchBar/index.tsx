@@ -5,6 +5,7 @@ import { getRegExp } from 'korean-regexp';
 
 import WordList from '../WordList';
 
+import RefreshStore from '@/stores/RefreshStore';
 import words from '@/static/constants/words';
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
@@ -22,6 +23,7 @@ const SearchBar = () => {
   const [recommendWords, setRecommendWords] = useState<string[]>([]);
   const [idxForChoicedWord, setIdxForChoicedWord] = useState<number>(-1);
   const routerHistory = useHistory();
+  const { refresh } = RefreshStore;
 
   useEffect(() => {
     const registerDomClickEvent = (e: Event) => {
@@ -61,6 +63,7 @@ const SearchBar = () => {
     setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
     setNameForSearch('');
     setShowWordList(false);
+    refresh();
     routerHistory.push(`/goods?word=${value}`);
   };
 
