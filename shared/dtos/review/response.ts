@@ -13,6 +13,7 @@ namespace ReviewResponse {
     }[];
     totalCount: number;
   }[];
+  export interface Create extends ReviewSchema {}
 }
 
 export default ReviewResponse;

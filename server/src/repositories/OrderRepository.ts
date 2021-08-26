@@ -47,7 +47,7 @@ export default class OrderRepository extends Repository<Order> {
 
   order({ orderId }: { orderId: number }) {
     const result = this.createQueryBuilder()
-      .update({ status: OrderStatus.BEFORE_PAYEMNT })
+      .update({ status: OrderStatus.IN_CART })
       .whereInIds(orderId)
       .execute();
 
@@ -57,7 +57,7 @@ export default class OrderRepository extends Repository<Order> {
   async cancel({ orderId }: { orderId: number }) {
     const order = await this.createQueryBuilder('o')
       .whereInIds(orderId)
-      .andWhere(`o.status = '${OrderStatus.BEFORE_PAYEMNT}'`)
+      .andWhere(`o.status = '${OrderStatus.IN_CART}'`)
       .getOne();
 
     const result = this.createQueryBuilder()

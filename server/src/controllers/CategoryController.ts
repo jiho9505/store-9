@@ -13,7 +13,6 @@ namespace CategoryController {
     const data = categoires.map<CategorySchema>((category) => ({
       id: category.id,
       name: category.name,
-      level: category.level,
       parentId: category.parent_id,
     }));
 
