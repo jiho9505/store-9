@@ -25,10 +25,8 @@ const CartPage = () => {
   useEffect(() => {
     const getCartItems = async () => {
       try {
-        const {
-          data: { order },
-        } = await OrderApi.getCart();
-        setCartProducts(order.orderItems);
+        const { data } = await OrderApi.getCart();
+        setCartProducts(data.orderItems);
       } catch (err) {
         setError(err.message);
       }
