@@ -101,6 +101,17 @@ export default class OrderRepository extends Repository<Order> {
     return result;
   }
 
+  async _checkCart(userId: number) {
+    let cart = await this.createQueryBuilder('o')
+      .where(`o.user_id = ${userId} AND o.status = '${OrderStatus.IN_CART}'`)
+      .getOne();
+
+    if (!cart) {
+      cart = await this.create({ user_id: userId, status: OrderStatus.IN_CART }).save();
+    }
+    return cart;
+  }
+
   async addCartItem({
     productId,
     userId,
@@ -110,9 +121,7 @@ export default class OrderRepository extends Repository<Order> {
     userId: number;
     amount: number;
   }) {
-    const cart = await this.createQueryBuilder('o')
-      .where(`o.user_id = ${userId} AND o.status = '${OrderStatus.IN_CART}'`)
-      .getOne();
+    const cart = await this._checkCart(userId);
 
     const result = await OrderItem.create({
       amount,
