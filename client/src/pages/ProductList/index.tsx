@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 
 import ItemLists from '@/components/common/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
 import Loading from '@/components/common/Loading';
 
+import RefreshStore from '@/stores/RefreshStore';
 import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
-import { getQueryStringValue } from '@/utils/getQueryStringValue';
 
 /**
  * TODO:
@@ -31,6 +32,7 @@ const ProductList = () => {
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState<boolean>(true);
+  const { refreshComponent } = RefreshStore;
 
   /**
    * TODO:
@@ -44,11 +46,11 @@ const ProductList = () => {
   useEffect(() => {
     setProduct(datas);
     setIsActiveInfiniteScroll(true);
-  }, [getQueryStringValue('word'), getQueryStringValue('categoryId'), filter]);
+  }, [refreshComponent, filter]);
 
   useEffect(() => {
     setTotalProductCount(datas.length);
-  }, [getQueryStringValue('word'), getQueryStringValue('categoryId')]);
+  }, [refreshComponent]);
 
   const handleFilter = (index: number) => {
     const newFilter = { ...filter, productFilter: index };
@@ -104,7 +106,7 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default observer(ProductList);
 
 const WholeContainer = styled.div`
   width: 100vw;
