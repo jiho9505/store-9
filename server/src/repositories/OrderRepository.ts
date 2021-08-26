@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, In, Repository, Not } from 'typeorm';
 import { OrderStatus } from '../../../shared/dtos/order/schema';
 import Order from '../entities/order';
 import OrderItem from '../entities/order_item';
@@ -51,7 +51,8 @@ export default class OrderRepository extends Repository<Order> {
     return { orders, totalCount: Number(totalCount[0].count) };
   }
 
-  order({
+  async order({
+    id,
     userId,
     buyerName,
     phone,
@@ -59,7 +60,9 @@ export default class OrderRepository extends Repository<Order> {
     receiverName,
     receiverAddress,
     receiverPhone,
+    selectedItem,
   }: {
+    id: number;
     userId: number;
     buyerName: string;
     phone: string;
@@ -67,6 +70,7 @@ export default class OrderRepository extends Repository<Order> {
     receiverName: string;
     receiverAddress: string;
     receiverPhone: string;
+    selectedItem: string[];
   }) {
     const result = this.createQueryBuilder()
       .update({
@@ -79,7 +83,10 @@ export default class OrderRepository extends Repository<Order> {
         receiverPhone,
       })
       .where(`user_id = ${userId}`)
+      .andWhere(`id = ${id}`)
       .execute();
+
+    const temp = await this.removeExceptCartItem([1, 2]);
 
     return result;
   }
@@ -131,5 +138,16 @@ export default class OrderRepository extends Repository<Order> {
     const result = await OrderItem.delete(orderItemId);
 
     return result;
+  }
+
+  async removeExceptCartItem(orderItemId: number[]) {
+    const order = await OrderItem.find({ where: { id: In(orderItemId) } });
+
+    const temp = await OrderItem.find({
+      where: { order_id: order[0].id, id: Not(In(orderItemId)) },
+    });
+    const result = await OrderItem.remove(temp);
+
+    return temp;
   }
 }
