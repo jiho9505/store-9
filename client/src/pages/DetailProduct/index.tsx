@@ -6,16 +6,13 @@ import Overview from '@/components/DetailProduct/Overview';
 
 import { ProductContext } from '@/hooks/context';
 import { normalContainerWidth } from '@/static/style/common';
-
+import DetailProductStore from '@/stores/DetailProductStore';
 import Datas from '@/dummy';
 
 const sampleData = Datas[0];
 
-/**
- * FIXME:
- * Mobx 쓰면 렌더링의 효율성을 더 높힐 수 있을 것 같습니다.
- */
 const DetailProduct = () => {
+  const { products, load } = DetailProductStore;
   window.scrollTo({ top: 0 });
 
   const [product, setProduct] = useState<Info>({});
@@ -23,6 +20,11 @@ const DetailProduct = () => {
   let timer: number = 0;
 
   useEffect(() => {
+    // (async() =>{
+    //   await load();
+    //   setProduct(products);
+    // })()
+
     setProduct(sampleData);
   }, []);
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 
 import Message from '@/components/common/Message';
 import BoardPost from '../BoardPost';
@@ -8,6 +9,7 @@ import BoardPageNumber from '../BoardPageNumber';
 import ModalPortal from '@/utils/portal';
 import PostModal from '../../common/PostModal';
 
+import DetailProductStore from '@/stores/DetailProductStore';
 import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 import { ProductContext } from '@/hooks/context';
 
@@ -16,11 +18,6 @@ type ProductBoardProps = {
   title: string;
 };
 
-/**
- * TODO:
- * 데이터 생성시 상위에서
- * 데이터 받아온 후  postInfoDatas  업데이트 해야합니다.
- */
 const ProductBoard = ({ title }: ProductBoardProps) => {
   const { info } = useContext(ProductContext);
   const [pageNumber, setPageNumber] = useState(0);
@@ -31,6 +28,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   const [showContent, setShowContent] = useState([]);
   const [showMessage, setshowMessage] = useState<boolean>(false);
   const [messageContent, setMessageContent] = useState<string>('');
+  const { products } = DetailProductStore;
 
   let timer: number = 0;
 
@@ -67,6 +65,11 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     setPostInfoDatas(newPostInfoDatas);
     setShowContent([]);
   };
+
+  useEffect(() => {
+    // 게시물 업데이트
+    // setPostInfoDatas(products.blah)
+  }, [products]);
 
   /**
    * TODO:
@@ -126,7 +129,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   );
 };
 
-export default ProductBoard;
+export default observer(ProductBoard);
 
 const ProductBoardContainer = styled.div`
   margin-top: 50px;
