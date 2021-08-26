@@ -43,7 +43,7 @@ export default class QnARepository extends Repository<QnA> {
     product_id: number;
     images: string;
   }) {
-    const result = await this.insert({
+    await this.insert({
       title,
       content,
       product_id,
@@ -52,9 +52,7 @@ export default class QnARepository extends Repository<QnA> {
       user_id: userId,
     });
 
-    const qna = this.findOne(result.identifiers[0].id, { relations: ['product'] });
-
-    return qna;
+    return;
   }
 
   async updateQnA({
