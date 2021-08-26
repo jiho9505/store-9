@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 
 import {
   baemin,
@@ -8,7 +10,7 @@ import {
   greySpan,
   lightBlack,
 } from '@/static/style/common';
-import styled from '@emotion/styled';
+import DetailProductStore from '@/stores/DetailProductStore';
 
 type DetailTab = {
   choicedIdx: number;
@@ -17,19 +19,27 @@ type DetailTab = {
 
 const TabName = ['상품상세정보', '배송안내', '교환 및 반품안내', '상품후기', '상품문의'];
 
-/**
- * TODO:
- * TabItem의 상품 후기 , 상품 문의 카운트는
- * 상위에서 받아와야 합니다!
- * ReviewCount 추가가 필요합니다!
- */
 const DetailTab = ({ choicedIdx, handleClickItemName }: DetailTab) => {
+  const { products } = DetailProductStore;
+  const [reviewCount, setReviewCount] = useState<number>(0);
+  const [qnaCount, setqnaCount] = useState<number>(0);
+
+  /**
+   * TODO:
+   * products안의 length로
+   * count 갱신해야합니다.
+   */
+  useEffect(() => {
+    setReviewCount(5);
+    setqnaCount(5);
+  }, [products]);
+
   const createTabItem = () => {
     return TabName.map((itemName, idx) => (
       <TabItem key={itemName} onClick={handleClickItemName} data-idx={idx}>
         <ItemName active={choicedIdx === idx}>{itemName}</ItemName>
-        {idx === 3 && <ReviewCount>0</ReviewCount>}
-        {idx === 4 && <QnaCount>0</QnaCount>}
+        {idx === 3 && <ReviewCount>{reviewCount}</ReviewCount>}
+        {idx === 4 && <QnaCount>{qnaCount}</QnaCount>}
       </TabItem>
     ));
   };
@@ -40,7 +50,7 @@ const DetailTab = ({ choicedIdx, handleClickItemName }: DetailTab) => {
   );
 };
 
-export default DetailTab;
+export default observer(DetailTab);
 
 type ItemNameProps = {
   active: boolean;
