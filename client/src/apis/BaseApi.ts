@@ -57,8 +57,12 @@ export default class BaseApi {
     return result.data;
   }
 
-  protected async delete<DTO = unknown>(url: string, config?: CustomAxiosRequestConfig) {
-    const result = await this.instance.delete<BaseResponseData<DTO>>(url, config);
+  protected async delete<DTO = unknown>(
+    url: string,
+    data?: object,
+    config?: CustomAxiosRequestConfig
+  ) {
+    const result = await this.instance.delete<BaseResponseData<DTO>>(url, { ...config, ...data });
     return result.data;
   }
 }

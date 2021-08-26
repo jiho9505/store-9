@@ -9,7 +9,7 @@ const ormconfig: ConnectionOptions = {
   username: env.db.user,
   password: env.db.password,
   database: env.db.database,
-  synchronize: true,
+  synchronize: false,
   logging: true,
   entities: ['src/entities/**/*.ts'],
   migrations: ['src/migrations/**/*.ts'],

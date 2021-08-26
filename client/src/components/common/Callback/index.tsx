@@ -25,7 +25,6 @@ const Callback = () => {
     if (error === 'access_denied' || error) {
       // 취소 눌렀을때
       history.go(-2);
-      // window.history.go(-2);
       return;
     }
     const requestGithubLogin = async () => {
@@ -36,13 +35,11 @@ const Callback = () => {
         codeData,
         { withCredentials: true }
       );
-      // TODO 글로벌 상태에 저장
-      // id 글로벌 상태에 저장 필요.
       if (isNotJoined) {
-        // AuthStore.myInfo.loginId = id;
         localStorage.setItem('loginId', id);
         history.push('/signup');
       } else {
+        await AuthStore.check();
         history.push('/');
       }
     };

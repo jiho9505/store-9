@@ -1,7 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import isEmail from 'validator/lib/isEmail';
-import isMobilePhone from 'validator/lib/isMobilePhone';
 
 import Input from '@/components/common/Input';
 import useAddress from '@/hooks/customHooks/useAddress';
@@ -9,6 +7,12 @@ import Button from '@/components/common/Button';
 import { baeminFont, greyLine } from '@/static/style/common';
 import AuthApi from '@/apis/AuthApi';
 import useHistory from '@/hooks/customHooks/useHistory';
+import { signupValidation } from '@/utils/validation';
+
+type ValidResult = {
+  isValid: boolean;
+  errorInput: string;
+};
 
 const SignupPage = () => {
   const {
@@ -17,29 +21,33 @@ const SignupPage = () => {
   } = useAddress();
   const history = useHistory();
   const signUpFormRef = useRef<HTMLFormElement>(null);
-  // global store로 변경 예정
+  const [errorInput, setErrorInput] = useState('');
+
   const getGithubLoginId = () => localStorage.getItem('loginId');
   const isGithubLogin = !!getGithubLoginId();
 
-  const isFormValid = (data) => {
+  const isFormValid = (data): ValidResult => {
     for (const [inputName, inputValue] of data.entries()) {
       if (inputName === 'confirmPassword') {
-        if (!validation[inputName](inputValue, data.get('password'))) {
-          return false;
+        if (!signupValidation[inputName](inputValue, data.get('password'))) {
+          return { isValid: false, errorInput: inputName };
         }
         continue;
       }
-      if (!validation[inputName](inputValue)) {
-        return false;
+      if (!signupValidation[inputName](inputValue)) {
+        return { isValid: false, errorInput: inputName };
       }
     }
-    return true;
+    return { isValid: true, errorInput: '' };
   };
 
   const onSignupFormSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(signUpFormRef.current);
-    if (!isFormValid(form)) {
+    const validResult = isFormValid(form);
+
+    if (!validResult.isValid) {
+      setErrorInput(validResult.errorInput);
       return;
     }
     const data = await AuthApi.signup(form);
@@ -47,6 +55,19 @@ const SignupPage = () => {
       history.push('/login');
     }
   };
+
+  const getInputErrorObject = (currentInputName): {} | null => {
+    if (errorInput === currentInputName) {
+      return { [currentInputName]: formErrorMessage[currentInputName] };
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem('loginId');
+    };
+  }, []);
 
   return (
     <SignupPageContainer>
@@ -65,6 +86,7 @@ const SignupPage = () => {
                 readOnly={isGithubLogin}
                 type="text"
                 defaultValue={isGithubLogin ? getGithubLoginId() : ''}
+                error={getInputErrorObject('id')}
               />
             </InputContainer>
           </ListItem>
@@ -79,6 +101,7 @@ const SignupPage = () => {
                     size="medium"
                     name="password"
                     type="password"
+                    error={getInputErrorObject('password')}
                   />
                 </InputContainer>
               </ListItem>
@@ -91,6 +114,7 @@ const SignupPage = () => {
                     size="medium"
                     name="confirmPassword"
                     type="password"
+                    error={getInputErrorObject('confirmPassword')}
                   />
                 </InputContainer>
               </ListItem>
@@ -99,13 +123,27 @@ const SignupPage = () => {
           <ListItem>
             <Label htmlFor="name">이름</Label>
             <InputContainer>
-              <Input id="name" variant="outlined" size="large" name="name" type="text" />
+              <Input
+                id="name"
+                variant="outlined"
+                size="large"
+                name="name"
+                type="text"
+                error={getInputErrorObject('name')}
+              />
             </InputContainer>
           </ListItem>
           <ListItem>
             <Label htmlFor="email">이메일</Label>
             <InputContainer>
-              <Input id="email" variant="outlined" size="medium" name="email" type="email" />
+              <Input
+                id="email"
+                variant="outlined"
+                size="medium"
+                name="email"
+                type="email"
+                error={getInputErrorObject('email')}
+              />
             </InputContainer>
           </ListItem>
           <ListItem>
@@ -118,6 +156,7 @@ const SignupPage = () => {
                 name="phoneNumber"
                 type="text"
                 placeholder="- 없이 입력하세요"
+                error={getInputErrorObject('phoneNumber')}
               />
             </InputContainer>
           </ListItem>
@@ -131,6 +170,7 @@ const SignupPage = () => {
                 name="callNumber"
                 type="text"
                 placeholder="- 없이 입력하세요"
+                error={getInputErrorObject('callNumber')}
               />
             </InputContainer>
           </ListItem>
@@ -146,6 +186,7 @@ const SignupPage = () => {
                   type="text"
                   value={postcode}
                   placeholder="우편번호 입력"
+                  error={getInputErrorObject('postcode')}
                 />
                 <Button
                   size="xsmall"
@@ -162,6 +203,7 @@ const SignupPage = () => {
                 name="address1"
                 type="text"
                 value={address}
+                error={getInputErrorObject('address1')}
               />
               <Input
                 id="address"
@@ -182,42 +224,17 @@ const SignupPage = () => {
 
 export default SignupPage;
 
-const validation = {
-  id: function (id: string): boolean {
-    return id.length > 5;
-  },
-  email: function (email: string): boolean {
-    return isEmail(email);
-  },
-  password: function (password: string): boolean {
-    return password.length > 5;
-  },
-  confirmPassword: function (password: string, confirmPassword: string): boolean {
-    return password === confirmPassword;
-  },
-  name: function (name: string): boolean {
-    const numRegex = /\d/;
-    const isNumberIncluded = numRegex.test(name);
-    if (isNumberIncluded) return false;
-    return true;
-  },
-  phoneNumber: function (phoneNumber: string): boolean {
-    return isMobilePhone(phoneNumber, 'ko-KR');
-  },
-  callNumber: function (): boolean {
-    // TODO: validation logic 필요한가
-    return true;
-  },
-  postcode: function (): boolean {
-    return true;
-  },
-  address1: function (): boolean {
-    return true;
-  },
-  address2: function (): boolean {
-    return true;
-  },
+const formErrorMessage = {
+  id: '아이디는 3글자 이상 작성해주세요',
+  email: '이메일 형식에 맞지 않습니다',
+  password: '패스워드는 3자리 이상 작성해주세요',
+  confirmPassword: '패스워드가 일치하지 않습니다',
+  name: '이름에 숫자가 들어갈 수 없습니다',
+  phoneNumber: '휴대폰 번호 양식에 맞지 않습니다',
+  postcode: '우편번호가 입력되지 않았습니다',
+  address1: '주소가 입력되지 않았습니다',
 };
+
 const signUpTitleSize = '2rem';
 const signupPageHeight = '800px';
 const signupFormMargin = '100px';

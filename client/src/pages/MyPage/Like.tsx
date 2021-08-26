@@ -1,38 +1,29 @@
-import React, { useState } from 'react';
-import guguStyled from '@/core/styled';
+import React, { useState, useEffect } from 'react';
+import { observer } from 'mobx-react';
 
+import UserApi from '@/apis/UserApi';
+import guguStyled from '@/core/styled';
+import RefreshStore from '@/stores/RefreshStore';
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
 
 import { LikeContent } from '@/components/MyPage';
 
-const likeProducts = [
-  {
-    productId: 5,
-    name: '똑똑똑 실내홥니다',
-    quantity: 1,
-    price: 6000,
-    totalPrice: 6000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-  {
-    productId: 3,
-    name: 'ㅋㅋ 슬리퍼',
-    quantity: 2,
-    price: 12000,
-    totalPrice: 24000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-];
-
 const LikePage = () => {
+  const { refresh, refreshComponent } = RefreshStore;
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const result = await UserApi.getLikeList();
+      setSelectedProducts(new Set());
+      setLikes(result.data.likes);
+    })();
+  }, [refreshComponent]);
 
   const handleClickCheckbox = (id) => {
     if (selectedProducts.has(id)) {
       setSelectedProducts((prev) => {
-        // prev.delete(id);
         const newSet = new Set(prev);
         newSet.delete(id);
         return newSet;
@@ -44,7 +35,7 @@ const LikePage = () => {
 
   const handleToggleSelectAllBtn = (e) => {
     const { target } = e;
-    const likeProductId = likeProducts.map(({ productId }) => productId);
+    const likeProductId = likes.map(({ id }) => id);
     if (target.checked) {
       setSelectedProducts(new Set(likeProductId));
     } else {
@@ -52,17 +43,38 @@ const LikePage = () => {
     }
   };
 
+  const handleClickDeleteBtn = async () => {
+    if (selectedProducts.size === 0) return;
+
+    try {
+      await UserApi.unlike({ data: { ids: [...selectedProducts] } });
+      refresh();
+    } catch (err) {
+      console.log(err);
+      alert('찜 목록 삭제에 실패했습니다.');
+    }
+  };
+
+  const handleAddLike = async () => {
+    try {
+      const result = await UserApi.like({ productId: 4 });
+      refresh();
+    } catch (err) {
+      alert('추가 실패');
+    }
+  };
+
   return (
     <LikePageContainer>
       <LikeContent
-        likeProducts={likeProducts}
+        likeProducts={likes}
         onCheck={handleClickCheckbox}
         onCheckAll={handleToggleSelectAllBtn}
         selectedProduct={selectedProducts}
       />
       <SelectProductAction>
-        <Button>선택상품 삭제</Button>
-        <Button>장바구니에 담기</Button>
+        <Button onClick={handleClickDeleteBtn}>선택상품 삭제</Button>
+        <Button onClick={handleAddLike}>추가 테스트</Button>
       </SelectProductAction>
     </LikePageContainer>
   );
@@ -85,4 +97,4 @@ const Button = guguStyled.button`
   }
 `;
 
-export default LikePage;
+export default observer(LikePage);

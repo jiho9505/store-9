@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 
-import { UserRepository } from '../repositories/user_repositiory';
+import { UserRepository } from '../repositories/UserRepositiory';
 import AuthRequest from '../../../shared/dtos/auth/request';
 import jwt from '../utils/jwt';
 import constant from '../utils/constant';
@@ -10,6 +10,9 @@ import { api } from '../api';
 import { passwordUtils } from '../utils/password';
 
 const AuthController = {
+  authorize: (req: Request, res: Response) => {
+    res.json({ ok: true, message: constant.USER_AUTHOIRZED });
+  },
   login: async (req: Request, res: Response) => {
     try {
       const { id: login_id, password }: AuthRequest.Login = req.body;

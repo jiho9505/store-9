@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 import { Link } from '@/core/Router';
 
 import Navigation from './Navigation';
@@ -55,4 +56,4 @@ const Logo = styled.img`
   width: 100%;
 `;
 
-export default Header;
+export default observer(Header);
