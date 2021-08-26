@@ -1,3 +1,5 @@
+import Review from 'src/entities/review';
+
 export type JwtSignPayload = {
   role: 'Master' | 'User' | 'Admin' | 'NotUser';
   id: number;
@@ -18,3 +20,13 @@ export type UserObj = {
   address: string;
   call_number: string;
 };
+
+interface CustomLocals {
+  user?: JwtSignPayload;
+  review?: Review;
+}
+declare module 'express' {
+  export interface MiddlewareResponse extends Response {
+    locals: CustomLocals;
+  }
+}
