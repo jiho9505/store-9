@@ -7,31 +7,28 @@ import OrderItem from '../entities/order_item';
 export default class OrderRepository extends Repository<Order> {
   getList({
     userId,
-    status = OrderStatus.PURCHASING_COMPLETE,
     page = 0,
     size = 20,
-    start = new Date(0),
-    end = new Date(),
+    startDate = new Date(0),
+    endDate = new Date(),
   }: {
     userId: number;
     status?: OrderStatus;
     size?: number;
     page?: number;
-    start?: Date | string;
-    end?: Date | string;
+    startDate?: Date | string;
+    endDate?: Date | string;
   }) {
-    const startDate = new Date(new Date(start).setHours(0, 0, 0, 0)).toISOString().slice(0, 10);
-    const endDate = new Date(new Date(end).setHours(23, 59, 59, 59)).toISOString().slice(0, 10);
-
-    console.log(new Date(new Date(end).setHours(24, 0, 0, 0)));
+    const start = new Date(new Date(startDate).setHours(0, 0, 0, 0)).toISOString().slice(0, 10);
+    const end = new Date(new Date(endDate).setHours(23, 59, 59, 59)).toISOString().slice(0, 10);
 
     const result = this.query(`
-      SELECT o.*, p.id as product_id, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
+      SELECT o.id, o.updated_at, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
       FROM orders o
       LEFT JOIN order_items oi ON o.id = oi.order_id
       LEFT JOIN products p ON oi.product_id = p.id
       LEFT JOIN reviews r ON r.product_id = p.id
-      WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${startDate}' AND '${endDate}'
+      WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${start}' AND '${end}'
       AND o.status != '${OrderStatus.IN_CART}'
       ORDER BY updated_at DESC
       LIMIT ${size}
@@ -41,24 +38,34 @@ export default class OrderRepository extends Repository<Order> {
     return result;
   }
 
-  order({ orderId }: { orderId: number }) {
+  order({
+    userId,
+    buyerName,
+    phone,
+    email,
+    receiverName,
+    receiverAddress,
+    receiverPhone,
+  }: {
+    userId: number;
+    buyerName: string;
+    phone: string;
+    email: string;
+    receiverName: string;
+    receiverAddress: string;
+    receiverPhone: string;
+  }) {
     const result = this.createQueryBuilder()
-      .update({ status: OrderStatus.BEFORE_PAYEMNT })
-      .whereInIds(orderId)
-      .execute();
-
-    return result;
-  }
-
-  async cancel({ orderId }: { orderId: number }) {
-    const order = await this.createQueryBuilder('o')
-      .whereInIds(orderId)
-      .andWhere(`o.status = '${OrderStatus.BEFORE_PAYEMNT}'`)
-      .getOne();
-
-    const result = this.createQueryBuilder()
-      .update({ status: OrderStatus.IN_CART })
-      .whereEntity(order)
+      .update({
+        status: OrderStatus.PURCHASING_COMPLETE,
+        buyerName,
+        phone,
+        email,
+        receiverName,
+        receiverAddress,
+        receiverPhone,
+      })
+      .where(`user_id = ${userId}`)
       .execute();
 
     return result;

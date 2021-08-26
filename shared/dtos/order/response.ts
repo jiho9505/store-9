@@ -16,19 +16,17 @@ namespace OrderResponse {
   }[];
 
   export type GetCart = {
-    order: {
+    id: number;
+    orderItems: {
       id: number;
-      orderItems: {
+      amount: number;
+      product: {
         id: number;
-        amount: number;
-        product: {
-          id: number;
-          name: string;
-          price: string;
-          thumbnail: string;
-        };
-      }[];
-    };
+        name: string;
+        price: number;
+        thumbnail: string;
+      };
+    }[];
   };
 
   export type Order = {

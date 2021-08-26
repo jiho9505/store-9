@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+
 import OrderRequest from '../../../shared/dtos/order/request';
 import OrderResponse from '../../../shared/dtos/order/response';
 import OrderRepository from '../repositories/OrderRepository';
@@ -8,10 +9,49 @@ namespace OrderController {
     req,
     res
   ) => {
-    const { start, end } = req.query;
+    // login check 해야함
+    const { id = 1 } = res.locals.user;
+    const { startDate, endDate, size, page } = req.query;
     try {
-      const result = await getCustomRepository(OrderRepository).getList({ userId: 1, start, end });
-      res.send(result);
+      const results = await getCustomRepository(OrderRepository).getList({
+        userId: id,
+        startDate,
+        endDate,
+        size,
+        page,
+      });
+
+      const data = results.reduce((acc, cur) => {
+        const lastOrder = acc[acc.length - 1];
+
+        if (lastOrder?.id === cur.id) {
+          lastOrder.orderItems.push({
+            productName: cur.name,
+            thumbnail: cur.thumbnail,
+            price: cur.price,
+            amount: cur.amount,
+            isReviewed: cur.is_reviewed,
+          });
+
+          return acc;
+        } else {
+          return acc.concat({
+            id: cur.id,
+            updatedAt: cur.updated_at,
+            orderItems: [
+              {
+                productName: cur.name,
+                thumbnail: cur.thumbnail,
+                price: cur.price,
+                amount: cur.amount,
+                isReviewed: cur.is_reviewed,
+              },
+            ],
+          });
+        }
+      }, []);
+
+      res.json({ ok: true, data });
     } catch (e) {
       console.error(e.message);
 
@@ -21,23 +61,10 @@ namespace OrderController {
 
   export const order: RouteHandler<OrderRequest.Order> = async (req, res) => {
     try {
-      const { orderId } = req.body;
+      // login check
+      const { id = 1 } = res.locals.user;
 
-      const result = await getCustomRepository(OrderRepository).order({ orderId });
-
-      res.json({ ok: result.affected > 0 });
-    } catch (e) {
-      console.error(e);
-
-      res.status(500).json({ ok: false });
-    }
-  };
-
-  export const cancel: RouteHandler<OrderRequest.Cancel> = async (req, res) => {
-    try {
-      const { orderId } = req.params;
-
-      const result = await getCustomRepository(OrderRepository).cancel({ orderId });
+      const result = await getCustomRepository(OrderRepository).order({ userId: id, ...req.body });
 
       res.json({ ok: result.affected > 0 });
     } catch (e) {
@@ -52,15 +79,15 @@ namespace OrderController {
     res
   ) => {
     try {
-      const { userId = 1 } = res.locals;
+      // login check
+      const { id = 1 } = res.locals.user;
 
-      const order = await getCustomRepository(OrderRepository).getCart({ userId });
+      const order = await getCustomRepository(OrderRepository).getCart({ userId: id });
 
       res.json({
         ok: true,
         data: {
           id: order.id,
-          status: order.status,
           orderItems: order.items.map((orderItem) => ({
             id: orderItem.id,
             amount: orderItem.amount,
