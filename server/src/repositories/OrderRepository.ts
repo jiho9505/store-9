@@ -86,7 +86,8 @@ export default class OrderRepository extends Repository<Order> {
       .andWhere(`id = ${id}`)
       .execute();
 
-    const temp = await this.removeExceptCartItem([1, 2]);
+    const deletedProducts = await this._removeExceptCartItem([1, 2]);
+    await this._addCartItems(userId, deletedProducts);
 
     return result;
   }
@@ -99,17 +100,6 @@ export default class OrderRepository extends Repository<Order> {
       .getOne();
 
     return result;
-  }
-
-  async _checkCart(userId: number) {
-    let cart = await this.createQueryBuilder('o')
-      .where(`o.user_id = ${userId} AND o.status = '${OrderStatus.IN_CART}'`)
-      .getOne();
-
-    if (!cart) {
-      cart = await this.create({ user_id: userId, status: OrderStatus.IN_CART }).save();
-    }
-    return cart;
   }
 
   async addCartItem({
@@ -149,14 +139,40 @@ export default class OrderRepository extends Repository<Order> {
     return result;
   }
 
-  async removeExceptCartItem(orderItemId: number[]) {
+  async _removeExceptCartItem(orderItemId: number[]) {
     const order = await OrderItem.find({ where: { id: In(orderItemId) } });
 
-    const temp = await OrderItem.find({
+    const deletedProducts = await OrderItem.find({
       where: { order_id: order[0].id, id: Not(In(orderItemId)) },
     });
-    const result = await OrderItem.remove(temp);
+    const result = await OrderItem.remove(deletedProducts);
 
-    return temp;
+    return result;
+  }
+
+  async _checkCart(userId: number) {
+    let cart = await this.createQueryBuilder('o')
+      .where(`o.user_id = ${userId} AND o.status = '${OrderStatus.IN_CART}'`)
+      .getOne();
+
+    if (!cart) {
+      cart = await this.create({ user_id: userId, status: OrderStatus.IN_CART }).save();
+    }
+    return cart;
+  }
+
+  async _addCartItems(userId, deletedProducts) {
+    const cart = await this._checkCart(userId);
+
+    const cartInfo = deletedProducts.map(({ product_id, amount }) => ({
+      product_id,
+      order_id: cart.id,
+      amount,
+      user_id: userId,
+    }));
+
+    const result = await OrderItem.createQueryBuilder().insert().values(cartInfo).execute();
+
+    return result;
   }
 }
