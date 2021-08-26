@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
-import { ReviewRepository } from '../repositories/review_repository';
+import { ReviewRepository } from '../repositories/ReviewRepository';
 import { JwtSignPayload } from '../utils/types';
 import constant from '../utils/constant';
 import {
@@ -22,13 +22,18 @@ const ReviewController = {
   getUserReviews: async (req: Request, res: Response) => {
     try {
       const user: JwtSignPayload = res.locals.user;
-
+      const { page } = req.query;
       const reviewRepository = getCustomRepository(ReviewRepository);
-      const reviews = await reviewRepository.getReviews(user.id);
+      const [reviews, totalCount] = await reviewRepository.getReviews(user.id, Number(page));
       const result = convertImageUrlStringToArrayAll(reviews);
 
-      res.json({ ok: true, reviews: result, message: constant.GET_REVIEW_SUCCEESS });
+      res.json({
+        ok: true,
+        data: { reviews: result, totalCount },
+        message: constant.GET_REVIEW_SUCCEESS,
+      });
     } catch (err) {
+      console.log(err.message);
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }
   },
@@ -52,6 +57,7 @@ const ReviewController = {
       const product_id = Number(req.params.productId);
       const images = req.files || [];
       const user_id = res.locals.user.id;
+
       const review: ReviewProps = {
         title,
         content,

@@ -19,11 +19,11 @@ export default class OrderRepository extends Repository<Order> {
     startDate?: Date | string;
     endDate?: Date | string;
   }) {
-    const start = new Date(new Date(startDate).setHours(0, 0, 0, 0)).toISOString().slice(0, 10);
-    const end = new Date(new Date(endDate).setHours(23, 59, 59, 59)).toISOString().slice(0, 10);
+    const start = new Date(new Date(startDate).setHours(0, 0, 0, 0)).toJSON();
+    const end = new Date(new Date(endDate).setHours(23, 59, 59, 59)).toJSON();
 
     const orders = await this.query(`
-      SELECT o.id, o.updated_at, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
+      SELECT o.*, p.id as product_id, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
       FROM orders o
       INNER JOIN order_items oi ON o.id = oi.order_id
       LEFT JOIN products p ON oi.product_id = p.id
@@ -43,9 +43,19 @@ export default class OrderRepository extends Repository<Order> {
         FROM order_items
       ) joi
       ON o.id = joi.order_id
-      WHERE o.user_id = ${userId}
+      WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${start}' AND '${end}'
+      AND o.status != '${OrderStatus.IN_CART}'
       GROUP BY o.user_id
     `);
+
+    return { orders, totalCount: Number(totalCount[0].count) };
+  }
+
+  order({ orderId }: { orderId: number }) {
+    const result = this.createQueryBuilder()
+      .update({ status: OrderStatus.BEFORE_PAYEMNT })
+      .whereInIds(orderId)
+      .execute();
 
     return { orders, totalCount: Number(totalCount[0].count) };
   }
@@ -126,7 +136,7 @@ export default class OrderRepository extends Repository<Order> {
     return result;
   }
 
-  async removeCartItem({ orderItemId }: { orderItemId: number }) {
+  async removeCartItem({ orderItemId }: { orderItemId: number[] }) {
     const result = await OrderItem.delete(orderItemId);
 
     return result;

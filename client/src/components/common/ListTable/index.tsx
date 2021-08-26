@@ -46,7 +46,11 @@ const ListTable = ({
         <TableHeaderRow>
           {checkable && (
             <TableHeaderCell>
-              <CheckBox type="checkbox" onChange={onCheckAll} />
+              <CheckBox
+                type="checkbox"
+                onChange={onCheckAll}
+                checked={selectedItems.size === body.length}
+              />
             </TableHeaderCell>
           )}
           {header.map(({ id, name, rowSpan }) => (

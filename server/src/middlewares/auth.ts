@@ -1,13 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, MiddlewareResponse } from 'express';
 import { getCustomRepository } from 'typeorm';
 import dotenv from 'dotenv';
 
-import { UserRepository } from '../repositories/user_repositiory';
+import { UserRepository } from '../repositories/UserRepositiory';
 import jwt from '../utils/jwt';
 import constant from '../utils/constant';
 import { getAccessToken } from '../utils/auth';
 import { api } from '../api';
 import { JwtSignPayload } from 'src/utils/types';
+import { env } from '../config/env';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ type JwtVerifyResult = {
 };
 
 const AuthMiddleware = {
-  checkLogin: async (req: Request, res: Response, next: NextFunction) => {
+  checkLogin: async (req: Request, res: MiddlewareResponse, next: NextFunction) => {
     try {
       const { AUTH_TOKEN: token } = req.signedCookies;
 
@@ -54,8 +55,8 @@ const AuthMiddleware = {
     const { code } = req.body;
 
     const loginPrivate = {
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
+      client_id: env.github.clientId,
+      client_secret: env.github.clientSecret,
       code,
     };
     const tokenPostOptions = {

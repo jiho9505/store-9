@@ -1,5 +1,5 @@
-import { getCustomRepository } from 'typeorm';
-
+import { CustomRepositoryDoesNotHaveEntityError, getCustomRepository } from 'typeorm';
+import { JwtSignPayload } from '../utils/types';
 import OrderRequest from '../../../shared/dtos/order/request';
 import OrderResponse from '../../../shared/dtos/order/response';
 import OrderRepository from '../repositories/OrderRepository';
@@ -9,10 +9,61 @@ namespace OrderController {
     req,
     res
   ) => {
-    // login check 해야함
+    const user: JwtSignPayload = res.locals.user;
+    const { startDate, endDate, size, page } = req.query;
     try {
-      const userId = res.locals?.user?.id || 1;
-      const { startDate, endDate, size, page } = req.query;
+      const results = await getCustomRepository(OrderRepository).getList({
+        userId: user.id,
+        startDate,
+        endDate,
+        size,
+        page,
+      });
+      const orders = results.orders.reduce((acc, cur) => {
+        const lastOrder = acc[acc.length - 1];
+
+        if (lastOrder?.id === cur.id) {
+          lastOrder.orderItems.push({
+            productId: cur.product_id,
+            productName: cur.name,
+            thumbnail: cur.thumbnail,
+            price: cur.price,
+            amount: cur.amount,
+            isReviewed: cur.is_reviewed,
+          });
+
+          return acc;
+        } else {
+          return acc.concat({
+            id: cur.id,
+            updatedAt: cur.updated_at,
+            orderItems: [
+              {
+                productId: cur.product_id,
+                productName: cur.name,
+                thumbnail: cur.thumbnail,
+                price: cur.price,
+                amount: cur.amount,
+                isReviewed: cur.is_reviewed,
+              },
+            ],
+          });
+        }
+      }, []);
+
+      res.json({
+        ok: true,
+        data: {
+          orders,
+          totalCount: results.totalCount,
+        },
+      });
+    } catch (e) {
+      console.error(e.message);
+
+      res.status(500).json({ ok: false });
+    }
+  };
 
       const results = await getCustomRepository(OrderRepository).getList({
         userId,
@@ -92,7 +143,10 @@ namespace OrderController {
       const userId = res.locals?.user?.id || 1;
 
       const order = await getCustomRepository(OrderRepository).getCart({ userId });
-
+      if (!order) {
+        res.json({ ok: true, data: {} });
+        return;
+      }
       res.json({
         ok: true,
         data: {
@@ -155,8 +209,10 @@ namespace OrderController {
   export const removeCartItem: RouteHandler<OrderRequest.RemoveCartItem> = async (req, res) => {
     try {
       const { orderItemId } = req.params;
-
-      const result = await getCustomRepository(OrderRepository).removeCartItem({ orderItemId });
+      const orderItemIdArray = `${orderItemId}`.split(',').map(Number);
+      const result = await getCustomRepository(OrderRepository).removeCartItem({
+        orderItemId: orderItemIdArray,
+      });
 
       res.json({ ok: result.affected > 0 });
     } catch (e) {

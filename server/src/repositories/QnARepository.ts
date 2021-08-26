@@ -5,10 +5,10 @@ import QnA from '../entities/qna';
 export default class QnARepository extends Repository<QnA> {
   getList({
     userId,
-    size = 10,
-    page = 0,
     startDate = new Date(0),
     endDate = new Date(),
+    page = 0,
+    size = 5,
   }: {
     userId: number;
     size?: number;
@@ -20,8 +20,8 @@ export default class QnARepository extends Repository<QnA> {
       .leftJoinAndSelect('q.product', 'product')
       .where(`q.user_id = ${userId}`)
       .where('q.created_at > :start_at AND q.created_at < :end_at', {
-        start_at: new Date(new Date(startDate).setHours(0, 0, 0, 0)),
-        end_at: new Date(new Date(endDate).setHours(23, 59, 59, 59)),
+        start_at: new Date(new Date(startDate).setHours(0, 0, 0, 0)).toJSON(),
+        end_at: new Date(new Date(endDate).setHours(23, 59, 59, 59)).toJSON(),
       })
       .limit(size)
       .offset(page * size)

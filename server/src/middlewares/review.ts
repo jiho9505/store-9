@@ -1,11 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, MiddlewareResponse } from 'express';
 import { getCustomRepository } from 'typeorm';
 
-import { ReviewRepository } from '../repositories/review_repository';
+import { ReviewRepository } from '../repositories/ReviewRepository';
 import constant from '../utils/constant';
 
 const ReviewMiddleware = {
-  checkReviewExist: async (req: Request, res: Response, next: NextFunction) => {
+  checkReviewExist: async (req: Request, res: MiddlewareResponse, next: NextFunction) => {
     const product_id = Number(req.params.productId);
     const user_id = res.locals.user.id;
     const reviewRepository = getCustomRepository(ReviewRepository);
@@ -15,6 +15,7 @@ const ReviewMiddleware = {
       res.json({ ok: false, message: constant.REVIEW_NOT_EXIST });
       return;
     }
+    res.locals.review = reviewExist;
     next();
   },
 };

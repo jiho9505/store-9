@@ -3,10 +3,12 @@ import Review from '../entities/review';
 
 @EntityRepository(Review)
 export class ReviewRepository extends Repository<Review> {
-  getReviews(user_id: number): Promise<Review[]> {
-    return this.find({
+  getReviews(user_id: number, page = 0, size = 5): Promise<[Review[], number]> {
+    return this.findAndCount({
       relations: ['product'],
       where: { user_id },
+      skip: page * size,
+      take: size,
     });
   }
   getReview(user_id: number, product_id: number): Promise<Review> {
