@@ -70,7 +70,7 @@ export default class OrderRepository extends Repository<Order> {
     receiverName: string;
     receiverAddress: string;
     receiverPhone: string;
-    selectedItem: string[];
+    selectedItem: number[];
   }) {
     const result = this.createQueryBuilder()
       .update({
@@ -86,7 +86,7 @@ export default class OrderRepository extends Repository<Order> {
       .andWhere(`id = ${id}`)
       .execute();
 
-    const deletedProducts = await this._removeExceptCartItem([1, 2]);
+    const deletedProducts = await this._removeExceptCartItem(selectedItem);
     await this._addCartItems(userId, deletedProducts);
 
     return result;
