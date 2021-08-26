@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import Stepper from './Stepper';
@@ -6,6 +6,7 @@ import Stage1 from './Stage1';
 import Stage2 from './Stage2';
 import Button from '@/components/common/Button';
 
+import { FormContext } from '@/hooks/context';
 import useInput from '@/hooks/customHooks/useInput';
 import Validation from '@/utils/validation';
 
@@ -33,11 +34,7 @@ const validationSchema = {
 };
 
 const OrderForm = () => {
-  const { form, onChange, onBlur, check, error } = useInput({
-    initialState: { ...stage1InitialForm, ...stage2InitialForm },
-    validationSchema,
-  });
-
+  const { form, error, onChange, onBlur, check } = useContext(FormContext);
   const { orderName, phoneNumber, email, recName, recPlace, recPhoneNumber } = form;
 
   const [stage, setStage] = useState(1);

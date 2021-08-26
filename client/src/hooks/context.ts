@@ -12,3 +12,5 @@ type ProductContextType = {
 };
 
 export const ProductContext = createContext<ProductContextType>({});
+
+export const FormContext = createContext(null);
