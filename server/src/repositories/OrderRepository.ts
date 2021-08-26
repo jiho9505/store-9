@@ -51,15 +51,6 @@ export default class OrderRepository extends Repository<Order> {
     return { orders, totalCount: Number(totalCount[0].count) };
   }
 
-  order({ orderId }: { orderId: number }) {
-    const result = this.createQueryBuilder()
-      .update({ status: OrderStatus.BEFORE_PAYEMNT })
-      .whereInIds(orderId)
-      .execute();
-
-    return { orders, totalCount: Number(totalCount[0].count) };
-  }
-
   order({
     userId,
     buyerName,
