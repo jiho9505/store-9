@@ -4,6 +4,7 @@ import { Link } from '@/core/Router';
 
 import '@/static/assets/img/circle.png';
 
+import RefreshStore from '@/stores/RefreshStore';
 import { testCategories, testSubCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
@@ -19,6 +20,7 @@ const Navigation = () => {
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
   const [categories, setCategories] = useState(initCategoryData);
   const [subCategories, setSubCategories] = useState([]);
+  const { refresh } = RefreshStore;
 
   useEffect(() => {
     setCategories([...categories, ...testCategories]);
@@ -73,12 +75,17 @@ const Navigation = () => {
     timer = 0;
   };
 
+  const handleClickLink = () => {
+    refresh();
+  };
+
   return (
     <NavigationContainer id="NavBorder">
       <Menu>
         {categories.map((category) => (
           <Item key={category.name}>
             <CategoryLink
+              onClick={handleClickLink}
               onMouseOver={handleMouseOverLink}
               onMouseOut={handleMouseOutLink}
               to={`/goods?categoryId=${category.id}`}
@@ -96,7 +103,11 @@ const Navigation = () => {
         <SubMenuContainer>
           <SubMenu dist={subItemXpos}>
             {subItems.map((subItem) => (
-              <Link to={`/goods?categoryId=${subItem.id}`} key={subItem.name}>
+              <Link
+                to={`/goods?categoryId=${subItem.id}`}
+                onClick={handleClickLink}
+                key={subItem.name}
+              >
                 <SubItem>{subItem.name}</SubItem>
               </Link>
             ))}
