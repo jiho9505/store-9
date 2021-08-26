@@ -1,4 +1,4 @@
-import { getCustomRepository } from 'typeorm';
+import { CustomRepositoryDoesNotHaveEntityError, getCustomRepository } from 'typeorm';
 import { JwtSignPayload } from '../utils/types';
 import OrderRequest from '../../../shared/dtos/order/request';
 import OrderResponse from '../../../shared/dtos/order/response';
@@ -19,12 +19,12 @@ namespace OrderController {
         size,
         page,
       });
-
       const orders = results.orders.reduce((acc, cur) => {
         const lastOrder = acc[acc.length - 1];
 
         if (lastOrder?.id === cur.id) {
           lastOrder.orderItems.push({
+            productId: cur.product_id,
             productName: cur.name,
             thumbnail: cur.thumbnail,
             price: cur.price,
@@ -39,6 +39,7 @@ namespace OrderController {
             updatedAt: cur.updated_at,
             orderItems: [
               {
+                productId: cur.product_id,
                 productName: cur.name,
                 thumbnail: cur.thumbnail,
                 price: cur.price,

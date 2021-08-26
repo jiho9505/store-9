@@ -9,7 +9,7 @@ export default class OrderRepository extends Repository<Order> {
     userId,
     startDate = new Date(0),
     endDate = new Date(),
-    size = 20,
+    size = 5,
     page = 0,
 
     status = OrderStatus.PURCHASING_COMPLETE,
@@ -45,7 +45,8 @@ export default class OrderRepository extends Repository<Order> {
         FROM order_items
       ) joi
       ON o.id = joi.order_id
-      WHERE o.user_id = ${userId}
+      WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${start}' AND '${end}'
+      AND o.status != '${OrderStatus.IN_CART}'
       GROUP BY o.user_id
     `);
 
