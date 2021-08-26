@@ -8,6 +8,7 @@ import ModalWrapper from '@/components/common/ModalWrapper';
 
 import ReviewApi from '@/apis/ReviewApi';
 import QnaApi from '@/apis/QnaApi';
+import DetailProductStore from '@/stores/DetailProductStore';
 import RefreshStore from '@/stores/RefreshStore';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
@@ -26,6 +27,7 @@ const PostModal = ({
   title,
   formType = { form: 'REVIEW', mode: 'ENROLL' },
 }: PostModalProps) => {
+  const { load } = DetailProductStore;
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
 
@@ -58,23 +60,39 @@ const PostModal = ({
    */
   const handleClickEnrollBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
+    const { form } = formType;
     const title: string = inputRef.current.value;
     const content: string = textAreaRef.current.value;
 
     const result = isPassedValidation(title, content);
     if (result) return;
 
-    try {
-      await ReviewApi.create(product.id, {
-        title,
-        content,
-        rate: starScore,
-        images: [],
-      });
-      onClose();
-      refresh();
-    } catch (err) {
-      alert('리뷰등록에 실패했습니다.');
+    if (form === 'REVIEW') {
+      try {
+        await ReviewApi.create(product.id, {
+          title,
+          content,
+          rate: starScore,
+          images: [],
+        });
+        onClose();
+        refresh();
+        load();
+      } catch (err) {
+        alert('리뷰등록에 실패했습니다.');
+      }
+    } else if (form === 'QNA') {
+      try {
+        await QnaApi.create({
+          title,
+          content,
+          productId: product.id,
+        });
+        onClose();
+        load();
+      } catch (err) {
+        alert('문의등록에 실패했습니다.');
+      }
     }
   };
 
