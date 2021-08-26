@@ -13,3 +13,11 @@ type Info = {
   badge?: Array<string>;
   quantity?: number;
 };
+
+type MessageModeType = 'success' | 'fail' | 'caution';
+
+type Message = {
+  showMessage: boolean;
+  messageContent?: string;
+  messageMode?: MessageModeType;
+};
