@@ -7,7 +7,8 @@ export default class ReviewModel implements ReviewSchema {
   title: string;
   content: string;
   images: string[];
-  createdAt: string;
+  rate: number;
+  createdAt: Date;
   createdDate: Date;
 
   constructor(dto: ReviewSchema) {

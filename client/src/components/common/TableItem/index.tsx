@@ -7,9 +7,9 @@ import ModalWrapper from '../ModalWrapper';
 import { baeminFont, greyLine, greySpan, normalRadius } from '@/static/style/common';
 import { OptionModal } from '@/components/Cart';
 
-const TableItem = ({ product }) => {
+const TableItem = ({ cartProduct }) => {
   const [activeModal, setActiveModal] = useState(false);
-  const { productId, name, thumbNail, price, quantity, totalPrice } = product;
+  const { name, thumbnail, price } = cartProduct.product;
 
   const handleOpenModal = () => {
     setActiveModal(true);
@@ -23,21 +23,22 @@ const TableItem = ({ product }) => {
     <>
       <TableItemContainer>
         <ProductBasicInfo>
-          <ProductImg src={thumbNail} />
+          <ProductImg src={thumbnail} />
           <ProductName>{name}</ProductName>
         </ProductBasicInfo>
+        {/* 누르면 상세페이지로 이동할수있도록.. */}
         <ProductPriceInfo>
           <ProductPrice>
-            {price.toLocaleString()} 원 / <span>{quantity} 개</span>
+            {price.toLocaleString()} 원 / <span>{cartProduct.amount} 개</span>
           </ProductPrice>
           <Button onClick={handleOpenModal}>옵션/수량 변경</Button>
         </ProductPriceInfo>
-        <ProductTotalPrice>{totalPrice.toLocaleString()} 원</ProductTotalPrice>
+        <ProductTotalPrice>{(cartProduct.amount * price).toLocaleString()} 원</ProductTotalPrice>
       </TableItemContainer>
       {activeModal && (
         <ModalPortal>
           <ModalWrapper onClose={handleCloseModal} title="옵션변경">
-            <OptionModal product={product} onClose={handleCloseModal} />
+            <OptionModal cartProduct={cartProduct} onClose={handleCloseModal} />
           </ModalWrapper>
         </ModalPortal>
       )}

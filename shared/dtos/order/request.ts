@@ -25,13 +25,13 @@ namespace OrderRequest {
     amount: number;
   };
 
-  export type GetList = {
-    start?: string;
-    end?: string;
-  };
+  // export type GetList = {
+  //   start?: string;
+  //   end?: string;
+  // };
 
   export type RemoveCartItem = {
-    orderItemId: number;
+    orderItemId: number[];
   };
 }
 

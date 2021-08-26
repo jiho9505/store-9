@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 import {
   normalContainerWidth,
   greyLine,
@@ -11,46 +12,45 @@ import {
 import { CartContent } from '@/components/Cart';
 import PricePannel from '@/components/common/PricePannel';
 import OrderStageHeader from '@/components/common/OrderStageHeader';
-
-const cartProducts = [
-  {
-    productId: 5,
-    name: '똑똑똑 실내홥니다',
-    quantity: 1,
-    price: 6000,
-    totalPrice: 6000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-  {
-    productId: 3,
-    name: 'ㅋㅋ 슬리퍼',
-    quantity: 2,
-    price: 12000,
-    totalPrice: 24000,
-    thumbNail: 'https://via.placeholder.com/150',
-    option: { size: 'small' },
-  },
-];
+import OrderApi from '@/apis/OrderApi';
+import RefreshStore from '@/stores/RefreshStore';
+import UserApi from '@/apis/UserApi';
 
 const CartPage = () => {
-  const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
+  const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
+  const [cartProducts, setCartProducts] = useState([]);
+  const [error, setError] = useState('');
+  const { refresh, refreshComponent } = RefreshStore;
+
+  useEffect(() => {
+    const getCartItems = async () => {
+      try {
+        const {
+          data: { order },
+        } = await OrderApi.getCart();
+        setCartProducts(order.orderItems);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    getCartItems();
+  }, [refreshComponent]);
 
   const handleClickCheckbox = (id) => {
-    if (selectedProducts.has(id)) {
-      setSelectedProducts((prev) => {
+    if (selectedItems.has(id)) {
+      setSelectedItems((prev) => {
         prev.delete(id);
         return new Set(prev);
       });
     } else {
-      setSelectedProducts((prev) => new Set(prev.add(id)));
+      setSelectedItems((prev) => new Set(prev.add(id)));
     }
   };
 
   const calTotalProductPrice = () => {
-    return cartProducts.reduce((acc, { productId, totalPrice }) => {
-      if (selectedProducts.has(productId)) {
-        return acc + totalPrice;
+    return cartProducts.reduce((acc, { id, amount, product }) => {
+      if (selectedItems.has(id)) {
+        return acc + amount * product.price;
       }
       return acc;
     }, 0);
@@ -58,11 +58,44 @@ const CartPage = () => {
 
   const handleToggleSelectAllBtn = (e) => {
     const { target } = e;
-    const curProductId = cartProducts.map(({ productId }) => productId);
+    const curProductId = cartProducts.map((cartProduct) => cartProduct.id);
     if (target.checked) {
-      setSelectedProducts(new Set(curProductId));
+      setSelectedItems(new Set(curProductId));
     } else {
-      setSelectedProducts(new Set());
+      setSelectedItems(new Set());
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    if (selectedItems.size === 0) return;
+    const selected = Array.from(selectedItems);
+
+    try {
+      const result = await OrderApi.removeCartItem({ orderItemId: selected });
+      if (result.ok) {
+        refresh();
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const orderItemIdtoProductId = (selected) => {
+    return selected.map((itemId) => {
+      const item = cartProducts.find((cartProduct) => cartProduct.id === itemId);
+      return item.product.id;
+    });
+  };
+
+  const handleLikeClick = async () => {
+    if (selectedItems.size === 0) return;
+    const selected = Array.from(selectedItems);
+    const productId: number[] = orderItemIdtoProductId(selected);
+
+    try {
+      const result = await UserApi.likeMany({ productId });
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -73,12 +106,12 @@ const CartPage = () => {
         cartProducts={cartProducts}
         onCheck={handleClickCheckbox}
         onCheckAll={handleToggleSelectAllBtn}
-        selectedProduct={selectedProducts}
+        selectedItems={selectedItems}
       />
       <CartFooter>
         <SelectProductAction>
-          <Button>선택상품 삭제</Button>
-          <Button>선택상품 찜</Button>
+          <Button onClick={handleDeleteClick}>선택상품 삭제</Button>
+          <Button onClick={handleLikeClick}>선택상품 찜</Button>
         </SelectProductAction>
         <PricePannel productTotalPrice={calTotalProductPrice()} />
       </CartFooter>
@@ -116,4 +149,4 @@ const Button = styled.button`
   }
 `;
 
-export default CartPage;
+export default observer(CartPage);

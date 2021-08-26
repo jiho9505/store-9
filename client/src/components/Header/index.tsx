@@ -9,7 +9,7 @@ import SearchBar from './SearchBar';
 
 import { baeminFont, greyLine, greySpan, normalContainerWidth } from '@/static/style/common';
 
-import '@/static/assets/img/logo.png';
+import LOGO from '@/static/assets/img/logo.png';
 import '@/static/assets/img/search.png';
 
 const Header = () => {

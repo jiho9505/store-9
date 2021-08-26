@@ -1,5 +1,5 @@
 import { OrderItemSchema } from '../order-item/schema';
-import { OrderSchema } from './schema';
+import { OrderSchema, OrderStatus } from './schema';
 
 namespace OrderResponse {
   export type GetList = {
@@ -16,15 +16,16 @@ namespace OrderResponse {
   }[];
 
   export type GetCart = {
-    order: {
+    order?: {
       id: number;
+      status: OrderStatus;
       orderItems: {
         id: number;
         amount: number;
         product: {
           id: number;
           name: string;
-          price: string;
+          price: number;
           thumbnail: string;
         };
       }[];

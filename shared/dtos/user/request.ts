@@ -5,6 +5,10 @@ namespace UserReqeust {
     productId: number;
   };
 
+  export type Likes = {
+    productId: number[];
+  };
+
   export type getLikeList = {};
 
   export type CreateAddress = AddressSchema;

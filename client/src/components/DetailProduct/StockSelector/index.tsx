@@ -31,9 +31,9 @@ const StockSelectorComponent = ({
 
   const handleClickButton = (e: React.MouseEvent) => {
     if (e.currentTarget.className === 'fas fa-sort-up') {
-      selectedStock < 100 && refreshStock(selectedStock + 1);
+      selectedStock < 100 && refreshStock(Number(selectedStock) + 1);
     } else if (e.currentTarget.className === 'fas fa-sort-down') {
-      selectedStock > 1 && refreshStock(selectedStock - 1);
+      selectedStock > 1 && refreshStock(Number(selectedStock) - 1);
     }
   };
 
