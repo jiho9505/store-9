@@ -28,7 +28,8 @@ const DetailTab = ({ choicedIdx, handleClickItemName }: DetailTab) => {
     return TabName.map((itemName, idx) => (
       <TabItem key={itemName} onClick={handleClickItemName} data-idx={idx}>
         <ItemName active={choicedIdx === idx}>{itemName}</ItemName>
-        {/* <ReviewCount>0</ReviewCount> */}
+        {idx === 3 && <ReviewCount>0</ReviewCount>}
+        {idx === 4 && <QnaCount>0</QnaCount>}
       </TabItem>
     ));
   };
@@ -66,11 +67,9 @@ const ItemName = styled.span<ItemNameProps>`
 `;
 
 const ReviewCount = styled.strong`
+  margin-left: 10px;
   color: ${baemin};
   font-size: 13px;
 `;
 
-const QnaCount = styled.strong`
-  color: ${baemin};
-  font-size: 13px;
-`;
+const QnaCount = styled(ReviewCount)``;
