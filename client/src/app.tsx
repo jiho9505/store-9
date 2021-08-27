@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import styled from '@emotion/styled';
+import guguStyled from '@/core/styled';
 import { Router, Route } from './core/Router';
 
 const Header = React.lazy(() => import('@/components/Header'));
@@ -76,11 +76,11 @@ const App = () => {
   );
 };
 
-const PageContainer = styled.div`
+const PageContainer = guguStyled.div`
   min-width: 1450px;
 `;
 
-const LoadingContainer = styled.div`
+const LoadingContainer = guguStyled.div`
   position: absolute;
   left: 45%;
   top: 35%;
