@@ -65,60 +65,6 @@ namespace OrderController {
     }
   };
 
-      const results = await getCustomRepository(OrderRepository).getList({
-        userId,
-        startDate,
-        endDate,
-        size,
-        page,
-      });
-
-      const orders = results.orders.reduce((acc, cur) => {
-        const lastOrder = acc[acc.length - 1];
-
-        if (lastOrder?.id === cur.id) {
-          lastOrder.orderItems.push({
-            productName: cur.name,
-            thumbnail: cur.thumbnail,
-            price: cur.price,
-            amount: cur.amount,
-            isReviewed: cur.is_reviewed,
-          });
-
-          return acc;
-        } else {
-          acc.push({
-            id: cur.id,
-            updatedAt: cur.updated_at,
-            orderItems: [
-              {
-                productName: cur.name,
-                thumbnail: cur.thumbnail,
-                price: cur.price,
-                amount: cur.amount,
-                isReviewed: cur.is_reviewed,
-              },
-            ],
-          });
-
-          return acc;
-        }
-      }, []);
-
-      res.json({
-        ok: true,
-        data: {
-          orders,
-          totalCount: results.totalCount,
-        },
-      });
-    } catch (e) {
-      console.error(e.message);
-
-      res.status(500).json({ ok: false });
-    }
-  };
-
   export const order: RouteHandler<OrderRequest.Order> = async (req, res) => {
     try {
       // login check

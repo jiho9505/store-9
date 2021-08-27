@@ -5,7 +5,10 @@ import QnAResponse from '../../../shared/dtos/qna/response';
 import QnARepository from '../repositories/QnARepository';
 
 namespace QnAController {
-  export const getList: RouteHandler<null, QnAResponse.GetList> = async (req, res) => {
+  export const getList: RouteHandler<QnARequest.GetList, QnAResponse.GetList> = async (
+    req,
+    res
+  ) => {
     try {
       const { userId = 1 } = res.locals;
       const { startDate, endDate, page } = req.query;
