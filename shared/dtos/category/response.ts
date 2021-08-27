@@ -10,7 +10,7 @@ namespace CategoryResponse {
       name: string;
       parentId: number;
     }[];
-  }[];
+  };
 }
 
 export default CategoryResponse;
