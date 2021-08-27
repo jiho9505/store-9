@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 
 import useHistory from '@/hooks/customHooks/useHistory';
+import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 
+import { ProductContext } from '@/hooks/context';
 import { greyLine, baeminFont } from '@/static/style/common';
 
 const Buy = () => {
+  const { info } = useContext(ProductContext);
   const history = useHistory();
+  const [BuyInfo, setBuyInfo] = useLocalStorage('buy', {});
 
   /**
    * TODO:
-   * 1.push에 인자를 싣는것이 된다면 그렇게 할 것
-   * 2.안된다면 POST (userid,productid,stock ...etc)
+   * 1.POST (userid,productid,stock ...etc)
    */
   const handleClickText = () => {
+    setBuyInfo(info);
     history.push('/order');
   };
   return (

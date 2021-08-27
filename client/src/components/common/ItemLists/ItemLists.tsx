@@ -6,9 +6,8 @@ import ItemLabel from './ItemLabel/ItemLabel';
 import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
-import '@/static/assets/img/sampleItem.jpeg';
-import '@/static/assets/img/soldout.png';
-import { red1 } from '@/static/style/common';
+import EMPTY from '@/static/assets/img/empty.png';
+import { baeminFont, greySpan, red1 } from '@/static/style/common';
 
 type ItemListsProps = {
   observeTag?: () => void;
@@ -18,23 +17,32 @@ type ItemListsProps = {
 /**
  * TODO:
  * API 연동 후 값 동적으로 넣어야 합니다.
+ * 별점과 라이크는 0이어도 띄우고 옆에 개수를 나타낸다.
  */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
-    return products.map((item, idx) => (
-      <Item key={idx} className="item">
-        <ItemImage productImage={item.image} quantity={item.quantity}></ItemImage>
-        <ItemContent item={item}></ItemContent>
-        {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
-        <StarContainer>
-          <StarComponent score={5} />
-        </StarContainer>
-        <LikeContainer>
-          <i className="fas fa-heart"></i>
-          <span>777</span>
-        </LikeContainer>
-      </Item>
-    ));
+    return products.length > 0 ? (
+      products.map((item, idx) => (
+        <Item key={idx} className="item">
+          <ItemImage productImage={item.image} quantity={item.quantity}></ItemImage>
+          <ItemContent item={item}></ItemContent>
+          {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
+          <StarContainer>
+            <StarComponent score={5} />
+            <span>352</span>
+          </StarContainer>
+          <LikeContainer>
+            <i className="fas fa-heart"></i>
+            <span>777</span>
+          </LikeContainer>
+        </Item>
+      ))
+    ) : (
+      <EmptyContainer>
+        <img src={EMPTY} />
+        <EmptyMessage>해당 제품이 없습니다...</EmptyMessage>
+      </EmptyContainer>
+    );
   };
 
   useEffect(() => {
@@ -51,6 +59,21 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   );
 };
 
+const EmptyMessage = styled.span`
+  color: ${greySpan};
+  font-size: 20px;
+  font-family: ${baeminFont};
+`;
+
+const EmptyContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 80px;
+`;
+
 const LikeContainer = styled.div`
   margin-top: 4px;
   display: flex;
@@ -66,6 +89,15 @@ const LikeContainer = styled.div`
 const StarContainer = styled.div`
   margin-top: 8px;
   font-size: 12px;
+  color: ${red1};
+  font-size: 13px;
+  i {
+    margin-bottom: 2px;
+  }
+
+  span {
+    margin-left: 5px;
+  }
 `;
 
 const EndPositionTag = styled.div``;

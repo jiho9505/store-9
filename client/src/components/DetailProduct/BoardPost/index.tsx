@@ -10,7 +10,7 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
     return (
       title === '상품 문의' && (
         <LockIcon>
-          <i className="fas fa-lock"></i>
+          <i className="fas fa-lock-open"></i>
         </LockIcon>
       )
     );

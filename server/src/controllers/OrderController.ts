@@ -34,12 +34,11 @@ namespace OrderController {
 
           return acc;
         } else {
-          return acc.concat({
+          acc.push({
             id: cur.id,
             updatedAt: cur.updated_at,
             orderItems: [
               {
-                productId: cur.product_id,
                 productName: cur.name,
                 thumbnail: cur.thumbnail,
                 price: cur.price,
@@ -48,6 +47,8 @@ namespace OrderController {
               },
             ],
           });
+
+          return acc;
         }
       }, []);
 
@@ -90,7 +91,7 @@ namespace OrderController {
 
       const order = await getCustomRepository(OrderRepository).getCart({ userId });
       if (!order) {
-        res.json({ ok: true, data: {} });
+        res.json({ ok: true, data: {} as any });
         return;
       }
       res.json({

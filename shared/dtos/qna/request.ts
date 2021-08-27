@@ -10,7 +10,7 @@ namespace QnARequest {
   export type Create = {
     title: string;
     content: string;
-    product_id: number;
+    productId: number;
     images?: string;
     isPrivate?: boolean;
   };

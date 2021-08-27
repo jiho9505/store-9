@@ -1,37 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 
+import Message from '@/components/common/Message';
 import BoardPost from '../BoardPost';
 import BoardHeader from '../BoardHeader';
 import BoardPageNumber from '../BoardPageNumber';
 import ModalPortal from '@/utils/portal';
 import PostModal from '../../common/PostModal';
 
+import DetailProductStore from '@/stores/DetailProductStore';
+import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import { ProductContext } from '@/hooks/context';
+
+const requireBuyHistoryMsg = '구매한 상품에 한해서 작성이 가능합니다.';
 type ProductBoardProps = {
   title: string;
-  item;
 };
-/**
- * TODO:
- * 데이터 생성시 상위에서
- * 데이터 받아온 후  postInfoDatas  업데이트 해야합니다.
- */
-const ProductBoard = ({ title, item }: ProductBoardProps) => {
-  const [pageNumber, setPageNumber] = useState(0);
+
+const ProductBoard = ({ title }: ProductBoardProps) => {
+  const { info } = useContext(ProductContext);
+  const [pageNumber, setPageNumber] = useState<number>(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
-  const [pageStart, setPageStart] = useState(0);
-  const [pageEnd, setPageEnd] = useState(10);
-  const [isActiveModal, setIsActiveModal] = useState(false);
-  const [showContent, setShowContent] = useState([]);
+  const [pageStart, setPageStart] = useState<number>(0);
+  const [pageEnd, setPageEnd] = useState<number>(10);
+  const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
+  const [showContent, setShowContent] = useState<number[]>([]);
+  const [message, setMessage] = useState<Message>({
+    showMessage: false,
+    messageContent: '',
+  });
+  const { products } = DetailProductStore;
+
+  let timer: number = 0;
 
   useEffect(() => {
     setPostInfoDatas(postDummyDatas.slice(pageStart, pageEnd));
+    return () => clearTimeout(timer);
   }, []);
 
-  /**
-   * page Number를 클릭해줌으로써
-   * 게시글 리스트와 페이지 넘버 color가 바뀐다.
-   */
+  const createMsg = (title: string) => {
+    setMessage({ showMessage: true, messageContent: title });
+    timer = setTimeout(() => {
+      setMessage({ ...message, showMessage: false });
+    }, showErrorMsgTime);
+  };
+
+  const viewMsgByUserStatus = (mode: string) => {
+    if (mode === 'notlogin') {
+      createMsg(requireLoginMsg);
+    } else if (mode === 'notbuy') {
+      createMsg(requireBuyHistoryMsg);
+    }
+  };
+
   const handleClickNumber = (e: React.MouseEvent<HTMLLIElement>) => {
     const newPageNumber = Number(e.currentTarget.dataset.idx);
     const newStartPoint = newPageNumber * 10;
@@ -44,8 +66,23 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
     setShowContent([]);
   };
 
+  useEffect(() => {
+    // 게시물 업데이트
+    // setPostInfoDatas(products.blah)
+  }, [products]);
+
+  /**
+   * TODO:
+   * post 후 store 업데이트 후 전체 새로운 데이터를 가져와야합니다.
+   *
+   * User login 유무 파악해서 처리 다르게 해야합니다
+   * 구매한 사람만 쓸 수 있게 예외처리 해야합니다. (우선순위 뒤)
+   *
+   * title이 문의냐 후기냐에 따라 if 분기문 작성
+   */
   const handleClickButton = () => {
-    setIsActiveModal(true);
+    viewMsgByUserStatus('notlogin');
+    // setIsActiveModal(true);
   };
 
   const handleClickForClose = () => {
@@ -80,14 +117,24 @@ const ProductBoard = ({ title, item }: ProductBoardProps) => {
       />
       {isActiveModal && (
         <ModalPortal>
-          <PostModal onClose={handleClickForClose} title={title} item={item}></PostModal>
+          <PostModal
+            onClose={handleClickForClose}
+            title={title}
+            item={info}
+            formType={{ form: title === '상품 후기' ? 'REVIEW' : 'QNA', mode: 'ENROLL' }}
+          />
+        </ModalPortal>
+      )}
+      {message.showMessage && (
+        <ModalPortal>
+          <Message text={message.messageContent} mode="fail" />
         </ModalPortal>
       )}
     </ProductBoardContainer>
   );
 };
 
-export default ProductBoard;
+export default observer(ProductBoard);
 
 const ProductBoardContainer = styled.div`
   margin-top: 50px;

@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 
 import OverViewContent from '../OverViewContent';
 import ZoomableImage from '../ZoomableImage';
 
-type OverviewProps = {
-  info;
-};
+import { ProductContext } from '@/hooks/context';
 
-const Overview = ({ info }: OverviewProps) => {
+const Overview = () => {
+  const { info } = useContext(ProductContext);
+
   return (
     <OverviewContainer>
-      <ZoomableImage width={473} height={585} src={info.image}></ZoomableImage>
-      <OverViewContent info={info}></OverViewContent>
+      {info && <ZoomableImage width={473} height={585} src={info.image} />}
+      {info && <OverViewContent />}
     </OverviewContainer>
   );
 };
