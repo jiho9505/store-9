@@ -24,3 +24,5 @@ app.use('/api', apiRouter);
 createConnection().then(() => {
   app.listen(port, () => console.log('Server run on:', port));
 });
+
+export { app };

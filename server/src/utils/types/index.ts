@@ -1,4 +1,4 @@
-import Review from 'src/entities/review';
+import Review from '../../entities/review';
 
 export type JwtSignPayload = {
   role: 'Master' | 'User' | 'Admin' | 'NotUser';

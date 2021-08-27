@@ -1,5 +1,5 @@
-import ReviewResponse from '@shared/dtos/review/response';
-import Review from 'src/entities/review';
+import ReviewResponse from '../../../shared/dtos/review/response';
+import Review from '../entities/review';
 
 type MulterFiles =
   | Express.Multer.File[]
@@ -9,7 +9,8 @@ type MulterFiles =
 type ImageString = string;
 
 const convertImagesToUrlString = (images: MulterFiles): ImageString => {
-  return images
+  const ret = images as Array<Express.MulterS3.File>;
+  return ret
     .map((image) => {
       return image.key + ';';
     })
