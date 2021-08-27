@@ -42,9 +42,11 @@ const CartPage = () => {
   }, [refreshComponent]);
 
   const addProductInLocalStorage = (id) => {
+    const [selectedProduct] = cartProducts.filter(({ id: cartId }) => id === cartId);
+
     const cartInfo = localStorage.getItem('cartInfo');
     const parsedCartInfo = JSON.parse(cartInfo).product;
-    parsedCartInfo[id] = id;
+    parsedCartInfo[id] = selectedProduct;
     localStorage.setItem(
       'cartInfo',
       JSON.stringify({ cartId: curCartId, product: parsedCartInfo })
