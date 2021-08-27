@@ -43,6 +43,7 @@ const Input = ({
         name={name}
         type={type}
         required={required}
+        autoComplete="off"
         onChange={onChange}
         onBlur={onBlur}
         placeholder={placeholder}
