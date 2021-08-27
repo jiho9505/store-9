@@ -11,6 +11,7 @@ import { normalRadius } from '@/static/style/common';
 import useInput from '@/hooks/customHooks/useInput';
 import Validation from '@/utils/validation';
 import OrderApi from '@/apis/OrderApi';
+import useHistory from '@/hooks/customHooks/useHistory';
 
 const stage1InitialForm = {
   buyerName: '',
@@ -34,6 +35,7 @@ const validationSchema = {
 };
 
 const OrderForm = () => {
+  const history = useHistory();
   const { form, onChange, onBlur, check, error } = useInput({
     initialState: { ...stage1InitialForm, ...stage2InitialForm },
     validationSchema,
@@ -59,7 +61,6 @@ const OrderForm = () => {
     const { cartId, products } = cartInfo;
 
     const orderId = products.map(({ id }) => id);
-    console.log(orderId);
     await OrderApi.order({
       id: cartId,
       buyerName,
@@ -70,6 +71,7 @@ const OrderForm = () => {
       receiverPhone,
       selectedItem: orderId,
     });
+    history.push('/end-order');
   };
 
   const Forms = () => {
