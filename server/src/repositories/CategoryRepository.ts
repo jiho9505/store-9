@@ -5,9 +5,7 @@ import Category from '../entities/category';
 @EntityRepository(Category)
 export default class CategoryRepository extends Repository<Category> {
   async getCategories() {
-    return this.createQueryBuilder('c')
-      .select(['c.id', 'c.level', 'c.name', 'c.parent_id'])
-      .getMany();
+    return this.createQueryBuilder('c').select(['c.id', 'c.name', 'c.parent_id']).getMany();
   }
 
   async createCategory({ level, name, parent_id }) {

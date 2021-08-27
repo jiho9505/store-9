@@ -1,5 +1,3 @@
-import { ReviewSchema } from './schema';
-
 namespace ReviewResponse {
   export type GetList = {
     reviews: {
