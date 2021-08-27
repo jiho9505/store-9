@@ -144,7 +144,7 @@ export default class OrderRepository extends Repository<Order> {
     const order = await OrderItem.find({ where: { id: In(orderItemId) } });
 
     const deletedProducts = await OrderItem.find({
-      where: { order_id: order[0]['order_id'], id: Not(In([4])) },
+      where: { order_id: order[0]['order_id'], id: Not(In([orderItemId])) },
     });
     const result = await OrderItem.remove(deletedProducts);
 
