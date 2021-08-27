@@ -5,15 +5,18 @@ import QnAResponse from '../../../shared/dtos/qna/response';
 import QnARepository from '../repositories/QnARepository';
 
 namespace QnAController {
-  export const getList: RouteHandler<null, QnAResponse.GetList> = async (req, res) => {
+  export const getList: RouteHandler<QnARequest.GetList, QnAResponse.GetList> = async (
+    req,
+    res
+  ) => {
     try {
       const { userId = 1 } = res.locals;
       const { startDate, endDate, page } = req.query;
 
       const [qnas, totalCount] = await getCustomRepository(QnARepository).getList({
         userId,
-        startDate,
-        endDate,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
         page,
       });
 
@@ -66,13 +69,13 @@ namespace QnAController {
 
   export const update: RouteHandler<QnARequest.Update, QnAResponse.Update> = async (req, res) => {
     try {
-      const { qnaId, title, content, images = '/' } = req.body;
+      const { qnaId, title, content } = req.body;
 
       const result = await getCustomRepository(QnARepository).updateQnA({
         qnaId,
         content,
         title,
-        images,
+        images: '/',
       });
 
       res.json({

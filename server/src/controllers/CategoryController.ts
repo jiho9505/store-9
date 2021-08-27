@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import CategoryRepository from '../repositories/CategoryRepository';
 import CategoryResponse from '../../../shared/dtos/category/response';
-import { CategorySchema } from '../../../shared/dtos/category/schema';
+import Category from '../entities/category';
 
 namespace CategoryController {
   export const getCategories: RouteHandler<null, CategoryResponse.GetCategories> = async (
@@ -10,14 +10,27 @@ namespace CategoryController {
   ) => {
     const categoires = await getCustomRepository(CategoryRepository).getCategories();
 
-    const data = categoires.map<CategorySchema>((category) => ({
+    const createCategoryData = (category: Category) => ({
       id: category.id,
       name: category.name,
-      level: category.level,
       parentId: category.parent_id,
-    }));
+    });
 
-    res.json({ ok: true, message: '카테고리 조회 ', data });
+    const parentCategories = categoires
+      .filter((category) => category.parent_id === null)
+      .map(createCategoryData);
+    const subCategories = categoires
+      .filter((category) => category.parent_id !== null)
+      .map(createCategoryData);
+
+    res.json({
+      ok: true,
+      message: '카테고리 조회 ',
+      data: {
+        parentCategories,
+        subCategories,
+      },
+    });
   };
 }
 
