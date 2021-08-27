@@ -4,13 +4,13 @@ import { JwtSignPayload } from './types';
 
 const validation = {
   isId: function (id: string): boolean {
-    return id.length > 5;
+    return id.length > 2;
   },
   isEmail: function (email: string): boolean {
     return isEmail(email);
   },
   isPassword: function (password: string): boolean {
-    return password.length > 5;
+    return password.length > 2;
   },
   checkConfirmPassword: function (password: string, confirmPassword: string): boolean {
     return password === confirmPassword;
