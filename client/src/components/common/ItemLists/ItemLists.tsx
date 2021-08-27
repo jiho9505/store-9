@@ -6,8 +6,6 @@ import ItemLabel from './ItemLabel/ItemLabel';
 import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
-import '@/static/assets/img/sampleItem.jpeg';
-import '@/static/assets/img/soldout.png';
 import EMPTY from '@/static/assets/img/empty.png';
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
 

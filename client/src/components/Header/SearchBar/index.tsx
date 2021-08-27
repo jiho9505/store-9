@@ -11,7 +11,7 @@ import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 import useHistory from '@/hooks/customHooks/useHistory';
-import '@/static/assets/img/search.png';
+import SEARCH from '@/static/assets/img/search.png';
 
 const timeToShowError = 2000;
 
@@ -140,7 +140,7 @@ const SearchBar = () => {
         maxLength={15}
       />
       <Button>
-        <SearchImg src="images/search.png" onClick={handleClickImg} />
+        <SearchImg src={SEARCH} onClick={handleClickImg} />
       </Button>
 
       {showWordList && (

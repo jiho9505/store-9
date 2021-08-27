@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { baemin, baeminFont } from '@/static/style/common';
-import '@/static/assets/img/loading.gif';
+import LOADING from '@/static/assets/img/loading.gif';
 import styled from '@emotion/styled';
 
 type Size = 'small' | 'big';
@@ -14,7 +14,7 @@ const Loading = ({ size }: LoadingProps) => {
   return (
     <LoadingContainer>
       <LoadingTitle size={size}>Loading...</LoadingTitle>
-      <LoadingImg src="images/loading.gif" size={size}></LoadingImg>
+      <LoadingImg src={LOADING} size={size}></LoadingImg>
     </LoadingContainer>
   );
 };

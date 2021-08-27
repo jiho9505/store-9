@@ -17,7 +17,6 @@ const Signup = React.lazy(() => import('@/pages/Signup'));
 const Callback = React.lazy(() => import('@/components/common/Callback'));
 const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
-import '@/static/assets/img/baeminFavicon.png';
 import Loading from './components/common/Loading';
 import AuthStore from './stores/AuthStore';
 
