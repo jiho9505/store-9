@@ -19,7 +19,12 @@ const StockSelectorComponent = ({
   currStock,
 }: StockSelectorComponentProps) => {
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    refreshStock(e.currentTarget.value);
+    const inputValue = Number(e.currentTarget.value);
+    if (inputValue > 100 || inputValue < 0) {
+      refreshStock(undefined);
+      return;
+    }
+    refreshStock(inputValue);
   };
 
   const handleBlurInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +54,8 @@ const StockSelectorComponent = ({
               onChange={handleChangeInput}
               onBlur={handleBlurInput}
               value={selectedStock}
+              min={1}
+              max={100}
             />
             <StockSelectorButtonContainer>
               <StockSelectorUpButton>
