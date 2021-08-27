@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from '@/core/Router';
 
-import '@/static/assets/img/circle.png';
-
 import RefreshStore from '@/stores/RefreshStore';
 import { testCategories, testSubCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
+import CIRCLE from '@/static/assets/img/circle.png';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
@@ -94,7 +93,7 @@ const Navigation = () => {
               {category.name}
             </CategoryLink>
             {(mouseOverdItemName === category.name || matchedItemIdToURL === category.id) && (
-              <CircleBorder src="images/circle.png" />
+              <CircleBorder src={CIRCLE} />
             )}
           </Item>
         ))}

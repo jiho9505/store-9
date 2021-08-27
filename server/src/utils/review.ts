@@ -8,7 +8,8 @@ type MulterFiles =
 type ImageString = string;
 
 const convertImagesToUrlString = (images: MulterFiles): ImageString => {
-  return (images as any[])
+  const ret = images as Array<Express.MulterS3.File>;
+  return ret
     .map((image) => {
       return image.key + ';';
     })
