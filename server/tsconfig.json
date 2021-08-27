@@ -11,7 +11,7 @@
     "outDir": "dist",
     "typeRoots": ["node_modules/@types", "@types"]
   },
-  "include": ["src/**/*", "../shared/**/*", "test/**/*", "./*.ts", "config/*"],
+  "include": ["src/**/*", "../shared/**/*", "test/**/*", "./*.ts", "config/*", "jest.config.js"],
   "exclude": ["node_modules"],
   "ts-node": {
     "transpileOnly": true,
