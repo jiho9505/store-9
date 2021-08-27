@@ -21,21 +21,21 @@ import { ProductContext } from '@/hooks/context';
 const OverViewContent = () => {
   const { info } = useContext(ProductContext);
   const [selectedStock, setSelectedStock] = useState(1);
-  const discountPrice = info.discount_rate ? calculateDiscount(info.price, info.discount_rate) : '';
+  const discountPrice = info.discountRate ? calculateDiscount(info.price, info.discountRate) : '';
 
-  const createSellPrice = (price, quantity) => {
+  const createSellPrice = (price, stock) => {
     return (
       <SellPrice>
         <PriceText>판매가격</PriceText>
-        <SellPriceValue soldout={!quantity}>{quantity ? `${price}원` : '품절'}</SellPriceValue>
+        <SellPriceValue soldout={!stock}>{stock ? `${price}원` : '품절'}</SellPriceValue>
       </SellPrice>
     );
   };
 
-  const createPrice = ({ discount_rate, price, quantity }: Info) => {
-    return discount_rate ? (
+  const createPrice = ({ discountRate, price, stock }: Info) => {
+    return discountRate ? (
       <PriceContainer>
-        {quantity ? (
+        {stock ? (
           <OriginalPrice>
             <PriceText>정가</PriceText>
             <OriginalPriceValue>{price}원</OriginalPriceValue>
@@ -43,10 +43,10 @@ const OverViewContent = () => {
         ) : (
           ''
         )}
-        {createSellPrice(discountPrice, quantity)}
+        {createSellPrice(discountPrice, stock)}
       </PriceContainer>
     ) : (
-      <PriceContainer> {createSellPrice(price, quantity)}</PriceContainer>
+      <PriceContainer> {createSellPrice(price, stock)}</PriceContainer>
     );
   };
 
@@ -54,15 +54,16 @@ const OverViewContent = () => {
     setSelectedStock(value);
   };
 
-  const makePriceWithoutComma = () => {
-    const price = info.discount_rate ? discountPrice : info.price;
-    const purePrice = price ? Number(price.replace(/[,]/g, '')) : 0;
-    return purePrice;
+  const getFinalPrice = () => {
+    if (info.discountRate) {
+      return discountPrice ? Number(discountPrice.replace(/[,]/g, '')) : 0;
+    }
+    return info.price;
   };
 
   return (
     <OverviewContent>
-      <Title>{info.title}</Title>
+      <Title>{info.name}</Title>
       {createPrice(info)}
       <ShipInfo>
         <ShipInfoText>배송정보</ShipInfoText>
@@ -72,16 +73,16 @@ const OverViewContent = () => {
         </ShipInfoDetail>
       </ShipInfo>
       <StockSelector
-        title={info.title}
-        price={makePriceWithoutComma()}
+        title={info.name}
+        price={getFinalPrice()}
         refreshStock={refreshStock}
         selectedStock={selectedStock}
-        currStock={info.quantity}
+        currStock={info.stock}
       ></StockSelector>
       <ContentBottomContainer>
-        {info.quantity ? (
+        {info.stock ? (
           <>
-            <TotalPrice price={makePriceWithoutComma()} selectedStock={selectedStock}></TotalPrice>
+            <TotalPrice price={getFinalPrice()} selectedStock={selectedStock}></TotalPrice>
             <ButtonContainer>
               <Like />
               <Cart />

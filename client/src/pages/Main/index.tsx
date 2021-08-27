@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
+import { getMainList } from '@/remotes/ProductRemote';
 import Carousel from '@/components/Main/Carousel/Carousel';
 import FeatureSection from '@/components/Main/FeatureSection/FeatureSection';
 import GiftSection from '@/components/Main/GiftSection/GiftSection';
 import Datas from '@/dummy';
 
-/**
- * TODO:
- * 데이터 한번에 가져온후
- * best,new,discount에 맞게 뿌려줄 것 (랜덤하게 주는것도 괜찮을듯)
- * Gift는 일단 고정
- */
 const Main = () => {
   const [products, setProducts] = useState({
     best: [],
@@ -19,15 +14,27 @@ const Main = () => {
     discount: [],
   });
 
+  /**
+   * useEffect에는 하위 주석만 있으면 됩니다.
+   */
   useEffect(() => {
+    // (async () => {
+    //   const data = await getMainList();
+    //   setProducts({
+    //     best: data.bestProducts,
+    //     new: data.newProducts,
+    //     discount: data.discountProducts,
+    //   });
+    // })();
+
     let bestProducts = [];
     let newProducts = [];
     let discountProducts = [];
 
-    Datas.filter((data) => data.quantity).forEach((data) => {
-      if (data.badge.includes('best')) bestProducts.push(data);
-      if (data.badge.includes('new')) newProducts.push(data);
-      if (data.badge.includes('sale')) discountProducts.push(data);
+    Datas.filter((data) => data.stock).forEach((data) => {
+      if (data.badges.includes('best')) bestProducts.push(data);
+      if (data.badges.includes('new')) newProducts.push(data);
+      if (data.badges.includes('sale')) discountProducts.push(data);
     });
 
     bestProducts = extractRandomlyProduct(bestProducts, 4);

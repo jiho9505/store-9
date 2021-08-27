@@ -26,7 +26,7 @@ const ItemLabel = ({ product }: LabelProps) => {
   };
 
   const createFeature = () => {
-    const badge = product.badge;
+    const badge = product.badges;
     const allBadge = product.isGreen ? [...badge, 'green'] : badge;
 
     return allBadge.map((item, idx) => (
