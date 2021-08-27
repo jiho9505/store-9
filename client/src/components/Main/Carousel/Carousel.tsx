@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import '@/static/assets/img/bannerImage1.gif';
-import '@/static/assets/img/bannerImage2.gif';
-import '@/static/assets/img/bannerImage3.gif';
+import BANNER1 from '@/static/assets/img/bannerImage1.gif';
+import BANNER2 from '@/static/assets/img/bannerImage2.gif';
+import BANNER3 from '@/static/assets/img/bannerImage3.gif';
 import { greyButton } from '@/static/style/common';
 
 /**
@@ -47,9 +47,9 @@ const Carousel = () => {
   return (
     <CarouselContainer>
       <ImageContainer translateX={index}>
-        <SlideImage src="images/bannerImage1.gif" alt="first-banner-image" />
-        <SlideImage src="images/bannerImage2.gif" alt="second-banner-image" />
-        <SlideImage src="images/bannerImage3.gif" alt="third-banner-image" />
+        <SlideImage src={BANNER1} alt="first-banner-image" />
+        <SlideImage src={BANNER2} alt="second-banner-image" />
+        <SlideImage src={BANNER3} alt="third-banner-image" />
       </ImageContainer>
       <ButtonContainer>
         <Button onClick={handleClickButton} data-idx="1" active={index === 1}></Button>

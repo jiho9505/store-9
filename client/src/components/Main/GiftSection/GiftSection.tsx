@@ -1,9 +1,9 @@
-import { baeminFont, normalContainerWidth } from '@/static/style/common';
-import styled from '@emotion/styled';
 import React from 'react';
+import styled from '@emotion/styled';
 
-import '@/static/assets/img/giftSection1.png';
-import '@/static/assets/img/giftSection2.png';
+import GIFT1 from '@/static/assets/img/giftSection1.png';
+import GIFT2 from '@/static/assets/img/giftSection2.png';
+import { baeminFont, normalContainerWidth } from '@/static/style/common';
 
 const GiftSection = () => {
   return (
@@ -11,7 +11,7 @@ const GiftSection = () => {
       <Title>선물하기 딱 좋아요!</Title>
       <GiftBlock>
         <ImgContainer>
-          <Img src="images/giftSection1.png" alt="first-gift-image" />
+          <Img src={GIFT1} alt="first-gift-image" />
         </ImgContainer>
 
         <GiftInfo>
@@ -21,7 +21,7 @@ const GiftSection = () => {
       </GiftBlock>
       <GiftBlock>
         <ImgContainer>
-          <Img src="images/giftSection2.png" alt="second-gift-image" />
+          <Img src={GIFT2} alt="second-gift-image" />
         </ImgContainer>
 
         <GiftInfo>
