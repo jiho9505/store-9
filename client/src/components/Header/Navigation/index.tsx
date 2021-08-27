@@ -1,39 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from '@/core/Router';
 
 import RefreshStore from '@/stores/RefreshStore';
-import { testCategories, testSubCategories } from '@/static/constants';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import CIRCLE from '@/static/assets/img/circle.png';
+import CategoryApi from '@/apis/CategoryApi';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
-const initCategoryData = [{ name: '전체', level: 1, id: 0, parent_id: null }];
+const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
+const alertMsg = '카테고리 목록을 불러오는데 실패하였습니다.';
 
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
+  const { refresh } = RefreshStore;
   const [categories, setCategories] = useState(initCategoryData);
   const [subCategories, setSubCategories] = useState([]);
-  const { refresh } = RefreshStore;
+  let subCatogoryStore = [];
+  let timer: number = 0;
 
   useEffect(() => {
-    setCategories([...categories, ...testCategories]);
-    setSubCategories(testSubCategories);
-
-    const getCatgoryIdx = () => {
-      let ctgId = Number(getQueryStringValue('categoryId'));
-      if (ctgId > 5) {
-        testSubCategories.forEach((subcategory) => {
-          if (subcategory.id === ctgId) ctgId = subcategory.parent_id;
-        });
+    (async () => {
+      try {
+        const result = await CategoryApi.getCategories();
+        if (result.ok) {
+          setCategories([...categories, ...result.data.parentCategories]);
+          setSubCategories(result.data.subCategories);
+          subCatogoryStore = result.data.subCategories;
+        }
+      } catch (e) {
+        alert(alertMsg);
       }
-      return ctgId;
-    };
+    })();
 
     const handleMouseOverOnDocument = (e: Event) => {
       const { target } = e;
@@ -46,14 +49,21 @@ const Navigation = () => {
           : setMatchedItemIdToURL(-1);
       }
     };
-
     document.addEventListener('mouseover', handleMouseOverOnDocument);
     return () => {
       document.removeEventListener('mouseover', handleMouseOverOnDocument);
     };
   }, []);
 
-  let timer: number = 0;
+  const getCatgoryIdx = useCallback(() => {
+    let ctgId = Number(getQueryStringValue('categoryId'));
+    if (ctgId > 5) {
+      subCatogoryStore.forEach((subcategory) => {
+        if (subcategory.id === ctgId) ctgId = subcategory.parentId;
+      });
+    }
+    return ctgId;
+  }, []);
 
   const handleMouseOverLink = (e: React.ChangeEvent<HTMLAnchorElement>) => {
     const waitTime = new Promise((resolve) => {
@@ -66,7 +76,7 @@ const Navigation = () => {
 
     waitTime.then(() => {
       if (!timer) return;
-      const newSubItems = subCategories.filter((item) => item.parent_id === id);
+      const newSubItems = subCategories.filter((item) => item.parentId === id);
 
       const extraXposToRemove =
         newSubItems.length % 2
