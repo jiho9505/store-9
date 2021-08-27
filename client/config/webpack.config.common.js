@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { DefinePlugin } = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -55,8 +55,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'index.css',
     }),
-    new DefinePlugin({
-      'process.env.API_URL': process.env.API_URL,
-    }),
+    new Dotenv(),
   ],
 };

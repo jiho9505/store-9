@@ -11,6 +11,8 @@ export default class BaseApi {
   constructor(path: string) {
     path = path.startsWith('/') ? path.slice(1) : path;
 
+    console.log(process.env.API_URL);
+
     const url = new URL(`api/${path}`, process.env.API_URL || 'http://localhost:4000');
 
     this.instance = axios.create({
