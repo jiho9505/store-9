@@ -25,7 +25,7 @@ const CartPage = () => {
 
   useEffect(() => {
     localStorage.clear();
-    localStorage.setItem('cartInfo', JSON.stringify({ cartId: curCartId, product: {} }));
+    localStorage.setItem('cartInfo', JSON.stringify({ cartId: curCartId, products: [] }));
   }, [curCartId]);
 
   useEffect(() => {
@@ -45,18 +45,16 @@ const CartPage = () => {
     const [selectedProduct] = cartProducts.filter(({ id: cartId }) => id === cartId);
 
     const cartInfo = localStorage.getItem('cartInfo');
-    const parsedCartInfo = JSON.parse(cartInfo).product;
-    parsedCartInfo[id] = selectedProduct;
-    localStorage.setItem(
-      'cartInfo',
-      JSON.stringify({ cartId: curCartId, product: parsedCartInfo })
-    );
+    const products = JSON.parse(cartInfo).products;
+    products.push(selectedProduct);
+
+    localStorage.setItem('cartInfo', JSON.stringify({ cartId: curCartId, products: products }));
   };
 
   const removeProductInLocalStorage = (id) => {
     const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
-    delete cartInfo.product[id];
-    localStorage.setItem('cartInfo', JSON.stringify({ ...cartInfo }));
+    const newProducts = cartInfo.products.filter(({ id: orderId }) => orderId !== id);
+    localStorage.setItem('cartInfo', JSON.stringify({ ...cartInfo, products: newProducts }));
   };
 
   const handleClickCheckbox = (id) => {
