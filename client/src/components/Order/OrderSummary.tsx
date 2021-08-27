@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import styled from '@emotion/styled';
 
 import { greyButton, normalRadius, primary1 } from '@/static/style/common';
@@ -56,7 +56,7 @@ const OrderSummary = () => {
   );
 };
 
-export default OrderSummary;
+export default memo(OrderSummary);
 
 const OrderSummaryContainer = styled.div`
   width: 500px;
