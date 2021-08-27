@@ -19,6 +19,7 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import Loading from './components/common/Loading';
 import AuthStore from './stores/AuthStore';
+import Redirect from './components/Redirect';
 
 const App = () => {
   useEffect(() => {
@@ -42,14 +43,12 @@ const App = () => {
             <LoginPage />
           </Route>
           <Route exact path="/cart">
-            <CartPage />
+            {AuthStore.isLogined ? <CartPage /> : <Redirect />}
           </Route>
           <Route exact path="/order">
-            <Order />
+            {AuthStore.isLogined ? <Order /> : <Redirect />}
           </Route>
-          <Route path="/mypage">
-            <MyPage />
-          </Route>
+          <Route path="/mypage">{AuthStore.isLogined ? <MyPage /> : <Redirect />}</Route>
           <Route exact path="/signupMethod">
             <SignupMethod />
           </Route>
