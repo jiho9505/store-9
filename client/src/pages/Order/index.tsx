@@ -8,6 +8,7 @@ import Validation from '@/utils/validation';
 import PricePannel from '@/components/common/PricePannel';
 import OrderStageHeader from '@/components/common/OrderStageHeader';
 import { OrderForm } from '@/components/Order';
+import OrderSummary from '@/components/Order/OrderSummary';
 
 const stage1InitialForm = {
   buyerName: '',
@@ -22,12 +23,12 @@ const stage2InitialForm = {
 };
 
 const validationSchema = {
-  buyerName: Validation().require('주문자명을 입력해 주세요.'),
-  phone: Validation().require('휴대폰 번호를 입력해 주세요.'),
-  email: Validation().require('이메일을 입력해 주세요.'),
-  receiverName: Validation().require('받는 사람이름을 입력해 주세요.'),
-  receiverAddress: Validation().require('받는 장소를 입력해 주세요.'),
-  receiverPhone: Validation().require('받는 사람 휴대폰 번호를 입력해 주세요.'),
+  buyerName: Validation().require().isName(),
+  phone: Validation().require().isPhone(),
+  email: Validation().require().isEmail(),
+  receiverName: Validation().require().isName(),
+  receiverAddress: Validation().require(),
+  receiverPhone: Validation().require().isPhone(),
 };
 
 const Order = () => {
@@ -42,7 +43,7 @@ const Order = () => {
       <OrderBody>
         <FormContext.Provider value={{ form, onChange, onBlur, check, error }}>
           <OrderForm />
-          <PricePannel productTotalPrice={100000} />
+          <OrderSummary />
         </FormContext.Provider>
       </OrderBody>
     </OrderContainer>
