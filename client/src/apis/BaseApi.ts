@@ -11,7 +11,7 @@ export default class BaseApi {
   constructor(path: string) {
     path = path.startsWith('/') ? path.slice(1) : path;
 
-    const url = new URL(`api/${path}`, process.env.API_URL || 'http://localhost:4000');
+    const url = new URL(`api/${path}`, process.env.API_URL || 'http://3.36.127.206:4000');
 
     this.instance = axios.create({
       baseURL: url.href,
