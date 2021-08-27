@@ -6,3 +6,9 @@ type historyContextType = {
 };
 
 export const HistoryContext = createContext<historyContextType>({ curLocation: '/' });
+
+type ProductContextType = {
+  info?: Info;
+};
+
+export const ProductContext = createContext<ProductContextType>({});

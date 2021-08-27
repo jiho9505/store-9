@@ -42,31 +42,20 @@ namespace QnAController {
 
   export const create: RouteHandler<QnARequest.Create, QnAResponse.Create> = async (req, res) => {
     try {
-      const { userId = 1 } = res.locals;
+      const userId = res.locals?.user?.id || 1;
 
-      const { title, content, product_id, images = '' } = req.body;
+      const { title, content, productId, images = '' } = req.body;
 
-      const result = await getCustomRepository(QnARepository).createQnA({
+      await getCustomRepository(QnARepository).createQnA({
         userId,
         title,
         content,
-        product_id,
+        product_id: productId,
         images,
       });
 
       res.json({
         ok: true,
-        data: {
-          id: result.id,
-          title: result.title,
-          content: result.content,
-          images: result.images,
-          createdAt: result.created_at,
-          product: {
-            id: result.product.id,
-            name: result.product.name,
-          },
-        },
       });
     } catch (e) {
       console.error(e);

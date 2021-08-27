@@ -34,59 +34,6 @@ namespace OrderController {
 
           return acc;
         } else {
-          return acc.concat({
-            id: cur.id,
-            updatedAt: cur.updated_at,
-            orderItems: [
-              {
-                productId: cur.product_id,
-                productName: cur.name,
-                thumbnail: cur.thumbnail,
-                price: cur.price,
-                amount: cur.amount,
-                isReviewed: cur.is_reviewed,
-              },
-            ],
-          });
-        }
-      }, []);
-
-      res.json({
-        ok: true,
-        data: {
-          orders,
-          totalCount: results.totalCount,
-        },
-      });
-    } catch (e) {
-      console.error(e.message);
-
-      res.status(500).json({ ok: false });
-    }
-  };
-
-      const results = await getCustomRepository(OrderRepository).getList({
-        userId,
-        startDate,
-        endDate,
-        size,
-        page,
-      });
-
-      const orders = results.orders.reduce((acc, cur) => {
-        const lastOrder = acc[acc.length - 1];
-
-        if (lastOrder?.id === cur.id) {
-          lastOrder.orderItems.push({
-            productName: cur.name,
-            thumbnail: cur.thumbnail,
-            price: cur.price,
-            amount: cur.amount,
-            isReviewed: cur.is_reviewed,
-          });
-
-          return acc;
-        } else {
           acc.push({
             id: cur.id,
             updatedAt: cur.updated_at,
@@ -144,7 +91,7 @@ namespace OrderController {
 
       const order = await getCustomRepository(OrderRepository).getCart({ userId });
       if (!order) {
-        res.json({ ok: true, data: {} });
+        res.json({ ok: true, data: {} as any });
         return;
       }
       res.json({

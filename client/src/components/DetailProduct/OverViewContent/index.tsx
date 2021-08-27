@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { calculateDiscount } from '@/utils/calculateDiscount';
 import StockSelector from '../StockSelector';
 import TotalPrice from '../TotalPrice';
@@ -16,11 +16,10 @@ import {
   greyLine,
 } from '@/static/style/common';
 
-type OverViewContentProps = {
-  info;
-};
+import { ProductContext } from '@/hooks/context';
 
-const OverViewContent = ({ info }: OverViewContentProps) => {
+const OverViewContent = () => {
+  const { info } = useContext(ProductContext);
   const [selectedStock, setSelectedStock] = useState(1);
   const discountPrice = info.discount_rate ? calculateDiscount(info.price, info.discount_rate) : '';
 
@@ -33,7 +32,7 @@ const OverViewContent = ({ info }: OverViewContentProps) => {
     );
   };
 
-  const createPrice = ({ discount_rate, price, quantity }) => {
+  const createPrice = ({ discount_rate, price, quantity }: Info) => {
     return discount_rate ? (
       <PriceContainer>
         {quantity ? (

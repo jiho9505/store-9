@@ -69,6 +69,7 @@ const Link = ({ to, children, ...rest }) => {
   const { history } = useContext(HistoryContext);
 
   const handleClickLink = () => {
+    rest.onClick?.();
     history.push(to);
   };
 
