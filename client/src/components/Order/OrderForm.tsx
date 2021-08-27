@@ -7,13 +7,37 @@ import Stage2 from './Stage2';
 import Button from '@/components/common/Button';
 
 import { FormContext } from '@/hooks/context';
+import { normalRadius } from '@/static/style/common';
 import useInput from '@/hooks/customHooks/useInput';
 import Validation from '@/utils/validation';
+import OrderApi from '@/apis/OrderApi';
 
-import { normalRadius } from '@/static/style/common';
+const stage1InitialForm = {
+  buyerName: '',
+  phone: '',
+  email: '',
+};
+
+const stage2InitialForm = {
+  receiverName: '',
+  receiverAddress: '',
+  receiverPhone: '',
+};
+
+const validationSchema = {
+  buyerName: Validation().require().isName(),
+  phone: Validation().require().isPhone(),
+  email: Validation().require().isEmail(),
+  receiverName: Validation().require().isName(),
+  receiverAddress: Validation().require(),
+  receiverPhone: Validation().require().isPhone(),
+};
 
 const OrderForm = () => {
-  const { form, error, onChange, onBlur, check } = useContext(FormContext);
+  const { form, onChange, onBlur, check, error } = useInput({
+    initialState: { ...stage1InitialForm, ...stage2InitialForm },
+    validationSchema,
+  });
   const { buyerName, phone, email, receiverName, receiverAddress, receiverPhone } = form;
 
   const [stage, setStage] = useState(1);
@@ -28,6 +52,24 @@ const OrderForm = () => {
 
   const handleClickPrev = () => {
     setStage((prev) => prev - 1);
+  };
+
+  const handleSumitOrderForm = async () => {
+    const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
+    const { cartId, products } = cartInfo;
+
+    const orderId = products.map(({ id }) => id);
+    console.log(orderId);
+    await OrderApi.order({
+      id: cartId,
+      buyerName,
+      phone,
+      email,
+      receiverName,
+      receiverAddress,
+      receiverPhone,
+      selectedItem: orderId,
+    });
   };
 
   const Forms = () => {
@@ -66,7 +108,7 @@ const OrderForm = () => {
             theme="white"
             value="submit"
             type="button"
-            onClick={() => console.log('a')}
+            onClick={handleSumitOrderForm}
           />
         </>
       );
