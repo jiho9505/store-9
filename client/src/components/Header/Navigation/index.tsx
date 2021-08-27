@@ -25,6 +25,16 @@ const Navigation = () => {
     setCategories([...categories, ...testCategories]);
     setSubCategories(testSubCategories);
 
+    const getCatgoryIdx = () => {
+      let ctgId = Number(getQueryStringValue('categoryId'));
+      if (ctgId > 5) {
+        testSubCategories.forEach((subcategory) => {
+          if (subcategory.id === ctgId) ctgId = subcategory.parent_id;
+        });
+      }
+      return ctgId;
+    };
+
     const handleMouseOverOnDocument = (e: Event) => {
       const { target } = e;
       if (!(target instanceof HTMLElement)) return;
@@ -32,7 +42,7 @@ const Navigation = () => {
         setSubItems([]);
         setMouseOverdItemName('');
         getQueryStringValue('categoryId')
-          ? setMatchedItemIdToURL(Number(getQueryStringValue('categoryId')))
+          ? setMatchedItemIdToURL(getCatgoryIdx())
           : setMatchedItemIdToURL(-1);
       }
     };
