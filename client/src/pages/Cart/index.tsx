@@ -17,9 +17,13 @@ import UserApi from '@/apis/UserApi';
 import { CartContent } from '@/components/Cart';
 import PricePannel from '@/components/common/PricePannel';
 import OrderStageHeader from '@/components/common/OrderStageHeader';
+import ModalPortal from '@/utils/portal';
+import Message from '@/components/common/Message';
+import AlertStore from '@/stores/AlertStore';
 
 const CartPage = () => {
   const { refresh, refreshComponent } = RefreshStore;
+  const { isShow, showAndUnShow } = AlertStore;
 
   const [cartInfo, setCartInfo] = useLocalStorage<{ cartId?: number; products?: any[] }>(
     'cartInfo',
@@ -28,7 +32,13 @@ const CartPage = () => {
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [cartProducts, setCartProducts] = useState([]);
   const [curCartId, setCurCartId] = useState(0);
-  const [error, setError] = useState('');
+  const [alertInfo, setAlertInfo] = useState<{
+    mode: 'caution' | 'fail' | 'success';
+    msg: string;
+  }>({
+    mode: 'caution',
+    msg: '',
+  });
 
   useEffect(() => {
     localStorage.clear();
@@ -42,7 +52,7 @@ const CartPage = () => {
         setCartProducts(data.orderItems);
         setCurCartId(data.id);
       } catch (err) {
-        setError(err.message);
+        // setError(err.message);
       }
     };
     getCartItems();
@@ -99,10 +109,13 @@ const CartPage = () => {
     try {
       const result = await OrderApi.removeCartItem({ orderItemId: selected });
       if (result.ok) {
+        setAlertInfo({ mode: 'success', msg: '삭제되었습니다.' });
+        showAndUnShow();
         refresh();
       }
     } catch (err) {
-      setError(err.message);
+      setAlertInfo({ mode: 'fail', msg: '삭제하지 못했습니다.' });
+      showAndUnShow();
     }
   };
 
@@ -120,8 +133,11 @@ const CartPage = () => {
 
     try {
       const result = await UserApi.likeMany({ productId });
+      setAlertInfo({ mode: 'success', msg: '찜하기에 추가되었습니다.' });
+      showAndUnShow();
     } catch (err) {
-      setError(err.message);
+      setAlertInfo({ mode: 'fail', msg: '찜하기에 추가하지 못했습니다.' });
+      showAndUnShow();
     }
   };
 
@@ -141,6 +157,11 @@ const CartPage = () => {
         </SelectProductAction>
         <PricePannel productTotalPrice={calTotalProductPrice()} />
       </CartFooter>
+      {isShow && (
+        <ModalPortal>
+          <Message text={alertInfo.msg} mode={alertInfo.mode} />
+        </ModalPortal>
+      )}
     </CartPageContainer>
   );
 };
