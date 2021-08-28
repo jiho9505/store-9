@@ -86,6 +86,7 @@ const getInputSize = (size: string) => {
 const InputContainer = styled.div<InputContainerProps>`
   ${({ size }) => getInputSize(size)}
   padding: 0 10px;
+  position: relative;
 `;
 
 const CustomInput = styled.input<InputVariantProps>`
@@ -103,6 +104,8 @@ const CustomInput = styled.input<InputVariantProps>`
 
 const ErrorMessage = styled.div`
   color: ${red2};
+  position: absolute;
+  top: 36px;
   font-size: 0.8rem;
   font-weight: bold;
   margin-top: 10px;
