@@ -4,13 +4,19 @@ import { observer } from 'mobx-react';
 import UserApi from '@/apis/UserApi';
 import guguStyled from '@/core/styled';
 import RefreshStore from '@/stores/RefreshStore';
+import useAlert from '@/hooks/customHooks/useAlert';
 import { greyLine, greySpan, normalRadius } from '@/static/style/common';
+import { alertMsg } from '@/utils/errorMessage';
 
 import { LikeContent } from '@/components/MyPage';
 import Pagination from '@/components/common/Pagination';
+import ModalPortal from '@/utils/portal';
+import Message from '@/components/common/Message';
 
 const LikePage = () => {
   const { refresh, refreshComponent } = RefreshStore;
+
+  const { isShow, alertInfo, showAndUnShowAlert } = useAlert();
   const [selectedProducts, setSelectedProducts] = useState<Set<number>>(new Set());
   const [likes, setLikes] = useState([]);
   const [curPage, setCurPage] = useState(1);
@@ -59,23 +65,16 @@ const LikePage = () => {
   };
 
   const handleClickDeleteBtn = async () => {
-    if (selectedProducts.size === 0) return;
-
+    if (selectedProducts.size === 0) {
+      showAndUnShowAlert({ mode: 'caution', msg: alertMsg['EMPTY_DELETE'] });
+      return;
+    }
     try {
       await UserApi.unlike({ data: { ids: [...selectedProducts] } });
+      showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_DELETE'] });
       refresh();
     } catch (err) {
-      console.log(err);
-      alert('찜 목록 삭제에 실패했습니다.');
-    }
-  };
-
-  const handleAddLike = async () => {
-    try {
-      const result = await UserApi.like({ productId: 4 });
-      refresh();
-    } catch (err) {
-      alert('추가 실패');
+      showAndUnShowAlert({ mode: 'fail', msg: alertMsg['FAIL_DELETE'] });
     }
   };
 
@@ -93,9 +92,13 @@ const LikePage = () => {
       />
       <SelectProductAction>
         <Button onClick={handleClickDeleteBtn}>선택상품 삭제</Button>
-        <Button onClick={handleAddLike}>추가 테스트</Button>
       </SelectProductAction>
       <Pagination totalCount={totalCount} onChange={handleChangePage} curPage={curPage} />
+      {isShow && (
+        <ModalPortal>
+          <Message text={alertInfo.msg} mode={alertInfo.mode} />
+        </ModalPortal>
+      )}
     </LikePageContainer>
   );
 };
