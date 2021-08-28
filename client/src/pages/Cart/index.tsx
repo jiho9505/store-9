@@ -108,12 +108,13 @@ const CartPage = () => {
       showAndUnShowAlert({ mode: 'caution', msg: alertMsg['EMPTY_DELETE'] });
       return;
     }
-    const selected = Array.from(selectedItems);
+    const selected = [...selectedItems];
 
     try {
       const result = await OrderApi.removeCartItem({ orderItemId: selected });
       if (result.ok) {
         showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_DELETE'] });
+        setCartInfo({ cartId: curCartId, products: [] });
         refresh();
       }
     } catch (err) {
