@@ -56,21 +56,29 @@ const OrderForm = () => {
   };
 
   const handleSumitOrderForm = async () => {
-    const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
-    const { cartId, products } = cartInfo;
+    try {
+      const pass = check('receiverName', 'receiverAddress', 'receiverPhone');
+      if (!pass) {
+        return;
+      }
+      const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
+      const { cartId, products } = cartInfo;
+      const orderId = products.map(({ id }) => id);
 
-    const orderId = products.map(({ id }) => id);
-    await OrderApi.order({
-      id: cartId,
-      buyerName,
-      phone,
-      email,
-      receiverName,
-      receiverAddress,
-      receiverPhone,
-      selectedItem: orderId,
-    });
-    history.push('/end-order');
+      await OrderApi.order({
+        id: cartId,
+        buyerName,
+        phone,
+        email,
+        receiverName,
+        receiverAddress,
+        receiverPhone,
+        selectedItem: orderId,
+      });
+      history.push('/end-order');
+    } catch (err) {
+      alert('주문에 실패 했습니다.');
+    }
   };
 
   const Forms = () => {
