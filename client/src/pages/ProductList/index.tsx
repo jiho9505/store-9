@@ -53,6 +53,8 @@ const ProductList = () => {
   /**
    * TODO:
    * api 요청
+   * getQueryStringValue('categoryId'), getQueryStringValue('word')에 빈값 넣을 시
+   * redirect 시켜야할듯 (에러처리)
    */
   useEffect(() => {
     setProduct(datas);

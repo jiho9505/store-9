@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import guguStyled from '@/core/styled';
 
 import ItemLists from '@/components/common/ItemLists/ItemLists';
 
@@ -14,12 +14,6 @@ const getTitle = (mode) => {
     return '지금은 할인 중';
   }
 };
-
-/**
- * TODO:
- * mode 에 따라 api 호출해서
- * state update 할 것
- */
 
 type FeatureSectionProps = {
   mode: string;
@@ -41,7 +35,7 @@ const FeatureSection = ({ mode, product }: FeatureSectionProps) => {
 
 export default FeatureSection;
 
-const FeatureContainer = styled.div`
+const FeatureContainer = guguStyled.div`
   width: ${normalContainerWidth};
   margin-top: 100px;
   display: flex;
@@ -50,7 +44,7 @@ const FeatureContainer = styled.div`
   margin-bottom: 50px;
 `;
 
-const Title = styled.span`
+const Title = guguStyled.span`
   font-family: ${baeminFont};
   font-weight: normal;
   font-size: 26px;

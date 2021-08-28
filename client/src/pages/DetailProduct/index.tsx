@@ -37,7 +37,7 @@ const DetailProduct = () => {
       <WholeContainer>
         <DetailProductContainer>
           <Overview></Overview>
-          {product.title && <Detail />}
+          {product.name && <Detail />}
         </DetailProductContainer>
       </WholeContainer>
     </ProductContext.Provider>

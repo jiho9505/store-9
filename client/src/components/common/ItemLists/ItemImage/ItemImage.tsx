@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from '@/core/Router';
 
+import SOLDOUT from '@/static/assets/img/soldout.png';
+
 type ImageProps = {
   quantity: number;
   productImage: string;
@@ -12,7 +14,7 @@ const ItemImage = ({ quantity, productImage }: ImageProps) => {
     <ImageContainer>
       <Link to="/detail">
         <ProductImg referrerPolicy="no-referrer" src={productImage} />
-        {!quantity ? <SoldOutImg src="images/soldout.png" /> : ``}
+        {!quantity ? <SoldOutImg src={SOLDOUT} /> : ``}
       </Link>
     </ImageContainer>
   );

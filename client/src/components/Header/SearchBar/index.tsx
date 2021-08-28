@@ -11,7 +11,7 @@ import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 import useHistory from '@/hooks/customHooks/useHistory';
-import '@/static/assets/img/search.png';
+import SEARCH from '@/static/assets/img/search.png';
 
 const timeToShowError = 2000;
 
@@ -59,8 +59,12 @@ const SearchBar = () => {
   };
 
   const movePageBySearch = (value: string) => {
-    const newHistory = history.length === 10 ? [...history].slice(0, 9) : [...history];
-    setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...newHistory]);
+    const newFilteredHistory = history.filter((search) => search.content !== value);
+    const finalHistory =
+      newFilteredHistory.length === 10
+        ? [...newFilteredHistory].slice(0, 9)
+        : [...newFilteredHistory];
+    setHistory([{ id: nanoid(), content: value, day: getDateFormat('', 'dot') }, ...finalHistory]);
     setNameForSearch('');
     setShowWordList(false);
     refresh();
@@ -140,7 +144,7 @@ const SearchBar = () => {
         maxLength={15}
       />
       <Button>
-        <SearchImg src="images/search.png" onClick={handleClickImg} />
+        <SearchImg src={SEARCH} onClick={handleClickImg} />
       </Button>
 
       {showWordList && (

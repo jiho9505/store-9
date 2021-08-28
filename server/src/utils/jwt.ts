@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { env } from '../config/env';
+import env from '../../config/env';
 
 import constant from './constant';
 import { JwtSignPayload } from './types';

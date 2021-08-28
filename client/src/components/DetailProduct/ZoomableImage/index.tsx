@@ -19,6 +19,7 @@ type ZoomableImageProps = {
   src: string;
   width: number;
   height?: number;
+  referrerPolicy: string;
 };
 
 type ImgSizeProps = {

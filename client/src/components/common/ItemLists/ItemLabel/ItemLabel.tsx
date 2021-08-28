@@ -1,7 +1,8 @@
-import styled from '@emotion/styled';
 import React from 'react';
+import guguStyled from '@/core/styled';
 
 import { baemin, baeminFont, green, red1 } from '@/static/style/common';
+import { Link } from '@/core/Router';
 
 type LabelProps = {
   product;
@@ -25,13 +26,15 @@ const ItemLabel = ({ product }: LabelProps) => {
   };
 
   const createFeature = () => {
-    const badge = product.badge;
-    const allBadge = product.is_green ? [...badge, 'green'] : badge;
+    const badge = product.badges;
+    const allBadge = product.isGreen ? [...badge, 'green'] : badge;
 
     return allBadge.map((item, idx) => (
-      <Feature color={getColor(item)} key={idx}>
-        <span>{item.toUpperCase()}</span>
-      </Feature>
+      <Link to="/detail">
+        <Feature color={getColor(item)} key={idx}>
+          <span>{item.toUpperCase()}</span>
+        </Feature>
+      </Link>
     ));
   };
 
@@ -43,7 +46,7 @@ const newFeatureColor = baemin;
 const saleFeatureColor = red1;
 const greenFeatureColor = green;
 
-const FeatureContainer = styled.div`
+const FeatureContainer = guguStyled.div`
   display: flex;
   gap: 8px;
   position: absolute;
@@ -51,7 +54,7 @@ const FeatureContainer = styled.div`
   top: 5px;
 `;
 
-const Feature = styled.div`
+const Feature = guguStyled.div`
   background-color: ${(props) => props.color};
   display: flex;
   align-items: center;

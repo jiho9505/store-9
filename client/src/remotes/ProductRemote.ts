@@ -6,12 +6,11 @@ export const getMainList = async () => {
   try {
     const result = await ProductApi.getMain();
 
-    const { bestProducts, discountProducts, recommendProducts, newProducts } = result.data;
+    const { bestProducts, discountProducts, newProducts } = result.data;
 
     return {
       bestProducts: bestProducts.map(ProductModel.create),
       discountProducts: discountProducts.map(ProductModel.create),
-      recommendProducts: recommendProducts.map(ProductModel.create),
       newProducts: newProducts.map(ProductModel.create),
     };
   } catch (e) {

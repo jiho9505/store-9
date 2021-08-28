@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
-
+import guguStyled from '@/core/styled';
 import ItemImage from './ItemImage/ItemImage';
 import ItemLabel from './ItemLabel/ItemLabel';
 import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
-import '@/static/assets/img/sampleItem.jpeg';
-import '@/static/assets/img/soldout.png';
 import EMPTY from '@/static/assets/img/empty.png';
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
 
@@ -21,21 +19,35 @@ type ItemListsProps = {
  * API 연동 후 값 동적으로 넣어야 합니다.
  * 별점과 라이크는 0이어도 띄우고 옆에 개수를 나타낸다.
  */
+
+/*    
+    데이터형식:
+    productId: number;
+    name: string;
+    price: number;
+    thumbnail: string;
+    reviewAverageRate: number;
+    reviewCount: number;
+    likeCount: number;
+    discountRate: number;
+    isGreen: boolean;
+    badges: string[];
+ */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
       products.map((item, idx) => (
         <Item key={idx} className="item">
-          <ItemImage productImage={item.image} quantity={item.quantity}></ItemImage>
+          <ItemImage productImage={item.thumbnail} quantity={item.stock}></ItemImage>
           <ItemContent item={item}></ItemContent>
-          {item.quantity ? <ItemLabel product={item}></ItemLabel> : ``}
+          {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
           <StarContainer>
-            <StarComponent score={5} />
-            <span>352</span>
+            <StarComponent score={item.reviewAverageRate} />
+            <span>{item.reviewCount}</span>
           </StarContainer>
           <LikeContainer>
             <i className="fas fa-heart"></i>
-            <span>777</span>
+            <span>{item.likeCount}</span>
           </LikeContainer>
         </Item>
       ))
@@ -61,13 +73,13 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   );
 };
 
-const EmptyMessage = styled.span`
+const EmptyMessage = guguStyled.span`
   color: ${greySpan};
   font-size: 20px;
   font-family: ${baeminFont};
 `;
 
-const EmptyContainer = styled.div`
+const EmptyContainer = guguStyled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -76,7 +88,7 @@ const EmptyContainer = styled.div`
   margin-top: 80px;
 `;
 
-const LikeContainer = styled.div`
+const LikeContainer = guguStyled.div`
   margin-top: 4px;
   display: flex;
   gap: 6px;
@@ -88,7 +100,7 @@ const LikeContainer = styled.div`
   }
 `;
 
-const StarContainer = styled.div`
+const StarContainer = guguStyled.div`
   margin-top: 8px;
   font-size: 12px;
   color: ${red1};
@@ -104,11 +116,11 @@ const StarContainer = styled.div`
 
 const EndPositionTag = styled.div``;
 
-const Item = styled.article`
+const Item = guguStyled.article`
   position: relative;
 `;
 
-const ItemContainer = styled.section`
+const ItemContainer = guguStyled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 40px 20px;

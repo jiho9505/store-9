@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import { createConnection } from 'typeorm';
 import 'reflect-metadata';
 
-import { env } from './src/config/env';
+import env from './config/env';
 import apiRouter from './src/routes';
 
 const port = env.server.port || 4000;
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(env.auth.cookieSecret));
 app.use(express.static('public'));
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: '*' }));
 app.use(morgan(env.isDev ? 'dev' : 'combine'));
 
 app.use('/api', apiRouter);
@@ -24,3 +24,5 @@ app.use('/api', apiRouter);
 createConnection().then(() => {
   app.listen(port, () => console.log('Server run on:', port));
 });
+
+export { app };

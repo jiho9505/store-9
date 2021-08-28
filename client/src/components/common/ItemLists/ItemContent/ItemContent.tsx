@@ -8,36 +8,35 @@ import { Link } from '@/core/Router';
 type ContentProps = {
   item: {
     quantity: number;
-    price: string;
-    discount_rate: string;
-    discount_price?: string;
-    title: string;
+    price: number;
+    discountRate: number;
+    discountPrice?: string;
+    name: string;
+    stock: number;
   };
 };
 
 const ItemContent = ({ item }: ContentProps) => {
-  if (item.quantity) {
-    item.discount_price = item.discount_rate
-      ? calculateDiscount(item.price, item.discount_rate)
-      : '';
+  if (item.stock) {
+    item.discountPrice = item.discountRate ? calculateDiscount(item.price, item.discountRate) : '';
     return (
       <ItemContentContainer>
-        {item.discount_rate ? <Discount>{item.discount_rate}</Discount> : ``}
+        {item.discountRate ? <Discount>{item.discountRate}%</Discount> : ``}
         <Link to="/detail">
-          <ProductName>{item.title}</ProductName>
+          <ProductName>{item.name}</ProductName>
         </Link>
-        <ProductOriginalPrice isDiscount={item.discount_rate ? true : false}>
-          {item.price}원
+        <ProductOriginalPrice isDiscount={item.discountRate ? true : false}>
+          {item.price.toLocaleString()}원
         </ProductOriginalPrice>
-        <ProductDiscountPrice isDiscount={item.discount_rate ? true : false}>
-          {item.discount_price}원
+        <ProductDiscountPrice isDiscount={item.discountRate ? true : false}>
+          {item.discountPrice}원
         </ProductDiscountPrice>
       </ItemContentContainer>
     );
   } else {
     return (
       <ItemContentContainer>
-        <ProductName>{item.title}</ProductName>
+        <ProductName>{item.name}</ProductName>
         <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
       </ItemContentContainer>
     );

@@ -3,15 +3,18 @@ interface History {
 }
 
 type Info = {
-  discount_rate?: string;
-  title?: string;
-  price?: string;
-  image?: string;
+  discountRate?: number;
+  name?: string;
+  price?: number;
+  thumbnail?: string;
   content_urls?: Array<string>;
-  is_green?: boolean;
+  isGreen?: boolean;
   category_id?: string;
-  badge?: Array<string>;
-  quantity?: number;
+  badges?: Array<string>;
+  stock?: number;
+  reviewAverageRate?: number;
+  reviewCount?: number;
+  likeCount?: number;
 };
 
 type MessageModeType = 'success' | 'fail' | 'caution';
