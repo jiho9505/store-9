@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import guguStyled from '@/core/styled';
 
 import GIFT1 from '@/static/assets/img/giftSection1.png';
 import GIFT2 from '@/static/assets/img/giftSection2.png';
@@ -35,14 +35,14 @@ const GiftSection = () => {
 
 export default GiftSection;
 
-const ImgContainer = styled.div`
+const ImgContainer = guguStyled.div`
   overflow: hidden;
   width: 900px;
   height: 330px;
   border-radius: 18px;
 `;
 
-const GiftContainer = styled.div`
+const GiftContainer = guguStyled.div`
   width: ${normalContainerWidth};
   margin-top: 100px;
   display: flex;
@@ -51,7 +51,7 @@ const GiftContainer = styled.div`
   margin-bottom: 50px;
 `;
 
-const Img = styled.img`
+const Img = guguStyled.img`
   cursor: pointer;
   transition: transform 0.2s ease;
   height: 100%;
@@ -60,17 +60,17 @@ const Img = styled.img`
   }
 `;
 
-const Title = styled.span`
+const Title = guguStyled.span`
   font-family: ${baeminFont};
   font-size: 26px;
 `;
 
-const GiftBlock = styled.div`
+const GiftBlock = guguStyled.div`
   display: flex;
   gap: 70px;
 `;
 
-const GiftInfo = styled.div`
+const GiftInfo = guguStyled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;

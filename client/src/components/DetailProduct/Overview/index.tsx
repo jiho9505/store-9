@@ -11,7 +11,9 @@ const Overview = () => {
 
   return (
     <OverviewContainer>
-      {info && <ZoomableImage width={473} height={585} src={info.image} />}
+      {info && (
+        <ZoomableImage width={473} height={585} referrerPolicy="no-referrer" src={info.thumbnail} />
+      )}
       {info && <OverViewContent />}
     </OverviewContainer>
   );

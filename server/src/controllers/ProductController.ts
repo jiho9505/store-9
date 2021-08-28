@@ -42,7 +42,7 @@ namespace ProductController {
         reviewCount: Number(data.review_cnt),
         likeCount: Number(data.like_cnt),
         discountRate: Number(data.discount_rate),
-        isGreen: data.is_green || false,
+        isGreen: data.isGreen || false,
         badges: createBadges(data),
       });
 
@@ -106,7 +106,7 @@ namespace ProductController {
         reviewCount: Number(data.review_cnt),
         likeCount: Number(data.like_cnt),
         discountRate: Number(data.discount_rate),
-        isGreen: data.is_green || false,
+        isGreen: data.isGreen || false,
         badges: createBadges(data),
       });
 
@@ -166,7 +166,7 @@ namespace ProductController {
           reviewCount: Number(data.review_cnt),
           likeCount: Number(data.like_cnt),
           discountRate: Number(data.discount_rate),
-          isGreen: data.is_green || false,
+          isGreen: data.isGreen || false,
           badges: createBadges(data),
         });
 

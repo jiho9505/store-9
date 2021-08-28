@@ -10,6 +10,7 @@ namespace ProductResponse {
     discountRate: number;
     isGreen: boolean;
     badges: string[];
+    stock: number;
   }
 
   export type GetMain = {

@@ -7,12 +7,14 @@ namespace OrderRequest {
   };
 
   export type Order = {
+    id: number;
     buyerName: string;
     phone: string;
     email: string;
     receiverName: string;
     receiverAddress: string;
     receiverPhone: string;
+    selectedItem: number[];
   };
 
   export type AddCartItem = {
@@ -24,7 +26,7 @@ namespace OrderRequest {
     orderItemId: number;
     amount: number;
   };
-  
+
   export type RemoveCartItem = {
     orderItemId: number[];
   };

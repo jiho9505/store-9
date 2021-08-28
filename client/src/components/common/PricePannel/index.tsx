@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
@@ -14,7 +14,7 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
   const history = useHistory();
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
 
-  const handleClickOrderBtn = () => {
+  const handleClickOrderBtn = async () => {
     if (curLocation === '/cart') {
       history.push('/order');
     }

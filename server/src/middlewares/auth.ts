@@ -9,7 +9,7 @@ import constant from '../utils/constant';
 import { getAccessToken } from '../utils/auth';
 import { api } from '../api';
 import { JwtSignPayload } from '../utils/types';
-import { env } from '../config/env';
+import env from '../../config/env';
 
 dotenv.config();
 

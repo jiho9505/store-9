@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import guguStyled from '@emotion/styled';
+
 import { baemin } from '@/static/style/common';
 
 const ButtonToMoveToTop = () => {
@@ -28,7 +29,7 @@ type ButtonProps = {
   active: boolean;
 };
 
-const Button = styled.button<ButtonProps>`
+const Button = guguStyled.button<ButtonProps>`
   position: fixed;
   bottom: 50px;
   right: 300px;

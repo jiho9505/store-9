@@ -3,7 +3,7 @@ import multerS3 from 'multer-s3';
 import aws from 'aws-sdk';
 import { NextFunction, Request, Response } from 'express';
 
-import { env } from '../config/env';
+import env from '../../config/env';
 import { convertImageUrlStringToArray } from '../utils/review';
 import constant from '../utils/constant';
 

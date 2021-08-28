@@ -7,23 +7,10 @@ import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
 import Loading from '@/components/common/Loading';
 
 import RefreshStore from '@/stores/RefreshStore';
-import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
+import ProductApi from '@/apis/ProductApi';
 
-/**
- * TODO:
- * @params productFilter
- * 필터의 인덱스로 key value 매칭을 통해
- * 변환 후 인자로 넣어 보낸다.
- * 컨트롤러에 대부분 있어서 Filter 간단할듯?
- *
- * TODO:
- * api를 이용해 데이터 호출
- * categoryId , pagenation , filter , intersectionObserver 고려
- */
-
-type ProductSortBy = 'RECOMMEND' | 'BEST' | 'NEW' | 'LOW_PRICE' | 'HIGH_PRICE';
 const sortByObj = {
   0: 'RECOMMEND',
   1: 'BEST',
@@ -32,71 +19,77 @@ const sortByObj = {
   4: 'HIGH_PRICE',
 };
 const size = 20;
+const alertMsg = '상품 목록을 가져오는데 실패하였습니다';
 
+/**
+ * TODO:
+ * 데이터 실삽입 후 테스트 & isActiveInfiniteScroll 필요없을 확률이 높으니 체크
+ */
 const ProductList = () => {
-  const [sortBy, setSortBy] = useState<ProductSortBy>('RECOMMEND');
+  const [sortByIdx, setSortByIdx] = useState<number>(0);
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState<boolean>(true);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
   const { refreshComponent } = RefreshStore;
 
   const filter = {
     page,
     size,
-    sortBy,
-    categoryId: getQueryStringValue('categoryId'),
-    searchQuery: getQueryStringValue('word'),
+    sortBy: sortByObj[sortByIdx],
+    categoryId: Number(getQueryStringValue('categoryId')),
+    search: getQueryStringValue('word'),
   };
 
-  /**
-   * TODO:
-   * api 요청
-   * getQueryStringValue('categoryId'), getQueryStringValue('word')에 빈값 넣을 시
-   * redirect 시켜야할듯 (에러처리)
-   */
   useEffect(() => {
-    setProduct(datas);
-    setTotalProductCount(datas.length);
+    (async () => {
+      try {
+        filter.page = 0;
+        const result = await ProductApi.getList(filter);
+        if (result.ok) {
+          setProduct(result.data.products);
+          console.log('result.data.products: ', result.data.products);
+          setTotalProductCount(result.data.totalCount);
+        }
+      } catch (e) {
+        alert(alertMsg);
+      }
+    })();
     setIsActiveInfiniteScroll(true);
-    setPage(0);
-  }, [refreshComponent, sortBy]);
+    setPage(1);
+  }, [refreshComponent, sortByIdx]);
 
   useEffect(() => {
-    setSortBy('RECOMMEND');
+    setSortByIdx(0);
   }, [refreshComponent]);
 
-  const handleFilter = (index: string) => {
-    setSortBy(sortByObj[index]);
+  const handleFilter = (index: number) => {
+    setSortByIdx(index);
   };
 
   const observeTag = () => {
-    if (!isActiveInfiniteScroll) return;
+    if (!isActiveInfiniteScroll || page === 0) return;
     const observerCallback = (entries, observer) => {
-      entries.forEach((entry) => {
+      entries.forEach(async (entry) => {
         if (!entry.isIntersecting) return;
         if (entry.target.id === 'end') {
-          setIsLoading(true);
-          setTimeout(() => {
-            const newProduct = [...product, ...datas];
-            setProduct(newProduct);
-            setIsLoading(false);
-          }, 2000);
-          /*
-            const data = await ProductApi.getList(filter);
-            if (data.success) {
-              if (data.length > 0) {
-                setPage(page+1)
-                setProduct([...product,...data])
+          try {
+            setIsLoading(true);
+            const result = await ProductApi.getList(filter);
+            if (result.ok) {
+              if (result.data.products.length > 0) {
+                setPage(page + 1);
+                setProduct([...product, ...result.data.products]);
               } else {
-                setIsActiveInfiniteScroll(false)
+                setIsActiveInfiniteScroll(false);
               }
-            } else {
-            	alert(data.message);
             }
-             setIsLoading(false);
-            */
+          } catch (e) {
+            alert(alertMsg);
+          } finally {
+            setIsLoading(false);
+          }
         }
         observer.unobserve(entry.target);
       });
@@ -112,6 +105,7 @@ const ProductList = () => {
         <ItemFilterBar
           handleFilter={handleFilter}
           totalProductCount={totalProductCount}
+          sortByIdx={sortByIdx}
         ></ItemFilterBar>
         <ItemLists observeTag={observeTag} products={product}></ItemLists>
         {isLoading && <Loading size="small" />}

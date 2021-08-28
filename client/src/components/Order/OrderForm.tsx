@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import Stepper from './Stepper';
@@ -6,44 +6,45 @@ import Stage1 from './Stage1';
 import Stage2 from './Stage2';
 import Button from '@/components/common/Button';
 
+import { normalRadius } from '@/static/style/common';
 import useInput from '@/hooks/customHooks/useInput';
 import Validation from '@/utils/validation';
-
-import { normalRadius } from '@/static/style/common';
+import OrderApi from '@/apis/OrderApi';
+import useHistory from '@/hooks/customHooks/useHistory';
 
 const stage1InitialForm = {
-  orderName: '',
-  phoneNumber: '',
+  buyerName: '',
+  phone: '',
   email: '',
 };
 
 const stage2InitialForm = {
-  recName: '',
-  recPlace: '',
-  recPhoneNumber: '',
+  receiverName: '',
+  receiverAddress: '',
+  receiverPhone: '',
 };
 
 const validationSchema = {
-  orderName: Validation().require('주문자명을 입력해 주세요.'),
-  phoneNumber: Validation().require('휴대폰 번호를 입력해 주세요.'),
-  email: Validation().require('이메일을 입력해 주세요.'),
-  recName: Validation().require('받는 사람이름을 입력해 주세요.'),
-  recPlace: Validation().require('받는 장소를 입력해 주세요.'),
-  recPhoneNumber: Validation().require('받는 사람 휴대폰 번호를 입력해 주세요.'),
+  buyerName: Validation().require().isName(),
+  phone: Validation().require().isPhone(),
+  email: Validation().require().isEmail(),
+  receiverName: Validation().require().isName(),
+  receiverAddress: Validation().require(),
+  receiverPhone: Validation().require().isPhone(),
 };
 
 const OrderForm = () => {
-  const { form, onChange, onBlur, check, error } = useInput({
+  const history = useHistory();
+  const { form, onChange, check, error } = useInput({
     initialState: { ...stage1InitialForm, ...stage2InitialForm },
     validationSchema,
   });
-
-  const { orderName, phoneNumber, email, recName, recPlace, recPhoneNumber } = form;
+  const { buyerName, phone, email, receiverName, receiverAddress, receiverPhone } = form;
 
   const [stage, setStage] = useState(1);
 
   const handleClickNext = () => {
-    const pass = check('orderName', 'phoneNumber', 'email');
+    const pass = check('buyerName', 'phone', 'email');
     if (!pass) {
       return;
     }
@@ -54,22 +55,40 @@ const OrderForm = () => {
     setStage((prev) => prev - 1);
   };
 
+  const handleSumitOrderForm = async () => {
+    try {
+      const pass = check('receiverName', 'receiverAddress', 'receiverPhone');
+      if (!pass) {
+        return;
+      }
+      const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
+      const { cartId, products } = cartInfo;
+      const orderId = products.map(({ id }) => id);
+
+      await OrderApi.order({
+        id: cartId,
+        buyerName,
+        phone,
+        email,
+        receiverName,
+        receiverAddress,
+        receiverPhone,
+        selectedItem: orderId,
+      });
+      history.push('/end-order');
+    } catch (err) {
+      alert('주문에 실패 했습니다.');
+    }
+  };
+
   const Forms = () => {
     if (stage === 1) {
-      return (
-        <Stage1
-          onChange={onChange}
-          onBlur={onBlur}
-          form={{ orderName, email, phoneNumber }}
-          error={error}
-        />
-      );
+      return <Stage1 onChange={onChange} form={{ buyerName, email, phone }} error={error} />;
     } else if (stage === 2) {
       return (
         <Stage2
           onChange={onChange}
-          onBlur={onBlur}
-          form={{ recName, recPlace, recPhoneNumber }}
+          form={{ receiverName, receiverAddress, receiverPhone }}
           error={error}
         />
       );
@@ -90,7 +109,7 @@ const OrderForm = () => {
             theme="white"
             value="submit"
             type="button"
-            onClick={() => console.log('a')}
+            onClick={handleSumitOrderForm}
           />
         </>
       );

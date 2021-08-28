@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import styled from '@emotion/styled';
+import guguStyled from '@/core/styled';
 import { Router, Route } from './core/Router';
 
 const Header = React.lazy(() => import('@/components/Header'));
@@ -11,6 +11,7 @@ const Main = React.lazy(() => import('@/pages/Main'));
 const ProductList = React.lazy(() => import('@/pages/ProductList'));
 const CartPage = React.lazy(() => import('@/pages/Cart'));
 const Order = React.lazy(() => import('@/pages/Order'));
+const FinishOrder = React.lazy(() => import('@/pages/FinishOrder'));
 const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
@@ -19,6 +20,7 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
 import Loading from './components/common/Loading';
 import AuthStore from './stores/AuthStore';
+import Redirect from './components/Redirect';
 
 const App = () => {
   useEffect(() => {
@@ -42,14 +44,15 @@ const App = () => {
             <LoginPage />
           </Route>
           <Route exact path="/cart">
-            <CartPage />
+            {AuthStore.isLogined ? <CartPage /> : <Redirect />}
           </Route>
           <Route exact path="/order">
-            <Order />
+            {AuthStore.isLogined ? <Order /> : <Redirect />}
           </Route>
-          <Route path="/mypage">
-            <MyPage />
+          <Route exact path="/end-order">
+            <FinishOrder />
           </Route>
+          <Route path="/mypage">{AuthStore.isLogined ? <MyPage /> : <Redirect />}</Route>
           <Route exact path="/signupMethod">
             <SignupMethod />
           </Route>
@@ -76,11 +79,11 @@ const App = () => {
   );
 };
 
-const PageContainer = styled.div`
+const PageContainer = guguStyled.div`
   min-width: 1450px;
 `;
 
-const LoadingContainer = styled.div`
+const LoadingContainer = guguStyled.div`
   position: absolute;
   left: 45%;
   top: 35%;

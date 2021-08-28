@@ -5,11 +5,11 @@ import ProductResponse from '@shared/dtos/product/response';
 
 class ProductAPI extends BaseApi {
   getMain() {
-    return this.get<ProductResponse.GetMain>('/');
+    return this.get<ProductResponse.GetMain>('/main');
   }
 
   getList(params: ProductRequest.GetList) {
-    return this.get<ProductResponse.GetList>('/', { params });
+    return this.get<ProductResponse.GetList>('/list', { params });
   }
 
   getDetail({ productId }: ProductRequest.GetDetail) {

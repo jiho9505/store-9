@@ -19,14 +19,12 @@ type InputProps = {
   error?: any;
   type?: string;
   onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
-  onBlur?(e: React.FocusEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };
 
 const Input = ({
   name,
   required,
-  onBlur,
   onChange,
   size,
   value,
@@ -43,8 +41,8 @@ const Input = ({
         name={name}
         type={type}
         required={required}
+        autoComplete="off"
         onChange={onChange}
-        onBlur={onBlur}
         placeholder={placeholder}
         variant={variant}
         error={error}

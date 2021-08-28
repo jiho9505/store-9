@@ -3,7 +3,7 @@ namespace CategoryResponse {
     parentCategories: {
       id: number;
       name: string;
-      parentId: null;
+      parentId: null | number;
     }[];
     subCategories: {
       id: number;

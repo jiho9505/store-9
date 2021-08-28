@@ -12,8 +12,8 @@ import { greyButton } from '@/static/style/common';
 const timeToChangeSlide = 3000;
 
 const Carousel = () => {
-  const [index, setIndex] = useState(1);
-  const [isClickEventActive, setIsClickEventActive] = useState(false);
+  const [index, setIndex] = useState<number>(1);
+  const [isClickEventActive, setIsClickEventActive] = useState<boolean>(false);
 
   /**
    * button clickEvent가 일어나지 않았을때
