@@ -19,8 +19,6 @@ const Main = () => {
     (async () => {
       try {
         const result = await ProductApi.getMain();
-        result.data.bestProducts[0].stock = 1;
-        result.data.bestProducts[0].discountRate = 1;
         setProducts({
           best: result.data.bestProducts,
           new: result.data.newProducts,
