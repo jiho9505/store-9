@@ -77,7 +77,7 @@ const PostModal = ({
         });
         onClose();
         refresh();
-        load();
+        load(product.productId);
       } catch (err) {
         alert('리뷰등록에 실패했습니다.');
       }
@@ -89,7 +89,7 @@ const PostModal = ({
           productId: product.id,
         });
         onClose();
-        load();
+        load(product.productId);
       } catch (err) {
         alert('문의등록에 실패했습니다.');
       }
