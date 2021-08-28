@@ -5,7 +5,7 @@ import ProductResponse from '@shared/dtos/product/response';
 
 class ProductAPI extends BaseApi {
   getMain() {
-    return this.get<ProductResponse.GetMain>('/');
+    return this.get<ProductResponse.GetMain>('/main');
   }
 
   getList(params: ProductRequest.GetList) {
