@@ -7,21 +7,9 @@ import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
 import Loading from '@/components/common/Loading';
 
 import RefreshStore from '@/stores/RefreshStore';
-import datas from '@/dummy';
 import { normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
-
-/**
- * TODO:
- * @params productFilter
- * 필터의 인덱스로 key value 매칭을 통해
- * 변환 후 인자로 넣어 보낸다.
- * 컨트롤러에 대부분 있어서 Filter 간단할듯?
- *
- * TODO:
- * api를 이용해 데이터 호출
- * categoryId , pagenation , filter , intersectionObserver 고려
- */
+import ProductApi from '@/apis/ProductApi';
 
 type ProductSortBy = 'RECOMMEND' | 'BEST' | 'NEW' | 'LOW_PRICE' | 'HIGH_PRICE';
 const sortByObj = {
@@ -32,6 +20,7 @@ const sortByObj = {
   4: 'HIGH_PRICE',
 };
 const size = 20;
+const alertMsg = '상품 목록을 가져오는데 실패하였습니다';
 
 const ProductList = () => {
   const [sortBy, setSortBy] = useState<ProductSortBy>('RECOMMEND');
@@ -46,19 +35,23 @@ const ProductList = () => {
     page,
     size,
     sortBy,
-    categoryId: getQueryStringValue('categoryId'),
-    searchQuery: getQueryStringValue('word'),
+    categoryId: Number(getQueryStringValue('categoryId')),
+    search: getQueryStringValue('word'),
   };
 
-  /**
-   * TODO:
-   * api 요청
-   * getQueryStringValue('categoryId'), getQueryStringValue('word')에 빈값 넣을 시
-   * redirect 시켜야할듯 (에러처리)
-   */
   useEffect(() => {
-    setProduct(datas);
-    setTotalProductCount(datas.length);
+    (async () => {
+      try {
+        const result = await ProductApi.getList(filter);
+        if (result.ok) {
+          setProduct(result.data.products);
+          setTotalProductCount(result.data.totalCount);
+        }
+      } catch (e) {
+        alert(alertMsg);
+      }
+    })();
+
     setIsActiveInfiniteScroll(true);
     setPage(0);
   }, [refreshComponent, sortBy]);
@@ -74,29 +67,25 @@ const ProductList = () => {
   const observeTag = () => {
     if (!isActiveInfiniteScroll) return;
     const observerCallback = (entries, observer) => {
-      entries.forEach((entry) => {
+      entries.forEach(async (entry) => {
         if (!entry.isIntersecting) return;
         if (entry.target.id === 'end') {
-          setIsLoading(true);
-          setTimeout(() => {
-            const newProduct = [...product, ...datas];
-            setProduct(newProduct);
-            setIsLoading(false);
-          }, 2000);
-          /*
-            const data = await ProductApi.getList(filter);
-            if (data.success) {
-              if (data.length > 0) {
-                setPage(page+1)
-                setProduct([...product,...data])
+          try {
+            setIsLoading(true);
+            const result = await ProductApi.getList(filter);
+            if (result.ok) {
+              if (result.data.products.length > 0) {
+                setPage(page + 1);
+                setProduct([...product, ...result.data.products]);
               } else {
-                setIsActiveInfiniteScroll(false)
+                setIsActiveInfiniteScroll(false);
               }
-            } else {
-            	alert(data.message);
             }
-             setIsLoading(false);
-            */
+          } catch (e) {
+            alert(alertMsg);
+          } finally {
+            setIsLoading(false);
+          }
         }
         observer.unobserve(entry.target);
       });
