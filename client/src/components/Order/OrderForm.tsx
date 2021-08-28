@@ -8,7 +8,7 @@ import Button from '@/components/common/Button';
 
 import { normalRadius } from '@/static/style/common';
 import useInput from '@/hooks/customHooks/useInput';
-import Validation from '@/utils/validation';
+import Validator from '@/utils/validation';
 import OrderApi from '@/apis/OrderApi';
 import useHistory from '@/hooks/customHooks/useHistory';
 
@@ -25,12 +25,12 @@ const stage2InitialForm = {
 };
 
 const validationSchema = {
-  buyerName: Validation().require().isName(),
-  phone: Validation().require().isPhone(),
-  email: Validation().require().isEmail(),
-  receiverName: Validation().require().isName(),
-  receiverAddress: Validation().require(),
-  receiverPhone: Validation().require().isPhone(),
+  buyerName: Validator().require().isName(),
+  phone: Validator().require().isPhone(),
+  email: Validator().require().isEmail(),
+  receiverName: Validator().require().isName(),
+  receiverAddress: Validator().require(),
+  receiverPhone: Validator().require().isPhone(),
 };
 
 const OrderForm = () => {
