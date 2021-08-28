@@ -9,7 +9,7 @@ class ProductAPI extends BaseApi {
   }
 
   getList(params: ProductRequest.GetList) {
-    return this.get<ProductResponse.GetList>('/', { params });
+    return this.get<ProductResponse.GetList>('/list', { params });
   }
 
   getDetail({ productId }: ProductRequest.GetDetail) {
