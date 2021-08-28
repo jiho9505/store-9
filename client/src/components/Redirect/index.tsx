@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
 import styled from '@emotion/styled';
 import Message from '../common/Message';
 import useHistory from '@/hooks/customHooks/useHistory';
 
 import ModalPortal from '@/utils/portal';
+import AuthStore from '@/stores/AuthStore';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
 import NOTLOGIN from '@/static/assets/img/notlogin.gif';
 
+let timer = null;
 const Redirect = () => {
   const [isShow, setIsShow] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     setIsShow(true);
-    setTimeout(() => {
+    timer = setTimeout(() => {
       history.push('/');
     }, showErrorMsgTime);
-  }, []);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [AuthStore.isLogined]);
   return (
     <>
       <RedirectContainer>
@@ -39,4 +45,4 @@ const RedirectContainer = styled.div`
   width: 100%;
 `;
 
-export default Redirect;
+export default observer(Redirect);
