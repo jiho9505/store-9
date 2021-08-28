@@ -4,7 +4,8 @@ import Message from '../common/Message';
 import useHistory from '@/hooks/customHooks/useHistory';
 
 import ModalPortal from '@/utils/portal';
-import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import { showErrorMsgTime } from '@/static/constants';
+import { alertMsg } from '@/utils/errorMessage';
 import NOTLOGIN from '@/static/assets/img/notlogin.gif';
 
 const Redirect = () => {
@@ -24,7 +25,7 @@ const Redirect = () => {
       </RedirectContainer>
       {isShow && (
         <ModalPortal>
-          <Message text={requireLoginMsg} mode="fail" />
+          <Message text={alertMsg['REQUIRED_LOGIN']} mode="fail" />
         </ModalPortal>
       )}
     </>

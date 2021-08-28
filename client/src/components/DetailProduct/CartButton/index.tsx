@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 
-import Message from '@/components/common/Message';
-
 import { baeminFont, greyLine } from '@/static/style/common';
 import { ProductContext } from '@/hooks/context';
+import { showErrorMsgTime } from '@/static/constants';
+import { alertMsg } from '@/utils/errorMessage';
+
+import Message from '@/components/common/Message';
 import ModalPortal from '@/utils/portal';
-import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 
 type CartModeType = 'notlogin' | 'add';
 
@@ -45,7 +46,7 @@ const Cart = () => {
 
   const viewMsgByUserStatus = (mode: CartModeType) => {
     if (mode === 'notlogin') {
-      createMsg('fail', requireLoginMsg);
+      createMsg('fail', alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'add') {
       createMsg('success', addCartMsg);
     }

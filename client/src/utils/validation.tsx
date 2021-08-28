@@ -1,7 +1,7 @@
 import isEmail from 'validator/lib/isEmail';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 
-import MSG from './validatorMsg';
+import { validationMsg } from './errorMessage';
 
 function Validation() {
   if (!(this instanceof Validation)) {
@@ -31,22 +31,22 @@ const _isName = (name) => {
   return isKorean.test(name);
 };
 
-Validation.prototype.isName = function (msg = MSG['INVALID_NAME']) {
+Validation.prototype.isName = function (msg = validationMsg['INVALID_NAME']) {
   this._validator.push({ fn: _isName, msg });
   return this;
 };
 
-Validation.prototype.isEmail = function (msg = MSG['INVALID_EMAIL']) {
+Validation.prototype.isEmail = function (msg = validationMsg['INVALID_EMAIL']) {
   this._validator.push({ fn: _isEmail, msg });
   return this;
 };
 
-Validation.prototype.isPhone = function (msg = MSG['INVALID_PHONE_NUMBER']) {
+Validation.prototype.isPhone = function (msg = validationMsg['INVALID_PHONE_NUMBER']) {
   this._validator.push({ fn: _isPhone, msg });
   return this;
 };
 
-Validation.prototype.require = function (msg = MSG['NOT_REQUIRE']) {
+Validation.prototype.require = function (msg = validationMsg['NOT_REQUIRE']) {
   this._validator.push({ fn: _require, msg });
   return this;
 };

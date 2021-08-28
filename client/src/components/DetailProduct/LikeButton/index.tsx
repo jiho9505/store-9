@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from '@emotion/styled';
 
-import Message from '@/components/common/Message';
-
 import { greyLine } from '@/static/style/common';
 import { ProductContext } from '@/hooks/context';
+import { showErrorMsgTime } from '@/static/constants';
+import { alertMsg } from '@/utils/errorMessage';
+
+import Message from '@/components/common/Message';
 import ModalPortal from '@/utils/portal';
-import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 
 type LikeModeType = 'notlogin' | 'add' | 'remove';
 const addLikeMsg = '관심목록에 추가하였습니다.';
@@ -37,7 +38,7 @@ const Like = () => {
 
   const viewMsgByUserStatus = (mode: LikeModeType) => {
     if (mode === 'notlogin') {
-      createMsg('fail', requireLoginMsg);
+      createMsg('fail', alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'add') {
       createMsg('success', addLikeMsg);
     } else if (mode === 'remove') {

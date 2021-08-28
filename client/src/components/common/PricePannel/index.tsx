@@ -1,21 +1,35 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
+import { alertMsg } from '@/utils/errorMessage';
 import useHistory from '@/hooks/customHooks/useHistory';
+import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
+
+import ModalPortal from '@/utils/portal';
+import Message from '@/components/common/Message';
 
 type PricePannelProps = {
   productTotalPrice: number;
 };
 
 const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
+  const [cartInfo, _] = useLocalStorage('cartInfo', { cartId: 0, products: [] });
   const curLocation = useLocation();
   const history = useHistory();
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
 
+  const [isActiveModal, setActiveModal] = useState(false);
+
   const handleClickOrderBtn = async () => {
     if (curLocation === '/cart') {
+      const { products } = cartInfo;
+      if (products.length === 0) {
+        console.log('a');
+        setActiveModal(true);
+        return;
+      }
       history.push('/order');
     }
   };
@@ -35,6 +49,11 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
         <span>{(productTotalPrice + deliveryCost).toLocaleString()}원</span>
       </TotalPrice>
       <OrderButton onClick={handleClickOrderBtn}>주문하기</OrderButton>
+      {isActiveModal && (
+        <ModalPortal>
+          <Message text={alertMsg['EMPTY_ORDER']} mode="caution" />
+        </ModalPortal>
+      )}
     </PricePannelContainer>
   );
 };

@@ -1,4 +1,3 @@
-export const requireLoginMsg = '로그인이 필요한 기능입니다.';
 export const showErrorMsgTime = 1500;
 const RouteListArray = [
   '/',
