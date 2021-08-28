@@ -9,6 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
+  isPrd: process.env.NODE_ENV === 'production',
   isDev: process.env.NODE_ENV === 'development',
   server: {
     port: Number(process.env.SERVER_PORT) || 4000,
@@ -18,7 +19,7 @@ module.exports = {
     protocol: process.env.CLIENT_PROTOCOL,
     domain: process.env.CLIENT_DOMAIN,
     port: Number(process.env.CLIENT_PORT) || 3000,
-    origin: `${process.env.CLIENT_PROTOCOL}://${process.env.CLIENT_DOMAIN}:${process.env.CLIENT_PORT}`,
+    origin: process.env.CLIENT_ORIGIN,
   },
   db: {
     host: process.env.DB_HOST,
