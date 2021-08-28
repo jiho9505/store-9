@@ -7,47 +7,43 @@ import { baeminFont } from '@/static/style/common';
 
 type Stage2Props = {
   onChange(e: ChangeEvent<HTMLInputElement>): void;
-  onBlur?(e: FocusEvent<HTMLInputElement>): void;
-  form: { recName: string; recPlace: string; recPhoneNumber: string };
+  form: { receiverName: string; receiverAddress: string; receiverPhone: string };
   error?: { [key: string]: string };
 };
 
-const Stage2 = ({ form, onChange, error, onBlur }: Stage2Props) => {
+const Stage2 = ({ form, onChange, error }: Stage2Props) => {
   return (
     <StageContainer>
       <InputLabel labelName="받을실 분" />
       <Input
-        name="recName"
+        name="receiverName"
         required={true}
         variant="outlined"
         size="large"
         onChange={onChange}
-        onBlur={onBlur}
-        value={form.recName}
+        value={form.receiverName}
         error={error}
         placeholder="받을실 분을 입력해 주세요."
       />
       <InputLabel labelName="받으실 곳" />
       <Input
-        name="recPlace"
+        name="receiverAddress"
         required={true}
         variant="outlined"
         size="large"
         onChange={onChange}
-        onBlur={onBlur}
-        value={form.recPlace}
+        value={form.receiverAddress}
         error={error}
         placeholder="받으실 곳을 입력해 주세요."
       />
       <InputLabel labelName="휴대폰" />
       <Input
-        name="recPhoneNumber"
+        name="receiverPhone"
         required
         variant="outlined"
         size="large"
         onChange={onChange}
-        onBlur={onBlur}
-        value={form.recPhoneNumber}
+        value={form.receiverPhone}
         error={error}
         placeholder="휴대폰 번호를 입력해 주세요."
       />

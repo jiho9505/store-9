@@ -11,6 +11,7 @@ const Main = React.lazy(() => import('@/pages/Main'));
 const ProductList = React.lazy(() => import('@/pages/ProductList'));
 const CartPage = React.lazy(() => import('@/pages/Cart'));
 const Order = React.lazy(() => import('@/pages/Order'));
+const FinishOrder = React.lazy(() => import('@/pages/FinishOrder'));
 const MyPage = React.lazy(() => import('@/pages/MyPage'));
 const NotFound = React.lazy(() => import('@/pages/NotFound'));
 const Signup = React.lazy(() => import('@/pages/Signup'));
@@ -47,6 +48,9 @@ const App = () => {
           </Route>
           <Route exact path="/order">
             {AuthStore.isLogined ? <Order /> : <Redirect />}
+          </Route>
+          <Route exact path="/end-order">
+            <FinishOrder />
           </Route>
           <Route path="/mypage">{AuthStore.isLogined ? <MyPage /> : <Redirect />}</Route>
           <Route exact path="/signupMethod">
