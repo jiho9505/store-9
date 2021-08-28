@@ -21,13 +21,17 @@ const sortByObj = {
 const size = 20;
 const alertMsg = '상품 목록을 가져오는데 실패하였습니다';
 
+/**
+ * TODO:
+ * 데이터 실삽입 후 테스트 & isActiveInfiniteScroll 필요없을 확률이 높으니 체크
+ */
 const ProductList = () => {
   const [sortByIdx, setSortByIdx] = useState<number>(0);
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState<boolean>(true);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
   const { refreshComponent } = RefreshStore;
 
   const filter = {
@@ -41,9 +45,11 @@ const ProductList = () => {
   useEffect(() => {
     (async () => {
       try {
+        filter.page = 0;
         const result = await ProductApi.getList(filter);
         if (result.ok) {
           setProduct(result.data.products);
+          console.log('result.data.products: ', result.data.products);
           setTotalProductCount(result.data.totalCount);
         }
       } catch (e) {
@@ -51,7 +57,7 @@ const ProductList = () => {
       }
     })();
     setIsActiveInfiniteScroll(true);
-    setPage(0);
+    setPage(1);
   }, [refreshComponent, sortByIdx]);
 
   useEffect(() => {
@@ -63,7 +69,7 @@ const ProductList = () => {
   };
 
   const observeTag = () => {
-    if (!isActiveInfiniteScroll) return;
+    if (!isActiveInfiniteScroll || page === 0) return;
     const observerCallback = (entries, observer) => {
       entries.forEach(async (entry) => {
         if (!entry.isIntersecting) return;

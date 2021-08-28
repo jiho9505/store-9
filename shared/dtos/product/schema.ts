@@ -10,8 +10,6 @@ export enum ProductSortBy {
   HIGH_PRICE = 'HIGH_PRICE',
 }
 
-export type ProductSortByType = 'RECOMMEND' | 'BEST' | 'NEW' | 'LOW_PRICE' | 'HIGH_PRICE';
-
 export interface ProductSchema {
   id: number;
   name: string;
