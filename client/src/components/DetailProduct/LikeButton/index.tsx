@@ -3,14 +3,17 @@ import styled from '@emotion/styled';
 
 import Message from '@/components/common/Message';
 
+import UserApi from '@/apis/UserApi';
 import { greyLine } from '@/static/style/common';
 import { ProductContext } from '@/hooks/context';
 import ModalPortal from '@/utils/portal';
 import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import AuthStore from '@/stores/AuthStore';
 
-type LikeModeType = 'notlogin' | 'add' | 'remove';
+type LikeModeType = 'notlogin' | 'add' | 'remove' | 'fail';
 const addLikeMsg = '관심목록에 추가하였습니다.';
 const removeLikeMsg = '관심목록에서 제거하였습니다.';
+const addLikeFailMsg = '관심목록 추가가 안되었습니다.';
 
 const Like = () => {
   const { info } = useContext(ProductContext);
@@ -23,7 +26,7 @@ const Like = () => {
   let timer: number = 0;
 
   useEffect(() => {
-    // setIsIconActive(info.userLiked)
+    if (!AuthStore.isLogined) setIsIconActive(false);
     return () => clearTimeout(timer);
   }, []);
 
@@ -42,25 +45,31 @@ const Like = () => {
       createMsg('success', addLikeMsg);
     } else if (mode === 'remove') {
       createMsg('success', removeLikeMsg);
+    } else if (mode === 'fail') {
+      createMsg('fail', addLikeFailMsg);
     }
   };
 
   /**
    * TODO:
-   * 로그인했다면 2번으로 넘어가서 post 혹은 delete하며 setState 해줍니다 (반환값 필요X)
-   * 그 후 관심상품으로 등록하였다는 메시지를 보여줍니다.
-   * 로그인이 안됐다면 1번에서 끝납니다.
-   *
-   * 여기서 분기문 쓰면 됩니다.
+   * { productId: 55 }) 수정할것
    */
-  const handleClickBtn = () => {
-    // 로그인 안했을때 먼저 처리
-    if (isIconActive) {
-      viewMsgByUserStatus('remove');
-      setIsIconActive(false);
-    } else if (!isIconActive) {
-      viewMsgByUserStatus('add');
-      setIsIconActive(true);
+  const handleClickBtn = async () => {
+    if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
+
+    try {
+      const result = await UserApi.toggleLike({ productId: 55 });
+      if (result.ok) {
+        if (isIconActive) {
+          viewMsgByUserStatus('remove');
+          setIsIconActive(false);
+        } else if (!isIconActive) {
+          viewMsgByUserStatus('add');
+          setIsIconActive(true);
+        }
+      }
+    } catch (e) {
+      viewMsgByUserStatus('fail');
     }
   };
 
