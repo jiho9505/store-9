@@ -5,7 +5,7 @@ import { UserRepository } from '../repositories/UserRepositiory';
 import AuthRequest from '../../../shared/dtos/auth/request';
 import jwt from '../utils/jwt';
 import constant from '../utils/constant';
-import { getJwtPayload, getUserObj, signUpDataValidationCheck, sanitizeBody } from '../utils/auth';
+import { getJwtPayload, getUserObj, signUpDataValidationCheck } from '../utils/auth';
 import { api } from '../api';
 import { passwordUtils } from '../utils/password';
 
