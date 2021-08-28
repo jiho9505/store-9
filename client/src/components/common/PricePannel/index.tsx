@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
 import { alertMsg } from '@/utils/errorMessage';
+import { showErrorMsgTime } from '@/static/constants';
 import useHistory from '@/hooks/customHooks/useHistory';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 
@@ -26,8 +27,10 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
     if (curLocation === '/cart') {
       const { products } = cartInfo;
       if (products.length === 0) {
-        console.log('a');
         setActiveModal(true);
+        setTimeout(() => {
+          setActiveModal(false);
+        }, showErrorMsgTime);
         return;
       }
       history.push('/order');

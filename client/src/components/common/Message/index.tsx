@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 import { baeminFont, greyBg1, red1 } from '@/static/style/common';
+import { showErrorMsgTime } from '@/static/constants';
 
 type Mode = 'success' | 'fail' | 'caution';
 type MessageProps = {
@@ -67,9 +69,22 @@ const WholeContainer = styled.div`
   font-size: 1.2rem;
 `;
 
+const showMessage = keyframes`
+  from {
+    transform: translateY(-500px);
+  }
+  50% {
+    transform: translateY(-350px);
+  }
+  100% {
+    transform: translateY(-500px);
+  }
+`;
+
 const MessageContainer = styled.div<MessageContainerProps>`
-  transition: all 0.5s ease-in-out;
-  transform: translateY(${(props) => (props.show ? '-350px' : '-500px')});
+  /* transition: all 0.5s ease-in-out; */
+  /* transform: translateY(${(props) => (props.show ? '-350px' : '-500px')}); */
+  /* transform: translateY(-500px); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,6 +97,7 @@ const MessageContainer = styled.div<MessageContainerProps>`
   border-radius: 0.5rem;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
   z-index: 1;
+  animation: ${showMessage} ${showErrorMsgTime}ms ease;
 `;
 
 const Text = styled.div`

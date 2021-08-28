@@ -7,4 +7,5 @@ export const validationMsg = {
 
 export const alertMsg = {
   REQUIRED_LOGIN: '로그인이 필요한 기능입니다.',
+  EMPTY_ORDER: '구매할 상품을 선택해 주세요.',
 };
