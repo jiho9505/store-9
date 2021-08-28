@@ -1,4 +1,4 @@
-export const showErrorMsgTime = 1500;
+export const showErrorMsgTime = 1700;
 const RouteListArray = [
   '/',
   '/login',
