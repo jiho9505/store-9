@@ -10,6 +10,7 @@ import {
   baeminFont,
 } from '@/static/style/common';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
+import useAlert from '@/hooks/customHooks/useAlert';
 import RefreshStore from '@/stores/RefreshStore';
 import OrderApi from '@/apis/OrderApi';
 import UserApi from '@/apis/UserApi';
@@ -19,26 +20,20 @@ import PricePannel from '@/components/common/PricePannel';
 import OrderStageHeader from '@/components/common/OrderStageHeader';
 import ModalPortal from '@/utils/portal';
 import Message from '@/components/common/Message';
-import AlertStore from '@/stores/AlertStore';
+import { alertMsg } from '@/utils/errorMessage';
 
 const CartPage = () => {
   const { refresh, refreshComponent } = RefreshStore;
-  const { isShow, showAndUnShow } = AlertStore;
 
   const [cartInfo, setCartInfo] = useLocalStorage<{ cartId?: number; products?: any[] }>(
     'cartInfo',
     {}
   );
+
+  const { isShow, alertInfo, showAndUnShowAlert } = useAlert();
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [cartProducts, setCartProducts] = useState([]);
   const [curCartId, setCurCartId] = useState(0);
-  const [alertInfo, setAlertInfo] = useState<{
-    mode: 'caution' | 'fail' | 'success';
-    msg: string;
-  }>({
-    mode: 'caution',
-    msg: '',
-  });
 
   useEffect(() => {
     localStorage.clear();
@@ -103,19 +98,20 @@ const CartPage = () => {
   };
 
   const handleDeleteClick = async () => {
-    if (selectedItems.size === 0) return;
+    if (selectedItems.size === 0) {
+      showAndUnShowAlert({ mode: 'caution', msg: alertMsg['EMPTY_DELETE'] });
+      return;
+    }
     const selected = Array.from(selectedItems);
 
     try {
       const result = await OrderApi.removeCartItem({ orderItemId: selected });
       if (result.ok) {
-        setAlertInfo({ mode: 'success', msg: '삭제되었습니다.' });
-        showAndUnShow();
+        showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_DELETE'] });
         refresh();
       }
     } catch (err) {
-      setAlertInfo({ mode: 'fail', msg: '삭제하지 못했습니다.' });
-      showAndUnShow();
+      showAndUnShowAlert({ mode: 'fail', msg: alertMsg['FAIL_DELETE'] });
     }
   };
 
@@ -127,17 +123,18 @@ const CartPage = () => {
   };
 
   const handleLikeClick = async () => {
-    if (selectedItems.size === 0) return;
+    if (selectedItems.size === 0) {
+      showAndUnShowAlert({ mode: 'caution', msg: alertMsg['EMPTY_LIKE'] });
+      return;
+    }
     const selected = Array.from(selectedItems);
     const productId: number[] = orderItemIdtoProductId(selected);
 
     try {
       const result = await UserApi.likeMany({ productId });
-      setAlertInfo({ mode: 'success', msg: '찜하기에 추가되었습니다.' });
-      showAndUnShow();
+      showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_ADD_LIKE'] });
     } catch (err) {
-      setAlertInfo({ mode: 'fail', msg: '찜하기에 추가하지 못했습니다.' });
-      showAndUnShow();
+      showAndUnShowAlert({ mode: 'fail', msg: alertMsg['FAIL_ADD_LIKE'] });
     }
   };
 

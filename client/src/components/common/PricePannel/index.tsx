@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
 import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
 import { alertMsg } from '@/utils/errorMessage';
-import { showErrorMsgTime } from '@/static/constants';
 import useHistory from '@/hooks/customHooks/useHistory';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
-import AlertStore from '@/stores/AlertStore';
+import useAlert from '@/hooks/customHooks/useAlert';
 
 import ModalPortal from '@/utils/portal';
 import Message from '@/components/common/Message';
@@ -18,7 +16,7 @@ type PricePannelProps = {
 };
 
 const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
-  const { isShow, showAndUnShow } = AlertStore;
+  const { isShow, showAndUnShowAlert } = useAlert();
   const [cartInfo, _] = useLocalStorage('cartInfo', { cartId: 0, products: [] });
   const curLocation = useLocation();
   const history = useHistory();
@@ -28,7 +26,7 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
     if (curLocation === '/cart') {
       const { products } = cartInfo;
       if (products.length === 0) {
-        showAndUnShow();
+        showAndUnShowAlert();
         return;
       }
       history.push('/order');
@@ -111,4 +109,4 @@ const OrderButton = styled.button`
   font-size: 20px;
 `;
 
-export default observer(PricePannel);
+export default PricePannel;
