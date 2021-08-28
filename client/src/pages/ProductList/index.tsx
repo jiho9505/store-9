@@ -11,7 +11,6 @@ import { normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import ProductApi from '@/apis/ProductApi';
 
-type ProductSortBy = 'RECOMMEND' | 'BEST' | 'NEW' | 'LOW_PRICE' | 'HIGH_PRICE';
 const sortByObj = {
   0: 'RECOMMEND',
   1: 'BEST',
@@ -23,7 +22,7 @@ const size = 20;
 const alertMsg = '상품 목록을 가져오는데 실패하였습니다';
 
 const ProductList = () => {
-  const [sortBy, setSortBy] = useState<ProductSortBy>('RECOMMEND');
+  const [sortByIdx, setSortByIdx] = useState<number>(0);
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,7 +33,7 @@ const ProductList = () => {
   const filter = {
     page,
     size,
-    sortBy,
+    sortBy: sortByObj[sortByIdx],
     categoryId: Number(getQueryStringValue('categoryId')),
     search: getQueryStringValue('word'),
   };
@@ -51,17 +50,16 @@ const ProductList = () => {
         alert(alertMsg);
       }
     })();
-
     setIsActiveInfiniteScroll(true);
     setPage(0);
-  }, [refreshComponent, sortBy]);
+  }, [refreshComponent, sortByIdx]);
 
   useEffect(() => {
-    setSortBy('RECOMMEND');
+    setSortByIdx(0);
   }, [refreshComponent]);
 
-  const handleFilter = (index: string) => {
-    setSortBy(sortByObj[index]);
+  const handleFilter = (index: number) => {
+    setSortByIdx(index);
   };
 
   const observeTag = () => {
@@ -101,6 +99,7 @@ const ProductList = () => {
         <ItemFilterBar
           handleFilter={handleFilter}
           totalProductCount={totalProductCount}
+          sortByIdx={sortByIdx}
         ></ItemFilterBar>
         <ItemLists observeTag={observeTag} products={product}></ItemLists>
         {isLoading && <Loading size="small" />}
