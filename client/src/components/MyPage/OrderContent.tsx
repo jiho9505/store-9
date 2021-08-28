@@ -5,6 +5,7 @@ import ModalPortal from '@/utils/portal';
 import PostModal from '../common/PostModal';
 import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
+import EmptyPannel from '../common/EmptyPannel';
 
 import { getDateFormat } from '@/utils/dateParse';
 import { greyButton } from '@/static/style/common';
@@ -97,7 +98,11 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 
   return (
     <OrderContentContainer>
-      <ListTable header={tableHeader} body={tableBody} />
+      {orderProducts.lenght === 0 ? (
+        <EmptyPannel />
+      ) : (
+        <ListTable header={tableHeader} body={tableBody} />
+      )}
       {activeModal && (
         <ModalPortal>
           <PostModal
