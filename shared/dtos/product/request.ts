@@ -1,8 +1,8 @@
 import { PageRequest } from '../base/request';
-import { ProductSchema, ProductSortBy } from './schema';
+import { ProductSchema, ProductSortByType } from './schema';
 
 namespace ProductRequest {
-  export type GetList = PageRequest<ProductSortBy> & {
+  export type GetList = PageRequest<ProductSortByType> & {
     categoryId?: number;
     search?: string;
   };

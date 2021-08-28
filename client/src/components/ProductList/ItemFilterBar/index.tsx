@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import { baemin, baeminFont, baeminThickFont, lightBlack } from '@/static/style/common';
@@ -7,25 +7,23 @@ import { getQueryStringValue } from '@/utils/getQueryStringValue';
 const filterName: string[] = ['추천순', '인기순', '최신순', '높은가격순', '낮은가격순'];
 
 type ItemFilterBarProps = {
-  handleFilter: (num: string) => void;
+  handleFilter: (num: number) => void;
   totalProductCount: number;
+  sortByIdx: number;
 };
 
-const ItemFilterBar = ({ handleFilter, totalProductCount }: ItemFilterBarProps) => {
-  const [index, setIndex] = useState<number>(0);
-
+const ItemFilterBar = ({ handleFilter, totalProductCount, sortByIdx }: ItemFilterBarProps) => {
   const handleClickFilter = (e: React.MouseEvent<HTMLLIElement>) => {
     const choicedIndex = Number(e.currentTarget.dataset.idx);
-    setIndex(choicedIndex);
-    handleFilter(e.currentTarget.dataset.idx);
+    handleFilter(choicedIndex);
   };
 
   const createFilter = () => {
     return filterName.map((itemName, idx) => (
       <Fliter
-        key={`filter-item-${itemName}`}
+        key={itemName}
         onClick={handleClickFilter}
-        active={index === idx}
+        active={sortByIdx === idx}
         data-idx={idx}
         itemLength={itemName.length}
       >

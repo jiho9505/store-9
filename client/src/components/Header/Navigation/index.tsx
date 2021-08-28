@@ -21,6 +21,7 @@ const Navigation = () => {
   const { refresh } = RefreshStore;
   const [categories, setCategories] = useState(initCategoryData);
   const [subCategories, setSubCategories] = useState([]);
+  let catogoryStore = [];
   let subCatogoryStore = [];
   let timer: number = 0;
 
@@ -31,6 +32,7 @@ const Navigation = () => {
         if (result.ok) {
           setCategories([...categories, ...result.data.parentCategories]);
           setSubCategories(result.data.subCategories);
+          catogoryStore = result.data.parentCategories;
           subCatogoryStore = result.data.subCategories;
         }
       } catch (e) {
@@ -38,26 +40,26 @@ const Navigation = () => {
       }
     })();
 
-    const handleMouseOverOnDocument = (e: Event) => {
-      const { target } = e;
-      if (!(target instanceof HTMLElement)) return;
-      if (!target.closest('#NavBorder')) {
-        setSubItems([]);
-        setMouseOverdItemName('');
-        getQueryStringValue('categoryId')
-          ? setMatchedItemIdToURL(getCatgoryIdx())
-          : setMatchedItemIdToURL(-1);
-      }
-    };
     document.addEventListener('mouseover', handleMouseOverOnDocument);
     return () => {
       document.removeEventListener('mouseover', handleMouseOverOnDocument);
     };
   }, []);
 
-  const getCatgoryIdx = useCallback(() => {
-    let ctgId = Number(getQueryStringValue('categoryId'));
-    if (ctgId > 5) {
+  const handleMouseOverOnDocument = useCallback((e: Event) => {
+    const { target } = e;
+    if (!(target instanceof HTMLElement)) return;
+    if (!target.closest('#NavBorder')) {
+      setSubItems([]);
+      setMouseOverdItemName('');
+      getQueryStringValue('categoryId')
+        ? setMatchedItemIdToURL(getCatgoryIdx(Number(getQueryStringValue('categoryId'))))
+        : setMatchedItemIdToURL(-1);
+    }
+  }, []);
+
+  const getCatgoryIdx = useCallback((ctgId) => {
+    if (ctgId > catogoryStore.length) {
       subCatogoryStore.forEach((subcategory) => {
         if (subcategory.id === ctgId) ctgId = subcategory.parentId;
       });
@@ -74,20 +76,22 @@ const Navigation = () => {
     const itemName = e.currentTarget.innerText;
     const itemXPos = e.currentTarget.getBoundingClientRect().x;
 
-    waitTime.then(() => {
-      if (!timer) return;
-      const newSubItems = subCategories.filter((item) => item.parentId === id);
+    waitTime.then(() => changeCategory(id, itemName, itemXPos));
+  };
 
-      const extraXposToRemove =
-        newSubItems.length % 2
-          ? Math.floor(newSubItems.length / 2) * 100
-          : Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthEven;
+  const changeCategory = (id: number, itemName: string, itemXPos: number) => {
+    if (!timer) return;
+    const newSubItems = subCategories.filter((item) => item.parentId === id);
 
-      setSubItemXpos(itemXPos - extraXposToRemove);
-      setSubItems(newSubItems);
-      setMouseOverdItemName(itemName);
-      setMatchedItemIdToURL(-1);
-    });
+    const extraXposToRemove =
+      newSubItems.length % 2
+        ? Math.floor(newSubItems.length / 2) * 100
+        : Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthEven;
+
+    setSubItemXpos(itemXPos - extraXposToRemove);
+    setSubItems(newSubItems);
+    setMouseOverdItemName(itemName);
+    setMatchedItemIdToURL(-1);
   };
 
   const handleMouseOutLink = () => {
