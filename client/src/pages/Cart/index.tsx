@@ -61,7 +61,6 @@ const CartPage = () => {
 
   const addProductInLocalStorage = (id) => {
     const [selectedProduct] = cartProducts.filter(({ id: cartId }) => id === cartId);
-    console.log(selectedProduct);
     setCartInfo({ ...cartInfo, products: [...cartInfo.products, selectedProduct] });
   };
 
