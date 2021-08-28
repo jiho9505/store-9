@@ -6,6 +6,7 @@ const RouteListArray = [
   '/cart',
   '/order',
   '/mypage',
+  '/end-order',
   '/signupMethod',
   '/goods',
   '/detail',
