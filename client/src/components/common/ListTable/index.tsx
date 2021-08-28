@@ -35,7 +35,7 @@ const ListTable = ({
   };
 
   return (
-    <div>
+    <Container>
       <Table>
         <colgroup>
           {checkable && <col width="1%" />}
@@ -61,14 +61,6 @@ const ListTable = ({
             ))}
           </TableHeaderRow>
         </TableHeader>
-      </Table>
-      <Table>
-        <colgroup>
-          {checkable && <col width="1%" />}
-          {tHeaderWidth.map((width, idx) => (
-            <col key={idx} width={width} />
-          ))}
-        </colgroup>
         <TableBody>
           {body.map(({ id, cells }) => (
             <TableBodyRow key={id} onClick={handleRowClick(id)}>
@@ -92,28 +84,28 @@ const ListTable = ({
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Container>
   );
 };
 
-const Table = styled.table`
+const Container = styled.div`
+  max-height: 606px;
+  overflow: auto;
+  scrollbar-width: none;
   width: 100%;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: ${normalRadius};
-  &:nth-of-type(2) {
-    display: block;
-    max-height: 606px;
-    overflow: auto;
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
   }
 `;
 
-const TableScroll = styled.table`
-  display: block;
-  max-height: 606px;
-  overflow: auto;
-`;
+const Table = styled.table``;
 
-const TableHeader = styled.thead``;
+const TableHeader = styled.thead`
+  position: sticky;
+  top: 0;
+`;
 
 const TableHeaderRow = styled.tr`
   height: 40px;

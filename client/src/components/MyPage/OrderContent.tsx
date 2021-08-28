@@ -79,6 +79,7 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
                   {Number(price).toLocaleString()}원/{amount}개
                 </Cell>
               ),
+              colSpan: 1,
             },
             {
               c: (
