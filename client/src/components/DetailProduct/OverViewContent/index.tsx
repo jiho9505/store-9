@@ -85,8 +85,8 @@ const OverViewContent = () => {
             <TotalPrice price={getFinalPrice()} selectedStock={selectedStock}></TotalPrice>
             <ButtonContainer>
               <Like />
-              <Cart />
-              <Buy />
+              <Cart selectedStock={selectedStock} />
+              <Buy selectedStock={selectedStock} />
             </ButtonContainer>
           </>
         ) : (
