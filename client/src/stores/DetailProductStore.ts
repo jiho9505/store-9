@@ -1,23 +1,22 @@
 import { makeAutoObservable } from 'mobx';
+import ProductApi from '@/apis/ProductApi';
+
+const alertMsg = '상품을 불러오는데 실패하였습니다.';
 
 class DetailProductStore {
-  products = [];
+  products = {};
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  load = () => {
-    console.log('load products...');
-    // try {
-    //   const data = await api;
-    //   this.products= data;
-    // } catch (e) {
-    //   alert(e);
-    // }
-
-    // 렌더링 체크용
-    this.products = [...this.products, '1'];
+  load = async (productId: number) => {
+    try {
+      const result = await ProductApi.getDetail({ productId });
+      if (result.ok) this.products = result.data;
+    } catch (e) {
+      alert(alertMsg);
+    }
   };
 }
 

@@ -11,7 +11,7 @@ class UserApi extends BaseApi {
     return this.get<UserResponse.GetLikeList>('/likes', { isRequiredLogin: true, ...params });
   }
 
-  like({ productId }: UserReqeust.Like) {
+  toggleLike({ productId }: UserReqeust.Like) {
     return this.post(`/likes/${productId}`, {}, { isRequiredLogin: true });
   }
 

@@ -30,8 +30,8 @@ const ItemLabel = ({ product }: LabelProps) => {
     const allBadge = product.isGreen ? [...badge, 'green'] : badge;
 
     return allBadge.map((item, idx) => (
-      <Link to="/detail">
-        <Feature color={getColor(item)} key={idx}>
+      <Link to="/detail" key={item}>
+        <Feature color={getColor(item)}>
           <span>{item.toUpperCase()}</span>
         </Feature>
       </Link>

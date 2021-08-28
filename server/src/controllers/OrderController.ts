@@ -122,13 +122,13 @@ namespace OrderController {
       const userId = res.locals?.user?.id || 1;
       const { productId, amount } = req.body;
 
-      await getCustomRepository(OrderRepository).addCartItem({
+      const result = await getCustomRepository(OrderRepository).addCartItem({
         productId,
         amount,
         userId,
       });
 
-      res.json({ ok: true });
+      res.json({ ok: true, data: result });
     } catch (e) {
       console.error(e);
 

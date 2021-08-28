@@ -21,7 +21,7 @@ const StockSelectorComponent = ({
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = Number(e.currentTarget.value);
     if (inputValue > 100 || inputValue < 0) {
-      refreshStock(undefined);
+      refreshStock(1);
       return;
     }
     refreshStock(inputValue);

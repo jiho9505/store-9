@@ -7,12 +7,18 @@ import { baeminFont, greyLine } from '@/static/style/common';
 import { ProductContext } from '@/hooks/context';
 import ModalPortal from '@/utils/portal';
 import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import AuthStore from '@/stores/AuthStore';
+import OrderApi from '@/apis/OrderApi';
 
-type CartModeType = 'notlogin' | 'add';
+type CartModeType = 'notlogin' | 'add' | 'fail';
 
-const addCartMsg = '장바구니에 추가하였습니다.';
+const addCartSuccessMsg = '장바구니에 추가하였습니다.';
+const addCartFailMsg = '장바구니 추가를 실패하였습니다.';
 
-const Cart = () => {
+type CartProps = {
+  selectedStock: number;
+};
+const Cart = ({ selectedStock }: CartProps) => {
   const { info } = useContext(ProductContext);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
@@ -27,12 +33,22 @@ const Cart = () => {
 
   /**
    * TODO:
-   * 로그인 유무에 따라
-   * POST (userid,productid,stock ...etc)
-   * 에러메시지 띄웁니다
+   * 백에서 동일한 장바구니의 경우 중복제거를 해서 최신것을 넣어주면 좋을듯
+   * { productId: 55, amount: 2 } 수정할것
+   *
    */
-  const handleClickText = () => {
-    viewMsgByUserStatus('add');
+  const handleClickText = async () => {
+    if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
+
+    try {
+      const result = await OrderApi.addCartItem({ productId: 55, amount: selectedStock });
+      if (result.ok) {
+        console.log(result);
+        viewMsgByUserStatus('add');
+      }
+    } catch (e) {
+      viewMsgByUserStatus('fail');
+    }
   };
 
   const createMsg = (mode: MessageModeType, title: string) => {
@@ -47,7 +63,9 @@ const Cart = () => {
     if (mode === 'notlogin') {
       createMsg('fail', requireLoginMsg);
     } else if (mode === 'add') {
-      createMsg('success', addCartMsg);
+      createMsg('success', addCartSuccessMsg);
+    } else if (mode === 'fail') {
+      createMsg('fail', addCartFailMsg);
     }
   };
 
