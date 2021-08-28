@@ -13,11 +13,11 @@ import Message from '@/components/common/Message';
 
 type PricePannelProps = {
   productTotalPrice: number;
+  cartInfo: { cartId?: number; products?: any[] };
 };
 
-const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
+const PricePannel = ({ productTotalPrice, cartInfo }: PricePannelProps) => {
   const { isShow, showAndUnShowAlert } = useAlert();
-  const [cartInfo, _] = useLocalStorage('cartInfo', { cartId: 0, products: [] });
   const curLocation = useLocation();
   const history = useHistory();
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
@@ -25,6 +25,8 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
   const handleClickOrderBtn = async () => {
     if (curLocation === '/cart') {
       const { products } = cartInfo;
+      console.log(products);
+
       if (products.length === 0) {
         showAndUnShowAlert();
         return;

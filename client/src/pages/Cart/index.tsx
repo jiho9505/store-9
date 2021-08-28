@@ -36,6 +36,12 @@ const CartPage = () => {
   const [curCartId, setCurCartId] = useState(0);
 
   useEffect(() => {
+    return () => {
+      localStorage.clear();
+    };
+  }, []);
+
+  useEffect(() => {
     localStorage.clear();
     setCartInfo({ cartId: curCartId, products: [] });
   }, [curCartId]);
@@ -53,10 +59,11 @@ const CartPage = () => {
     getCartItems();
   }, [refreshComponent]);
 
-  const addProductInLocalStorage = useCallback((id) => {
+  const addProductInLocalStorage = (id) => {
     const [selectedProduct] = cartProducts.filter(({ id: cartId }) => id === cartId);
+    console.log(selectedProduct);
     setCartInfo({ ...cartInfo, products: [...cartInfo.products, selectedProduct] });
-  }, []);
+  };
 
   const removeProductInLocalStorage = useCallback((id) => {
     const newProducts = cartInfo.products.filter(({ id: orderId }) => orderId !== id);
@@ -152,7 +159,7 @@ const CartPage = () => {
           <Button onClick={handleDeleteClick}>선택상품 삭제</Button>
           <Button onClick={handleLikeClick}>선택상품 찜</Button>
         </SelectProductAction>
-        <PricePannel productTotalPrice={calTotalProductPrice()} />
+        <PricePannel productTotalPrice={calTotalProductPrice()} cartInfo={cartInfo} />
       </CartFooter>
       {isShow && (
         <ModalPortal>
