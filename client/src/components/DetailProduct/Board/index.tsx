@@ -12,6 +12,7 @@ import PostModal from '../../common/PostModal';
 import DetailProductStore from '@/stores/DetailProductStore';
 import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
 import { ProductContext } from '@/hooks/context';
+import AuthStore from '@/stores/AuthStore';
 
 const requireBuyHistoryMsg = '구매한 상품에 한해서 작성이 가능합니다.';
 type ProductBoardProps = {
@@ -81,8 +82,8 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
    * title이 문의냐 후기냐에 따라 if 분기문 작성
    */
   const handleClickButton = () => {
-    viewMsgByUserStatus('notlogin');
-    // setIsActiveModal(true);
+    if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
+    setIsActiveModal(true);
   };
 
   const handleClickForClose = () => {
@@ -120,7 +121,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
           <PostModal
             onClose={handleClickForClose}
             title={title}
-            item={info}
+            item={{ product: info }}
             formType={{ form: title === '상품 후기' ? 'REVIEW' : 'QNA', mode: 'ENROLL' }}
           />
         </ModalPortal>
