@@ -1,5 +1,3 @@
-import { ReviewSchema } from './schema';
-
 namespace ReviewResponse {
   export type GetList = {
     reviews: {
@@ -13,7 +11,6 @@ namespace ReviewResponse {
     }[];
     totalCount: number;
   };
-  export interface Create extends ReviewSchema {}
 }
 
 export default ReviewResponse;

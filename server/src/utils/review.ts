@@ -1,4 +1,3 @@
-import ReviewResponse from '../../../shared/dtos/review/response';
 import Review from '../entities/review';
 
 type MulterFiles =
@@ -17,7 +16,7 @@ const convertImagesToUrlString = (images: MulterFiles): ImageString => {
     .reduce((acc, filename) => acc + filename, '');
 };
 
-const convertImageUrlStringToArray = (review: Review): ReviewResponse.Create => {
+const convertImageUrlStringToArray = (review: Review) => {
   const parsedImageArray = review.images.split(';');
   parsedImageArray.pop();
 
@@ -30,7 +29,7 @@ const convertImageUrlStringToArray = (review: Review): ReviewResponse.Create => 
   };
   return result;
 };
-const convertImageUrlStringToArrayAll = (reviews: Review[]): ReviewResponse.Create[] => {
+const convertImageUrlStringToArrayAll = (reviews: Review[]) => {
   return reviews.map((review) => convertImageUrlStringToArray(review));
 };
 export { convertImagesToUrlString, convertImageUrlStringToArray, convertImageUrlStringToArrayAll };
