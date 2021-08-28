@@ -35,54 +35,64 @@ const ListTable = ({
   };
 
   return (
-    <Table>
-      <colgroup>
-        {checkable && <col width="1%" />}
-        {tHeaderWidth.map((width, idx) => (
-          <col key={idx} width={width} />
-        ))}
-      </colgroup>
-      <thead>
-        <TableHeaderRow>
-          {checkable && (
-            <TableHeaderCell>
-              <CheckBox
-                type="checkbox"
-                onChange={onCheckAll}
-                checked={selectedItems.size === body.length}
-              />
-            </TableHeaderCell>
-          )}
-          {header.map(({ id, name, rowSpan }) => (
-            <TableHeaderCell key={id} rowSpan={rowSpan && rowSpan}>
-              {name}
-            </TableHeaderCell>
+    <div>
+      <Table>
+        <colgroup>
+          {checkable && <col width="1%" />}
+          {tHeaderWidth.map((width, idx) => (
+            <col key={idx} width={width} />
           ))}
-        </TableHeaderRow>
-      </thead>
-      <tbody>
-        {body.map(({ id, cells }) => (
-          <TableBodyRow key={id} onClick={handleRowClick(id)}>
+        </colgroup>
+        <TableHeader>
+          <TableHeaderRow>
             {checkable && (
-              <td>
+              <TableHeaderCell>
                 <CheckBox
                   type="checkbox"
-                  checked={selectedItems.has(id)}
-                  onChange={() => onCheck(id)}
+                  onChange={onCheckAll}
+                  checked={selectedItems.size === body.length}
                 />
-              </td>
+              </TableHeaderCell>
             )}
-            {cells.map((cell, idx) => {
-              return (
-                <td key={`${id}_${idx}`} colSpan={cell.colSpan}>
-                  {cell.c}
+            {header.map(({ id, name, rowSpan }) => (
+              <TableHeaderCell key={id} rowSpan={rowSpan && rowSpan}>
+                {name}
+              </TableHeaderCell>
+            ))}
+          </TableHeaderRow>
+        </TableHeader>
+      </Table>
+      <Table>
+        <colgroup>
+          {checkable && <col width="1%" />}
+          {tHeaderWidth.map((width, idx) => (
+            <col key={idx} width={width} />
+          ))}
+        </colgroup>
+        <TableBody>
+          {body.map(({ id, cells }) => (
+            <TableBodyRow key={id} onClick={handleRowClick(id)}>
+              {checkable && (
+                <td>
+                  <CheckBox
+                    type="checkbox"
+                    checked={selectedItems.has(id)}
+                    onChange={() => onCheck(id)}
+                  />
                 </td>
-              );
-            })}
-          </TableBodyRow>
-        ))}
-      </tbody>
-    </Table>
+              )}
+              {cells.map((cell, idx) => {
+                return (
+                  <td key={`${id}_${idx}`} colSpan={cell.colSpan}>
+                    {cell.c}
+                  </td>
+                );
+              })}
+            </TableBodyRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
@@ -90,8 +100,20 @@ const Table = styled.table`
   width: 100%;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: ${normalRadius};
-  overflow: hidden;
+  &:nth-of-type(2) {
+    display: block;
+    max-height: 606px;
+    overflow: auto;
+  }
 `;
+
+const TableScroll = styled.table`
+  display: block;
+  max-height: 606px;
+  overflow: auto;
+`;
+
+const TableHeader = styled.thead``;
 
 const TableHeaderRow = styled.tr`
   height: 40px;
@@ -106,9 +128,10 @@ const TableHeaderCell = styled.th`
   line-height: 40px;
 `;
 
+const TableBody = styled.tbody``;
+
 const TableBodyRow = styled.tr`
   border-bottom: 1px solid ${greyBg1};
-
   td {
     div {
       font-family: ${baeminFont};
