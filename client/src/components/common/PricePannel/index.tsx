@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { observer } from 'mobx-react';
 import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
@@ -7,6 +8,7 @@ import { alertMsg } from '@/utils/errorMessage';
 import { showErrorMsgTime } from '@/static/constants';
 import useHistory from '@/hooks/customHooks/useHistory';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
+import AlertStore from '@/stores/AlertStore';
 
 import ModalPortal from '@/utils/portal';
 import Message from '@/components/common/Message';
@@ -16,21 +18,17 @@ type PricePannelProps = {
 };
 
 const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
+  const { isShow, showAndUnShow } = AlertStore;
   const [cartInfo, _] = useLocalStorage('cartInfo', { cartId: 0, products: [] });
   const curLocation = useLocation();
   const history = useHistory();
   const deliveryCost = productTotalPrice < 30000 ? 2500 : 0;
 
-  const [isActiveModal, setActiveModal] = useState(false);
-
   const handleClickOrderBtn = async () => {
     if (curLocation === '/cart') {
       const { products } = cartInfo;
       if (products.length === 0) {
-        setActiveModal(true);
-        setTimeout(() => {
-          setActiveModal(false);
-        }, showErrorMsgTime);
+        showAndUnShow();
         return;
       }
       history.push('/order');
@@ -52,7 +50,7 @@ const PricePannel = ({ productTotalPrice }: PricePannelProps) => {
         <span>{(productTotalPrice + deliveryCost).toLocaleString()}원</span>
       </TotalPrice>
       <OrderButton onClick={handleClickOrderBtn}>주문하기</OrderButton>
-      {isActiveModal && (
+      {isShow && (
         <ModalPortal>
           <Message text={alertMsg['EMPTY_ORDER']} mode="caution" />
         </ModalPortal>
@@ -113,4 +111,4 @@ const OrderButton = styled.button`
   font-size: 20px;
 `;
 
-export default PricePannel;
+export default observer(PricePannel);
