@@ -77,20 +77,22 @@ const Navigation = () => {
     const itemName = e.currentTarget.innerText;
     const itemXPos = e.currentTarget.getBoundingClientRect().x;
 
-    waitTime.then(() => {
-      if (!timer) return;
-      const newSubItems = subCategories.filter((item) => item.parentId === id);
+    waitTime.then(() => changeCategory(id, itemName, itemXPos));
+  };
 
-      const extraXposToRemove =
-        newSubItems.length % 2
-          ? Math.floor(newSubItems.length / 2) * 100
-          : Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthEven;
+  const changeCategory = (id: number, itemName: string, itemXPos: number) => {
+    if (!timer) return;
+    const newSubItems = subCategories.filter((item) => item.parentId === id);
 
-      setSubItemXpos(itemXPos - extraXposToRemove);
-      setSubItems(newSubItems);
-      setMouseOverdItemName(itemName);
-      setMatchedItemIdToURL(-1);
-    });
+    const extraXposToRemove =
+      newSubItems.length % 2
+        ? Math.floor(newSubItems.length / 2) * 100
+        : Math.floor(newSubItems.length / 2) * 100 + weightWhenSubItemsLengthEven;
+
+    setSubItemXpos(itemXPos - extraXposToRemove);
+    setSubItems(newSubItems);
+    setMouseOverdItemName(itemName);
+    setMatchedItemIdToURL(-1);
   };
 
   const handleMouseOutLink = () => {
