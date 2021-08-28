@@ -6,7 +6,6 @@ import Stage1 from './Stage1';
 import Stage2 from './Stage2';
 import Button from '@/components/common/Button';
 
-import { FormContext } from '@/hooks/context';
 import { normalRadius } from '@/static/style/common';
 import useInput from '@/hooks/customHooks/useInput';
 import Validation from '@/utils/validation';
@@ -36,7 +35,7 @@ const validationSchema = {
 
 const OrderForm = () => {
   const history = useHistory();
-  const { form, onChange, onBlur, check, error } = useInput({
+  const { form, onChange, check, error } = useInput({
     initialState: { ...stage1InitialForm, ...stage2InitialForm },
     validationSchema,
   });
@@ -76,19 +75,11 @@ const OrderForm = () => {
 
   const Forms = () => {
     if (stage === 1) {
-      return (
-        <Stage1
-          onChange={onChange}
-          onBlur={onBlur}
-          form={{ buyerName, email, phone }}
-          error={error}
-        />
-      );
+      return <Stage1 onChange={onChange} form={{ buyerName, email, phone }} error={error} />;
     } else if (stage === 2) {
       return (
         <Stage2
           onChange={onChange}
-          onBlur={onBlur}
           form={{ receiverName, receiverAddress, receiverPhone }}
           error={error}
         />

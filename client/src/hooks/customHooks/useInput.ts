@@ -42,14 +42,6 @@ const useInput = <TFields extends inputInfoType>(inputInfo: TFields) => {
     }
   }, []);
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { target } = e;
-    setError((prev) => ({
-      ...prev,
-      [target.name]: validationSchema[target.name].isValid(form[target.name]),
-    }));
-  };
-
   const onSetForm = useCallback((obj) => {
     setForm(obj);
   }, []);
@@ -72,7 +64,7 @@ const useInput = <TFields extends inputInfoType>(inputInfo: TFields) => {
     setForm(initialState);
   }, [initialState]);
 
-  return { form, onChange, onBlur, onSetForm, check, error, reset };
+  return { form, onChange, onSetForm, check, error, reset };
 };
 
 export default useInput;
