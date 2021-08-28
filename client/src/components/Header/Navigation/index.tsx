@@ -53,13 +53,12 @@ const Navigation = () => {
       setSubItems([]);
       setMouseOverdItemName('');
       getQueryStringValue('categoryId')
-        ? setMatchedItemIdToURL(getCatgoryIdx())
+        ? setMatchedItemIdToURL(getCatgoryIdx(Number(getQueryStringValue('categoryId'))))
         : setMatchedItemIdToURL(-1);
     }
   }, []);
 
-  const getCatgoryIdx = useCallback(() => {
-    let ctgId = Number(getQueryStringValue('categoryId'));
+  const getCatgoryIdx = useCallback((ctgId) => {
     if (ctgId > catogoryStore.length) {
       subCatogoryStore.forEach((subcategory) => {
         if (subcategory.id === ctgId) ctgId = subcategory.parentId;
