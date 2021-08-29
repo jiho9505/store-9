@@ -3,61 +3,34 @@ import { getCustomRepository } from 'typeorm';
 import ProductRepository from '../repositories/ProductRepository';
 import ProductRequest from '../../../shared/dtos/product/request';
 import ProductResponse from '../../../shared/dtos/product/response';
-
-const DAY = 1000 * 60 * 60 * 24;
-const MONTH_DAY = 31;
+import createProduct from '../utils/product';
+import constant from '../utils/constant';
 
 namespace ProductController {
   export const getMain: RouteHandler<null, ProductResponse.GetMain> = async (req, res) => {
     try {
-      const result = await getCustomRepository(ProductRepository).getMain();
+      const { bestProducts, discountProducts, newProducts, soldProductAmounts, totalProductCount } =
+        await getCustomRepository(ProductRepository).getMain();
 
-      const totalProductAmount = result.productTotalSoldAmount.reduce(
-        (acc, cur) => acc + Number(cur.product_total_amount),
-        0
-      );
-      const standardOfBest = totalProductAmount / result.productCnt;
-
-      const createBadges = (data) => {
-        const isSaled = data.discount_rate !== '0';
-        const DayDiff = (new Date().getTime() - new Date(data.created_at).getTime()) / DAY;
-        const isNew = DayDiff < MONTH_DAY;
-        const isBest = data.total_amount >= standardOfBest;
-
-        const badges = [];
-
-        if (isSaled) badges.push('sale');
-        if (isNew) badges.push('new');
-        if (isBest) badges.push('best');
-
-        return badges;
-      };
-
-      const createData = (data) => ({
-        productId: data.id,
-        name: data.name,
-        price: data.price,
-        thumbnail: data.thumbnail,
-        reviewAverageRate: Number(data.review_average),
-        reviewCount: Number(data.review_cnt),
-        likeCount: Number(data.like_cnt),
-        discountRate: Number(data.discount_rate),
-        isGreen: data.isGreen || false,
-        badges: createBadges(data),
+      const formatProduct = createProduct({
+        soldProductAmounts: soldProductAmounts.map(
+          ({ sold_product_amount }) => sold_product_amount
+        ),
+        totalProductCount: totalProductCount,
       });
 
       res.json({
         ok: true,
         data: {
-          bestProducts: result.bestProducts.map(createData),
-          newProducts: result.newProducts.map(createData),
-          discountProducts: result.discountProducts.map(createData),
+          bestProducts: bestProducts.map(formatProduct),
+          newProducts: newProducts.map(formatProduct),
+          discountProducts: discountProducts.map(formatProduct),
         },
       });
     } catch (e) {
       console.error(e);
 
-      res.status(500).json({ ok: false });
+      res.status(500).json({ ok: false, message: constant.PRODUCT_LOAD_FAILURE });
     }
   };
 
@@ -68,59 +41,33 @@ namespace ProductController {
     try {
       const { categoryId, page, search, size, sortBy } = req.query;
 
-      const result = await getCustomRepository(ProductRepository).getProductsByCategory({
-        categoryId,
-        page,
-        size,
-        search,
-        sortBy,
-      });
+      const { soldProductAmounts, totalProductCount, products, totalCountByCategory } =
+        await getCustomRepository(ProductRepository).getProductsByCategory({
+          categoryId,
+          page,
+          size,
+          search,
+          sortBy,
+        });
 
-      const totalProductAmount = result.productTotalSoldAmount.reduce(
-        (acc, cur) => acc + Number(cur.product_total_amount),
-        0
-      );
-      const standardOfBest = totalProductAmount / result.totalProductCount;
-
-      const createBadges = (data) => {
-        const isSaled = data.discount_rate !== '0';
-        const DayDiff = (new Date().getTime() - new Date(data.created_at).getTime()) / DAY;
-        const isNew = DayDiff < MONTH_DAY;
-        const isBest = data.total_amount >= standardOfBest;
-
-        const badges = [];
-
-        if (isSaled) badges.push('sale');
-        if (isNew) badges.push('new');
-        if (isBest) badges.push('best');
-
-        return badges;
-      };
-
-      const createData = (data) => ({
-        productId: data.id,
-        name: data.name,
-        price: data.price,
-        thumbnail: data.thumbnail,
-        reviewAverageRate: Number(data.review_average),
-        reviewCount: Number(data.review_cnt),
-        likeCount: Number(data.like_cnt),
-        discountRate: Number(data.discount_rate),
-        isGreen: data.isGreen || false,
-        badges: createBadges(data),
+      const formatProduct = createProduct({
+        soldProductAmounts: soldProductAmounts.map(
+          ({ sold_product_amount }) => sold_product_amount
+        ),
+        totalProductCount: totalProductCount,
       });
 
       res.json({
         ok: true,
         data: {
-          products: result.products.map(createData),
-          totalCount: Number(result.totalCountByCategory[0]['total_count']),
+          products: products.map(formatProduct),
+          totalCount: Number(totalCountByCategory[0]['total_count']),
         },
       });
     } catch (e) {
       console.error(e);
 
-      res.status(500).json({ ok: false });
+      res.status(500).json({ ok: false, message: constant.PRODUCT_LOAD_FAILURE });
     }
   };
 
@@ -129,45 +76,16 @@ namespace ProductController {
       try {
         const { productId } = req.params;
 
-        const { product, reviews, qnas, productTotalSoldAmount, productCnt } =
+        const { product, reviews, qnas, recommendProducts, totalProductCount, soldProductAmounts } =
           await getCustomRepository(ProductRepository).getDetail({
             productId,
           });
 
-        // const randomRecommendProducts = extractRandomlyProduct(recommendProducts, 4);
-
-        const totalProductAmount = productTotalSoldAmount.reduce(
-          (acc, cur) => acc + Number(cur.product_total_amount),
-          0
-        );
-        const standardOfBest = totalProductAmount / productCnt;
-
-        const createBadges = (data) => {
-          const isSaled = data.discount_rate !== '0';
-          const DayDiff = (new Date().getTime() - new Date(data.created_at).getTime()) / DAY;
-          const isNew = DayDiff < MONTH_DAY;
-          const isBest = data.total_amount >= standardOfBest;
-
-          const badges = [];
-
-          if (isSaled) badges.push('sale');
-          if (isNew) badges.push('new');
-          if (isBest) badges.push('best');
-
-          return badges;
-        };
-
-        const createData = (data) => ({
-          productId: data.id,
-          name: data.name,
-          price: data.price,
-          thumbnail: data.thumbnail,
-          reviewAverageRate: Number(data.review_average),
-          reviewCount: Number(data.review_cnt),
-          likeCount: Number(data.like_cnt),
-          discountRate: Number(data.discount_rate),
-          isGreen: data.isGreen || false,
-          badges: createBadges(data),
+        const formatProduct = createProduct({
+          soldProductAmounts: soldProductAmounts.map(
+            ({ sold_product_amount }) => sold_product_amount
+          ),
+          totalProductCount: totalProductCount,
         });
 
         res.json({
@@ -175,35 +93,35 @@ namespace ProductController {
           data: {
             productId,
             name: product.name,
-            price: product.price,
+            price: Number(product.price),
+            stock: Number(product.stock),
             thumbnail: product.thumbnail,
-            contentImages: product.content,
+            content_urls: product.content?.split(';'),
             discountRate: product.discount_rate,
-            isLike: product['is_like'] !== '0',
+            isLike: product.is_like !== '0',
             reviews: reviews.map((review) => ({
               id: review.id,
               title: review.title,
               content: review.content,
               rate: review.rate,
-              username: '',
+              username: review.username,
               createdAt: review.created_at,
             })),
             qnas: qnas.map((qna) => ({
               id: qna.id,
               title: qna.title,
               content: qna.content,
-              username: qna.useranme,
+              username: qna.username,
               createdAt: qna.created_at,
               isPrivate: qna.isPrivate,
             })),
-            recommends: [],
-            // recommends: randomRecommendProducts.map(createData),
+            recommends: recommendProducts.map(formatProduct),
           },
         });
       } catch (e) {
         console.error(e);
 
-        res.status(500).json({ ok: false });
+        res.status(500).json({ ok: false, message: constant.PRODUCT_LOAD_FAILURE });
       }
     };
 
@@ -247,13 +165,3 @@ namespace ProductController {
 }
 
 export default ProductController;
-
-const extractRandomlyProduct = (productArray, extractNum) => {
-  const randomItems = [];
-  const totalLength = productArray.length;
-  while (productArray.length > totalLength - extractNum) {
-    let target = productArray.splice(Math.floor(Math.random() * productArray.length), 1)[0];
-    randomItems.push(target);
-  }
-  return randomItems;
-};

@@ -49,7 +49,6 @@ const ProductList = () => {
         const result = await ProductApi.getList(filter);
         if (result.ok) {
           setProduct(result.data.products);
-          console.log('result.data.products: ', result.data.products);
           setTotalProductCount(result.data.totalCount);
         }
       } catch (e) {
