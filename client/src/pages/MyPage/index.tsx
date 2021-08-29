@@ -1,10 +1,10 @@
 import React from 'react';
 import guguStyled from '@/core/styled';
 
-import LikePage from './Like';
-import OrderPage from './Order';
-import QnAPage from './QnA';
-import ReviewPage from './Reivew';
+const LikePage = React.lazy(() => import('./Like'));
+const OrderPage = React.lazy(() => import('./Order'));
+const QnAPage = React.lazy(() => import('./QnA'));
+const ReviewPage = React.lazy(() => import('./Reivew'));
 import { Route } from '@/core/Router';
 import { LeftNav } from '@/components/MyPage';
 
