@@ -10,7 +10,6 @@ import HeaderStore from '@/stores/HeaderStore';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
-const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
 let timer: number = 0;
 
 const Navigation = () => {
@@ -19,7 +18,6 @@ const Navigation = () => {
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
   const { refresh } = RefreshStore;
-  const [categories, setCategories] = useState(initCategoryData);
 
   useEffect(() => {
     document.addEventListener('mouseover', handleMouseOverOnDocument);
@@ -27,12 +25,6 @@ const Navigation = () => {
       document.removeEventListener('mouseover', handleMouseOverOnDocument);
     };
   }, []);
-
-  useEffect(() => {
-    categories.length === 1 &&
-      HeaderStore.parentCategories.length > 0 &&
-      setCategories([...categories, ...HeaderStore.parentCategories]);
-  }, [HeaderStore.parentCategories]);
 
   const handleMouseOverOnDocument = useCallback((e: Event) => {
     const { target } = e;
@@ -93,7 +85,7 @@ const Navigation = () => {
   return (
     <NavigationContainer id="NavBorder">
       <Menu>
-        {categories.map((category) => (
+        {HeaderStore.parentCategories.map((category) => (
           <Item key={category.name}>
             <CategoryLink
               onClick={handleClickLink}
