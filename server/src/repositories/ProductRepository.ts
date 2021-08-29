@@ -39,7 +39,7 @@ export default class ProductRepository extends Repository<Product> {
       ) ju
       ON r.user_id = ju.id
       WHERE r.product_id = ${productId}
-      LIMIT ${PRODUCT_GET_DETAIL.DETAIL_REVIEW_LIMIT}
+      ORDER BY r.created_at DESC
     `);
 
     const qnas = await this.query(`
@@ -51,7 +51,7 @@ export default class ProductRepository extends Repository<Product> {
       ) ju
       ON q.user_id = ju.id
       WHERE q.product_id = ${productId}
-      LIMIT ${PRODUCT_GET_DETAIL.DETAIL_QNA_LIMIT}
+      ORDER BY q.created_at DESC
     `);
 
     const recommendProducts = await this.query(`
