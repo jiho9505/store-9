@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
 import { baeminFont, greyLine } from '@/static/style/common';
 import { ProductContext } from '@/hooks/context';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
+import { debounce } from '@/utils/debouncer';
 
 import Message from '@/components/common/Message';
 import ModalPortal from '@/utils/portal';
@@ -19,7 +20,9 @@ const addCartFailMsg = '장바구니 추가를 실패하였습니다.';
 type CartProps = {
   selectedStock: number;
 };
+
 const Cart = ({ selectedStock }: CartProps) => {
+  const buttonRef = useRef(null);
   const { info } = useContext(ProductContext);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
@@ -38,7 +41,9 @@ const Cart = ({ selectedStock }: CartProps) => {
    * { productId: 55, amount: 2 } 수정할것
    *
    */
-  const handleClickText = async () => {
+
+  const handleClickText = debounce(async (e) => {
+    e.stopPropagation();
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
 
     try {
@@ -49,7 +54,7 @@ const Cart = ({ selectedStock }: CartProps) => {
     } catch (e) {
       viewMsgByUserStatus('fail');
     }
-  };
+  });
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -70,14 +75,16 @@ const Cart = ({ selectedStock }: CartProps) => {
   };
 
   return (
-    <CartContainer onClick={handleClickText}>
-      <span>장바구니</span>
+    <>
+      <CartContainer ref={buttonRef} onClick={handleClickText}>
+        <span>장바구니</span>
+      </CartContainer>
       {message.showMessage && (
         <ModalPortal>
           <Message text={message.messageContent} mode={message.messageMode} />
         </ModalPortal>
       )}
-    </CartContainer>
+    </>
   );
 };
 
