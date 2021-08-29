@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
 
@@ -12,7 +12,6 @@ import PostModal from '../../common/PostModal';
 import DetailProductStore from '@/stores/DetailProductStore';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
-import { ProductContext } from '@/hooks/context';
 import AuthStore from '@/stores/AuthStore';
 
 const requireBuyHistoryMsg = '구매한 상품에 한해서 작성이 가능합니다.';
@@ -20,8 +19,9 @@ type ProductBoardProps = {
   title: string;
 };
 
+let timer: number = 0;
+
 const ProductBoard = ({ title }: ProductBoardProps) => {
-  const { info } = useContext(ProductContext);
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
   const [pageStart, setPageStart] = useState<number>(0);
@@ -32,14 +32,19 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     showMessage: false,
     messageContent: '',
   });
-  const { products } = DetailProductStore;
-
-  let timer: number = 0;
+  const [wholeDatas, setWholeDatas] = useState([]);
+  const { reviews, qnas } = DetailProductStore.product;
 
   useEffect(() => {
-    setPostInfoDatas(postDummyDatas.slice(pageStart, pageEnd));
+    if (title === '상품 후기') {
+      setPostInfoDatas(reviews.slice(pageStart, pageEnd));
+      setWholeDatas(reviews);
+    } else if (title === '상품 문의') {
+      setPostInfoDatas(qnas.slice(pageStart, pageEnd));
+      setWholeDatas(qnas);
+    }
     return () => clearTimeout(timer);
-  }, []);
+  }, [DetailProductStore.product]);
 
   const createMsg = (title: string) => {
     setMessage({ showMessage: true, messageContent: title });
@@ -60,7 +65,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     const newPageNumber = Number(e.currentTarget.dataset.idx);
     const newStartPoint = newPageNumber * 10;
     const newEndPoint = newPageNumber * 10 + 10;
-    const newPostInfoDatas = postDummyDatas.slice(newStartPoint, newEndPoint);
+    const newPostInfoDatas = wholeDatas.slice(newStartPoint, newEndPoint);
     setPageNumber(newPageNumber);
     setPageStart(newStartPoint);
     setPageEnd(newEndPoint);
@@ -71,7 +76,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   useEffect(() => {
     // 게시물 업데이트
     // setPostInfoDatas(products.blah)
-  }, [products]);
+  }, []);
 
   /**
    * TODO:
@@ -103,17 +108,18 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     }
     setShowContent([...showContent, index]);
   };
+
   return (
     <ProductBoardContainer>
       <BoardHeader title={title} handleClickButton={handleClickButton} />
       <BoardPost
+        postInfo={postInfoDatas}
         title={title}
-        infos={postInfoDatas}
         handleClickTitle={handleClickTitle}
         showContent={showContent}
       />
       <BoardPageNumber
-        length={postDummyDatas.length}
+        length={wholeDatas.length}
         pageNumber={pageNumber}
         handleClickNumber={handleClickNumber}
       />
@@ -122,7 +128,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
           <PostModal
             onClose={handleClickForClose}
             title={title}
-            item={{ product: info }}
+            item={DetailProductStore.product}
             formType={{ form: title === '상품 후기' ? 'REVIEW' : 'QNA', mode: 'ENROLL' }}
           />
         </ModalPortal>
@@ -142,38 +148,3 @@ const ProductBoardContainer = styled.div`
   margin-top: 50px;
   margin-bottom: 100px;
 `;
-
-const postDummyDatas = [
-  {
-    title: 'Start 1page',
-    content: 'Start 1page Content',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    title: 'TEST',
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  {
-    title: 'TEST',
-    content: '빠른배송감사합니다--',
-    userId: 'User-ID',
-    createAt: '2021-08-18',
-  },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'Start 2page--', content: 'Start 2page--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-  { title: 'TEST', content: '빠른배송감사합니다--', userId: 'User-ID', createAt: '2021-08-18' },
-];
