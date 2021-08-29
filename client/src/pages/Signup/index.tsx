@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
+import sanitizeHtml from 'sanitize-html';
 
 import Input from '@/components/common/Input';
 import useAddress from '@/hooks/customHooks/useAddress';
@@ -11,7 +12,7 @@ import { signupValidation } from '@/utils/validation';
 
 type ValidResult = {
   isValid: boolean;
-  errorInput: string;
+  error: string;
 };
 
 const SignupPage = () => {
@@ -28,26 +29,28 @@ const SignupPage = () => {
 
   const isFormValid = (data): ValidResult => {
     for (const [inputName, inputValue] of data.entries()) {
+      data.set(inputName, sanitizeHtml(inputValue));
       if (inputName === 'confirmPassword') {
         if (!signupValidation[inputName](inputValue, data.get('password'))) {
-          return { isValid: false, errorInput: inputName };
+          return { isValid: false, error: inputName };
         }
         continue;
       }
+
       if (!signupValidation[inputName](inputValue)) {
-        return { isValid: false, errorInput: inputName };
+        return { isValid: false, error: inputName };
       }
     }
-    return { isValid: true, errorInput: '' };
+    return { isValid: true, error: '' };
   };
 
   const onSignupFormSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(signUpFormRef.current);
-    const validResult = isFormValid(form);
+    const { isValid, error } = isFormValid(form);
 
-    if (!validResult.isValid) {
-      setErrorInput(validResult.errorInput);
+    if (!isValid) {
+      setErrorInput(error);
       return;
     }
     const data = await AuthApi.signup(form);
@@ -61,6 +64,22 @@ const SignupPage = () => {
       return { [currentInputName]: formErrorMessage[currentInputName] };
     }
     return null;
+  };
+
+  const onInputChangeSetError = (e) => {
+    const { name, value } = e.target;
+    let valid;
+    if (name === 'confirmPassword') {
+      const formRef = new FormData(signUpFormRef.current);
+      valid = signupValidation[name](value, formRef.get('password'));
+    } else {
+      valid = signupValidation[name](value);
+    }
+    if (!valid) {
+      setErrorInput(name);
+    } else {
+      setErrorInput('');
+    }
   };
 
   useEffect(() => {
@@ -87,6 +106,7 @@ const SignupPage = () => {
                 type="text"
                 defaultValue={isGithubLogin ? getGithubLoginId() : ''}
                 error={getInputErrorObject('id')}
+                onChange={onInputChangeSetError}
               />
             </InputContainer>
           </ListItem>
@@ -102,6 +122,7 @@ const SignupPage = () => {
                     name="password"
                     type="password"
                     error={getInputErrorObject('password')}
+                    onChange={onInputChangeSetError}
                   />
                 </InputContainer>
               </ListItem>
@@ -115,6 +136,7 @@ const SignupPage = () => {
                     name="confirmPassword"
                     type="password"
                     error={getInputErrorObject('confirmPassword')}
+                    onChange={onInputChangeSetError}
                   />
                 </InputContainer>
               </ListItem>
@@ -130,6 +152,7 @@ const SignupPage = () => {
                 name="name"
                 type="text"
                 error={getInputErrorObject('name')}
+                onChange={onInputChangeSetError}
               />
             </InputContainer>
           </ListItem>
@@ -143,6 +166,7 @@ const SignupPage = () => {
                 name="email"
                 type="email"
                 error={getInputErrorObject('email')}
+                onChange={onInputChangeSetError}
               />
             </InputContainer>
           </ListItem>
@@ -157,6 +181,7 @@ const SignupPage = () => {
                 type="text"
                 placeholder="- 없이 입력하세요"
                 error={getInputErrorObject('phoneNumber')}
+                onChange={onInputChangeSetError}
               />
             </InputContainer>
           </ListItem>
@@ -187,6 +212,7 @@ const SignupPage = () => {
                   value={postcode}
                   placeholder="우편번호 입력"
                   error={getInputErrorObject('postcode')}
+                  onChange={onInputChangeSetError}
                 />
                 <Button
                   size="xsmall"
@@ -204,6 +230,7 @@ const SignupPage = () => {
                 type="text"
                 value={address}
                 error={getInputErrorObject('address1')}
+                onChange={onInputChangeSetError}
               />
               <Input
                 id="address"
@@ -212,6 +239,7 @@ const SignupPage = () => {
                 name="address2"
                 type="text"
                 placeholder="상세주소 입력"
+                onChange={onInputChangeSetError}
               />
             </InputContainer>
           </ListItem>
@@ -225,11 +253,11 @@ const SignupPage = () => {
 export default SignupPage;
 
 const formErrorMessage = {
-  id: '아이디는 3글자 이상 작성해주세요',
+  id: '아이디는 3글자 이상 작성해주세요. 혹은 잘못된 형식입니다.',
   email: '이메일 형식에 맞지 않습니다',
-  password: '패스워드는 3자리 이상 작성해주세요',
+  password: '패스워드는 3자리 이상 작성해주세요. 혹은 잘못된 형식입니다.',
   confirmPassword: '패스워드가 일치하지 않습니다',
-  name: '이름에 숫자가 들어갈 수 없습니다',
+  name: '잘못된 이름 형식입니다.',
   phoneNumber: '휴대폰 번호 양식에 맞지 않습니다',
   postcode: '우편번호가 입력되지 않았습니다',
   address1: '주소가 입력되지 않았습니다',
@@ -238,7 +266,7 @@ const formErrorMessage = {
 const signUpTitleSize = '2rem';
 const signupPageHeight = '800px';
 const signupFormMargin = '100px';
-const signupListItemPadding = '15px';
+const signupListItemPadding = '25px 10px';
 const labelBgColor = '#e7e7e748';
 const requiredColor = '#ff5353';
 
@@ -287,6 +315,7 @@ const ListItem = styled.li`
 
 const InputContainer = styled.div`
   padding: ${signupListItemPadding};
+  position: relative;
 `;
 
 const AddressContainer = styled.div`

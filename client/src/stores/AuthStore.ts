@@ -17,14 +17,15 @@ class AuthStore {
     this.isLoading = true;
     try {
       const result = await AuthApi.login(body);
-
       // this.myInfo = UserModel.create(result.data);
       this.isLogined = true;
       if (this.isError) this.isError = false;
 
-      return result.ok;
+      return result;
     } catch (e) {
       this.isError = true;
+
+      return e;
     } finally {
       this.isLoading = false;
     }
