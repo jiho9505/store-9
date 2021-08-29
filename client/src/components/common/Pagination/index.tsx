@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import guguStyled from '@/core/styled';
 import { baeminFont, greyBg1, greyButton, primary1, white } from '@/static/style/common';
 
@@ -24,7 +24,7 @@ const Pagination = ({ totalCount, curPage = 1, onChange }) => {
   );
 };
 
-export default Pagination;
+export default memo(Pagination);
 
 const PaginationContainer = guguStyled.ul`
   display: flex;

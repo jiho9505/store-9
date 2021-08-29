@@ -5,6 +5,7 @@ import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
 import ModalPortal from '@/utils/portal';
 import PostModal from '../common/PostModal';
+import EmptyPannel from '../common/EmptyPannel';
 
 import { getDateFormat } from '@/utils/dateParse';
 
@@ -49,7 +50,11 @@ const ReviewContent = ({ reviews }: ReviewContentProps) => {
 
   return (
     <RiviewContentContainer>
-      <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
+      {reviews.length === 0 ? (
+        <EmptyPannel />
+      ) : (
+        <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
+      )}
       {activeModal && (
         <ModalPortal>
           <PostModal

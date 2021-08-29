@@ -1,11 +1,11 @@
-export const requireLoginMsg = '로그인이 필요한 기능입니다.';
-export const showErrorMsgTime = 1500;
+export const showErrorMsgTime = 1700;
 const RouteListArray = [
   '/',
   '/login',
   '/cart',
   '/order',
   '/mypage',
+  '/end-order',
   '/signupMethod',
   '/goods',
   '/detail',
