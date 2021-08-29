@@ -16,7 +16,7 @@ class AuthApi extends BaseApi {
   }
 
   check() {
-    return this.get('/check');
+    return this.get<AuthResponse.Login>('/check');
   }
 
   getTerms() {
