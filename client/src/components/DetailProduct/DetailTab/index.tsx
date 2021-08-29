@@ -20,19 +20,14 @@ type DetailTab = {
 const TabName = ['상품상세정보', '배송안내', '교환 및 반품안내', '상품후기', '상품문의'];
 
 const DetailTab = ({ choicedIdx, handleClickItemName }: DetailTab) => {
-  const { products } = DetailProductStore;
+  const { qnas, reviews } = DetailProductStore.product;
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [qnaCount, setqnaCount] = useState<number>(0);
 
-  /**
-   * TODO:
-   * products안의 length로
-   * count 갱신해야합니다.
-   */
   useEffect(() => {
-    setReviewCount(5);
-    setqnaCount(5);
-  }, [products]);
+    setReviewCount(reviews.length);
+    setqnaCount(qnas.length);
+  }, [DetailProductStore.product]);
 
   const createTabItem = () => {
     return TabName.map((itemName, idx) => (

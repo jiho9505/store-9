@@ -11,6 +11,7 @@ export const alertMsg = {
   EMPTY_ORDER: '구매할 상품을 선택해 주세요.',
   EMPTY_LIKE: '찜 할 상품을 선택해 주세요.',
   SUCCESS_ADD_LIKE: '찜하기에 추가되었습니다.',
+  SUCCESS_REMOVE_LIKE: '찜하기에서 제거되었습니다.',
   FAIL_ADD_LIKE: '찜하기에 추가하지 못했습니다.',
   EMPTY_DELETE: '삭제할 상품을 선택해 주세요.',
   SUCCESS_DELETE: '삭제 되었습니다.',

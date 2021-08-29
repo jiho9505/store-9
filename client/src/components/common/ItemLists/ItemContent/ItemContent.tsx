@@ -5,15 +5,11 @@ import { calculateDiscount } from '@/utils/calculateDiscount';
 import { baeminFont, red2 } from '@/static/style/common';
 import { Link } from '@/core/Router';
 
+/**
+ * Type 적용
+ */
 type ContentProps = {
-  item: {
-    quantity: number;
-    price: number;
-    discountRate: number;
-    discountPrice?: string;
-    name: string;
-    stock: number;
-  };
+  item;
 };
 
 const ItemContent = ({ item }: ContentProps) => {
@@ -22,7 +18,7 @@ const ItemContent = ({ item }: ContentProps) => {
     return (
       <ItemContentContainer>
         {item.discountRate ? <Discount>{item.discountRate}%</Discount> : ``}
-        <Link to="/detail">
+        <Link to={`/detail?id=${item.productId}`}>
           <ProductName>{item.name}</ProductName>
         </Link>
         <ProductOriginalPrice isDiscount={item.discountRate ? true : false}>
@@ -36,7 +32,9 @@ const ItemContent = ({ item }: ContentProps) => {
   } else {
     return (
       <ItemContentContainer>
-        <ProductName>{item.name}</ProductName>
+        <Link to={`/detail?id=${item.productId}`}>
+          <ProductName>{item.name}</ProductName>
+        </Link>
         <ProductOriginalPrice isDiscount={false}>품절</ProductOriginalPrice>
       </ItemContentContainer>
     );

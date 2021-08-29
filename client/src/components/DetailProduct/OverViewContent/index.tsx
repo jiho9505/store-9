@@ -1,12 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { calculateDiscount } from '@/utils/calculateDiscount';
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+
 import StockSelector from '../StockSelector';
 import TotalPrice from '../TotalPrice';
 import Like from '../LikeButton';
 import Cart from '../CartButton';
 import Buy from '../BuyButton';
 
-import styled from '@emotion/styled';
+import { calculateDiscount } from '@/utils/calculateDiscount';
+import DetailProductStore from '@/stores/DetailProductStore';
 import {
   baemin,
   baeminFont,
@@ -15,33 +17,32 @@ import {
   lightBlack,
   greyLine,
 } from '@/static/style/common';
-
-import { ProductContext } from '@/hooks/context';
+import ProductResponse from '@shared/dtos/product/response';
 
 const OverViewContent = () => {
-  const { info } = useContext(ProductContext);
-  const [selectedStock, setSelectedStock] = useState(1);
-  const discountPrice = info.discountRate ? calculateDiscount(info.price, info.discountRate) : '';
+  const { discountRate, price, name, stock } = DetailProductStore.product;
+  const [selectedStock, setSelectedStock] = useState<number>(1);
+  const discountPrice: string = discountRate ? calculateDiscount(price, discountRate) : '';
 
-  const createSellPrice = (price, stock) => {
+  const createSellPrice = (price: string | number, stock: number) => {
     return (
       <SellPrice>
         <PriceText>판매가격</PriceText>
-        <SellPriceValue soldout={!stock}>{stock ? `${price}원` : '품절'}</SellPriceValue>
+        <SellPriceValue soldout={!stock}>
+          {stock ? `${price.toLocaleString()}원` : '품절'}
+        </SellPriceValue>
       </SellPrice>
     );
   };
 
-  const createPrice = ({ discountRate, price, stock }: Info) => {
+  const createPrice = ({ discountRate, price, stock }: ProductResponse.GetDetail) => {
     return discountRate ? (
       <PriceContainer>
-        {stock ? (
+        {stock > 0 && (
           <OriginalPrice>
             <PriceText>정가</PriceText>
             <OriginalPriceValue>{price}원</OriginalPriceValue>
           </OriginalPrice>
-        ) : (
-          ''
         )}
         {createSellPrice(discountPrice, stock)}
       </PriceContainer>
@@ -50,21 +51,21 @@ const OverViewContent = () => {
     );
   };
 
-  const refreshStock = (value) => {
+  const refreshStock = (value: number) => {
     setSelectedStock(value);
   };
 
   const getFinalPrice = () => {
-    if (info.discountRate) {
+    if (discountRate) {
       return discountPrice ? Number(discountPrice.replace(/[,]/g, '')) : 0;
     }
-    return info.price;
+    return price;
   };
 
   return (
     <OverviewContent>
-      <Title>{info.name}</Title>
-      {createPrice(info)}
+      <Title>{name}</Title>
+      {createPrice(DetailProductStore.product)}
       <ShipInfo>
         <ShipInfoText>배송정보</ShipInfoText>
         <ShipInfoDetail>
@@ -73,14 +74,14 @@ const OverViewContent = () => {
         </ShipInfoDetail>
       </ShipInfo>
       <StockSelector
-        title={info.name}
+        title={name}
         price={getFinalPrice()}
         refreshStock={refreshStock}
         selectedStock={selectedStock}
-        currStock={info.stock}
+        currStock={stock}
       ></StockSelector>
       <ContentBottomContainer>
-        {info.stock ? (
+        {stock > 0 && (
           <>
             <TotalPrice price={getFinalPrice()} selectedStock={selectedStock}></TotalPrice>
             <ButtonContainer>
@@ -89,8 +90,6 @@ const OverViewContent = () => {
               <Buy selectedStock={selectedStock} />
             </ButtonContainer>
           </>
-        ) : (
-          ''
         )}
       </ContentBottomContainer>
     </OverviewContent>

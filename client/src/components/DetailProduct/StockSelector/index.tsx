@@ -6,7 +6,7 @@ import { greyBg1, greyLine, baeminFont, baeminThickFont, greyButton } from '@/st
 type StockSelectorComponentProps = {
   title: string;
   price: number;
-  refreshStock: (number) => void;
+  refreshStock: (num: number) => void;
   selectedStock: number;
   currStock: number;
 };
