@@ -39,7 +39,7 @@ namespace ProductController {
     res
   ) => {
     try {
-      const { categoryId, page, search, size, sortBy } = req.query;
+      const { categoryId, page, search = '', size, sortBy } = req.query;
 
       const { soldProductAmounts, totalProductCount, products, totalCountByCategory } =
         await getCustomRepository(ProductRepository).getProductsByCategory({

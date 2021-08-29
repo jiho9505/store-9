@@ -31,7 +31,7 @@ namespace CategoryController {
       data: {
         parentCategories,
         subCategories,
-        productNames: Array.from(new Set(productNames.map(({ name }) => name).concat('지우개'))),
+        productNames: Array.from(new Set(productNames.map(({ name }) => name))),
       },
     });
   };
