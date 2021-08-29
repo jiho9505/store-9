@@ -14,12 +14,17 @@ type ItemListsProps = {
   products;
 };
 
+/**
+ * TODO:
+ * key 수정
+ * 타입 수정
+ */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item) => (
-        <Item key={item.productId} className="item">
-          <ItemImage productImage={item.thumbnail} quantity={item.stock}></ItemImage>
+      products.map((item, idx) => (
+        <Item key={idx} className="item">
+          <ItemImage item={item}></ItemImage>
           <ItemContent item={item}></ItemContent>
           {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
           <StarContainer>
@@ -53,6 +58,8 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
     </>
   );
 };
+
+export default ItemLists;
 
 const EmptyMessage = guguStyled.span`
   color: ${greySpan};
@@ -106,5 +113,3 @@ const ItemContainer = guguStyled.section`
   flex-wrap: wrap;
   gap: 40px 20px;
 `;
-
-export default ItemLists;
