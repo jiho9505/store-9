@@ -140,7 +140,7 @@ export default class ProductRepository extends Repository<Product> {
         SUM(o.amount) AS total_amount, 
         ${PRODUCT_QUERY.COMMON_SELECT}
       FROM products p
-      INNER JOIN (
+      LEFT JOIN (
         SELECT oi.* 
         FROM order_items oi
         LEFT OUTER JOIN orders
