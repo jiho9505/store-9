@@ -99,7 +99,7 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 
   return (
     <OrderContentContainer>
-      {orderProducts.lenght === 0 ? (
+      {orderProducts.length === 0 ? (
         <EmptyPannel />
       ) : (
         <ListTable header={tableHeader} body={tableBody} />

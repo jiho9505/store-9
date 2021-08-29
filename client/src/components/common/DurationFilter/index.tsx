@@ -1,4 +1,4 @@
-import React, { MouseEvent, ChangeEvent, useState } from 'react';
+import React, { MouseEvent, ChangeEvent, useState, memo } from 'react';
 import guguStyled from '@/core/styled';
 
 import styled from '@emotion/styled';
@@ -27,7 +27,6 @@ type DurationFilterProps = {
   onSetForm(obj: Form): void;
 };
 
-
 const DurationFilter = ({ form, onSubmit, onChange, onSetForm }: DurationFilterProps) => {
   const [curActiveFilter, setActiveFilter] = useState<string>('');
 
@@ -45,6 +44,11 @@ const DurationFilter = ({ form, onSubmit, onChange, onSetForm }: DurationFilterP
     onSetForm({ start: getDateFormat(pastDate), finish: getDateFormat(curDate) });
   };
 
+  const handleChangeDateFilter = (e) => {
+    onChange(e);
+    setActiveFilter('');
+  };
+
   return (
     <DurationFilterContainer>
       <FilterContainer>
@@ -56,7 +60,7 @@ const DurationFilter = ({ form, onSubmit, onChange, onSetForm }: DurationFilterP
             variant="outlined"
             required
             value={form.start}
-            onChange={onChange}
+            onChange={handleChangeDateFilter}
           />
           <span>-</span>
           <Input
@@ -66,7 +70,7 @@ const DurationFilter = ({ form, onSubmit, onChange, onSetForm }: DurationFilterP
             variant="outlined"
             required
             value={form.finish}
-            onChange={onChange}
+            onChange={handleChangeDateFilter}
           />
         </DateInputContainer>
         <DurationButtons>
@@ -129,4 +133,4 @@ const DuartionButton = guguStyled.div`
   border: ${({ isActive }) => (isActive ? `1px solid ${primary1}` : 'none')};
 `;
 
-export default DurationFilter;
+export default memo(DurationFilter);
