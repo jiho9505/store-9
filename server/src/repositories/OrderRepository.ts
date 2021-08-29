@@ -8,7 +8,7 @@ export default class OrderRepository extends Repository<Order> {
   async getList({
     userId,
     page = 0,
-    size = 20,
+    size = 5,
     startDate = new Date(0),
     endDate = new Date(),
   }: {
@@ -28,7 +28,7 @@ export default class OrderRepository extends Repository<Order> {
       INNER JOIN order_items oi ON o.id = oi.order_id
       LEFT JOIN products p ON oi.product_id = p.id
       LEFT JOIN reviews r ON r.product_id = p.id
-      WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${start}' AND '${end}'
+      WHERE o.user_id = ${userId} AND DATE(o.updated_at) BETWEEN '${start}' AND '${end}'
       AND o.status != '${OrderStatus.IN_CART}'
       ORDER BY updated_at DESC
       LIMIT ${size}
@@ -43,12 +43,16 @@ export default class OrderRepository extends Repository<Order> {
         FROM order_items
       ) joi
       ON o.id = joi.order_id
-      WHERE o.user_id = ${userId} AND DATE(o.created_at) BETWEEN '${start}' AND '${end}'
+      WHERE o.user_id = ${userId} AND DATE(o.updated_at) BETWEEN '${start}' AND '${end}'
       AND o.status != '${OrderStatus.IN_CART}'
       GROUP BY o.user_id
     `);
 
-    return { orders, totalCount: Number(totalCount[0].count) };
+    console.log('~~~~~~~');
+    console.log(totalCount);
+    console.log('~~~~~~~');
+
+    return { orders, totalCount: Number(totalCount[0]?.count) };
   }
 
   async order({
@@ -114,13 +118,27 @@ export default class OrderRepository extends Repository<Order> {
   }) {
     const cart = await this._checkCart(userId);
 
-    const result = await OrderItem.create({
+    const isExist = await OrderItem.find({
+      order_id: cart.id,
+      product_id: productId,
+    });
+
+    if (isExist.length !== 0) {
+      await this.updateCartItem({
+        orderItemId: isExist[0].id,
+        amount: amount + Number(isExist[0].amount),
+      });
+      return await OrderItem.findOne({
+        order_id: cart.id,
+        product_id: productId,
+      });
+    }
+
+    return OrderItem.create({
       amount,
       order_id: cart.id,
       product_id: productId,
     }).save();
-
-    return result;
   }
 
   async updateCartItem({ orderItemId, amount }: { orderItemId: number; amount: number }) {
