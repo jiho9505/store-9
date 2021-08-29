@@ -6,6 +6,10 @@ import FeatureSection from '@/components/Main/FeatureSection/FeatureSection';
 import GiftSection from '@/components/Main/GiftSection/GiftSection';
 import ProductApi from '@/apis/ProductApi';
 
+/**
+ * TODO:
+ * alertMsg => 서버 메시지로 변경
+ */
 const alertMsg = '아이템을 불러오는데 실패하였습니다.';
 
 const Main = () => {
@@ -19,11 +23,13 @@ const Main = () => {
     (async () => {
       try {
         const result = await ProductApi.getMain();
-        setProducts({
-          best: result.data.bestProducts,
-          new: result.data.newProducts,
-          discount: result.data.discountProducts,
-        });
+        if (result.ok) {
+          setProducts({
+            best: result.data.bestProducts,
+            new: result.data.newProducts,
+            discount: result.data.discountProducts,
+          });
+        }
       } catch (e) {
         alert(alertMsg);
       }

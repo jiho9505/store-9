@@ -4,17 +4,19 @@ import { Link } from '@/core/Router';
 
 import SOLDOUT from '@/static/assets/img/soldout.png';
 
+/**
+ * Type 적용
+ */
 type ImageProps = {
-  quantity: number;
-  productImage: string;
+  item;
 };
 
-const ItemImage = ({ quantity, productImage }: ImageProps) => {
+const ItemImage = ({ item }: ImageProps) => {
   return (
     <ImageContainer>
-      <Link to="/detail">
-        <ProductImg referrerPolicy="no-referrer" src={productImage} />
-        {!quantity ? <SoldOutImg src={SOLDOUT} /> : ``}
+      <Link to={`/detail?id=${item.productId}`}>
+        <ProductImg referrerPolicy="no-referrer" src={item.thumbnail} />
+        {!item.stock ? <SoldOutImg src={SOLDOUT} /> : ``}
       </Link>
     </ImageContainer>
   );

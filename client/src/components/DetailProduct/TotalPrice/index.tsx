@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import React from 'react';
+import styled from '@emotion/styled';
 
 import { baemin, baeminThickFont, baeminFont, greySpan } from '@/static/style/common';
 
@@ -16,6 +16,8 @@ const TotalPrice = ({ price, selectedStock }: TotalPriceProps) => {
     </TotalPriceContainer>
   );
 };
+
+export default TotalPrice;
 
 const TotalPriceContainer = styled.div`
   margin-top: 15px;
@@ -35,4 +37,3 @@ const TotalPriceValue = styled.span`
   font-size: 28px;
   color: ${baemin};
 `;
-export default TotalPrice;
