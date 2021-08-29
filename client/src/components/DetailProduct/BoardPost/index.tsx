@@ -30,9 +30,8 @@ const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
   const getAnonymousUserName = (userName: string): string => {
     const userNameLength = userName.length;
     const countToChange = Math.floor(userNameLength / 2);
-    const sliceStart = userNameLength - countToChange;
-    const sliceEnd = sliceStart + countToChange;
-    const anonymouseName = userName.slice(sliceStart, sliceEnd - 1);
+    const slicePoint = userNameLength - countToChange;
+    const anonymouseName = userName.slice(0, slicePoint) + '*'.repeat(userNameLength - slicePoint);
     return anonymouseName;
   };
 
