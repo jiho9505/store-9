@@ -85,6 +85,14 @@ const AuthController = {
   githubLogin: async (req: Request, res: Response) => {
     const { login_id, accessToken } = res.locals.githubUser;
     const userRepository = getCustomRepository(UserRepository);
+
+    if (!login_id) {
+      res
+        .status(constant.STATUS_AUTH_FAILURE)
+        .json({ ok: false, message: constant.LOGOUT_FAILURE });
+      return;
+    }
+
     try {
       const user = await userRepository.checkUserExist(login_id);
       if (!user) {

@@ -26,7 +26,19 @@ class AuthStore {
       return result;
     } catch (e) {
       this.isError = true;
+      return e;
+    } finally {
+      this.isLoading = false;
+    }
+  }
 
+  async githubLogin(body: AuthRequest.GithubLogin) {
+    this.isLoading = true;
+    try {
+      const result = await AuthApi.githubLogin(body);
+      return result;
+    } catch (e) {
+      this.isError = true;
       return e;
     } finally {
       this.isLoading = false;
@@ -39,6 +51,7 @@ class AuthStore {
 
       // this.myInfo = undefined;
       this.isLogined = false;
+      this.loginId = '';
       if (this.isError) this.isError = false;
 
       return result.ok;
@@ -53,8 +66,8 @@ class AuthStore {
       const result = await AuthApi.check();
       this.isLogined = result.ok;
       this.loginId = result.data.loginId;
-
       if (!this.isError) this.isError = false;
+
       return result.ok;
     } catch (e) {
       this.isError = true;

@@ -15,8 +15,8 @@ namespace QnAController {
 
       const [qnas, totalCount] = await getCustomRepository(QnARepository).getList({
         userId,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate,
+        endDate,
         page,
       });
 

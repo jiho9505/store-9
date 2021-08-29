@@ -7,6 +7,10 @@ class AuthApi extends BaseApi {
     return this.post<AuthResponse.Login>('/login', body);
   }
 
+  githubLogin(body: AuthRequest.GithubLogin) {
+    return this.post<AuthResponse.GithubLogin>('/github', body);
+  }
+
   signup(body: AuthRequest.Signup) {
     return this.post('/signup', body);
   }

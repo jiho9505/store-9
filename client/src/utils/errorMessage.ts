@@ -7,6 +7,7 @@ export const validationMsg = {
 
 export const alertMsg = {
   REQUIRED_LOGIN: '로그인이 필요한 기능입니다.',
+  ALREADY_LOGIN: '이미 로그인 하셨습니다.',
   EMPTY_ORDER: '구매할 상품을 선택해 주세요.',
   EMPTY_LIKE: '찜 할 상품을 선택해 주세요.',
   SUCCESS_ADD_LIKE: '찜하기에 추가되었습니다.',

@@ -6,6 +6,8 @@ import Message from '@/components/common/Message';
 import { baeminFont, greyLine } from '@/static/style/common';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
+
+import { debounce } from '@/utils/debouncer';
 import ModalPortal from '@/utils/portal';
 import AuthStore from '@/stores/AuthStore';
 import OrderApi from '@/apis/OrderApi';
@@ -31,7 +33,8 @@ const Cart = ({ selectedStock }: CartProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleClickText = async () => {
+  const handleClickText = debounce(async (e) => {
+    e.stopPropagation();
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
 
     try {
@@ -45,7 +48,7 @@ const Cart = ({ selectedStock }: CartProps) => {
     } catch (e) {
       viewMsgByUserStatus('fail');
     }
-  };
+  });
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -66,14 +69,16 @@ const Cart = ({ selectedStock }: CartProps) => {
   };
 
   return (
-    <CartContainer onClick={handleClickText}>
-      <span>장바구니</span>
+    <>
+      <CartContainer onClick={handleClickText}>
+        <span>장바구니</span>
+      </CartContainer>
       {message.showMessage && (
         <ModalPortal>
           <Message text={message.messageContent} mode={message.messageMode} />
         </ModalPortal>
       )}
-    </CartContainer>
+    </>
   );
 };
 

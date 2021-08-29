@@ -42,7 +42,7 @@ const Buy = ({ selectedStock }: BuyProps) => {
           cartId: id,
           products: [
             {
-              id: orderId,
+              id: result.data.id,
               amount,
               product: DetailProductStore.product,
             },
