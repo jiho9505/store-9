@@ -8,6 +8,7 @@ export namespace PRODUCT_GET_MAIN {
 export namespace PRODUCT_GET_DETAIL {
   export const DETAIL_REVIEW_LIMIT = 5;
   export const DETAIL_QNA_LIMIT = 5;
+  export const DETAIL_RECOMMEND_PRODUCT_LIMIT = 3;
 }
 
 export namespace PRODUCT_QUERY {

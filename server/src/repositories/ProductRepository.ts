@@ -57,7 +57,7 @@ export default class ProductRepository extends Repository<Product> {
       ON joi.product_id = p.id
       ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
       ORDER BY RAND()
-      LIMIT 4
+      LIMIT ${PRODUCT_GET_DETAIL.DETAIL_RECOMMEND_PRODUCT_LIMIT}
     `);
 
     const soldProductAmounts = await this.query(`
