@@ -8,7 +8,7 @@ export default class OrderRepository extends Repository<Order> {
   async getList({
     userId,
     page = 0,
-    size = 20,
+    size = 5,
     startDate = new Date(0),
     endDate = new Date(),
   }: {
