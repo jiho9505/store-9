@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { nanoid } from 'nanoid';
 import { getRegExp } from 'korean-regexp';
+import { observer } from 'mobx-react';
 
 import WordList from '../WordList';
 
@@ -161,7 +162,7 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default observer(SearchBar);
 
 const ErrorMsg = styled.div`
   position: absolute;

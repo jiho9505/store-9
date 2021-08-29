@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 import { Link } from '@/core/Router';
 
 import RefreshStore from '@/stores/RefreshStore';
@@ -121,7 +122,7 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default observer(Navigation);
 
 type SubMenuProps = {
   dist: number;
