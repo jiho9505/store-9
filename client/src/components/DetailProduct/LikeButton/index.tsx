@@ -27,7 +27,11 @@ const Like = () => {
   });
 
   useEffect(() => {
-    if (!AuthStore.isLogined) setIsIconActive(false);
+    if (!AuthStore.isLogined) {
+      setIsIconActive(false);
+      return;
+    }
+    DetailProductStore.product.isLike ? setIsIconActive(true) : setIsIconActive(false);
     return () => clearTimeout(timer);
   }, [AuthStore.isLogined]);
 
