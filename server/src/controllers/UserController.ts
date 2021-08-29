@@ -30,9 +30,9 @@ const UserController = {
         { user_id: user.id, product_id: Number(productId) },
       ]);
 
-      if (likeExist) {
+      if (likeExist.length) {
         await likeRepository.deleteLike(user.id, [likeExist[0].id]);
-        res.json({ ok: true, message: constant.DELETE_REVIEW_SUCCESS });
+        res.json({ ok: true, message: constant.DELETE_LIKE_SUCCESS });
         return;
       }
       await likeRepository.createLike([{ user_id: user.id, product_id: Number(productId) }]);
@@ -68,7 +68,7 @@ const UserController = {
       const user: JwtSignPayload = res.locals.user;
       const likeRepository = getCustomRepository(LikeRepository);
       await likeRepository.deleteLike(user.id, ids);
-      res.json({ ok: true, message: constant.DELETE_REVIEW_SUCCESS });
+      res.json({ ok: true, message: constant.DELETE_LIKE_SUCCESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }

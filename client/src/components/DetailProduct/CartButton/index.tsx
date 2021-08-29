@@ -42,9 +42,8 @@ const Cart = ({ selectedStock }: CartProps) => {
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
 
     try {
-      const result = await OrderApi.addCartItem({ productId: 55, amount: selectedStock });
+      const result = await OrderApi.addCartItem({ productId: 2, amount: selectedStock });
       if (result.ok) {
-        console.log(result);
         viewMsgByUserStatus('add');
       }
     } catch (e) {

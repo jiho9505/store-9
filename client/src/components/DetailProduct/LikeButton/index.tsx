@@ -59,7 +59,7 @@ const Like = () => {
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
 
     try {
-      const result = await UserApi.toggleLike({ productId: 55 });
+      const result = await UserApi.toggleLike({ productId: 2 });
       if (result.ok) {
         if (isIconActive) {
           viewMsgByUserStatus('remove');

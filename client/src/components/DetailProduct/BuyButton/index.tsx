@@ -39,9 +39,20 @@ const Buy = ({ selectedStock }: BuyProps) => {
   const handleClickText = async () => {
     if (!AuthStore.isLogined) return createMsg();
     try {
-      const result = await OrderApi.addCartItem({ productId: 55, amount: selectedStock });
+      const result = await OrderApi.addCartItem({ productId: 2, amount: selectedStock });
       if (result.ok) {
-        setBuyInfo(info);
+        const { amount, order_id: orderId } = result.data;
+
+        setBuyInfo({
+          cartId: result.data.id,
+          products: [
+            {
+              id: orderId,
+              amount,
+              product: info,
+            },
+          ],
+        });
         history.push('/order');
       }
     } catch (e) {
