@@ -23,11 +23,8 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 import Loading from './components/common/Loading';
 import AuthStore from './stores/AuthStore';
 import Redirect from './components/Redirect';
-<<<<<<< HEAD
 import HeaderStore from './stores/HeaderStore';
-=======
 import { alertMsg } from './utils/errorMessage';
->>>>>>> f3643b45c1d822d9d3fc3241693f15e640d34b28
 
 const App = () => {
   useEffect(() => {
