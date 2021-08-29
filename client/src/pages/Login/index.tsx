@@ -9,8 +9,6 @@ import Button from '@/components/common/Button';
 
 import useHistory from '@/hooks/customHooks/useHistory';
 import AuthStore from '@/stores/AuthStore';
-import AuthApi from '@/apis/AuthApi';
-import axios from 'axios';
 import { red1 } from '@/static/style/common';
 
 const CAUTION_TEXT = '주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기 바랍니다.';
@@ -67,6 +65,7 @@ const LoginPage = () => {
 
   const onNonUserLoginClick = (e) => {
     e.preventDefault();
+    alert('준비중인 기능입니다.');
   };
 
   return (
@@ -132,13 +131,7 @@ const LoginPage = () => {
             value={orderNumber}
             placeholder="주문번호"
           />
-          <Button
-            size="medium"
-            value="조회하기"
-            type="submit"
-            onClick={onLoginClick}
-            theme="normal"
-          />
+          <Button size="medium" value="조회하기" type="submit" theme="normal" />
           <CautionText>{CAUTION_TEXT}</CautionText>
         </LoginForm>
       </LoginContainer>

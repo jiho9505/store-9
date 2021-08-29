@@ -90,7 +90,7 @@ const SignupPage = () => {
 
   return (
     <SignupPageContainer>
-      {/* <SignUpTitle>배민 문방구 회원 가입</SignUpTitle> */}
+      <SignUpTitle>배민 문방구 회원 가입</SignUpTitle>
       <SignupForm onSubmit={onSignupFormSubmit} ref={signUpFormRef} encType="multipart/form-data">
         <SignupList>
           <ListItem>
@@ -105,6 +105,7 @@ const SignupPage = () => {
                 readOnly={isGithubLogin}
                 type="text"
                 defaultValue={isGithubLogin ? getGithubLoginId() : ''}
+                maxLength={20}
                 error={getInputErrorObject('id')}
                 onChange={onInputChangeSetError}
               />
@@ -253,9 +254,9 @@ const SignupPage = () => {
 export default SignupPage;
 
 const formErrorMessage = {
-  id: '아이디는 3글자 이상 작성해주세요. 혹은 잘못된 형식입니다.',
+  id: '아이디는 3글자 이상 20자 이하로 작성해주세요.',
   email: '이메일 형식에 맞지 않습니다',
-  password: '패스워드는 3자리 이상 작성해주세요. 혹은 잘못된 형식입니다.',
+  password: '패스워드는 3자리 이상 작성해주세요.',
   confirmPassword: '패스워드가 일치하지 않습니다',
   name: '잘못된 이름 형식입니다.',
   phoneNumber: '휴대폰 번호 양식에 맞지 않습니다',
@@ -264,8 +265,8 @@ const formErrorMessage = {
 };
 
 const signUpTitleSize = '2rem';
-const signupPageHeight = '800px';
-const signupFormMargin = '100px';
+const signupPageHeight = '1050px';
+const signupFormMargin = '60px';
 const signupListItemPadding = '25px 10px';
 const labelBgColor = '#e7e7e748';
 const requiredColor = '#ff5353';
@@ -282,6 +283,7 @@ const SignupPageContainer = styled.section`
 const SignUpTitle = styled.div`
   font-size: ${signUpTitleSize};
   text-align: center;
+  margin-top: 30px;
 `;
 
 const SignupForm = styled.form`
