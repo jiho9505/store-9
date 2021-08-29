@@ -8,7 +8,7 @@
     "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create -- -n $NAME",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
-    "build": "tsc ",
+    "build": "tsc",
     "start": "pm2 reload ecosystem.config.js",
     "start-test": "node ./dist/server/app.js",
     "test": "jest --setupFiles dotenv/config --forceExit --detectOpenHandles"
