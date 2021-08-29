@@ -128,8 +128,7 @@ export default class OrderRepository extends Repository<Order> {
         orderItemId: isExist[0].id,
         amount: amount + Number(isExist[0].amount),
       });
-      return OrderItem.create({
-        amount,
+      return await OrderItem.findOne({
         order_id: cart.id,
         product_id: productId,
       });
