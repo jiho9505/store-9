@@ -1,4 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
+import { observer } from 'mobx-react';
+
 import guguStyled from '@/core/styled';
 import { Router, Route } from './core/Router';
 
@@ -89,4 +91,4 @@ const LoadingContainer = guguStyled.div`
   top: 35%;
 `;
 
-export default App;
+export default observer(App);
