@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 
 import Message from '@/components/common/Message';
 
@@ -28,7 +29,7 @@ const Like = () => {
   useEffect(() => {
     if (!AuthStore.isLogined) setIsIconActive(false);
     return () => clearTimeout(timer);
-  }, []);
+  }, [AuthStore.isLogined]);
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -81,7 +82,7 @@ const Like = () => {
   );
 };
 
-export default Like;
+export default observer(Like);
 
 const LikeContainer = styled.div`
   display: flex;
