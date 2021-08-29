@@ -6,12 +6,12 @@ import { getRegExp } from 'korean-regexp';
 import WordList from '../WordList';
 
 import RefreshStore from '@/stores/RefreshStore';
-import words from '@/static/constants/words';
 import { getDateFormat } from '@/utils/dateParse';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 import useHistory from '@/hooks/customHooks/useHistory';
 import SEARCH from '@/static/assets/img/search.png';
+import HeaderStore from '@/stores/HeaderStore';
 
 const timeToShowError = 2000;
 
@@ -112,7 +112,7 @@ const SearchBar = () => {
       return;
     }
 
-    const matchedWords = words
+    const matchedWords = HeaderStore.productNames
       .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
       .sort((a, b) => a.length - b.length)
       .slice(0, 10);
