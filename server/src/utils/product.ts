@@ -38,7 +38,7 @@ const createProduct = ({
   const standardOfBest = totalSoldProductAmount / totalProductCount;
 
   return (data) => ({
-    productId: data.id,
+    productId: Number(data.id),
     name: data.name,
     price: Number(data.price),
     stock: Number(data.stock),

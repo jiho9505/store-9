@@ -35,6 +35,7 @@ namespace ProductResponse {
     contentImages?: string[];
     discountRate: number;
     isLike: boolean;
+    isBuy: boolean;
     reviews: {
       id: number;
       title: string;
