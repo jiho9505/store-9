@@ -10,7 +10,8 @@ import ModalPortal from '@/utils/portal';
 import PostModal from '../../common/PostModal';
 
 import DetailProductStore from '@/stores/DetailProductStore';
-import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import { showErrorMsgTime } from '@/static/constants';
+import { alertMsg } from '@/utils/errorMessage';
 import { ProductContext } from '@/hooks/context';
 import AuthStore from '@/stores/AuthStore';
 
@@ -49,7 +50,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
 
   const viewMsgByUserStatus = (mode: string) => {
     if (mode === 'notlogin') {
-      createMsg(requireLoginMsg);
+      createMsg(alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'notbuy') {
       createMsg(requireBuyHistoryMsg);
     }

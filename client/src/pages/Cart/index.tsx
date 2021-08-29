@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
+
 import {
   normalContainerWidth,
   greyLine,
@@ -8,24 +9,41 @@ import {
   normalRadius,
   baeminFont,
 } from '@/static/style/common';
+import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
+import useAlert from '@/hooks/customHooks/useAlert';
+import RefreshStore from '@/stores/RefreshStore';
+import OrderApi from '@/apis/OrderApi';
+import UserApi from '@/apis/UserApi';
 
 import { CartContent } from '@/components/Cart';
 import PricePannel from '@/components/common/PricePannel';
 import OrderStageHeader from '@/components/common/OrderStageHeader';
-import OrderApi from '@/apis/OrderApi';
-import RefreshStore from '@/stores/RefreshStore';
-import UserApi from '@/apis/UserApi';
+import ModalPortal from '@/utils/portal';
+import Message from '@/components/common/Message';
+import { alertMsg } from '@/utils/errorMessage';
 
 const CartPage = () => {
+  const { refresh, refreshComponent } = RefreshStore;
+
+  const [cartInfo, setCartInfo] = useLocalStorage<{ cartId?: number; products?: any[] }>(
+    'cartInfo',
+    {}
+  );
+
+  const { isShow, alertInfo, showAndUnShowAlert } = useAlert();
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
   const [cartProducts, setCartProducts] = useState([]);
   const [curCartId, setCurCartId] = useState(0);
-  const [error, setError] = useState('');
-  const { refresh, refreshComponent } = RefreshStore;
+
+  useEffect(() => {
+    return () => {
+      localStorage.clear();
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.clear();
-    localStorage.setItem('cartInfo', JSON.stringify({ cartId: curCartId, products: [] }));
+    setCartInfo({ cartId: curCartId, products: [] });
   }, [curCartId]);
 
   useEffect(() => {
@@ -35,7 +53,7 @@ const CartPage = () => {
         setCartProducts(data.orderItems);
         setCurCartId(data.id);
       } catch (err) {
-        setError(err.message);
+        // setError(err.message);
       }
     };
     getCartItems();
@@ -43,19 +61,13 @@ const CartPage = () => {
 
   const addProductInLocalStorage = (id) => {
     const [selectedProduct] = cartProducts.filter(({ id: cartId }) => id === cartId);
-
-    const cartInfo = localStorage.getItem('cartInfo');
-    const products = JSON.parse(cartInfo).products;
-    products.push(selectedProduct);
-
-    localStorage.setItem('cartInfo', JSON.stringify({ cartId: curCartId, products: products }));
+    setCartInfo({ ...cartInfo, products: [...cartInfo.products, selectedProduct] });
   };
 
-  const removeProductInLocalStorage = (id) => {
-    const cartInfo = JSON.parse(localStorage.getItem('cartInfo'));
+  const removeProductInLocalStorage = useCallback((id) => {
     const newProducts = cartInfo.products.filter(({ id: orderId }) => orderId !== id);
-    localStorage.setItem('cartInfo', JSON.stringify({ ...cartInfo, products: newProducts }));
-  };
+    setCartInfo({ ...cartInfo, products: newProducts });
+  }, []);
 
   const handleClickCheckbox = (id) => {
     if (selectedItems.has(id)) {
@@ -70,6 +82,18 @@ const CartPage = () => {
     }
   };
 
+  const handleToggleSelectAllBtn = (e) => {
+    const { target } = e;
+    const curProductId = cartProducts.map((cartProduct) => cartProduct.id);
+    if (target.checked) {
+      setSelectedItems(new Set(curProductId));
+      setCartInfo({ ...cartInfo, products: cartProducts });
+    } else {
+      setSelectedItems(new Set());
+      setCartInfo({ cartId: curCartId, products: [] });
+    }
+  };
+
   const calTotalProductPrice = () => {
     return cartProducts.reduce((acc, { id, amount, product }) => {
       if (selectedItems.has(id)) {
@@ -79,27 +103,22 @@ const CartPage = () => {
     }, 0);
   };
 
-  const handleToggleSelectAllBtn = (e) => {
-    const { target } = e;
-    const curProductId = cartProducts.map((cartProduct) => cartProduct.id);
-    if (target.checked) {
-      setSelectedItems(new Set(curProductId));
-    } else {
-      setSelectedItems(new Set());
-    }
-  };
-
   const handleDeleteClick = async () => {
-    if (selectedItems.size === 0) return;
-    const selected = Array.from(selectedItems);
+    if (selectedItems.size === 0) {
+      showAndUnShowAlert({ mode: 'caution', msg: alertMsg['EMPTY_DELETE'] });
+      return;
+    }
+    const selected = [...selectedItems];
 
     try {
       const result = await OrderApi.removeCartItem({ orderItemId: selected });
       if (result.ok) {
+        showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_DELETE'] });
+        setCartInfo({ cartId: curCartId, products: [] });
         refresh();
       }
     } catch (err) {
-      setError(err.message);
+      showAndUnShowAlert({ mode: 'fail', msg: alertMsg['FAIL_DELETE'] });
     }
   };
 
@@ -111,14 +130,18 @@ const CartPage = () => {
   };
 
   const handleLikeClick = async () => {
-    if (selectedItems.size === 0) return;
+    if (selectedItems.size === 0) {
+      showAndUnShowAlert({ mode: 'caution', msg: alertMsg['EMPTY_LIKE'] });
+      return;
+    }
     const selected = Array.from(selectedItems);
     const productId: number[] = orderItemIdtoProductId(selected);
 
     try {
       const result = await UserApi.likeMany({ productId });
+      showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_ADD_LIKE'] });
     } catch (err) {
-      setError(err.message);
+      showAndUnShowAlert({ mode: 'fail', msg: alertMsg['FAIL_ADD_LIKE'] });
     }
   };
 
@@ -136,8 +159,13 @@ const CartPage = () => {
           <Button onClick={handleDeleteClick}>선택상품 삭제</Button>
           <Button onClick={handleLikeClick}>선택상품 찜</Button>
         </SelectProductAction>
-        <PricePannel productTotalPrice={calTotalProductPrice()} />
+        <PricePannel productTotalPrice={calTotalProductPrice()} cartInfo={cartInfo} />
       </CartFooter>
+      {isShow && (
+        <ModalPortal>
+          <Message text={alertInfo.msg} mode={alertInfo.mode} />
+        </ModalPortal>
+      )}
     </CartPageContainer>
   );
 };

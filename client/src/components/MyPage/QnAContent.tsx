@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import styled from '@emotion/styled';
 
 import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
@@ -6,6 +7,7 @@ import Cell from '../common/Cell';
 import { getDateFormat } from '@/utils/dateParse';
 
 import ModalPortal from '@/utils/portal';
+import EmptyPannel from '../common/EmptyPannel';
 import PostModal from '../common/PostModal';
 
 type QnAContentProps = {
@@ -56,7 +58,11 @@ const QnAContent = ({ questions }: QnAContentProps) => {
 
   return (
     <>
-      <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
+      {questions.length === 0 ? (
+        <EmptyPannel />
+      ) : (
+        <ListTable header={tableHeader} body={tableBody} onClickRow={handleModalOpen} />
+      )}
       {activeModal && (
         <ModalPortal>
           <PostModal
@@ -72,3 +78,7 @@ const QnAContent = ({ questions }: QnAContentProps) => {
 };
 
 export default QnAContent;
+
+const EmptyImgContainer = styled.div`
+  height: 200px;
+`;

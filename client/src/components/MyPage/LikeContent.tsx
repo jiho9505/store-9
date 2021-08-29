@@ -2,10 +2,10 @@ import React, { useMemo } from 'react';
 
 import guguStyled from '@/core/styled';
 
+import EmptyPannel from '../common/EmptyPannel';
 import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
 
-// api 확정되면 type 지정
 type LikeContentProps = {
   likeProducts: any;
   selectedProduct: Set<number>;
@@ -48,14 +48,18 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
 
   return (
     <div>
-      <ListTable
-        checkable
-        header={tableHeader}
-        body={tableBody}
-        onCheck={onCheck}
-        onCheckAll={onCheckAll}
-        selectedItems={selectedProduct}
-      />
+      {likeProducts.length === 0 ? (
+        <EmptyPannel />
+      ) : (
+        <ListTable
+          checkable
+          header={tableHeader}
+          body={tableBody}
+          onCheck={onCheck}
+          onCheckAll={onCheckAll}
+          selectedItems={selectedProduct}
+        />
+      )}
     </div>
   );
 };
