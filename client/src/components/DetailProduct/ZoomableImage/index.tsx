@@ -1,6 +1,7 @@
 import React, { MutableRefObject, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { primary1 } from '@/static/style/common';
 
 /**
  * ZoomableImage
@@ -75,9 +76,9 @@ const ZoomableImage = ({ src, width = 500, height }: ZoomableImageProps) => {
 
     const getBackgroundPosition = (): position[] => {
       const x: position =
-        Math.round((mouseX / currentImgWidth) * zoomedImgWidth - zoomSize / 2) * -1;
+        Math.round((mouseX / currentImgWidth) * zoomedImgWidth - zoomSize / 2 + 5) * -1;
       const y: position =
-        Math.round((mouseY / currentImgHeight) * zoomedImgHeight - zoomSize / 2) * -1;
+        Math.round((mouseY / currentImgHeight) * zoomedImgHeight - zoomSize / 2 + 5) * -1;
       return [x, y];
     };
 
@@ -152,9 +153,8 @@ const Zoom = styled.div<ZoomProps>`
   height: ${({ size }) => `${size}px`};
   position: absolute;
   border-radius: 100%;
-  border: 5px solid #e4e4e4;
+  border: 5px solid ${primary1};
   background: url(${({ backgroundUrl }) => backgroundUrl}) no-repeat;
-  transition: all 0.1s;
   background-size: ${({ bgImgWidth, bgImgHeight }) => `${bgImgWidth}px ${bgImgHeight}px`};
   background-color: white;
 `;

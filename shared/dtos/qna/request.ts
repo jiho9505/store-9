@@ -2,8 +2,8 @@ import { QnASchema } from './schema';
 
 namespace QnARequest {
   export type GetList = {
-    startDate?: string;
-    endDate?: string;
+    startDate?: Date;
+    endDate?: Date;
     page?: number;
   };
 
@@ -19,6 +19,7 @@ namespace QnARequest {
     qnaId: number;
     title: string;
     content: string;
+    images?: string;
     isPrivate?: boolean;
   };
 

@@ -84,6 +84,7 @@ export const signupValidation = {
     return password === confirmPassword;
   },
   name: function (name: string): boolean {
+    if (name.length === 0) return false;
     const numRegex = /\d/;
     const isNumberIncluded = numRegex.test(name);
     if (isNumberIncluded) return false;

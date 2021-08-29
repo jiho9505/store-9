@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, MiddlewareResponse } from 'express';
 import { getCustomRepository } from 'typeorm';
 import dotenv from 'dotenv';
+import validator from 'validator';
 
 import { UserRepository } from '../repositories/UserRepositiory';
 import jwt from '../utils/jwt';
@@ -84,6 +85,12 @@ const AuthMiddleware = {
       console.log(err.message);
       // next(err.message);
     }
+  },
+  sanitizeBody: (req: Request, res: Response, next: NextFunction) => {
+    Object.entries(req.body).forEach(([key, value]) => {
+      req.body[key] = validator.trim(validator.escape(value));
+    });
+    next();
   },
   checkAdmin: () => {},
 };

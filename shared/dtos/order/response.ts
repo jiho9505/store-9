@@ -18,8 +18,8 @@ namespace OrderResponse {
   };
 
   export type GetCart = {
-    id: number;
-    orderItems: {
+    id?: number;
+    orderItems?: {
       id: number;
       amount: number;
       product: {
