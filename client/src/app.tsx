@@ -23,10 +23,12 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 import Loading from './components/common/Loading';
 import AuthStore from './stores/AuthStore';
 import Redirect from './components/Redirect';
+import HeaderStore from './stores/HeaderStore';
 
 const App = () => {
   useEffect(() => {
     AuthStore.check();
+    HeaderStore.load();
   }, []);
   return (
     <PageContainer>
