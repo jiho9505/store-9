@@ -13,15 +13,21 @@ export default class QnARepository extends Repository<QnA> {
     userId: number;
     size?: number;
     page?: number;
-    startDate?: Date;
-    endDate?: Date;
+    startDate?: Date | string;
+    endDate?: Date | string;
   }) {
+    console.log(startDate);
+    const start = new Date(new Date(startDate).setHours(0, 0, 0, 0)).toJSON();
+    const end = new Date(new Date(endDate).setHours(23, 59, 59, 59)).toJSON();
+
+    console.log(start, end);
+
     const result = this.createQueryBuilder('q')
       .leftJoinAndSelect('q.product', 'product')
       .where(`q.user_id = ${userId}`)
-      .where('q.created_at > :start_at AND q.created_at < :end_at', {
-        start_at: new Date(new Date(startDate).setHours(0, 0, 0, 0)).toJSON(),
-        end_at: new Date(new Date(endDate).setHours(23, 59, 59, 59)).toJSON(),
+      .andWhere('q.created_at > :start_at AND q.created_at < :end_at', {
+        start_at: start,
+        end_at: end,
       })
       .limit(size)
       .offset(page * size)
