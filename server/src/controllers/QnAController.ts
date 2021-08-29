@@ -4,6 +4,7 @@ import QnARequest from '../../../shared/dtos/qna/request';
 import QnAResponse from '../../../shared/dtos/qna/response';
 import QnARepository from '../repositories/QnARepository';
 import { JwtSignPayload } from '../utils/types';
+import constant from '../utils/constant';
 
 namespace QnAController {
   export const getList: RouteHandler<QnARequest.GetList, QnAResponse.GetList> = async (
@@ -64,7 +65,7 @@ namespace QnAController {
     } catch (e) {
       console.error(e);
 
-      res.status(500).json({ ok: false });
+      res.status(500).json({ ok: false, message: constant.QNA_FAILURE });
     }
   };
 
