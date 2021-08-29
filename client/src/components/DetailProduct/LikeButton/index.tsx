@@ -1,30 +1,29 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 
+import Message from '@/components/common/Message';
+
+import ModalPortal from '@/utils/portal';
+import { showErrorMsgTime } from '@/static/constants';
+import DetailProductStore from '@/stores/DetailProductStore';
 import UserApi from '@/apis/UserApi';
 import AuthStore from '@/stores/AuthStore';
 import { greyLine } from '@/static/style/common';
-import { ProductContext } from '@/hooks/context';
 import { alertMsg } from '@/utils/errorMessage';
-
-import Message from '@/components/common/Message';
-import ModalPortal from '@/utils/portal';
-import { showErrorMsgTime } from '@/static/constants';
 
 type LikeModeType = 'notlogin' | 'add' | 'remove' | 'fail';
 const addLikeMsg = '관심목록에 추가하였습니다.';
 const removeLikeMsg = '관심목록에서 제거하였습니다.';
 const addLikeFailMsg = '관심목록 추가가 안되었습니다.';
+let timer: number = 0;
 
 const Like = () => {
-  const { info } = useContext(ProductContext);
-  const [isIconActive, setIsIconActive] = useState(false);
+  const [isIconActive, setIsIconActive] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
     messageContent: '',
     messageMode: 'fail',
   });
-  let timer: number = 0;
 
   useEffect(() => {
     if (!AuthStore.isLogined) setIsIconActive(false);
@@ -51,15 +50,11 @@ const Like = () => {
     }
   };
 
-  /**
-   * TODO:
-   * { productId: 55 }) 수정할것
-   */
   const handleClickBtn = async () => {
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
 
     try {
-      const result = await UserApi.toggleLike({ productId: 55 });
+      const result = await UserApi.toggleLike({ productId: DetailProductStore.product.productId });
       if (result.ok) {
         if (isIconActive) {
           viewMsgByUserStatus('remove');

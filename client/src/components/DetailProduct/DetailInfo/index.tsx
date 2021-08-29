@@ -1,17 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import DetailInfoTable from '../DetailInfoTable';
 import DetailInfoRecommend from '../DetailInfoRecommend';
 
-import { ProductContext } from '@/hooks/context';
 import { baeminThickFont } from '@/static/style/common';
+import DetailProductStore from '@/stores/DetailProductStore';
 
 const DetailInfo = () => {
-  const { info } = useContext(ProductContext);
+  const { contentImages } = DetailProductStore.product;
 
   const createInfoImages = () => {
-    return info.content_urls.map((image, idx) => (
+    return contentImages.map((image) => (
       <img key={image} referrerPolicy="no-referrer" src={image}></img>
     ));
   };
@@ -19,7 +19,7 @@ const DetailInfo = () => {
   return (
     <DetailInfoContainer>
       <Title>상품상세정보</Title>
-      {info.content_urls && createInfoImages()}
+      {contentImages && createInfoImages()}
       <DetailInfoTable />
       <DetailInfoRecommend />
     </DetailInfoContainer>
