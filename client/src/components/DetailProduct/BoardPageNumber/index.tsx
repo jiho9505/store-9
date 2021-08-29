@@ -13,7 +13,7 @@ const BoardPageNumber = ({ length, pageNumber, handleClickNumber }: BoardPageNum
     const getPageLength = Math.floor(length / 10) + 1;
     const PageLengthArray = new Array(getPageLength).fill(0);
 
-    return PageLengthArray.map((value, idx) => (
+    return PageLengthArray.map((_, idx) => (
       <PageNumber onClick={handleClickNumber} key={idx} active={pageNumber === idx} data-idx={idx}>
         {idx + 1}
       </PageNumber>

@@ -14,30 +14,11 @@ type ItemListsProps = {
   products;
 };
 
-/**
- * TODO:
- * API 연동 후 값 동적으로 넣어야 합니다.
- * 별점과 라이크는 0이어도 띄우고 옆에 개수를 나타낸다.
- */
-
-/*    
-    데이터형식:
-    productId: number;
-    name: string;
-    price: number;
-    thumbnail: string;
-    reviewAverageRate: number;
-    reviewCount: number;
-    likeCount: number;
-    discountRate: number;
-    isGreen: boolean;
-    badges: string[];
- */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item, idx) => (
-        <Item key={idx} className="item">
+      products.map((item) => (
+        <Item key={item.productId} className="item">
           <ItemImage productImage={item.thumbnail} quantity={item.stock}></ItemImage>
           <ItemContent item={item}></ItemContent>
           {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}

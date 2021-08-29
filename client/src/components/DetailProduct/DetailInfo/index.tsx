@@ -12,7 +12,7 @@ const DetailInfo = () => {
 
   const createInfoImages = () => {
     return info.content_urls.map((image, idx) => (
-      <img key={idx} referrerPolicy="no-referrer" src={image}></img>
+      <img key={image} referrerPolicy="no-referrer" src={image}></img>
     ));
   };
 
