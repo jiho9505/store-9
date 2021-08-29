@@ -17,7 +17,6 @@ const ReviewPage = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(curPage);
       await getReviews(curPage - 1);
     })();
   }, [refreshComponent]);
