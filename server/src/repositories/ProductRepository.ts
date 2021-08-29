@@ -107,6 +107,7 @@ export default class ProductRepository extends Repository<Product> {
       INNER JOIN categories c
       ON c.id = p.category_id
       ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
+      WHERE p.stock != 0
       GROUP BY p.id
       ORDER BY total_amount DESC
       LIMIT ${PRODUCT_GET_MAIN.MAIN_BEST_PRODUCT_LIMIT}
@@ -127,6 +128,7 @@ export default class ProductRepository extends Repository<Product> {
         WHERE orders.status = '${OrderStatus.PURCHASING_COMPLETE}'
       ) o
       ON p.id = o.product_id
+      WHERE p.stock != 0
       GROUP BY p.id
       ORDER BY created_at DESC
       LIMIT ${PRODUCT_GET_MAIN.MAIN_NEW_PRODUCT_LIMIT}
@@ -152,6 +154,7 @@ export default class ProductRepository extends Repository<Product> {
         FROM discounts
         WHERE discounts.product_id = p.id
       )
+      AND p.stock != 0
       GROUP BY p.id
       ORDER BY total_amount DESC
       LIMIT ${PRODUCT_GET_MAIN.MAIN_DISCOUNT_PRODUCT_LIMIT}
