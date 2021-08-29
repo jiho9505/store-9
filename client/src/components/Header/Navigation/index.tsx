@@ -22,12 +22,16 @@ const Navigation = () => {
   const [categories, setCategories] = useState(initCategoryData);
 
   useEffect(() => {
-    setCategories([...categories, ...HeaderStore.parentCategories]);
     document.addEventListener('mouseover', handleMouseOverOnDocument);
     return () => {
       document.removeEventListener('mouseover', handleMouseOverOnDocument);
     };
   }, []);
+
+  useEffect(() => {
+    HeaderStore.parentCategories.length > 0 &&
+      setCategories([...categories, ...HeaderStore.parentCategories]);
+  }, [HeaderStore.parentCategories]);
 
   const handleMouseOverOnDocument = useCallback((e: Event) => {
     const { target } = e;
