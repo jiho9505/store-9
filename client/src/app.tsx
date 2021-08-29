@@ -57,11 +57,15 @@ const App = () => {
             {AuthStore.isLogined ? <Order /> : <Redirect />}
           </Route>
           <Route exact path="/end-order">
-            <FinishOrder />
+            {AuthStore.isLogined ? <FinishOrder /> : <Redirect />}
           </Route>
           <Route path="/mypage">{AuthStore.isLogined ? <MyPage /> : <Redirect />}</Route>
           <Route exact path="/signupMethod">
-            <SignupMethod />
+            {AuthStore.isLogined ? (
+              <Redirect redirectMessage={alertMsg.ALREADY_LOGIN} />
+            ) : (
+              <SignupMethod />
+            )}
           </Route>
           <Route exact path="/goods">
             <ProductList />
