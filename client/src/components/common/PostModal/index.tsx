@@ -31,8 +31,6 @@ const PostModal = ({
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
 
-  product.id = 3; //@@@@ 테스트용
-
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
