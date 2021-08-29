@@ -36,12 +36,6 @@ const CartPage = () => {
   const [curCartId, setCurCartId] = useState(0);
 
   useEffect(() => {
-    return () => {
-      localStorage.clear();
-    };
-  }, []);
-
-  useEffect(() => {
     localStorage.clear();
     setCartInfo({ cartId: curCartId, products: [] });
   }, [curCartId]);
