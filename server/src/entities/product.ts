@@ -18,7 +18,7 @@ class Product extends DateBasicEntity {
   @Column({ nullable: true })
   thumbnail?: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   content: string;
 
   @Column({ type: 'decimal', nullable: true, default: 0 })
