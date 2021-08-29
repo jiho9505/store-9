@@ -29,8 +29,7 @@ const Navigation = () => {
   }, []);
 
   useEffect(() => {
-    HeaderStore.parentCategories.length > 0 &&
-      setCategories([...categories, ...HeaderStore.parentCategories]);
+    categories.length === 1 && setCategories([...categories, ...HeaderStore.parentCategories]);
   }, [HeaderStore.parentCategories]);
 
   const handleMouseOverOnDocument = useCallback((e: Event) => {
