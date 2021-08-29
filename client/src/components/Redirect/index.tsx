@@ -11,7 +11,7 @@ import { alertMsg } from '@/utils/errorMessage';
 import NOTLOGIN from '@/static/assets/img/notlogin.gif';
 
 let timer = null;
-const Redirect = () => {
+const Redirect = ({ redirectMessage = alertMsg.REQUIRED_LOGIN }) => {
   const [isShow, setIsShow] = useState(false);
   const history = useHistory();
 
@@ -31,7 +31,7 @@ const Redirect = () => {
       </RedirectContainer>
       {isShow && (
         <ModalPortal>
-          <Message text={alertMsg['REQUIRED_LOGIN']} mode="fail" />
+          <Message text={redirectMessage} mode="fail" />
         </ModalPortal>
       )}
     </>

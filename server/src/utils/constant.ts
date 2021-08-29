@@ -4,6 +4,7 @@ const constant = {
   WRONG_INFO: '아이디 혹은 비밀번호가 틀렸습니다.',
   LOGIN_SUCCESS: '로그인이 완료되었습니다.',
   LOGOUT_SUCCESS: '로그아웃 완료되었습니다.',
+  LOGOUT_FAILURE: '로그인에 실패했습니다',
   SIGN_UP_SUCCESS: '회원가입 완료되었습니다.',
   USER_NOT_EXIST: '존재하지 않는 유저 입니다.',
   USER_EXIST_ALREADY: '이미 가입된 사용자입니다.',

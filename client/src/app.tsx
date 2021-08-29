@@ -23,6 +23,7 @@ const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 import Loading from './components/common/Loading';
 import AuthStore from './stores/AuthStore';
 import Redirect from './components/Redirect';
+import { alertMsg } from './utils/errorMessage';
 
 const App = () => {
   useEffect(() => {
@@ -43,7 +44,11 @@ const App = () => {
             <Main />
           </Route>
           <Route exact path="/login">
-            <LoginPage />
+            {AuthStore.isLogined ? (
+              <Redirect redirectMessage={alertMsg.ALREADY_LOGIN} />
+            ) : (
+              <LoginPage />
+            )}
           </Route>
           <Route exact path="/cart">
             {AuthStore.isLogined ? <CartPage /> : <Redirect />}
@@ -52,11 +57,15 @@ const App = () => {
             {AuthStore.isLogined ? <Order /> : <Redirect />}
           </Route>
           <Route exact path="/end-order">
-            <FinishOrder />
+            {AuthStore.isLogined ? <FinishOrder /> : <Redirect />}
           </Route>
           <Route path="/mypage">{AuthStore.isLogined ? <MyPage /> : <Redirect />}</Route>
           <Route exact path="/signupMethod">
-            <SignupMethod />
+            {AuthStore.isLogined ? (
+              <Redirect redirectMessage={alertMsg.ALREADY_LOGIN} />
+            ) : (
+              <SignupMethod />
+            )}
           </Route>
           <Route exact path="/goods">
             <ProductList />
@@ -65,7 +74,11 @@ const App = () => {
             <DetailProduct />
           </Route>
           <Route exact path="/signup">
-            <Signup />
+            {AuthStore.isLogined ? (
+              <Redirect redirectMessage={alertMsg.ALREADY_LOGIN} />
+            ) : (
+              <Signup />
+            )}
           </Route>
           <Route exact path="/callback">
             <Callback />
