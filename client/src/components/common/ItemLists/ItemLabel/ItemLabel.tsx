@@ -29,8 +29,8 @@ const ItemLabel = ({ product }: LabelProps) => {
     const badge = product.badges;
     const allBadge = product.isGreen ? [...badge, 'green'] : badge;
 
-    return allBadge.map((item, idx) => (
-      <Link to="/detail" key={item}>
+    return allBadge.map((item) => (
+      <Link to={`/detail?id=${item.productId}`} key={item}>
         <Feature color={getColor(item)}>
           <span>{item.toUpperCase()}</span>
         </Feature>

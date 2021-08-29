@@ -4,29 +4,49 @@ import guguStyled from '@/core/styled';
 import GIFT1 from '@/static/assets/img/giftSection1.png';
 import GIFT2 from '@/static/assets/img/giftSection2.png';
 import { baeminFont, normalContainerWidth } from '@/static/style/common';
+import { Link } from '@/core/Router';
 
+/**
+ * TODO:
+ * match URL 수정
+ */
+/**
+ * FIXME:
+ * 해당 데이터는 크롤링하지 못하여 고정데이터를 이용합니다.
+ */
 const GiftSection = () => {
   return (
     <GiftContainer>
       <Title>선물하기 딱 좋아요!</Title>
       <GiftBlock>
-        <ImgContainer>
-          <Img src={GIFT1} alt="first-gift-image" />
-        </ImgContainer>
+        <Link to="/detail?id=55">
+          <ImgContainer>
+            <Img src={GIFT1} alt="first-gift-image" />
+          </ImgContainer>
+        </Link>
 
         <GiftInfo>
-          <h3>한 상 가득</h3>
-          <span>캬~ 좋다. 을지로 쟁반</span>
+          <Link to="/detail?id=55">
+            <h3>한 상 가득</h3>
+          </Link>
+          <Link to="/detail?id=55">
+            <span>캬~ 좋다. 을지로 쟁반</span>
+          </Link>
         </GiftInfo>
       </GiftBlock>
       <GiftBlock>
-        <ImgContainer>
-          <Img src={GIFT2} alt="second-gift-image" />
-        </ImgContainer>
-
+        <Link to="/detail?id=55">
+          <ImgContainer>
+            <Img src={GIFT2} alt="second-gift-image" />
+          </ImgContainer>
+        </Link>
         <GiftInfo>
-          <h3>쉿 비밀펜</h3>
-          <span>진짜진짜 아무한테도 말하지마</span>
+          <Link to="/detail?id=55">
+            <h3>쉿 비밀펜</h3>
+          </Link>
+          <Link to="/detail?id=55">
+            <span>진짜진짜 아무한테도 말하지마</span>
+          </Link>
         </GiftInfo>
       </GiftBlock>
     </GiftContainer>

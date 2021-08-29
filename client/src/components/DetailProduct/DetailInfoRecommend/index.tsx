@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import { baeminThickFont } from '@/static/style/common';
 import ItemLists from '@/components/common/ItemLists/ItemLists';
-import Datas from '@/dummy';
+import DetailProductStore from '@/stores/DetailProductStore';
 
-const sampleData = [Datas[0], Datas[1], Datas[2]];
-
-/**
- * TODO:
- * 추후 Back에서 데이터 3개만 받아와야 합니다.
- * 예상 : 랜덤으로 / 추천알고리즘에 의해서
- */
 const DetailInfoRecommend = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    setProducts(sampleData);
-  }, []);
-
   return (
     <DetailInfoRecommendContainer>
       <Title>이건 어때요?</Title>
-      <ItemLists products={products} />
+      <ItemLists products={DetailProductStore.product.recommends} />
     </DetailInfoRecommendContainer>
   );
 };

@@ -1,12 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import ProductApi from '@/apis/ProductApi';
-
-const alertMsg = '상품을 불러오는데 실패하였습니다.';
+import ProductResponse from '@shared/dtos/product/response';
 
 class DetailProductStore {
-  products = {
-    reviews: [],
-  };
+  product: ProductResponse.GetDetail;
 
   constructor() {
     makeAutoObservable(this);
@@ -15,15 +12,11 @@ class DetailProductStore {
   load = async (productId: number) => {
     try {
       const result = await ProductApi.getDetail({ productId });
-      if (result.ok) this.products = result.data;
+      if (result.ok) this.product = result.data;
     } catch (e) {
-      alert(alertMsg);
+      alert(e.response.data.message);
     }
   };
-
-  async getReviews() {
-    return this.products;
-  }
 }
 
 export default new DetailProductStore();

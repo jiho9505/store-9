@@ -1,53 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { observer } from 'mobx-react';
 
 import Detail from '@/components/DetailProduct/Detail';
 import Overview from '@/components/DetailProduct/Overview';
 
-import { ProductContext } from '@/hooks/context';
 import { normalContainerWidth } from '@/static/style/common';
 import DetailProductStore from '@/stores/DetailProductStore';
-import AuthStore from '@/stores/AuthStore';
-import Datas from '@/dummy';
-
-const sampleData = Datas[0];
+import { getQueryStringValue } from '@/utils/getQueryStringValue';
+import ProductResponse from '@shared/dtos/product/response';
 
 const DetailProduct = () => {
   window.scrollTo({ top: 0 });
 
-  const [product, setProduct] = useState<Info>({});
-
-  let timer: number = 0;
+  const [product, setProduct] = useState<ProductResponse.GetDetail>(null);
 
   useEffect(() => {
-    // (async () => {
-    //   await DetailProductStore.load(20);
-    //   console.log('DetailProductStore.products: ', toJS(DetailProductStore.products));
-    //   toJS(DetailProductStore.products)
-    //   setProduct(DetailProductStore.products);
-    // })();
-
-    setProduct(sampleData);
-  }, [AuthStore.isLogined]);
+    (async () => {
+      await DetailProductStore.load(Number(getQueryStringValue('id')));
+      setProduct(DetailProductStore.product);
+    })();
+  }, []);
 
   return (
-    <ProductContext.Provider
-      value={{
-        info: product,
-      }}
-    >
-      <WholeContainer>
-        <DetailProductContainer>
-          <Overview></Overview>
-          {product.name && <Detail />}
-        </DetailProductContainer>
-      </WholeContainer>
-    </ProductContext.Provider>
+    <WholeContainer>
+      <DetailProductContainer>
+        <Overview></Overview>
+        {product && <Detail />}
+      </DetailProductContainer>
+    </WholeContainer>
   );
 };
 
-export default observer(DetailProduct);
+export default DetailProduct;
 
 const WholeContainer = styled.div`
   display: flex;

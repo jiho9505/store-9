@@ -4,8 +4,16 @@ import styled from '@emotion/styled';
 import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
+import { getDateFormat } from '@/utils/dateParse';
 
-const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
+type BoardPost = {
+  title: string;
+  showContent: number[];
+  handleClickTitle: (e: React.MouseEvent<HTMLSpanElement>) => void;
+  postInfo: unknown;
+};
+
+const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
   const createFirstField = () => {
     return title === '상품 후기' ? (
       <StarContainer width="10%">
@@ -18,9 +26,18 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
     );
   };
 
+  const getAnonymousUserName = (userName: string): string => {
+    const userNameLength = userName.length;
+    const countToChange = Math.floor(userNameLength / 2);
+    const sliceStart = userNameLength - countToChange;
+    const sliceEnd = sliceStart + countToChange;
+    const anonymouseName = userName.slice(sliceStart, sliceEnd - 1);
+    return anonymouseName;
+  };
+
   const createPostlist = () => {
-    return infos.map((info, idx) => (
-      <tbody key={idx}>
+    return postInfo.map((info, idx) => (
+      <tbody key={info.id}>
         <PostTitleRow>
           {createFirstField()}
           <PostTitleContainer width="60%">
@@ -28,8 +45,8 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
               {info.title}
             </PostTitle>
           </PostTitleContainer>
-          <PostText width="15%">{info.userId}</PostText>
-          <PostText width="15%">{info.createAt}</PostText>
+          <PostText width="15%">{getAnonymousUserName(info.username)}</PostText>
+          <PostText width="15%">{getDateFormat(info.createAt)}</PostText>
         </PostTitleRow>
         {showContent.includes(idx) && (
           <PostContentRow>
