@@ -13,11 +13,6 @@ ReviewRouter.get('/:productId', ReviewController.getProductUserReview);
 ReviewRouter.post('/:productId', FileMiddleware.dataUpload, ReviewController.createUserReview);
 ReviewRouter.use('/:productId', ReviewMiddleware.checkReviewExist);
 ReviewRouter.delete('/:productId', FileMiddleware.dataDelete, ReviewController.deleteUserReview);
-ReviewRouter.put(
-  '/:productId',
-  FileMiddleware.dataDelete,
-  FileMiddleware.dataUpload,
-  ReviewController.updateUserReview
-);
+ReviewRouter.put('/:productId', FileMiddleware.dataUpload, ReviewController.updateUserReview);
 
 export default ReviewRouter;

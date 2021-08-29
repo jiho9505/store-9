@@ -12,7 +12,6 @@ namespace ReviewRequest {
   };
 
   export type Update = {
-    reviewId: number;
     title: string;
     content: string;
     rate: number;

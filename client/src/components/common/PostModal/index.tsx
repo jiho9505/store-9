@@ -114,7 +114,6 @@ const PostModal = ({
           title: inputRef.current.value,
           content: textAreaRef.current.value,
           rate,
-          images: [],
         });
       modifyAction.msg = '리뷰수정에 실패했습니다.';
     } else if (form === 'QNA') {
