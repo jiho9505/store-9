@@ -4,8 +4,10 @@ import styled from '@emotion/styled';
 import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
+import DetailProductStore from '@/stores/DetailProductStore';
 
-const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
+const BoardPost = ({ title, handleClickTitle, showContent }) => {
+  const { reviews, qnas } = DetailProductStore.product;
   const createFirstField = () => {
     return title === '상품 후기' ? (
       <StarContainer width="10%">
@@ -20,9 +22,19 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
     );
   };
 
+  const getAnonymousUserName = (userName: string): string => {
+    const userNameLength = userName.length;
+    const countToChange = Math.floor(userNameLength / 2);
+    const sliceStart = userNameLength - countToChange;
+    const sliceEnd = sliceStart + countToChange;
+    const anonymouseName = userName.slice(sliceStart, sliceEnd - 1);
+    return anonymouseName;
+  };
+
   const createPostlist = () => {
+    const infos = title === '상품 후기' ? reviews : qnas;
     return infos.map((info, idx) => (
-      <tbody key={idx}>
+      <tbody key={info.id}>
         <PostTitleRow>
           {createFirstField()}
           <PostTitleContainer width="60%">
@@ -30,7 +42,7 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
               {info.title}
             </PostTitle>
           </PostTitleContainer>
-          <PostText width="15%">{info.userId}</PostText>
+          <PostText width="15%">{getAnonymousUserName(info.username)}</PostText>
           <PostText width="15%">{info.createAt}</PostText>
         </PostTitleRow>
         {showContent.includes(idx) && (
