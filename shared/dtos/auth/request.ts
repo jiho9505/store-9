@@ -5,6 +5,10 @@ namespace AuthRequest {
   }
 
   export type Signup = FormData;
+
+  export type GithubLogin = {
+    code: string;
+  };
 }
 
 export default AuthRequest;

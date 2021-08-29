@@ -22,29 +22,30 @@ const Callback = () => {
     const error: string = qs.get('error');
     const codeData = { code };
 
+    if (!code) {
+      history.push('/');
+      return;
+    }
+
     if (error === 'access_denied' || error) {
       // 취소 눌렀을때
       history.go(-2);
       return;
     }
     const requestGithubLogin = async () => {
-      try {
-        const {
-          data: { id, isNotJoined },
-        }: AxiosResponse<GithubAuthResponse> = await axios.post(
-          `${process.env.API_URL}/api/auth/github`,
-          codeData,
-          { withCredentials: true }
-        );
-        if (isNotJoined) {
-          localStorage.setItem('loginId', id);
-          history.push('/signup');
-        } else {
-          await AuthStore.check();
-          history.push('/');
-        }
-      } catch (err) {
+      const result = await AuthStore.githubLogin(codeData);
+
+      if (!result.ok) {
         alert('깃허브 로그인에 실패했습니다. 홈으로 돌아갑니다');
+        history.push('/');
+        return;
+      }
+
+      if (result.isNotJoined) {
+        localStorage.setItem('loginId', result.id);
+        history.push('/signup');
+      } else {
+        await AuthStore.check();
         history.push('/');
       }
     };
