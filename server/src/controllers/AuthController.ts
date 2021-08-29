@@ -11,7 +11,8 @@ import { passwordUtils } from '../utils/password';
 
 const AuthController = {
   authorize: (req: Request, res: Response) => {
-    res.json({ ok: true, message: constant.USER_AUTHOIRZED });
+    const loginId = res.locals.user.login_id;
+    res.json({ ok: true, data: { loginId }, message: constant.USER_AUTHOIRZED });
   },
   login: async (req: Request, res: Response) => {
     try {
