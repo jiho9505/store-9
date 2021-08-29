@@ -36,7 +36,7 @@ const PostModal = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
-  const [starScore, setStarScore] = useState<number>(1);
+  const [starScore, setStarScore] = useState<number>(5);
 
   useEffect(() => {
     return () => {
