@@ -12,6 +12,7 @@ const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
 const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
 const alertMsg = '카테고리 목록을 불러오는데 실패하였습니다.';
+let timer: number = 0;
 
 const Navigation = () => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
@@ -23,7 +24,6 @@ const Navigation = () => {
   const [subCategories, setSubCategories] = useState([]);
   let catogoryStore = [];
   let subCatogoryStore = [];
-  let timer: number = 0;
 
   useEffect(() => {
     (async () => {
