@@ -8,8 +8,8 @@ type CategoryType = {
 }[];
 
 class CaregoryStore {
-  parentCategories: CategoryType;
-  subCategories: CategoryType;
+  parentCategories: CategoryType = [];
+  subCategories: CategoryType = [];
   productNames: string[];
 
   constructor() {
