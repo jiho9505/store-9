@@ -82,9 +82,6 @@ const showMessage = keyframes`
 `;
 
 const MessageContainer = styled.div<MessageContainerProps>`
-  /* transition: all 0.5s ease-in-out; */
-  /* transform: translateY(${(props) => (props.show ? '-350px' : '-500px')}); */
-  /* transform: translateY(-500px); */
   display: flex;
   align-items: center;
   justify-content: center;
