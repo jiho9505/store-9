@@ -100,7 +100,9 @@ const Container = styled.div`
   }
 `;
 
-const Table = styled.table``;
+const Table = styled.table`
+  width: 100%;
+`;
 
 const TableHeader = styled.thead`
   position: sticky;

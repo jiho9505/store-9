@@ -1,55 +1,54 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 
+import Message from '@/components/common/Message';
+
 import { baeminFont, greyLine } from '@/static/style/common';
-import { ProductContext } from '@/hooks/context';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
 
-import Message from '@/components/common/Message';
+import { debounce } from '@/utils/debouncer';
 import ModalPortal from '@/utils/portal';
 import AuthStore from '@/stores/AuthStore';
 import OrderApi from '@/apis/OrderApi';
+import DetailProductStore from '@/stores/DetailProductStore';
 
 type CartModeType = 'notlogin' | 'add' | 'fail';
-
 const addCartSuccessMsg = '장바구니에 추가하였습니다.';
 const addCartFailMsg = '장바구니 추가를 실패하였습니다.';
+let timer: number = 0;
 
 type CartProps = {
   selectedStock: number;
 };
+
 const Cart = ({ selectedStock }: CartProps) => {
-  const { info } = useContext(ProductContext);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
     messageContent: '',
     messageMode: 'fail',
   });
-  let timer: number = 0;
 
   useEffect(() => {
     return () => clearTimeout(timer);
   }, []);
 
-  /**
-   * TODO:
-   * 백에서 동일한 장바구니의 경우 중복제거를 해서 최신것을 넣어주면 좋을듯
-   * { productId: 55, amount: 2 } 수정할것
-   *
-   */
-  const handleClickText = async () => {
+  const handleClickText = debounce(async (e) => {
+    e.stopPropagation();
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
 
     try {
-      const result = await OrderApi.addCartItem({ productId: 2, amount: selectedStock });
+      const result = await OrderApi.addCartItem({
+        productId: DetailProductStore.product.productId,
+        amount: selectedStock,
+      });
       if (result.ok) {
         viewMsgByUserStatus('add');
       }
     } catch (e) {
       viewMsgByUserStatus('fail');
     }
-  };
+  });
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -70,14 +69,16 @@ const Cart = ({ selectedStock }: CartProps) => {
   };
 
   return (
-    <CartContainer onClick={handleClickText}>
-      <span>장바구니</span>
+    <>
+      <CartContainer onClick={handleClickText}>
+        <span>장바구니</span>
+      </CartContainer>
       {message.showMessage && (
         <ModalPortal>
           <Message text={message.messageContent} mode={message.messageMode} />
         </ModalPortal>
       )}
-    </CartContainer>
+    </>
   );
 };
 

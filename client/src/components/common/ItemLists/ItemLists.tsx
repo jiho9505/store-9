@@ -16,29 +16,15 @@ type ItemListsProps = {
 
 /**
  * TODO:
- * API 연동 후 값 동적으로 넣어야 합니다.
- * 별점과 라이크는 0이어도 띄우고 옆에 개수를 나타낸다.
- */
-
-/*    
-    데이터형식:
-    productId: number;
-    name: string;
-    price: number;
-    thumbnail: string;
-    reviewAverageRate: number;
-    reviewCount: number;
-    likeCount: number;
-    discountRate: number;
-    isGreen: boolean;
-    badges: string[];
+ * key 수정
+ * 타입 수정
  */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
       products.map((item, idx) => (
         <Item key={idx} className="item">
-          <ItemImage productImage={item.thumbnail} quantity={item.stock}></ItemImage>
+          <ItemImage item={item}></ItemImage>
           <ItemContent item={item}></ItemContent>
           {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
           <StarContainer>
@@ -72,6 +58,8 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
     </>
   );
 };
+
+export default ItemLists;
 
 const EmptyMessage = guguStyled.span`
   color: ${greySpan};
@@ -125,5 +113,3 @@ const ItemContainer = guguStyled.section`
   flex-wrap: wrap;
   gap: 40px 20px;
 `;
-
-export default ItemLists;

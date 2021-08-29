@@ -2,8 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import { baeminThickFont, greyBg1, greyLine, greySpan } from '@/static/style/common';
+import DetailProductStore from '@/stores/DetailProductStore';
 
 const DetailInfoTable = () => {
+  const { name } = DetailProductStore.product;
+
   return (
     <DetailInfoTableContainer>
       <Title>상품필수 정보</Title>
@@ -11,7 +14,7 @@ const DetailInfoTable = () => {
         <tbody>
           <Tr>
             <Th>종류</Th>
-            <Td>플리츠마마X배달의민족. 텀블러백</Td>
+            <Td>{name}</Td>
           </Tr>
           <Tr>
             <Th>소재</Th>
@@ -27,7 +30,7 @@ const DetailInfoTable = () => {
           </Tr>
           <Tr>
             <Th>제조자</Th>
-            <Td>플리츠마마</Td>
+            <Td>배달의민족</Td>
           </Tr>
           <Tr>
             <Th>제조국</Th>
