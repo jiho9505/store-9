@@ -6,12 +6,11 @@ import RefreshStore from '@/stores/RefreshStore';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import CIRCLE from '@/static/assets/img/circle.png';
-import CategoryApi from '@/apis/CategoryApi';
+import HeaderStore from '@/stores/HeaderStore';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
 const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
-const alertMsg = '카테고리 목록을 불러오는데 실패하였습니다.';
 let timer: number = 0;
 
 const Navigation = () => {
@@ -21,30 +20,18 @@ const Navigation = () => {
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
   const { refresh } = RefreshStore;
   const [categories, setCategories] = useState(initCategoryData);
-  const [subCategories, setSubCategories] = useState([]);
-  let catogoryStore = [];
-  let subCatogoryStore = [];
 
   useEffect(() => {
-    (async () => {
-      try {
-        const result = await CategoryApi.getCategories();
-        if (result.ok) {
-          setCategories([...categories, ...result.data.parentCategories]);
-          setSubCategories(result.data.subCategories);
-          catogoryStore = result.data.parentCategories;
-          subCatogoryStore = result.data.subCategories;
-        }
-      } catch (e) {
-        alert(alertMsg);
-      }
-    })();
-
     document.addEventListener('mouseover', handleMouseOverOnDocument);
     return () => {
       document.removeEventListener('mouseover', handleMouseOverOnDocument);
     };
   }, []);
+
+  useEffect(() => {
+    HeaderStore.parentCategories.length > 0 &&
+      setCategories([...categories, ...HeaderStore.parentCategories]);
+  }, [HeaderStore.parentCategories]);
 
   const handleMouseOverOnDocument = useCallback((e: Event) => {
     const { target } = e;
@@ -59,8 +46,8 @@ const Navigation = () => {
   }, []);
 
   const getCatgoryIdx = useCallback((ctgId) => {
-    if (ctgId > catogoryStore.length) {
-      subCatogoryStore.forEach((subcategory) => {
+    if (ctgId > HeaderStore.parentCategories.length) {
+      HeaderStore.subCategories.forEach((subcategory) => {
         if (subcategory.id === ctgId) ctgId = subcategory.parentId;
       });
     }
@@ -81,7 +68,7 @@ const Navigation = () => {
 
   const changeCategory = (id: number, itemName: string, itemXPos: number) => {
     if (!timer) return;
-    const newSubItems = subCategories.filter((item) => item.parentId === id);
+    const newSubItems = HeaderStore.subCategories.filter((item) => item.parentId === id);
 
     const extraXposToRemove =
       newSubItems.length % 2

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import guguStyled from '@/core/styled';
+
+import EmptyPannel from '../EmptyPannel';
 import ItemImage from './ItemImage/ItemImage';
 import ItemLabel from './ItemLabel/ItemLabel';
 import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
-import EMPTY from '@/static/assets/img/empty.png';
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
 
 type ItemListsProps = {
@@ -39,7 +40,7 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
       ))
     ) : (
       <EmptyContainer>
-        <img src={EMPTY} />
+        <EmptyPannel />
         <EmptyMessage>해당 제품이 없습니다...</EmptyMessage>
       </EmptyContainer>
     );

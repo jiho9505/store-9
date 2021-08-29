@@ -15,8 +15,8 @@ const sortByObj = {
   0: 'RECOMMEND',
   1: 'BEST',
   2: 'NEW',
-  3: 'LOW_PRICE',
-  4: 'HIGH_PRICE',
+  3: 'HIGH_PRICE',
+  4: 'LOW_PRICE',
 };
 const size = 20;
 const alertMsg = '상품 목록을 가져오는데 실패하였습니다';

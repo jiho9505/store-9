@@ -21,6 +21,8 @@ type PostModalProps = {
   formType: { form: 'REVIEW' | 'QNA'; mode: 'ENROLL' | 'MODIFY' };
 };
 
+let timeOutId: number;
+
 const PostModal = ({
   item,
   onClose,
@@ -33,11 +35,8 @@ const PostModal = ({
 
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
   const [starScore, setStarScore] = useState<number>(1);
-
-  let timeOutId: number;
 
   useEffect(() => {
     return () => {
@@ -53,11 +52,6 @@ const PostModal = ({
     }
   }, []);
 
-  /**
-   * TODO:
-   * 아래 내용과 product userId 등 조합해서 post 요청 보내야합니다.
-   * 그 후 mobx를 통해 상태 업뎃해서 상위부터 리렌더링 되게 하면 될것 같습니다.
-   */
   const handleClickEnrollBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
     const { form } = formType;
@@ -75,9 +69,9 @@ const PostModal = ({
           rate: starScore,
           images: [],
         });
-        onClose();
         refresh();
         load(product.id);
+        onClose();
       } catch (err) {
         alert('리뷰등록에 실패했습니다.');
       }
@@ -88,8 +82,8 @@ const PostModal = ({
           content,
           productId: product.id,
         });
-        onClose();
         load(product.id);
+        onClose();
       } catch (err) {
         alert('문의등록에 실패했습니다.');
       }
