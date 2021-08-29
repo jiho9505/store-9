@@ -160,7 +160,7 @@ const Zoom = styled.div<ZoomProps>`
   height: ${({ size }) => `${size}px`};
   position: absolute;
   border-radius: 100%;
-  border: 5px solid ${primary1};
+  border: 5px solid #e4e4e4;
   background: url(${({ backgroundUrl }) => backgroundUrl}) no-repeat;
   background-size: ${({ bgImgWidth, bgImgHeight }) => `${bgImgWidth}px ${bgImgHeight}px`};
   background-color: white;
