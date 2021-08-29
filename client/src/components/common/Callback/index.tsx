@@ -28,18 +28,23 @@ const Callback = () => {
       return;
     }
     const requestGithubLogin = async () => {
-      const {
-        data: { id, isNotJoined },
-      }: AxiosResponse<GithubAuthResponse> = await axios.post(
-        `${process.env.API_URL}/api/auth/github`,
-        codeData,
-        { withCredentials: true }
-      );
-      if (isNotJoined) {
-        localStorage.setItem('loginId', id);
-        history.push('/signup');
-      } else {
-        await AuthStore.check();
+      try {
+        const {
+          data: { id, isNotJoined },
+        }: AxiosResponse<GithubAuthResponse> = await axios.post(
+          `${process.env.API_URL}/api/auth/github`,
+          codeData,
+          { withCredentials: true }
+        );
+        if (isNotJoined) {
+          localStorage.setItem('loginId', id);
+          history.push('/signup');
+        } else {
+          await AuthStore.check();
+          history.push('/');
+        }
+      } catch (err) {
+        alert('깃허브 로그인에 실패했습니다. 홈으로 돌아갑니다');
         history.push('/');
       }
     };

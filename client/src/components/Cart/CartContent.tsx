@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import ListTable from '../common/ListTable';
 import TableItem from '../common/TableItem';
+import EmptyPannel from '../common/EmptyPannel';
 
 import { normalContainerWidth } from '@/static/style/common';
 
@@ -44,7 +45,7 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedItems }: CartC
   return (
     <CartContentContainer>
       {cartProducts.length === 0 ? (
-        <CartEmptyAlert>장바구니가 비었어요!!</CartEmptyAlert>
+        <EmptyPannel />
       ) : (
         <ListTable
           checkable={true}
@@ -61,11 +62,6 @@ const CartContent = ({ cartProducts, onCheck, onCheckAll, selectedItems }: CartC
 
 const CartContentContainer = styled.div`
   width: ${normalContainerWidth};
-`;
-
-const CartEmptyAlert = styled.div`
-  padding: 50px 0px 50px;
-  text-align: center;
 `;
 
 export default CartContent;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { observer } from 'mobx-react';
 
 import Detail from '@/components/DetailProduct/Detail';
 import Overview from '@/components/DetailProduct/Overview';
@@ -7,12 +8,12 @@ import Overview from '@/components/DetailProduct/Overview';
 import { ProductContext } from '@/hooks/context';
 import { normalContainerWidth } from '@/static/style/common';
 import DetailProductStore from '@/stores/DetailProductStore';
+import AuthStore from '@/stores/AuthStore';
 import Datas from '@/dummy';
 
 const sampleData = Datas[0];
 
 const DetailProduct = () => {
-  const { products, load } = DetailProductStore;
   window.scrollTo({ top: 0 });
 
   const [product, setProduct] = useState<Info>({});
@@ -20,13 +21,15 @@ const DetailProduct = () => {
   let timer: number = 0;
 
   useEffect(() => {
-    // (async() =>{
-    //   await load();
-    //   setProduct(products);
-    // })()
+    // (async () => {
+    //   await DetailProductStore.load(20);
+    //   console.log('DetailProductStore.products: ', toJS(DetailProductStore.products));
+    //   toJS(DetailProductStore.products)
+    //   setProduct(DetailProductStore.products);
+    // })();
 
     setProduct(sampleData);
-  }, []);
+  }, [AuthStore.isLogined]);
 
   return (
     <ProductContext.Provider
@@ -44,7 +47,7 @@ const DetailProduct = () => {
   );
 };
 
-export default DetailProduct;
+export default observer(DetailProduct);
 
 const WholeContainer = styled.div`
   display: flex;

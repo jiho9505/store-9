@@ -6,23 +6,17 @@ import StarComponent from '@/components/common/Star';
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
 
 const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
-  const createLockIcon = () => {
-    return (
-      title === '상품 문의' && (
-        <LockIcon>
-          <i className="fas fa-lock-open"></i>
-        </LockIcon>
-      )
-    );
-  };
-
   const createFirstField = () => {
     return title === '상품 후기' ? (
       <StarContainer width="10%">
         <StarComponent score={5}></StarComponent>
       </StarContainer>
     ) : (
-      <PostNumber width="10%">1</PostNumber>
+      <PostNumber width="10%">
+        <LockIcon>
+          <i className="fas fa-lock-open"></i>
+        </LockIcon>
+      </PostNumber>
     );
   };
 
@@ -31,7 +25,6 @@ const BoardPost = ({ infos, title, handleClickTitle, showContent }) => {
       <tbody key={idx}>
         <PostTitleRow>
           {createFirstField()}
-          {createLockIcon()}
           <PostTitleContainer width="60%">
             <PostTitle onClick={handleClickTitle} data-idx={idx}>
               {info.title}

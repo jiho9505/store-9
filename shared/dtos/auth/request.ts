@@ -1,5 +1,5 @@
 namespace AuthRequest {
-  export interface Login extends FormData {
+  export interface Login {
     id?: string;
     password?: string;
   }

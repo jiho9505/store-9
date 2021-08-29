@@ -1,28 +1,68 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+
+import Message from '@/components/common/Message';
 
 import useHistory from '@/hooks/customHooks/useHistory';
 import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
-
 import { ProductContext } from '@/hooks/context';
 import { greyLine, baeminFont } from '@/static/style/common';
+import AuthStore from '@/stores/AuthStore';
+import ModalPortal from '@/utils/portal';
+import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import OrderApi from '@/apis/OrderApi';
 
-const Buy = () => {
+const alertMsg = '과정에서 에러가 발생하였습니다';
+
+type BuyProps = {
+  selectedStock: number;
+};
+
+const Buy = ({ selectedStock }: BuyProps) => {
   const { info } = useContext(ProductContext);
   const history = useHistory();
-  const [BuyInfo, setBuyInfo] = useLocalStorage('buy', {});
+  const [BuyInfo, setBuyInfo] = useLocalStorage('cartInfo', {});
+  const [showMessage, setShowMessage] = useState<boolean>(false);
+
+  let timer: number = 0;
+
+  useEffect(() => {
+    return () => clearTimeout(timer);
+  }, []);
 
   /**
    * TODO:
-   * 1.POST (userid,productid,stock ...etc)
+   * 반환값을 이용하여
+   * 슬랙에서 받은 사진과 같은 데이터 형식으로 보낼것
    */
-  const handleClickText = () => {
-    setBuyInfo(info);
-    history.push('/order');
+  const handleClickText = async () => {
+    if (!AuthStore.isLogined) return createMsg();
+    try {
+      const result = await OrderApi.addCartItem({ productId: 55, amount: selectedStock });
+      if (result.ok) {
+        setBuyInfo(info);
+        history.push('/order');
+      }
+    } catch (e) {
+      alert(alertMsg);
+    }
   };
+
+  const createMsg = () => {
+    setShowMessage(true);
+    timer = setTimeout(() => {
+      setShowMessage(false);
+    }, showErrorMsgTime);
+  };
+
   return (
     <BuyContainer onClick={handleClickText}>
       <span>바로 구매</span>
+      {showMessage && (
+        <ModalPortal>
+          <Message text={requireLoginMsg} mode="fail" />
+        </ModalPortal>
+      )}
     </BuyContainer>
   );
 };

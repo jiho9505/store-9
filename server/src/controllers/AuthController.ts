@@ -11,17 +11,21 @@ import { passwordUtils } from '../utils/password';
 
 const AuthController = {
   authorize: (req: Request, res: Response) => {
-    res.json({ ok: true, message: constant.USER_AUTHOIRZED });
+    const loginId = res.locals.user.login_id;
+    res.json({ ok: true, data: { loginId }, message: constant.USER_AUTHOIRZED });
   },
   login: async (req: Request, res: Response) => {
     try {
       const { id: login_id, password }: AuthRequest.Login = req.body;
       const userRepository = getCustomRepository(UserRepository);
       const user = await userRepository.checkUserExist(login_id);
+
+      if (!user) {
+        res.status(constant.STATUS_AUTH_FAILURE).json({ ok: false, message: constant.WRONG_INFO });
+        return;
+      }
       const isPasswordSame = await passwordUtils.compare(password, user.password);
-      // TODO 가입 여부 확인 미들웨어로 분리
-      if (!user || !isPasswordSame) {
-        // TODO 이런 에러 처리 대신 에러 객체 만들어서 next
+      if (!isPasswordSame) {
         res.status(constant.STATUS_AUTH_FAILURE).json({ ok: false, message: constant.WRONG_INFO });
         return;
       }
@@ -34,7 +38,7 @@ const AuthController = {
         maxAge: constant.MILLISECONDS_OF_SEVEN_DAYS,
       };
       res.cookie(constant.AUTH_TOKEN_NAME, token, cookieOptions);
-      res.json({ ok: true, message: constant.LOGIN_SUCCESS });
+      res.json({ ok: true, data: { loginId: login_id }, message: constant.LOGIN_SUCCESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, message: err.message });
     }
@@ -97,7 +101,7 @@ const AuthController = {
         maxAge: constant.MILLISECONDS_OF_SEVEN_DAYS,
       };
       res.cookie(constant.AUTH_TOKEN_NAME, token, cookieOptions);
-      res.json({ ok: true, message: constant.LOGIN_SUCCESS });
+      res.json({ ok: true, data: { loginId: login_id }, message: constant.LOGIN_SUCCESS });
     } catch (err) {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, message: err.message });
     }
