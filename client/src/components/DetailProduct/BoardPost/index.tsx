@@ -4,11 +4,16 @@ import styled from '@emotion/styled';
 import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
-import DetailProductStore from '@/stores/DetailProductStore';
 import { getDateFormat } from '@/utils/dateParse';
 
-const BoardPost = ({ title, handleClickTitle, showContent }) => {
-  const { reviews, qnas } = DetailProductStore.product;
+type BoardPost = {
+  title: string;
+  showContent: number[];
+  handleClickTitle: (e: React.MouseEvent<HTMLSpanElement>) => void;
+  postInfo: unknown;
+};
+
+const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
   const createFirstField = () => {
     return title === '상품 후기' ? (
       <StarContainer width="10%">
@@ -33,8 +38,7 @@ const BoardPost = ({ title, handleClickTitle, showContent }) => {
   };
 
   const createPostlist = () => {
-    const infos = title === '상품 후기' ? reviews : qnas;
-    return infos.map((info, idx) => (
+    return postInfo.map((info, idx) => (
       <tbody key={info.id}>
         <PostTitleRow>
           {createFirstField()}

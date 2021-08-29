@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+
 import { lightBlack } from '@/static/style/common';
 
 type BoardPageNumber = {
