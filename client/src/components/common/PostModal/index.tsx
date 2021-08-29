@@ -31,6 +31,8 @@ const PostModal = ({
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
 
+  product.id = 3; //@@@@ 테스트용
+
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -77,7 +79,7 @@ const PostModal = ({
         });
         onClose();
         refresh();
-        load(product.productId);
+        load(product.id);
       } catch (err) {
         alert('리뷰등록에 실패했습니다.');
       }
@@ -89,7 +91,7 @@ const PostModal = ({
           productId: product.id,
         });
         onClose();
-        load(product.productId);
+        load(product.id);
       } catch (err) {
         alert('문의등록에 실패했습니다.');
       }

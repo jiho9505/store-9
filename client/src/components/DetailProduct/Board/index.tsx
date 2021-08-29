@@ -31,14 +31,22 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     showMessage: false,
     messageContent: '',
   });
-  const { products } = DetailProductStore;
+  // const { products } = DetailProductStore;
 
   let timer: number = 0;
 
   useEffect(() => {
-    setPostInfoDatas(postDummyDatas.slice(pageStart, pageEnd));
+    const getData = async () => {
+      const result = await DetailProductStore.getReviews();
+      setPostInfoDatas(result.reviews);
+    };
+    getData();
+
+    // console.log({ ...DetailProductStore.products });
+    // console.log(postInfoDatas);
+    // setPostInfoDatas(DetailProductStore?.products?.reviews?.slice(pageStart, pageEnd));
     return () => clearTimeout(timer);
-  }, []);
+  }, [DetailProductStore.products]);
 
   const createMsg = (title: string) => {
     setMessage({ showMessage: true, messageContent: title });
@@ -67,10 +75,10 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     setShowContent([]);
   };
 
-  useEffect(() => {
-    // 게시물 업데이트
-    // setPostInfoDatas(products.blah)
-  }, [products]);
+  // useEffect(() => {
+  //   // 게시물 업데이트
+  //   // setPostInfoDatas(products.blah)
+  // }, [products]);
 
   /**
    * TODO:
@@ -102,6 +110,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     }
     setShowContent([...showContent, index]);
   };
+
   return (
     <ProductBoardContainer>
       <BoardHeader title={title} handleClickButton={handleClickButton} />

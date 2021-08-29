@@ -4,7 +4,9 @@ import ProductApi from '@/apis/ProductApi';
 const alertMsg = '상품을 불러오는데 실패하였습니다.';
 
 class DetailProductStore {
-  products = {};
+  products = {
+    reviews: [],
+  };
 
   constructor() {
     makeAutoObservable(this);
@@ -18,6 +20,10 @@ class DetailProductStore {
       alert(alertMsg);
     }
   };
+
+  async getReviews() {
+    return this.products;
+  }
 }
 
 export default new DetailProductStore();
