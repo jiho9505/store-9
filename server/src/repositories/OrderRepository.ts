@@ -47,11 +47,7 @@ export default class OrderRepository extends Repository<Order> {
       AND o.status != '${OrderStatus.IN_CART}'
       GROUP BY o.user_id
     `);
-
-    console.log('~~~~~~~');
-    console.log(totalCount);
-    console.log('~~~~~~~');
-
+    
     return { orders, totalCount: Number(totalCount[0]?.count) };
   }
 

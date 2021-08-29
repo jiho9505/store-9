@@ -39,6 +39,7 @@ namespace OrderController {
             updatedAt: cur.updated_at,
             orderItems: [
               {
+                productId: cur.product_id,
                 productName: cur.name,
                 thumbnail: cur.thumbnail,
                 price: cur.price,

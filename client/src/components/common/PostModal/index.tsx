@@ -32,6 +32,7 @@ const PostModal = ({
   const { load } = DetailProductStore;
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
+
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);

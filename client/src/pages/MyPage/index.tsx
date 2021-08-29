@@ -1,4 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+
+import AuthStore from '@/stores/AuthStore';
 import guguStyled from '@/core/styled';
 
 const LikePage = React.lazy(() => import('./Like'));
@@ -11,12 +14,13 @@ import { LeftNav } from '@/components/MyPage';
 import { normalContainerWidth, baeminThickFont, baeminFont } from '@/static/style/common';
 
 const MyPage = () => {
+  const { loginId } = AuthStore;
   return (
     <MyPageContainer>
       <LeftNav />
       <MyPageContentContiner>
         <MyPageHeader>반가워요</MyPageHeader>
-        <UserName>OOO 님</UserName>
+        <UserName>{loginId} 님!!!</UserName>
         <Route path="/mypage/like">
           <LikePage />
         </Route>
@@ -59,4 +63,4 @@ const UserName = guguStyled.div`
   font-family: ${baeminFont};
 `;
 
-export default MyPage;
+export default observer(MyPage);

@@ -7,6 +7,7 @@ import ListTable from '../common/ListTable';
 import Cell from '../common/Cell';
 import EmptyPannel from '../common/EmptyPannel';
 
+import useHistory from '@/hooks/customHooks/useHistory';
 import { getDateFormat } from '@/utils/dateParse';
 import { greyButton } from '@/static/style/common';
 
@@ -44,13 +45,14 @@ const ReviewButton = ({ isReviewed, onClick }) => {
 const OrderContent = ({ orderProducts }: OrderContentProps) => {
   const [activeModal, setActiveModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
+  const history = useHistory();
 
   const handleClickReviewBtn = (idx) => (e) => {
     e.stopPropagation();
     const [parentIdx, childIdx] = idx.split('_');
     const { orderItems } = orderProducts[parentIdx];
     const { productId, thumbnail, productName } = orderItems[childIdx];
-    setSelectedProduct({ product: { id: productId, thumbnail, productName } });
+    setSelectedProduct({ product: { id: productId, thumbnail, name: productName } });
     handleOpenModal();
   };
 
@@ -60,6 +62,13 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 
   const handleOpenModal = () => {
     setActiveModal(true);
+  };
+
+  const handleClickRow = (idx) => {
+    const [parentIdx, childIdx] = idx.split('_');
+    const { orderItems } = orderProducts[parentIdx];
+    const { productId } = orderItems[childIdx];
+    history.push(`/detail?id=${productId}`)
   };
 
   const tableBody = useMemo(() => {
@@ -99,10 +108,10 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
 
   return (
     <OrderContentContainer>
-      {orderProducts.lenght === 0 ? (
+      {orderProducts.length === 0 ? (
         <EmptyPannel />
       ) : (
-        <ListTable header={tableHeader} body={tableBody} />
+        <ListTable header={tableHeader} body={tableBody} onClickRow={handleClickRow} />
       )}
       {activeModal && (
         <ModalPortal>

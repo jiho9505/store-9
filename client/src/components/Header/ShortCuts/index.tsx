@@ -23,7 +23,7 @@ const ShortCuts = () => {
     } else if (name === '로그아웃') {
       AuthStore.logout();
     } else if (name === '마이페이지') {
-      history.push('/mypage');
+      history.push('/mypage/like');
     } else if (name === '장바구니') {
       history.push('/cart');
     }
