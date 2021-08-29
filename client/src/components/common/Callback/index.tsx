@@ -31,7 +31,7 @@ const Callback = () => {
       const {
         data: { id, isNotJoined },
       }: AxiosResponse<GithubAuthResponse> = await axios.post(
-        'http://localhost:4000/api/auth/github',
+        `${process.env.API_URL}/api/auth/github`,
         codeData,
         { withCredentials: true }
       );
