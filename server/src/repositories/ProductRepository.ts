@@ -9,7 +9,7 @@ import { ProductSortBy } from '../../../shared/dtos/product/schema';
 export default class ProductRepository extends Repository<Product> {
   async getDetail({ productId, userId = 0 }: { productId: number; userId?: number }) {
     const product = await this.query(`
-      SELECT p.*, IFNULL(l.id, 0) AS is_like
+      SELECT p.*, IFNULL(l.id, 0) AS is_like, IFNULL(jo.order_item_product_id, 0) as is_bought
       FROM products p 
       LEFT JOIN (
         SELECT l.id, l.product_id
@@ -17,6 +17,16 @@ export default class ProductRepository extends Repository<Product> {
         WHERE l.user_id = ${userId}
       ) l
       ON p.id = l.product_id
+      LEFT JOIN (
+        SELECT o.*, joi.product_id as order_item_product_id
+        FROM orders o
+        INNER JOIN (
+          SELECT oi.*
+          FROM order_items oi
+        ) joi
+        ON joi.order_id = o.id
+      ) jo
+      ON jo.user_id = ${userId} AND jo.order_item_product_id = ${productId}
       WHERE p.id = ${productId}
     `);
 
@@ -190,9 +200,33 @@ export default class ProductRepository extends Repository<Product> {
 
     const whereName = `p.name LIKE '%${search}%'`;
 
-    const whereCategory = `WHERE p.category_id ${
-      categoryId ? `= ${categoryId}` : 'IS NOT NULL'
-    } AND ${whereName}`;
+    let parentCategories = await this.query(`
+      SELECT id
+      FROM categories
+      WHERE parent_id IS NULL
+    `);
+
+    parentCategories = parentCategories.map(({ id }) => id);
+
+    const isParentCategory = parentCategories.includes(Number(categoryId));
+
+    let whereCategory = '';
+
+    if (isParentCategory) {
+      let childrenCategoryIds = await this.query(`
+        select c.id
+        from categories c
+        where c.parent_id = ${categoryId}
+      `);
+
+      childrenCategoryIds = childrenCategoryIds.map(({ id }) => id);
+
+      whereCategory = `WHERE p.category_id IN (${childrenCategoryIds.join(',')})`;
+    } else {
+      whereCategory = `WHERE p.category_id ${
+        categoryId ? `= ${categoryId}` : 'IS NOT NULL'
+      } AND ${whereName}`;
+    }
 
     switch (sortBy) {
       case ProductSortBy.BEST:
@@ -336,5 +370,14 @@ export default class ProductRepository extends Repository<Product> {
     const product = this.findOne(result.identifiers[0].id);
 
     return product;
+  }
+
+  async getProductNames() {
+    const result = await this.query(`
+      select name 
+      from products
+    `);
+
+    return result;
   }
 }

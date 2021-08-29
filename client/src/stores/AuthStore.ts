@@ -8,6 +8,7 @@ class AuthStore {
   isLoading: boolean = false;
   isLogined: boolean = false;
   isError: boolean;
+  loginId: string;
 
   constructor() {
     makeAutoObservable(this);
@@ -17,8 +18,9 @@ class AuthStore {
     this.isLoading = true;
     try {
       const result = await AuthApi.login(body);
-      // this.myInfo = UserModel.create(result.data);
+
       this.isLogined = true;
+      this.loginId = result.data.loginId;
       if (this.isError) this.isError = false;
 
       return result;
@@ -50,6 +52,7 @@ class AuthStore {
     try {
       const result = await AuthApi.check();
       this.isLogined = result.ok;
+      this.loginId = result.data.loginId;
 
       if (!this.isError) this.isError = false;
       return result.ok;

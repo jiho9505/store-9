@@ -116,7 +116,14 @@ const ZoomableImage = ({ src, width = 500, height }: ZoomableImageProps) => {
           }}
         />
       )}
-      <SmallImg ref={imgRef} src={src} width={width} height={height} alt="product-image" />
+      <SmallImg
+        ref={imgRef}
+        referrerPolicy="no-referrer"
+        src={src}
+        width={width}
+        height={height}
+        alt="product-image"
+      />
     </ImgContainer>
   );
 };
@@ -153,7 +160,7 @@ const Zoom = styled.div<ZoomProps>`
   height: ${({ size }) => `${size}px`};
   position: absolute;
   border-radius: 100%;
-  border: 5px solid ${primary1};
+  border: 5px solid #e4e4e4;
   background: url(${({ backgroundUrl }) => backgroundUrl}) no-repeat;
   background-size: ${({ bgImgWidth, bgImgHeight }) => `${bgImgWidth}px ${bgImgHeight}px`};
   background-color: white;

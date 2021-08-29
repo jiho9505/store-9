@@ -1,4 +1,4 @@
-import { CustomRepositoryDoesNotHaveEntityError, getCustomRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import { JwtSignPayload } from '../utils/types';
 import OrderRequest from '../../../shared/dtos/order/request';
 import OrderResponse from '../../../shared/dtos/order/response';

@@ -43,10 +43,10 @@ namespace ProductController {
 
       const { soldProductAmounts, totalProductCount, products, totalCountByCategory } =
         await getCustomRepository(ProductRepository).getProductsByCategory({
-          categoryId,
+          categoryId: Number(categoryId),
           page,
           size,
-          search,
+          search: decodeURIComponent(search),
           sortBy,
         });
 
@@ -74,11 +74,13 @@ namespace ProductController {
   export const getDetail: RouteHandler<ProductRequest.GetDetail, ProductResponse.GetDetail> =
     async (req, res) => {
       try {
+        const userId = res.locals?.user?.id || 1;
         const { productId } = req.params;
 
         const { product, reviews, qnas, recommendProducts, totalProductCount, soldProductAmounts } =
           await getCustomRepository(ProductRepository).getDetail({
             productId,
+            userId,
           });
 
         const formatProduct = createProduct({
@@ -91,14 +93,15 @@ namespace ProductController {
         res.json({
           ok: true,
           data: {
-            productId,
+            productId: Number(productId),
             name: product.name,
             price: Number(product.price),
             stock: Number(product.stock),
             thumbnail: product.thumbnail,
-            contentImages: product.content?.split(';'),
+            contentImages: product.content?.split(';')?.filter(Boolean),
             discountRate: product.discount_rate,
             isLike: product.is_like !== '0',
+            isBuy: product.is_bought !== '0',
             reviews: reviews.map((review) => ({
               id: review.id,
               title: review.title,

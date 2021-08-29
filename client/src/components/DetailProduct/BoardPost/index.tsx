@@ -20,11 +20,9 @@ const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
         <StarComponent score={5}></StarComponent>
       </StarContainer>
     ) : (
-      <PostNumber width="10%">
-        <LockIcon>
-          <i className="fas fa-lock-open"></i>
-        </LockIcon>
-      </PostNumber>
+      <LockIcon width="10%">
+        <i className="fas fa-lock-open"></i>
+      </LockIcon>
     );
   };
 
@@ -126,5 +124,9 @@ const PostTitleContainer = styled(PostText)`
 const LockIcon = styled.td`
   i {
     margin-right: 15px;
+    font-size: 13px;
+    color: ${lightBlack};
+    color: ${baemin};
+    padding: 0px 20px;
   }
 `;
