@@ -9,10 +9,11 @@ import { ProductContext } from '@/hooks/context';
 import { greyLine, baeminFont } from '@/static/style/common';
 import AuthStore from '@/stores/AuthStore';
 import ModalPortal from '@/utils/portal';
-import { requireLoginMsg, showErrorMsgTime } from '@/static/constants';
+import { showErrorMsgTime } from '@/static/constants';
+import { alertMsg } from '@/utils/errorMessage';
 import OrderApi from '@/apis/OrderApi';
 
-const alertMsg = '과정에서 에러가 발생하였습니다';
+const errorMsg = '과정에서 에러가 발생하였습니다';
 
 type BuyProps = {
   selectedStock: number;
@@ -44,7 +45,7 @@ const Buy = ({ selectedStock }: BuyProps) => {
         history.push('/order');
       }
     } catch (e) {
-      alert(alertMsg);
+      alert(errorMsg);
     }
   };
 
@@ -60,7 +61,7 @@ const Buy = ({ selectedStock }: BuyProps) => {
       <span>바로 구매</span>
       {showMessage && (
         <ModalPortal>
-          <Message text={requireLoginMsg} mode="fail" />
+          <Message text={alertMsg['REQUIRED_LOGIN']} mode="fail" />
         </ModalPortal>
       )}
     </BuyContainer>
