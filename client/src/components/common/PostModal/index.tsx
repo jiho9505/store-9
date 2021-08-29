@@ -31,8 +31,6 @@ const PostModal = ({
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
 
-  product.id = 3; //@@@@ 테스트용
-
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -114,7 +112,6 @@ const PostModal = ({
           title: inputRef.current.value,
           content: textAreaRef.current.value,
           rate,
-          images: [],
         });
       modifyAction.msg = '리뷰수정에 실패했습니다.';
     } else if (form === 'QNA') {

@@ -16,8 +16,8 @@ type QnAContentProps = {
 
 const tableHeader = [
   { id: 'id', name: '번호', width: '10%' },
-  { id: 'productName', name: '제품명', width: '10%' },
-  { id: 'title', name: '문의명', width: '70%' },
+  { id: 'productName', name: '제품명', width: '30%' },
+  { id: 'title', name: '문의명', width: '40%' },
   { id: 'qnaDate', name: '문의날짜', width: '10%' },
 ];
 

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 
+import useHistory from '@/hooks/customHooks/useHistory';
 import guguStyled from '@/core/styled';
 
 import EmptyPannel from '../common/EmptyPannel';
@@ -28,6 +29,8 @@ const ProductInfoCell = ({ thumbNail, name }) => {
 };
 
 const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: LikeContentProps) => {
+  const history = useHistory();
+
   const tableBody = useMemo(
     () =>
       likeProducts.map((likeProduct) => {
@@ -46,6 +49,10 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
     [likeProducts]
   );
 
+  const handleClickRow = (id) => {
+    history.push(`/detail?id=${id}`);
+  };
+
   return (
     <div>
       {likeProducts.length === 0 ? (
@@ -57,6 +64,7 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
           body={tableBody}
           onCheck={onCheck}
           onCheckAll={onCheckAll}
+          onClickRow={handleClickRow}
           selectedItems={selectedProduct}
         />
       )}
