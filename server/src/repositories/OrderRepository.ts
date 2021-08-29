@@ -118,13 +118,28 @@ export default class OrderRepository extends Repository<Order> {
   }) {
     const cart = await this._checkCart(userId);
 
-    const result = await OrderItem.create({
+    const isExist = await OrderItem.find({
+      order_id: cart.id,
+      product_id: productId,
+    });
+
+    if (isExist.length !== 0) {
+      await this.updateCartItem({
+        orderItemId: isExist[0].id,
+        amount: amount + Number(isExist[0].amount),
+      });
+      return OrderItem.create({
+        amount,
+        order_id: cart.id,
+        product_id: productId,
+      });
+    }
+
+    return OrderItem.create({
       amount,
       order_id: cart.id,
       product_id: productId,
     }).save();
-
-    return result;
   }
 
   async updateCartItem({ orderItemId, amount }: { orderItemId: number; amount: number }) {
