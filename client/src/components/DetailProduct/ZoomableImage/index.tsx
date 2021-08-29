@@ -116,7 +116,14 @@ const ZoomableImage = ({ src, width = 500, height }: ZoomableImageProps) => {
           }}
         />
       )}
-      <SmallImg ref={imgRef} src={src} width={width} height={height} alt="product-image" />
+      <SmallImg
+        ref={imgRef}
+        referrerPolicy="no-referrer"
+        src={src}
+        width={width}
+        height={height}
+        alt="product-image"
+      />
     </ImgContainer>
   );
 };
