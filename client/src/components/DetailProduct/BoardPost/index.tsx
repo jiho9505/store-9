@@ -5,6 +5,7 @@ import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
 import { getDateFormat } from '@/utils/dateParse';
+import EmptyPannel from '@/components/common/EmptyPannel';
 
 type BoardPost = {
   title: string;
@@ -62,12 +63,22 @@ const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
 
   return (
     <BoardPostContainer>
-      <PostList>{createPostlist()}</PostList>
+      {postInfo.length > 0 ? (
+        <PostList>{createPostlist()}</PostList>
+      ) : (
+        <EmptyContainer>
+          <EmptyPannel />
+        </EmptyContainer>
+      )}
     </BoardPostContainer>
   );
 };
 
 export default BoardPost;
+
+const EmptyContainer = styled.div`
+  margin-top: 75px;
+`;
 
 const StarContainer = styled.td``;
 
