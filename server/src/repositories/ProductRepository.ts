@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Like, Repository } from 'typeorm';
 
 import { PRODUCT_GET_DETAIL, PRODUCT_GET_MAIN, PRODUCT_QUERY } from './constants/product';
 import Product from '../entities/product';
@@ -44,37 +44,37 @@ export default class ProductRepository extends Repository<Product> {
       LIMIT ${PRODUCT_GET_DETAIL.DETAIL_QNA_LIMIT}
     `);
 
-    // const recommendProducts = await this.query(`
-    //   SELECT
-    //     p.*,
-    //     ${PRODUCT_QUERY.COMMON_SELECT}
-    //   FROM products p
-    //   LEFT JOIN (
-    //     SELECT SUM(oi.amount) AS sold_cnt, oi.product_id
-    //     FROM order_items oi
-    //     GROUP BY oi.product_id
-    //   ) joi
-    //   ON joi.product_id = p.id
-    //   ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
-    //   ORDER BY joi.sold_cnt DESC
-    //   LIMIT 10
-    // `);
+    const recommendProducts = await this.query(`
+      SELECT
+        p.*,
+        ${PRODUCT_QUERY.COMMON_SELECT}
+      FROM products p
+      LEFT JOIN (
+        SELECT SUM(oi.amount) AS sold_cnt, oi.product_id
+        FROM order_items oi
+        GROUP BY oi.product_id
+      ) joi
+      ON joi.product_id = p.id
+      ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
+      ORDER BY RAND()
+      LIMIT ${PRODUCT_GET_DETAIL.DETAIL_RECOMMEND_PRODUCT_LIMIT}
+    `);
 
-    const productTotalSoldAmount = await this.query(`
-      SELECT SUM(oi.amount) AS product_total_amount
+    const soldProductAmounts = await this.query(`
+      SELECT SUM(oi.amount) AS sold_product_amount
       FROM order_items oi
       GROUP BY oi.product_id
     `);
 
-    const productCnt = await this.count();
+    const totalProductCount = await this.count();
 
     return {
       product: product[0],
       reviews,
       qnas,
-      // recommendProducts,
-      productTotalSoldAmount,
-      productCnt,
+      recommendProducts,
+      soldProductAmounts,
+      totalProductCount,
     };
   }
 
@@ -147,29 +147,29 @@ export default class ProductRepository extends Repository<Product> {
       LIMIT ${PRODUCT_GET_MAIN.MAIN_DISCOUNT_PRODUCT_LIMIT}
     `);
 
-    const productTotalSoldAmountPromise = this.query(`
-      SELECT SUM(oi.amount) AS product_total_amount
+    const soldProductAmountPromise = this.query(`
+      SELECT SUM(oi.amount) AS sold_product_amount
       FROM order_items oi
       GROUP BY oi.product_id
     `);
 
-    const productCntPromise = this.count();
+    const totalProductCountPromise = this.count();
 
-    const [bestProducts, newProducts, discountProducts, productTotalSoldAmount, productCnt] =
+    const [bestProducts, newProducts, discountProducts, soldProductAmounts, totalProductCount] =
       await Promise.all([
         bestProductsPromise,
         newProductsPromise,
         discountProductsPromise,
-        productTotalSoldAmountPromise,
-        productCntPromise,
+        soldProductAmountPromise,
+        totalProductCountPromise,
       ]);
 
     return {
       bestProducts,
       newProducts,
       discountProducts,
-      productTotalSoldAmount,
-      productCnt,
+      soldProductAmounts,
+      totalProductCount,
     };
   }
 
@@ -188,10 +188,11 @@ export default class ProductRepository extends Repository<Product> {
   }) {
     let QUERY: string;
 
-    // TODO 검색 api
-    // const name = Like(`%${search}%`);
+    const whereName = `p.name LIKE '%${search}%'`;
 
-    const whereCategory = `WHERE p.category_id ${categoryId ? `= ${categoryId}` : 'IS NOT NULL'}`;
+    const whereCategory = `WHERE p.category_id ${
+      categoryId ? `= ${categoryId}` : 'IS NOT NULL'
+    } AND ${whereName}`;
 
     switch (sortBy) {
       case ProductSortBy.BEST:
@@ -284,26 +285,26 @@ export default class ProductRepository extends Repository<Product> {
       ${whereCategory}
     `);
 
-    const productTotalSoldAmountPromise = this.query(`
-    SELECT SUM(oi.amount) AS product_total_amount
+    const soldProductAmountPromise = this.query(`
+    SELECT SUM(oi.amount) AS sold_product_amount
     FROM order_items oi
     GROUP BY oi.product_id
   `);
 
     const totalProductCountPromise = this.count();
 
-    const [products, totalCountByCategory, productTotalSoldAmount, totalProductCount] =
+    const [products, totalCountByCategory, soldProductAmounts, totalProductCount] =
       await Promise.all([
         productsPromise,
         totalCountByCategoryPromise,
-        productTotalSoldAmountPromise,
+        soldProductAmountPromise,
         totalProductCountPromise,
       ]);
 
     return {
       products,
       totalCountByCategory,
-      productTotalSoldAmount,
+      soldProductAmounts,
       totalProductCount,
     };
   }

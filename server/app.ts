@@ -17,17 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(env.auth.cookieSecret));
 app.use(express.static('public'));
-app.use(cors({ credentials: true, origin: env.client.origin }));
+app.use(cors({ credentials: true, origin: origins.dev }));
 app.use(morgan(env.isDev ? 'dev' : 'combine'));
-
-app.use((req, res, next) => {
-  const allowedOrigins = origins.dev;
-  const requestOrigin = req.headers.origin;
-  if (allowedOrigins.includes(requestOrigin)) {
-    res.setHeader('access-control-allow-origin', requestOrigin);
-  }
-  next();
-});
 
 app.use('/api', apiRouter);
 
