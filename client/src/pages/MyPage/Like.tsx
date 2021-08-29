@@ -78,9 +78,9 @@ const LikePage = () => {
     }
   };
 
-  const handleChangePage = async (page: number) => {
+  const handleChangePage = useCallback(async (page: number) => {
     await getLikeList(page);
-  };
+  }, []);
 
   return (
     <LikePageContainer>
