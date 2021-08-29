@@ -190,9 +190,33 @@ export default class ProductRepository extends Repository<Product> {
 
     const whereName = `p.name LIKE '%${search}%'`;
 
-    const whereCategory = `WHERE p.category_id ${
-      categoryId ? `= ${categoryId}` : 'IS NOT NULL'
-    } AND ${whereName}`;
+    let parentCategories = await this.query(`
+      SELECT id
+      FROM categories
+      WHERE parent_id IS NULL
+    `);
+
+    parentCategories = parentCategories.map(({ id }) => id);
+
+    const isParentCategory = parentCategories.includes(Number(categoryId));
+
+    let whereCategory = '';
+
+    if (isParentCategory) {
+      let childrenCategoryIds = await this.query(`
+        select c.id
+        from categories c
+        where c.parent_id = ${categoryId}
+      `);
+
+      childrenCategoryIds = childrenCategoryIds.map(({ id }) => id);
+
+      whereCategory = `WHERE p.category_id IN (${childrenCategoryIds.join(',')})`;
+    } else {
+      whereCategory = `WHERE p.category_id ${
+        categoryId ? `= ${categoryId}` : 'IS NOT NULL'
+      } AND ${whereName}`;
+    }
 
     switch (sortBy) {
       case ProductSortBy.BEST:
