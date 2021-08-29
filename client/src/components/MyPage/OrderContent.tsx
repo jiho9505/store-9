@@ -50,7 +50,7 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
     const [parentIdx, childIdx] = idx.split('_');
     const { orderItems } = orderProducts[parentIdx];
     const { productId, thumbnail, productName } = orderItems[childIdx];
-    setSelectedProduct({ product: { id: productId, thumbnail, productName } });
+    setSelectedProduct({ product: { id: productId, thumbnail, name: productName } });
     handleOpenModal();
   };
 
