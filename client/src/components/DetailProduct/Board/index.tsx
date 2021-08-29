@@ -20,12 +20,12 @@ type ProductBoardProps = {
 };
 
 let timer: number = 0;
+const initPageStart = 0;
+const initPageEnd = 10;
 
 const ProductBoard = ({ title }: ProductBoardProps) => {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
-  const [pageStart, setPageStart] = useState<number>(0);
-  const [pageEnd, setPageEnd] = useState<number>(10);
   const [isActiveModal, setIsActiveModal] = useState<boolean>(false);
   const [showContent, setShowContent] = useState<number[]>([]);
   const [message, setMessage] = useState<Message>({
@@ -33,14 +33,14 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     messageContent: '',
   });
   const [wholeDatas, setWholeDatas] = useState([]);
-  const { reviews, qnas } = DetailProductStore.product;
+  const { reviews, qnas, productId, isBuy } = DetailProductStore.product;
 
   useEffect(() => {
     if (title === '상품 후기') {
-      setPostInfoDatas(reviews.slice(pageStart, pageEnd));
+      setPostInfoDatas(reviews.slice(initPageStart, initPageEnd));
       setWholeDatas(reviews);
     } else if (title === '상품 문의') {
-      setPostInfoDatas(qnas.slice(pageStart, pageEnd));
+      setPostInfoDatas(qnas.slice(initPageStart, initPageEnd));
       setWholeDatas(qnas);
     }
     return () => clearTimeout(timer);
@@ -67,28 +67,13 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     const newEndPoint = newPageNumber * 10 + 10;
     const newPostInfoDatas = wholeDatas.slice(newStartPoint, newEndPoint);
     setPageNumber(newPageNumber);
-    setPageStart(newStartPoint);
-    setPageEnd(newEndPoint);
     setPostInfoDatas(newPostInfoDatas);
     setShowContent([]);
   };
 
-  useEffect(() => {
-    // 게시물 업데이트
-    // setPostInfoDatas(products.blah)
-  }, []);
-
-  /**
-   * TODO:
-   * post 후 store 업데이트 후 전체 새로운 데이터를 가져와야합니다.
-   *
-   * User login 유무 파악해서 처리 다르게 해야합니다
-   * 구매한 사람만 쓸 수 있게 예외처리 해야합니다. (우선순위 뒤)
-   *
-   * title이 문의냐 후기냐에 따라 if 분기문 작성
-   */
   const handleClickButton = () => {
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
+    if (title === '상품 후기' && !isBuy) return viewMsgByUserStatus('notbuy');
     setIsActiveModal(true);
   };
 
@@ -118,17 +103,24 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
         handleClickTitle={handleClickTitle}
         showContent={showContent}
       />
-      <BoardPageNumber
-        length={wholeDatas.length}
-        pageNumber={pageNumber}
-        handleClickNumber={handleClickNumber}
-      />
+      {wholeDatas.length > 0 && (
+        <BoardPageNumber
+          length={wholeDatas.length}
+          pageNumber={pageNumber}
+          handleClickNumber={handleClickNumber}
+        />
+      )}
       {isActiveModal && (
         <ModalPortal>
           <PostModal
             onClose={handleClickForClose}
             title={title}
-            item={DetailProductStore.product}
+            item={{
+              product: {
+                ...DetailProductStore.product,
+                id: productId,
+              },
+            }}
             formType={{ form: title === '상품 후기' ? 'REVIEW' : 'QNA', mode: 'ENROLL' }}
           />
         </ModalPortal>

@@ -56,7 +56,6 @@ class AuthStore {
 
       return result.ok;
     } catch (e) {
-      console.log(e);
       this.isError = true;
     }
   }

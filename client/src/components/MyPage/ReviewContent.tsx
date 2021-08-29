@@ -15,8 +15,8 @@ type ReviewContentProps = {
 
 const tableHeader = [
   { id: 'id', name: '번호', width: '10%' },
-  { id: 'productName', name: '제품명', width: '10%' },
-  { id: 'title', name: '제목', width: '70%' },
+  { id: 'productName', name: '제품명', width: '30%' },
+  { id: 'title', name: '제목', width: '40%' },
   { id: 'date', name: '날짜', width: '10%' },
 ];
 

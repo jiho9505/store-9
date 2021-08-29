@@ -33,7 +33,6 @@ const ReviewController = {
         message: constant.GET_REVIEW_SUCCEESS,
       });
     } catch (err) {
-      console.log(err.message);
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }
   },
@@ -78,7 +77,6 @@ const ReviewController = {
       await reviewRepository.createReview(review);
       res.json({ ok: true, message: constant.CREATE_REVIEW_SUCCESS });
     } catch (err) {
-      console.log(err.message);
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, err: err.message });
     }
   },

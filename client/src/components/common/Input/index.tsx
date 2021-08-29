@@ -18,6 +18,7 @@ type InputProps = {
   variant: inputVariant;
   error?: any;
   type?: string;
+  maxLength?: number;
   onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
   onKeyPress?(e: React.KeyboardEvent): void;
 };
@@ -32,6 +33,7 @@ const Input = ({
   placeholder = '',
   variant,
   error,
+  maxLength,
   ...otherProps
 }: InputProps) => {
   return (
@@ -46,6 +48,7 @@ const Input = ({
         placeholder={placeholder}
         variant={variant}
         error={error}
+        maxLength={maxLength}
         {...otherProps}
       />
       {error?.[name] && <ErrorMessage>{error[name]}</ErrorMessage>}

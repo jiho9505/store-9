@@ -5,6 +5,7 @@ import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
 import { getDateFormat } from '@/utils/dateParse';
+import EmptyPannel from '@/components/common/EmptyPannel';
 
 type BoardPost = {
   title: string;
@@ -29,9 +30,8 @@ const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
   const getAnonymousUserName = (userName: string): string => {
     const userNameLength = userName.length;
     const countToChange = Math.floor(userNameLength / 2);
-    const sliceStart = userNameLength - countToChange;
-    const sliceEnd = sliceStart + countToChange;
-    const anonymouseName = userName.slice(sliceStart, sliceEnd - 1);
+    const slicePoint = userNameLength - countToChange;
+    const anonymouseName = userName.slice(0, slicePoint) + '*'.repeat(userNameLength - slicePoint);
     return anonymouseName;
   };
 
@@ -62,12 +62,22 @@ const BoardPost = ({ postInfo, title, handleClickTitle, showContent }) => {
 
   return (
     <BoardPostContainer>
-      <PostList>{createPostlist()}</PostList>
+      {postInfo.length > 0 ? (
+        <PostList>{createPostlist()}</PostList>
+      ) : (
+        <EmptyContainer>
+          <EmptyPannel />
+        </EmptyContainer>
+      )}
     </BoardPostContainer>
   );
 };
 
 export default BoardPost;
+
+const EmptyContainer = styled.div`
+  margin-top: 75px;
+`;
 
 const StarContainer = styled.td``;
 
