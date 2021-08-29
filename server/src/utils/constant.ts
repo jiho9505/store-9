@@ -34,6 +34,8 @@ const constant = {
   STATUS_CONFLICT: 409,
   STATUS_INVALID_DATA: 422,
   STATUS_SERVER_ERROR: 500,
+
+  PRODUCT_LOAD_FAILURE: '상품 조회에 실패했습니다.',
 };
 
 export default constant;

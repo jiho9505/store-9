@@ -30,8 +30,9 @@ namespace ProductResponse {
     productId: number;
     name: string;
     price: number;
+    stock: number;
     thumbnail: string;
-    contentImages?: string[];
+    content_urls?: string[];
     discountRate: number;
     isLike: boolean;
     reviews: {
