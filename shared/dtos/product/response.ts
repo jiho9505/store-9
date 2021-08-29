@@ -32,7 +32,7 @@ namespace ProductResponse {
     price: number;
     stock: number;
     thumbnail: string;
-    content_urls?: string[];
+    contentImages?: string[];
     discountRate: number;
     isLike: boolean;
     reviews: {

@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import CategoryRepository from '../repositories/CategoryRepository';
 import CategoryResponse from '../../../shared/dtos/category/response';
 import Category from '../entities/category';
+import ProductRepository from '../repositories/ProductRepository';
 
 namespace CategoryController {
   export const getCategories: RouteHandler<null, CategoryResponse.GetCategories> = async (
@@ -9,6 +10,7 @@ namespace CategoryController {
     res
   ) => {
     const categoires = await getCustomRepository(CategoryRepository).getCategories();
+    const productNames = await getCustomRepository(ProductRepository).getProductNames();
 
     const createCategoryData = (category: Category) => ({
       id: category.id,
@@ -29,6 +31,7 @@ namespace CategoryController {
       data: {
         parentCategories,
         subCategories,
+        productNames: Array.from(new Set(productNames.map(({ name }) => name).concat('지우개'))),
       },
     });
   };

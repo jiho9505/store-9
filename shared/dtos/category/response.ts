@@ -10,6 +10,7 @@ namespace CategoryResponse {
       name: string;
       parentId: number;
     }[];
+    productNames: string[];
   };
 }
 

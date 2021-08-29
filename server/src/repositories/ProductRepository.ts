@@ -337,4 +337,13 @@ export default class ProductRepository extends Repository<Product> {
 
     return product;
   }
+
+  async getProductNames() {
+    const result = await this.query(`
+      select name 
+      from products
+    `);
+
+    return result;
+  }
 }
