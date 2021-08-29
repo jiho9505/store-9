@@ -5,6 +5,7 @@ import StarComponent from '@/components/common/Star';
 
 import { baemin, greyBg1, greyLine, lightBlack } from '@/static/style/common';
 import DetailProductStore from '@/stores/DetailProductStore';
+import { getDateFormat } from '@/utils/dateParse';
 
 const BoardPost = ({ title, handleClickTitle, showContent }) => {
   const { reviews, qnas } = DetailProductStore.product;
@@ -43,7 +44,7 @@ const BoardPost = ({ title, handleClickTitle, showContent }) => {
             </PostTitle>
           </PostTitleContainer>
           <PostText width="15%">{getAnonymousUserName(info.username)}</PostText>
-          <PostText width="15%">{info.createAt}</PostText>
+          <PostText width="15%">{getDateFormat(info.createAt)}</PostText>
         </PostTitleRow>
         {showContent.includes(idx) && (
           <PostContentRow>
