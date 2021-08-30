@@ -24,6 +24,7 @@ const constant = {
   CREATE_LIKE_SUCCESS: '좋아요 목록에 추가되었습니다.',
   DELETE_LIKE_SUCCESS: '좋아요 삭제가 완료되었습니다.',
   S3_SAVE_ERROR: 'S3 업로드에 실패했습니다',
+  JWT_ERROR: 'JWT 토큰 해석 에러',
 
   GET_TOKEN_URL: `https://github.com/login/oauth/access_token`,
   GET_USER_INFO_URL: `https://api.github.com/user`,

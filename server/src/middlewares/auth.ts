@@ -52,6 +52,20 @@ const AuthMiddleware = {
       res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, message: err.message });
     }
   },
+  injectUserId: async (req: Request, res: Response, next: NextFunction) => {
+    const { AUTH_TOKEN: token } = req.signedCookies;
+    try {
+      const { ok, decoded, err }: JwtVerifyResult = jwt.verify(token);
+      if (!ok) {
+        res.status(constant.STATUS_NO_AUTHORIZED).json({ ok: false, message: err });
+        return;
+      }
+      res.locals.user = decoded;
+      next();
+    } catch (err) {
+      res.status(constant.STATUS_SERVER_ERROR).json({ ok: false, message: constant.JWT_ERROR });
+    }
+  },
   githubAuthInitialRequest: async (req: Request, res: Response, next: NextFunction) => {
     const { code } = req.body;
 
