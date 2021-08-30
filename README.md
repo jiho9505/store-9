@@ -1,9 +1,10 @@
-## 구구 비둘기파 (9팀)
+## 🕊 구구 비둘기파 (9팀) 🐦
 
 조직원 : 문지호, 안준범, 이재윤, 조혁주 
 <br><br>
 
 ## 배민 문방구 프로젝트
+게스트 로그인 / id: guest, password: 1234
 
 ### ``기술스택 ``
 
@@ -46,10 +47,85 @@
 
 - 위와 같은 코드리뷰에서 유발되는 다음날 아침의 [스크럼](https://github.com/woowa-techcamp-2021/store-9/wiki)회의에서의 토론
 
+### ``폴더구조``
+
+```
+client
+
+├── /node_modules
+├── /@types
+├── /config
+├── .env
+├── .eslintrc
+├── tsconfig.json
+└── /src
+    ├── /apis
+    ├── /components
+    ├── /core
+    ├── /hooks
+    ├── /pages
+    ├── /remotes
+    ├── /static
+    ├── /stores
+    ├── /utils
+    ├── app.tsx
+    ├── index.html
+    └── index.tsx
+```
+
+```
+server
+
+├── /node_modules
+├── /@types
+├── /config
+├── .env
+├── .eslintrc
+├── tsconfig.json
+└── /src
+    ├── /apis
+    ├── /components
+    ├── /core
+    ├── /hooks
+    ├── /pages
+    ├── /remotes
+    ├── /static
+    ├── /stores
+    ├── /utils
+    ├── app.tsx
+    ├── index.html
+    └── index.tsx
+```
+
+```
+shared
+
+├── /node_modules
+├── /@types
+├── /config
+├── .env
+├── .eslintrc
+├── tsconfig.json
+└── /src
+    ├── /apis
+    ├── /components
+    ├── /core
+    ├── /hooks
+    ├── /pages
+    ├── /remotes
+    ├── /static
+    ├── /stores
+    ├── /utils
+    ├── app.tsx
+    ├── index.html
+    └── index.tsx
+```
+
 
 
 
 ❗️이 구역은 우리가 접수한다❗️
 
 
-<img width="500" height="500" alt="스크린샷 2021-08-13 오후 12 14 43" src="https://user-images.githubusercontent.com/50862052/129299953-83b7f341-4dc4-4594-b536-05343fb83142.png">
+
+<img width="500" height="500" alt="스크린샷 2021-08-13 오후 12 14 43" src="https://user-images.githubusercontent.com/32658347/131289707-fe4d9181-d302-4df9-ae9c-792cb4833fff.png">
