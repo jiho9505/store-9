@@ -37,12 +37,12 @@ const Buy = ({ selectedStock }: BuyProps) => {
         amount: selectedStock,
       });
       if (result.ok) {
-        const { id, amount, orderId } = result.data;
+        const { id, amount, order_id } = result.data;
         setBuyInfo({
-          cartId: id,
+          cartId: order_id,
           products: [
             {
-              id: result.data.id,
+              id,
               amount,
               product: DetailProductStore.product,
             },
