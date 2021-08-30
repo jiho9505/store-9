@@ -49,7 +49,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       setWholeDatas(DetailProductStore.product.qnas);
     }
     return () => clearTimeout(timer);
-  }, [DetailProductStore.product]);
+  }, [DetailProductStore.product, RefreshStore.refreshComponent]);
 
   const createMsg = (title: string) => {
     setMessage({ showMessage: true, messageContent: title });
@@ -85,6 +85,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     //   return viewMsgByUserStatus('notbuy');
     // if (DetailProductStore.errorOn) return viewMsgByUserStatus('alreadyWrite');
     setIsActiveModal(true);
+    RefreshStore.refresh();
   };
 
   const handleClickForClose = () => {
