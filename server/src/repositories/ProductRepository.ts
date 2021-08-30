@@ -9,7 +9,7 @@ import { ProductSortBy } from '../../../shared/dtos/product/schema';
 export default class ProductRepository extends Repository<Product> {
   async getDetail({ productId, userId = 0 }: { productId: number; userId?: number }) {
     const product = await this.query(`
-      SELECT p.*, IFNULL(l.id, 0) AS is_like, IFNULL(jo.order_item_product_id, 0) as is_bought
+      SELECT p.*, IFNULL(l.id, 0) AS is_like, IFNULL(jo.order_item_product_id, 0) AS is_bought, IFNULL(jd.rate, 0) AS discount_rate
       FROM products p 
       LEFT JOIN (
         SELECT l.id, l.product_id
@@ -27,6 +27,11 @@ export default class ProductRepository extends Repository<Product> {
         ON joi.order_id = o.id
       ) jo
       ON jo.user_id = ${userId} AND jo.order_item_product_id = ${productId}
+      LEFT JOIN (
+        SELECT d.*
+        FROM discounts d
+      ) jd
+      ON jd.product_id = p.id
       WHERE p.id = ${productId}
     `);
 
@@ -248,6 +253,7 @@ export default class ProductRepository extends Repository<Product> {
           ) o
           ON p.id = o.product_id
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
+          ${whereCategory}
           GROUP BY p.id
           ORDER BY total_amount DESC
           LIMIT ${size}

@@ -11,7 +11,7 @@ const timeToChangeSlide = 3000;
 const matchedProductId = {
   1: 1060,
   2: 1112,
-  3: 1053,
+  3: 1243,
 };
 
 /**
