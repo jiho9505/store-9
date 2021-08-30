@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
 import { Link } from '@/core/Router';
@@ -7,10 +7,33 @@ import Navigation from './Navigation';
 import SearchBar from './SearchBar';
 import ShortCuts from './ShortCuts';
 
+import CategoryApi from '@/apis/CategoryApi';
 import { normalContainerWidth } from '@/static/style/common';
 import LOGO from '@/static/assets/img/logo.png';
+import { alertMsg } from '@/utils/errorMessage';
+
+const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
 
 const Header = () => {
+  const [categories, setCategories] = useState(initCategoryData);
+  const [subCategories, setSubCategories] = useState([]);
+  const [words, setWords] = useState<string[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await CategoryApi.getCategories();
+        if (result.ok) {
+          setCategories([...categories, ...result.data.parentCategories]);
+          setSubCategories(result.data.subCategories);
+          setWords(result.data.productNames);
+        }
+      } catch (e) {
+        alert(alertMsg['CATEGORY_FAIL']);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <ShortCuts />
@@ -19,9 +42,9 @@ const Header = () => {
           <LogoLink to="/">
             <Logo src={LOGO} />
           </LogoLink>
-          <SearchBar />
+          <SearchBar words={words} />
         </SearchHeader>
-        <Navigation />
+        <Navigation categories={categories} subCategories={subCategories} />
       </HeaderContainer>
     </>
   );

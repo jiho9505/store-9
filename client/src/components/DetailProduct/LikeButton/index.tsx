@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
 
@@ -12,28 +12,15 @@ import AuthStore from '@/stores/AuthStore';
 import { greyLine } from '@/static/style/common';
 import { alertMsg } from '@/utils/errorMessage';
 
-type LikeModeType = 'notlogin' | 'add' | 'remove' | 'fail';
-const addLikeMsg = '관심목록에 추가하였습니다.';
-const removeLikeMsg = '관심목록에서 제거하였습니다.';
-const addLikeFailMsg = '관심목록 추가가 안되었습니다.';
+type LikeModeType = 'notlogin' | 'add' | 'remove';
 let timer: number = 0;
 
 const Like = () => {
-  const [isIconActive, setIsIconActive] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
     messageContent: '',
     messageMode: 'fail',
   });
-
-  useEffect(() => {
-    if (!AuthStore.isLogined) {
-      setIsIconActive(false);
-      return;
-    }
-    DetailProductStore.product.isLike ? setIsIconActive(true) : setIsIconActive(false);
-    return () => clearTimeout(timer);
-  }, [AuthStore.isLogined]);
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -47,11 +34,9 @@ const Like = () => {
     if (mode === 'notlogin') {
       createMsg('fail', alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'add') {
-      createMsg('success', addLikeMsg);
+      createMsg('success', alertMsg['SUCCESS_ADD_LIKE']);
     } else if (mode === 'remove') {
-      createMsg('success', removeLikeMsg);
-    } else if (mode === 'fail') {
-      createMsg('fail', addLikeFailMsg);
+      createMsg('success', alertMsg['SUCCESS_REMOVE_LIKE']);
     }
   };
 
@@ -61,22 +46,21 @@ const Like = () => {
     try {
       const result = await UserApi.toggleLike({ productId: DetailProductStore.product.productId });
       if (result.ok) {
-        if (isIconActive) {
-          viewMsgByUserStatus('remove');
-          setIsIconActive(false);
-        } else if (!isIconActive) {
-          viewMsgByUserStatus('add');
-          setIsIconActive(true);
-        }
+        DetailProductStore.product.isLike
+          ? viewMsgByUserStatus('remove')
+          : viewMsgByUserStatus('add');
       }
     } catch (e) {
-      viewMsgByUserStatus('fail');
+      viewMsgByUserStatus('notlogin');
     }
   };
 
   return (
     <LikeContainer>
-      <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickBtn}></i>
+      <i
+        className={`${DetailProductStore.product.isLike ? 'fas' : 'far'} fa-heart`}
+        onClick={handleClickBtn}
+      ></i>
       {message.showMessage && (
         <ModalPortal>
           <Message text={message.messageContent} mode={message.messageMode} />

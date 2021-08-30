@@ -34,7 +34,7 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
   const tableBody = useMemo(
     () =>
       likeProducts.map((likeProduct, idx) => {
-        const { id, product_id, product } = likeProduct;
+        const { product } = likeProduct;
         return {
           id: idx,
           cells: [

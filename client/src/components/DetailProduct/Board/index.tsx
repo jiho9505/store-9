@@ -13,8 +13,8 @@ import DetailProductStore from '@/stores/DetailProductStore';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
 import AuthStore from '@/stores/AuthStore';
+import RefreshStore from '@/stores/RefreshStore';
 
-const requireBuyHistoryMsg = '구매한 상품에 한해서 작성이 가능합니다.';
 type ProductBoardProps = {
   title: string;
 };
@@ -23,6 +23,10 @@ let timer: number = 0;
 const initPageStart = 0;
 const initPageEnd = 10;
 
+/**
+ * TODO:
+ * 안되면 refresh 이용하기.
+ */
 const ProductBoard = ({ title }: ProductBoardProps) => {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
@@ -44,8 +48,9 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       setWholeDatas(DetailProductStore.product.qnas);
     }
     return () => clearTimeout(timer);
-  }, [DetailProductStore.product]);
+  }, [RefreshStore.refreshComponent]);
 
+  console.log(1);
   const createMsg = (title: string) => {
     setMessage({ showMessage: true, messageContent: title });
     timer = setTimeout(() => {
@@ -57,7 +62,9 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     if (mode === 'notlogin') {
       createMsg(alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'notbuy') {
-      createMsg(requireBuyHistoryMsg);
+      createMsg(alertMsg['REQUIRE_BUY']);
+    } else if (mode === 'alreadyWrite') {
+      createMsg(alertMsg['AIREADY_WRITE']);
     }
   };
 
@@ -72,15 +79,18 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   };
 
   const handleClickButton = () => {
-    console.log('isBuy Value', DetailProductStore.product.isBuy, isBuy);
+    // console.log('isBuy Value', DetailProductStore.product.isBuy, isBuy);
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
     if (title === '상품 후기' && !DetailProductStore.product.isBuy)
       return viewMsgByUserStatus('notbuy');
+    if (DetailProductStore.errorOn) return viewMsgByUserStatus('alreadyWrite');
     setIsActiveModal(true);
   };
 
-  const handleClickForClose = () => {
+  const handleClickForClose = async () => {
     setIsActiveModal(false);
+    await DetailProductStore.load(DetailProductStore.product.productId);
+    RefreshStore.refresh();
   };
 
   const handleClickTitle = (e: React.MouseEvent<HTMLSpanElement>) => {

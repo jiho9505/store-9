@@ -6,12 +6,6 @@ import FeatureSection from '@/components/Main/FeatureSection/FeatureSection';
 import GiftSection from '@/components/Main/GiftSection/GiftSection';
 import ProductApi from '@/apis/ProductApi';
 
-/**
- * TODO:
- * alertMsg => 서버 메시지로 변경
- */
-const alertMsg = '아이템을 불러오는데 실패하였습니다.';
-
 const Main = () => {
   const [products, setProducts] = useState({
     best: [],
@@ -31,7 +25,7 @@ const Main = () => {
           });
         }
       } catch (e) {
-        alert(alertMsg);
+        alert(e.response.data.message);
       }
     })();
   }, []);

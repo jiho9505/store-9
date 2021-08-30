@@ -9,3 +9,9 @@ type Message = {
   messageContent?: string;
   messageMode?: MessageModeType;
 };
+
+type CategoryType = {
+  id: number;
+  name: string;
+  parentId: number | null;
+}[];

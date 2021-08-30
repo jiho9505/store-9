@@ -13,8 +13,6 @@ import { alertMsg } from '@/utils/errorMessage';
 import OrderApi from '@/apis/OrderApi';
 import DetailProductStore from '@/stores/DetailProductStore';
 
-const errorMsg = '과정에서 에러가 발생하였습니다';
-
 type BuyProps = {
   selectedStock: number;
 };
@@ -30,14 +28,16 @@ const Buy = ({ selectedStock }: BuyProps) => {
   }, []);
 
   const handleClickText = async () => {
-    if (!AuthStore.isLogined) return createMsg();
+    // if (!AuthStore.isLogined) return createMsg();
     try {
       const result = await OrderApi.addCartItem({
         productId: DetailProductStore.product.productId,
         amount: selectedStock,
       });
       if (result.ok) {
-        const { id, amount, order_id } = result.data;
+        const { id, amount, order_id, orderId } = result.data;
+        console.log('orderId: ', orderId);
+        console.log(' order_id : ', order_id);
         setBuyInfo({
           cartId: order_id,
           products: [
@@ -51,7 +51,7 @@ const Buy = ({ selectedStock }: BuyProps) => {
         history.push('/order');
       }
     } catch (e) {
-      alert(errorMsg);
+      alert(alertMsg.ERROR_MSG);
     }
   };
 

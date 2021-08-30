@@ -12,19 +12,25 @@ import { baeminFont, greySpan, red1 } from '@/static/style/common';
 
 type ItemListsProps = {
   observeTag?: () => void;
-  products;
+  products: {
+    productId?: number;
+    name?: string;
+    reviewAverageRate?: number;
+    reviewCount?: number;
+    likeCount?: number;
+    discountRate?: number;
+    isGreen?: boolean;
+    badges?: string[];
+    stock?: number;
+  }[];
+  showEndTag?: boolean;
 };
 
-/**
- * TODO:
- * key 수정
- * 타입 수정
- */
-const ItemLists = ({ observeTag, products }: ItemListsProps) => {
+const ItemLists = ({ showEndTag, observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item, idx) => (
-        <Item key={idx} className="item">
+      products.map((item) => (
+        <Item key={item.productId} className="item">
           <ItemImage item={item}></ItemImage>
           <ItemContent item={item}></ItemContent>
           {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
@@ -47,14 +53,14 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   };
 
   useEffect(() => {
-    observeTag && observeTag();
-  }, [products]);
+    observeTag?.();
+  });
 
   return (
     <>
       <ItemContainer>
         {createItem()}
-        <EndPositionTag className="item" id="end" />
+        {observeTag && <EndPositionTag className="item" id="end" />}
       </ItemContainer>
     </>
   );
@@ -103,7 +109,9 @@ const StarContainer = guguStyled.div`
   }
 `;
 
-const EndPositionTag = styled.div``;
+const EndPositionTag = styled.div`
+  margin-top: 600px;
+`;
 
 const Item = guguStyled.article`
   position: relative;

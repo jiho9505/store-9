@@ -11,6 +11,7 @@ import {
   lightBlack,
 } from '@/static/style/common';
 import DetailProductStore from '@/stores/DetailProductStore';
+import RefreshStore from '@/stores/RefreshStore';
 
 type DetailTab = {
   choicedIdx: number;
@@ -20,14 +21,13 @@ type DetailTab = {
 const TabName = ['상품상세정보', '배송안내', '교환 및 반품안내', '상품후기', '상품문의'];
 
 const DetailTab = ({ choicedIdx, handleClickItemName }: DetailTab) => {
-  const { qnas, reviews } = DetailProductStore.product;
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [qnaCount, setqnaCount] = useState<number>(0);
 
   useEffect(() => {
-    setReviewCount(reviews.length);
-    setqnaCount(qnas.length);
-  }, [DetailProductStore.product]);
+    setReviewCount(DetailProductStore.product.reviews.length);
+    setqnaCount(DetailProductStore.product.qnas.length);
+  }, [RefreshStore.refreshComponent]);
 
   const createTabItem = () => {
     return TabName.map((itemName, idx) => (

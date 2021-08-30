@@ -6,13 +6,16 @@ import RefreshStore from '@/stores/RefreshStore';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import CIRCLE from '@/static/assets/img/circle.png';
-import HeaderStore from '@/stores/HeaderStore';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
 let timer: number = 0;
 
-const Navigation = () => {
+type NavigationProps = {
+  categories: CategoryType;
+  subCategories: CategoryType;
+};
+const Navigation = ({ categories, subCategories }: NavigationProps) => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
@@ -39,8 +42,8 @@ const Navigation = () => {
   }, []);
 
   const getCatgoryIdx = useCallback((ctgId) => {
-    if (ctgId > HeaderStore.parentCategories.length) {
-      HeaderStore.subCategories.forEach((subcategory) => {
+    if (ctgId > categories.length) {
+      subCategories.forEach((subcategory) => {
         if (subcategory.id === ctgId) ctgId = subcategory.parentId;
       });
     }
@@ -61,7 +64,7 @@ const Navigation = () => {
 
   const changeCategory = (id: number, itemName: string, itemXPos: number) => {
     if (!timer) return;
-    const newSubItems = HeaderStore.subCategories.filter((item) => item.parentId === id);
+    const newSubItems = subCategories.filter((item) => item.parentId === id);
 
     const extraXposToRemove =
       newSubItems.length % 2
@@ -85,7 +88,7 @@ const Navigation = () => {
   return (
     <NavigationContainer id="NavBorder">
       <Menu>
-        {HeaderStore.parentCategories.map((category) => (
+        {categories.map((category) => (
           <Item key={category.name}>
             <CategoryLink
               onClick={handleClickLink}

@@ -1,12 +1,14 @@
 import React, { Suspense, useEffect } from 'react';
 import { observer } from 'mobx-react';
-
 import guguStyled from '@/core/styled';
 import { Router, Route } from './core/Router';
 
-const Header = React.lazy(() => import('@/components/Header'));
-const Footer = React.lazy(() => import('@/components/Footer'));
-const ButtonToMoveToTop = React.lazy(() => import('@/components/ButtonToMoveToTop'));
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import ButtonToMoveToTop from '@/components/ButtonToMoveToTop';
+import Loading from './components/common/Loading';
+import AuthStore from './stores/AuthStore';
+import Redirect from './components/Redirect';
 const LoginPage = React.lazy(() => import('@/pages/Login'));
 const SignupMethod = React.lazy(() => import('@/pages/SignupMethod'));
 const Main = React.lazy(() => import('@/pages/Main'));
@@ -20,16 +22,11 @@ const Signup = React.lazy(() => import('@/pages/Signup'));
 const Callback = React.lazy(() => import('@/components/common/Callback'));
 const DetailProduct = React.lazy(() => import('@/pages/DetailProduct'));
 
-import Loading from './components/common/Loading';
-import AuthStore from './stores/AuthStore';
-import Redirect from './components/Redirect';
-import HeaderStore from './stores/HeaderStore';
 import { alertMsg } from './utils/errorMessage';
 
 const App = () => {
   useEffect(() => {
     AuthStore.check();
-    HeaderStore.load();
   }, []);
   return (
     <PageContainer>
