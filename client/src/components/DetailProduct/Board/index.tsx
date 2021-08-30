@@ -40,7 +40,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   const { reviews, qnas, productId, isBuy } = DetailProductStore.product;
 
   useEffect(() => {
-    console.log(222);
+    console.log(22233);
     if (title === '상품 후기') {
       setPostInfoDatas(DetailProductStore.product.reviews.slice(initPageStart, initPageEnd));
       setWholeDatas(DetailProductStore.product.reviews);
@@ -49,7 +49,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       setWholeDatas(DetailProductStore.product.qnas);
     }
     return () => clearTimeout(timer);
-  }, [DetailProductStore.product, RefreshStore.refreshComponent]);
+  }, [RefreshStore.refreshComponent]);
 
   const createMsg = (title: string) => {
     setMessage({ showMessage: true, messageContent: title });
@@ -87,10 +87,10 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     setIsActiveModal(true);
   };
 
-  const handleClickForClose = () => {
+  const handleClickForClose = async () => {
     setIsActiveModal(false);
+    await DetailProductStore.load(DetailProductStore.product.productId);
     RefreshStore.refresh();
-    DetailProductStore.load(DetailProductStore.product.productId);
   };
 
   const handleClickTitle = (e: React.MouseEvent<HTMLSpanElement>) => {
