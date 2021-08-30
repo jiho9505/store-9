@@ -16,4 +16,10 @@ export const alertMsg = {
   EMPTY_DELETE: '삭제할 상품을 선택해 주세요.',
   SUCCESS_DELETE: '삭제 되었습니다.',
   FAIL_DELETE: '삭제하지 못했습니다.',
+  REQUIRE_BUY: '구매한 상품에 한해서 작성이 가능합니다.',
+  AlREADY_WRITE: '리뷰는 한번만 작성 가능합니다.',
+  ADD_CART_SUCCESS: '장바구니에 추가하였습니다.',
+  ADD_CART_FAILURE: '장바구니 추가를 실패하였습니다.',
+  ERROR_MSG: '과정에서 에러가 발생하였습니다',
+  CATEGORY_FAIL: '카테고리 목록을 불러오는데 실패하였습니다.',
 };

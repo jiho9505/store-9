@@ -10,8 +10,8 @@ import ShortCuts from './ShortCuts';
 import CategoryApi from '@/apis/CategoryApi';
 import { normalContainerWidth } from '@/static/style/common';
 import LOGO from '@/static/assets/img/logo.png';
+import { alertMsg } from '@/utils/errorMessage';
 
-const alertMsg = '카테고리 목록을 불러오는데 실패하였습니다.';
 const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
 
 const Header = () => {
@@ -27,11 +27,9 @@ const Header = () => {
           setCategories([...categories, ...result.data.parentCategories]);
           setSubCategories(result.data.subCategories);
           setWords(result.data.productNames);
-          // catogoryStore = result.data.parentCategories;
-          // subCatogoryStore = result.data.subCategories;
         }
       } catch (e) {
-        alert(alertMsg);
+        alert(alertMsg['CATEGORY_FAIL']);
       }
     })();
   }, []);

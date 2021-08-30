@@ -14,10 +14,7 @@ import OrderApi from '@/apis/OrderApi';
 import DetailProductStore from '@/stores/DetailProductStore';
 
 type CartModeType = 'notlogin' | 'add' | 'fail';
-const addCartSuccessMsg = '장바구니에 추가하였습니다.';
-const addCartFailMsg = '장바구니 추가를 실패하였습니다.';
 let timer: number = 0;
-
 type CartProps = {
   selectedStock: number;
 };
@@ -62,9 +59,9 @@ const Cart = ({ selectedStock }: CartProps) => {
     if (mode === 'notlogin') {
       createMsg('fail', alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'add') {
-      createMsg('success', addCartSuccessMsg);
+      createMsg('success', alertMsg['ADD_CART_SUCCESS']);
     } else if (mode === 'fail') {
-      createMsg('fail', addCartFailMsg);
+      createMsg('fail', alertMsg['ADD_CART_FAILURE']);
     }
   };
 
