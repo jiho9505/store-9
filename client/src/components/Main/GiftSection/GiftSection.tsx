@@ -7,10 +7,6 @@ import { baeminFont, normalContainerWidth } from '@/static/style/common';
 import { Link } from '@/core/Router';
 
 /**
- * TODO:
- * match URL 수정
- */
-/**
  * FIXME:
  * 해당 데이터는 크롤링하지 못하여 고정데이터를 이용합니다.
  */
@@ -19,32 +15,32 @@ const GiftSection = () => {
     <GiftContainer>
       <Title>선물하기 딱 좋아요!</Title>
       <GiftBlock>
-        <Link to="/detail?id=55">
+        <Link to="/detail?id=1248">
           <ImgContainer>
             <Img src={GIFT1} alt="first-gift-image" />
           </ImgContainer>
         </Link>
 
         <GiftInfo>
-          <Link to="/detail?id=55">
+          <Link to="/detail?id=1248">
             <h3>한 상 가득</h3>
           </Link>
-          <Link to="/detail?id=55">
+          <Link to="/detail?id=1248">
             <span>캬~ 좋다. 을지로 쟁반</span>
           </Link>
         </GiftInfo>
       </GiftBlock>
       <GiftBlock>
-        <Link to="/detail?id=55">
+        <Link to="/detail?id=995">
           <ImgContainer>
             <Img src={GIFT2} alt="second-gift-image" />
           </ImgContainer>
         </Link>
         <GiftInfo>
-          <Link to="/detail?id=55">
+          <Link to="/detail?id=995">
             <h3>쉿 비밀펜</h3>
           </Link>
-          <Link to="/detail?id=55">
+          <Link to="/detail?id=995">
             <span>진짜진짜 아무한테도 말하지마</span>
           </Link>
         </GiftInfo>

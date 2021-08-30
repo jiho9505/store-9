@@ -6,20 +6,21 @@ import RefreshStore from '@/stores/RefreshStore';
 import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import CIRCLE from '@/static/assets/img/circle.png';
-import HeaderStore from '@/stores/HeaderStore';
 
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
-const initCategoryData = [{ name: '전체', id: 0, parentId: null }];
 let timer: number = 0;
 
-const Navigation = () => {
+type NavigationProps = {
+  categories: CategoryType;
+  subCategories: CategoryType;
+};
+const Navigation = ({ categories, subCategories }: NavigationProps) => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
   const [mouseOverdItemName, setMouseOverdItemName] = useState<string>('');
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
   const { refresh } = RefreshStore;
-  const [categories, setCategories] = useState(initCategoryData);
 
   useEffect(() => {
     document.addEventListener('mouseover', handleMouseOverOnDocument);
@@ -27,10 +28,6 @@ const Navigation = () => {
       document.removeEventListener('mouseover', handleMouseOverOnDocument);
     };
   }, []);
-
-  useEffect(() => {
-    categories.length === 1 && setCategories([...categories, ...HeaderStore.parentCategories]);
-  }, [HeaderStore.parentCategories]);
 
   const handleMouseOverOnDocument = useCallback((e: Event) => {
     const { target } = e;
@@ -45,8 +42,8 @@ const Navigation = () => {
   }, []);
 
   const getCatgoryIdx = useCallback((ctgId) => {
-    if (ctgId > HeaderStore.parentCategories.length) {
-      HeaderStore.subCategories.forEach((subcategory) => {
+    if (ctgId > categories.length) {
+      subCategories.forEach((subcategory) => {
         if (subcategory.id === ctgId) ctgId = subcategory.parentId;
       });
     }
@@ -67,7 +64,7 @@ const Navigation = () => {
 
   const changeCategory = (id: number, itemName: string, itemXPos: number) => {
     if (!timer) return;
-    const newSubItems = HeaderStore.subCategories.filter((item) => item.parentId === id);
+    const newSubItems = subCategories.filter((item) => item.parentId === id);
 
     const extraXposToRemove =
       newSubItems.length % 2

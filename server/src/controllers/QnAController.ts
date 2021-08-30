@@ -3,6 +3,8 @@ import { getCustomRepository } from 'typeorm';
 import QnARequest from '../../../shared/dtos/qna/request';
 import QnAResponse from '../../../shared/dtos/qna/response';
 import QnARepository from '../repositories/QnARepository';
+import { JwtSignPayload } from '../utils/types';
+import constant from '../utils/constant';
 
 namespace QnAController {
   export const getList: RouteHandler<QnARequest.GetList, QnAResponse.GetList> = async (
@@ -10,11 +12,11 @@ namespace QnAController {
     res
   ) => {
     try {
-      const { userId = 1 } = res.locals;
+      const user: JwtSignPayload = res.locals.user;
       const { startDate, endDate, page } = req.query;
 
       const [qnas, totalCount] = await getCustomRepository(QnARepository).getList({
-        userId,
+        userId: user.id,
         startDate,
         endDate,
         page,
@@ -45,12 +47,12 @@ namespace QnAController {
 
   export const create: RouteHandler<QnARequest.Create, QnAResponse.Create> = async (req, res) => {
     try {
-      const userId = res.locals?.user?.id || 1;
+      const user: JwtSignPayload = res.locals.user;
 
       const { title, content, productId, images = '' } = req.body;
 
       await getCustomRepository(QnARepository).createQnA({
-        userId,
+        userId: user.id,
         title,
         content,
         product_id: productId,
@@ -63,7 +65,7 @@ namespace QnAController {
     } catch (e) {
       console.error(e);
 
-      res.status(500).json({ ok: false });
+      res.status(500).json({ ok: false, message: constant.QNA_FAILURE });
     }
   };
 

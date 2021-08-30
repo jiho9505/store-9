@@ -9,7 +9,7 @@ import { ProductSortBy } from '../../../shared/dtos/product/schema';
 export default class ProductRepository extends Repository<Product> {
   async getDetail({ productId, userId = 0 }: { productId: number; userId?: number }) {
     const product = await this.query(`
-      SELECT p.*, IFNULL(l.id, 0) AS is_like, IFNULL(jo.order_item_product_id, 0) as is_bought
+      SELECT p.*, IFNULL(l.id, 0) AS is_like, IFNULL(jo.order_item_product_id, 0) AS is_bought, IFNULL(jd.rate, 0) AS discount_rate
       FROM products p 
       LEFT JOIN (
         SELECT l.id, l.product_id
@@ -27,6 +27,11 @@ export default class ProductRepository extends Repository<Product> {
         ON joi.order_id = o.id
       ) jo
       ON jo.user_id = ${userId} AND jo.order_item_product_id = ${productId}
+      LEFT JOIN (
+        SELECT d.*
+        FROM discounts d
+      ) jd
+      ON jd.product_id = p.id
       WHERE p.id = ${productId}
     `);
 
@@ -107,6 +112,7 @@ export default class ProductRepository extends Repository<Product> {
       INNER JOIN categories c
       ON c.id = p.category_id
       ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
+      WHERE p.stock != 0
       GROUP BY p.id
       ORDER BY total_amount DESC
       LIMIT ${PRODUCT_GET_MAIN.MAIN_BEST_PRODUCT_LIMIT}
@@ -127,6 +133,7 @@ export default class ProductRepository extends Repository<Product> {
         WHERE orders.status = '${OrderStatus.PURCHASING_COMPLETE}'
       ) o
       ON p.id = o.product_id
+      WHERE p.stock != 0
       GROUP BY p.id
       ORDER BY created_at DESC
       LIMIT ${PRODUCT_GET_MAIN.MAIN_NEW_PRODUCT_LIMIT}
@@ -138,7 +145,7 @@ export default class ProductRepository extends Repository<Product> {
         SUM(o.amount) AS total_amount, 
         ${PRODUCT_QUERY.COMMON_SELECT}
       FROM products p
-      INNER JOIN (
+      LEFT JOIN (
         SELECT oi.* 
         FROM order_items oi
         LEFT OUTER JOIN orders
@@ -152,6 +159,7 @@ export default class ProductRepository extends Repository<Product> {
         FROM discounts
         WHERE discounts.product_id = p.id
       )
+      AND p.stock != 0
       GROUP BY p.id
       ORDER BY total_amount DESC
       LIMIT ${PRODUCT_GET_MAIN.MAIN_DISCOUNT_PRODUCT_LIMIT}
@@ -245,6 +253,7 @@ export default class ProductRepository extends Repository<Product> {
           ) o
           ON p.id = o.product_id
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
+          ${whereCategory}
           GROUP BY p.id
           ORDER BY total_amount DESC
           LIMIT ${size}
