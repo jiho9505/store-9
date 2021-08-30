@@ -12,11 +12,12 @@ import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 import useHistory from '@/hooks/customHooks/useHistory';
 import SEARCH from '@/static/assets/img/search.png';
-import HeaderStore from '@/stores/HeaderStore';
 
 const timeToShowError = 2000;
-
-const SearchBar = () => {
+type SearchBarProps = {
+  words: string[];
+};
+const SearchBar = ({ words }: SearchBarProps) => {
   const [history, setHistory] = useLocalStorage('searchs', []);
   const [nameForSearch, setNameForSearch] = useState<string>('');
   const [showWordList, setShowWordList] = useState<boolean>(false);
@@ -113,7 +114,7 @@ const SearchBar = () => {
       return;
     }
 
-    const matchedWords = HeaderStore.productNames
+    const matchedWords = words
       .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
       .sort((a, b) => a.length - b.length)
       .slice(0, 10);
