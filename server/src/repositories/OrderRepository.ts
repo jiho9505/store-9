@@ -23,13 +23,17 @@ export default class OrderRepository extends Repository<Order> {
     const end = new Date(new Date(endDate).setHours(23, 59, 59, 59)).toJSON();
 
     const orders = await this.query(`
-      SELECT o.*, p.id as product_id, p.name, p.thumbnail, p.price, oi.amount, r.id as is_reviewed
-      FROM orders o
-      INNER JOIN order_items oi ON o.id = oi.order_id
-      LEFT JOIN products p ON oi.product_id = p.id
-      LEFT JOIN reviews r ON r.product_id = p.id
-      WHERE o.user_id = ${userId} AND DATE(o.updated_at) BETWEEN '${start}' AND '${end}'
-      AND o.status != '${OrderStatus.IN_CART}'
+      SELECT a.*, b.id AS is_reviewed
+      FROM
+      (SELECT o.*, p.id as product_id, p.name, p.thumbnail, p.price, oi.amount
+        FROM orders o
+        INNER JOIN order_items oi ON o.id = oi.order_id
+        LEFT JOIN products p ON oi.product_id = p.id
+        WHERE o.user_id = ${userId}
+      ) a LEFT JOIN (SELECT r.* FROM reviews r WHERE r.user_id = ${userId}) b
+      ON a.product_id = b.product_id
+      WHERE DATE(a.updated_at) BETWEEN '${start}' AND '${end}'
+      AND a.status != '${OrderStatus.IN_CART}'
       ORDER BY updated_at DESC
       LIMIT ${size}
       OFFSET ${page * size}
@@ -47,7 +51,7 @@ export default class OrderRepository extends Repository<Order> {
       AND o.status != '${OrderStatus.IN_CART}'
       GROUP BY o.user_id
     `);
-    
+
     return { orders, totalCount: Number(totalCount[0]?.count) };
   }
 

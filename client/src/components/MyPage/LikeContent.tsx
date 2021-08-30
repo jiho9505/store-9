@@ -9,7 +9,7 @@ import Cell from '../common/Cell';
 
 type LikeContentProps = {
   likeProducts: any;
-  selectedProduct: Set<number>;
+  selectedProduct: Set<number | string>;
   onCheck(id: number): void;
   onCheckAll(e): void;
 };
@@ -33,10 +33,10 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
 
   const tableBody = useMemo(
     () =>
-      likeProducts.map((likeProduct) => {
-        const { product, product_id } = likeProduct;
+      likeProducts.map((likeProduct, idx) => {
+        const { product } = likeProduct;
         return {
-          id: product_id,
+          id: idx,
           cells: [
             {
               c: <ProductInfoCell thumbNail={product.thumbnail} name={product.name} />,
@@ -50,7 +50,8 @@ const LikeContent = ({ likeProducts, onCheck, onCheckAll, selectedProduct }: Lik
   );
 
   const handleClickRow = (id) => {
-    history.push(`/detail?id=${id}`);
+    const { product_id } = likeProducts[id];
+    history.push(`/detail?id=${product_id}`);
   };
 
   return (
