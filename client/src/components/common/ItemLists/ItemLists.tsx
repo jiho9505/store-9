@@ -9,7 +9,6 @@ import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
-import ProductResponse from '@shared/dtos/product/response';
 
 type ItemListsProps = {
   observeTag?: () => void;
@@ -24,9 +23,10 @@ type ItemListsProps = {
     badges?: string[];
     stock?: number;
   }[];
+  showEndTag?: boolean;
 };
 
-const ItemLists = ({ observeTag, products }: ItemListsProps) => {
+const ItemLists = ({ showEndTag, observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
       products.map((item) => (
@@ -53,8 +53,8 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   };
 
   useEffect(() => {
-    observeTag && observeTag();
-  }, [products]);
+    observeTag?.();
+  });
 
   return (
     <>
