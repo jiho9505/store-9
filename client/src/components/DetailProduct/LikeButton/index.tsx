@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
 
@@ -16,21 +16,11 @@ type LikeModeType = 'notlogin' | 'add' | 'remove';
 let timer: number = 0;
 
 const Like = () => {
-  const [isIconActive, setIsIconActive] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
     messageContent: '',
     messageMode: 'fail',
   });
-
-  useEffect(() => {
-    if (!AuthStore.isLogined) {
-      setIsIconActive(false);
-      return;
-    }
-    DetailProductStore.product.isLike ? setIsIconActive(true) : setIsIconActive(false);
-    return () => clearTimeout(timer);
-  }, [AuthStore.isLogined, DetailProductStore.product.isLike]);
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -56,13 +46,9 @@ const Like = () => {
     try {
       const result = await UserApi.toggleLike({ productId: DetailProductStore.product.productId });
       if (result.ok) {
-        if (isIconActive) {
-          viewMsgByUserStatus('remove');
-          setIsIconActive(false);
-        } else if (!isIconActive) {
-          viewMsgByUserStatus('add');
-          setIsIconActive(true);
-        }
+        DetailProductStore.product.isLike
+          ? viewMsgByUserStatus('remove')
+          : viewMsgByUserStatus('add');
       }
     } catch (e) {
       viewMsgByUserStatus('notlogin');
@@ -71,7 +57,10 @@ const Like = () => {
 
   return (
     <LikeContainer>
-      <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickBtn}></i>
+      <i
+        className={`${DetailProductStore.product.isLike ? 'fas' : 'far'} fa-heart`}
+        onClick={handleClickBtn}
+      ></i>
       {message.showMessage && (
         <ModalPortal>
           <Message text={message.messageContent} mode={message.messageMode} />
