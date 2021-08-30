@@ -14,9 +14,9 @@ const timeToChangeSlide = 3000;
  * matched 수정해야합니다
  */
 const matchedProductId = {
-  1: 55,
-  2: 56,
-  3: 57,
+  1: 1060,
+  2: 1112,
+  3: 1243,
 };
 
 /**
