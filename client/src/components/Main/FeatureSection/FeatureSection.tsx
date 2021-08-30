@@ -17,7 +17,17 @@ const getTitle = (mode) => {
 
 type FeatureSectionProps = {
   mode: string;
-  product;
+  product: {
+    productId?: number;
+    name?: string;
+    reviewAverageRate?: number;
+    reviewCount?: number;
+    likeCount?: number;
+    discountRate?: number;
+    isGreen?: boolean;
+    badges?: string[];
+    stock?: number;
+  }[];
 };
 
 const FeatureSection = ({ mode, product }: FeatureSectionProps) => {

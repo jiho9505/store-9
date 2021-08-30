@@ -4,11 +4,7 @@ import guguStyled from '@/core/styled';
 import { baemin, baeminFont, green, red1 } from '@/static/style/common';
 import { Link } from '@/core/Router';
 
-type LabelProps = {
-  product;
-};
-
-const ItemLabel = ({ product }: LabelProps) => {
+const ItemLabel = ({ product }) => {
   const getColor = (item) => {
     switch (item) {
       case 'new':

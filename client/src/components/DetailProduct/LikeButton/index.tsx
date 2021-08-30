@@ -12,10 +12,7 @@ import AuthStore from '@/stores/AuthStore';
 import { greyLine } from '@/static/style/common';
 import { alertMsg } from '@/utils/errorMessage';
 
-type LikeModeType = 'notlogin' | 'add' | 'remove' | 'fail';
-const addLikeMsg = '관심목록에 추가하였습니다.';
-const removeLikeMsg = '관심목록에서 제거하였습니다.';
-const addLikeFailMsg = '관심목록 추가가 안되었습니다.';
+type LikeModeType = 'notlogin' | 'add' | 'remove';
 let timer: number = 0;
 
 const Like = () => {
@@ -47,11 +44,9 @@ const Like = () => {
     if (mode === 'notlogin') {
       createMsg('fail', alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'add') {
-      createMsg('success', addLikeMsg);
+      createMsg('success', alertMsg['SUCCESS_ADD_LIKE']);
     } else if (mode === 'remove') {
-      createMsg('success', removeLikeMsg);
-    } else if (mode === 'fail') {
-      createMsg('fail', addLikeFailMsg);
+      createMsg('success', alertMsg['FAIL_ADD_LIKE']);
     }
   };
 
@@ -70,7 +65,7 @@ const Like = () => {
         }
       }
     } catch (e) {
-      viewMsgByUserStatus('fail');
+      viewMsgByUserStatus('notlogin');
     }
   };
 

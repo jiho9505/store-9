@@ -13,14 +13,19 @@ import ProductResponse from '@shared/dtos/product/response';
 
 type ItemListsProps = {
   observeTag?: () => void;
-  products;
+  products: {
+    productId?: number;
+    name?: string;
+    reviewAverageRate?: number;
+    reviewCount?: number;
+    likeCount?: number;
+    discountRate?: number;
+    isGreen?: boolean;
+    badges?: string[];
+    stock?: number;
+  }[];
 };
 
-/**
- * TODO:
- * key 수정
- * 타입 수정
- */
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (

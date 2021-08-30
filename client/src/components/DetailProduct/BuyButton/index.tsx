@@ -13,8 +13,6 @@ import { alertMsg } from '@/utils/errorMessage';
 import OrderApi from '@/apis/OrderApi';
 import DetailProductStore from '@/stores/DetailProductStore';
 
-const errorMsg = '과정에서 에러가 발생하였습니다';
-
 type BuyProps = {
   selectedStock: number;
 };
@@ -51,7 +49,7 @@ const Buy = ({ selectedStock }: BuyProps) => {
         history.push('/order');
       }
     } catch (e) {
-      alert(errorMsg);
+      alert(alertMsg.ERROR_MSG);
     }
   };
 
