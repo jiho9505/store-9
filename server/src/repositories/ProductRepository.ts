@@ -253,6 +253,7 @@ export default class ProductRepository extends Repository<Product> {
           ) o
           ON p.id = o.product_id
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
+          ${whereCategory}
           GROUP BY p.id
           ORDER BY total_amount DESC
           LIMIT ${size}
