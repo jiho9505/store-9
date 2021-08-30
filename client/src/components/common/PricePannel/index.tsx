@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useLocation from '@/hooks/customHooks/useLocation';
 import styled from '@emotion/styled';
 
 import { baeminFont, normalRadius, primary1, white } from '@/static/style/common';
 import { alertMsg } from '@/utils/errorMessage';
 import useHistory from '@/hooks/customHooks/useHistory';
-import useLocalStorage from '@/hooks/customHooks/useLocalStorage';
 import useAlert from '@/hooks/customHooks/useAlert';
 
 import ModalPortal from '@/utils/portal';

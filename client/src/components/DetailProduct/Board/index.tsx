@@ -13,6 +13,7 @@ import DetailProductStore from '@/stores/DetailProductStore';
 import { showErrorMsgTime } from '@/static/constants';
 import { alertMsg } from '@/utils/errorMessage';
 import AuthStore from '@/stores/AuthStore';
+import RefreshStore from '@/stores/RefreshStore';
 
 type ProductBoardProps = {
   title: string;
@@ -39,6 +40,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   const { reviews, qnas, productId, isBuy } = DetailProductStore.product;
 
   useEffect(() => {
+    console.log(222);
     if (title === '상품 후기') {
       setPostInfoDatas(DetailProductStore.product.reviews.slice(initPageStart, initPageEnd));
       setWholeDatas(DetailProductStore.product.reviews);
@@ -78,10 +80,10 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
 
   const handleClickButton = () => {
     console.log('isBuy Value', DetailProductStore.product.isBuy, isBuy);
-    if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
-    if (title === '상품 후기' && !DetailProductStore.product.isBuy)
-      return viewMsgByUserStatus('notbuy');
-    if (DetailProductStore.errorOn) return viewMsgByUserStatus('alreadyWrite');
+    // if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
+    // if (title === '상품 후기' && !DetailProductStore.product.isBuy)
+    //   return viewMsgByUserStatus('notbuy');
+    // if (DetailProductStore.errorOn) return viewMsgByUserStatus('alreadyWrite');
     setIsActiveModal(true);
   };
 
