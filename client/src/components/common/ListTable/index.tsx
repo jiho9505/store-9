@@ -30,8 +30,18 @@ const ListTable = ({
     return header.map(({ width }) => (width ? width : '10%'));
   }, [header]);
 
-  const handleRowClick = (id) => () => {
-    onClickRow?.(id);
+  const handleRowClick =
+    (id) =>
+    ({ target }) => {
+      if (target.tagName === 'INPUT') {
+        return;
+      }
+      onClickRow?.(id);
+    };
+
+  const handleCheckClick = (id) => (e) => {
+    e.stopPropagation();
+    onCheck(id);
   };
 
   return (
@@ -69,7 +79,7 @@ const ListTable = ({
                   <CheckBox
                     type="checkbox"
                     checked={selectedItems.has(id)}
-                    onChange={() => onCheck(id)}
+                    onChange={handleCheckClick(id)}
                   />
                 </td>
               )}
