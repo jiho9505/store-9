@@ -56,9 +56,9 @@ const LikePage = () => {
 
   const handleToggleSelectAllBtn = (e) => {
     const { target } = e;
-    const likeProductId = likes.map(({ id }) => id);
+    const likeProductId = likes.map((_, idx) => idx);
     if (target.checked) {
-      setSelectedProducts(new Set(likeProductId));
+      setSelectedProducts(new Set([...likeProductId]));
     } else {
       setSelectedProducts(new Set());
     }
@@ -70,7 +70,8 @@ const LikePage = () => {
       return;
     }
     try {
-      await UserApi.unlike({ data: { ids: [...selectedProducts] } });
+      const selectedProductsIdx = [...selectedProducts].map((idx) => likes[idx].id);
+      await UserApi.unlike({ data: { ids: [...selectedProductsIdx] } });
       showAndUnShowAlert({ mode: 'success', msg: alertMsg['SUCCESS_DELETE'] });
       refresh();
     } catch (err) {
