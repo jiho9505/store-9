@@ -8,7 +8,6 @@ import ModalWrapper from '@/components/common/ModalWrapper';
 
 import ReviewApi from '@/apis/ReviewApi';
 import QnaApi from '@/apis/QnaApi';
-import DetailProductStore from '@/stores/DetailProductStore';
 import RefreshStore from '@/stores/RefreshStore';
 import { baeminFont, greyLine, red1 } from '@/static/style/common';
 
@@ -29,10 +28,8 @@ const PostModal = ({
   title,
   formType = { form: 'REVIEW', mode: 'ENROLL' },
 }: PostModalProps) => {
-  const { load } = DetailProductStore;
   const { refresh } = RefreshStore;
   const { id, title: formTitle, content, rate, product } = item;
-
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
@@ -70,7 +67,6 @@ const PostModal = ({
           images: [],
         });
         refresh();
-        load(product.id);
         onClose();
       } catch (e) {
         alert(e.response.data.message);
@@ -82,7 +78,7 @@ const PostModal = ({
           content,
           productId: product.id,
         });
-        load(product.id);
+        refresh();
         onClose();
       } catch (e) {
         alert(e.response.data.message);

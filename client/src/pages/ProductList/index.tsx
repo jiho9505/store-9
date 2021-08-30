@@ -19,7 +19,6 @@ const sortByObj = {
   4: 'LOW_PRICE',
 };
 const size = 20;
-const alertMsg = '상품 목록을 가져오는데 실패하였습니다';
 
 const ProductList = () => {
   const [sortByIdx, setSortByIdx] = useState<number>(0);
@@ -54,7 +53,7 @@ const ProductList = () => {
           }
         }
       } catch (e) {
-        alert(alertMsg);
+        alert(e.response.data.message);
       }
     })();
   }, [refreshComponent, sortByIdx]);
@@ -87,7 +86,7 @@ const ProductList = () => {
               }
             }
           } catch (e) {
-            alert(alertMsg);
+            alert(e.response.data.message);
           } finally {
             setIsLoading(false);
           }
