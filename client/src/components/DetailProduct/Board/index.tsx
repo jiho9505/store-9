@@ -85,11 +85,11 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     //   return viewMsgByUserStatus('notbuy');
     // if (DetailProductStore.errorOn) return viewMsgByUserStatus('alreadyWrite');
     setIsActiveModal(true);
-    RefreshStore.refresh();
   };
 
   const handleClickForClose = () => {
     setIsActiveModal(false);
+    RefreshStore.refresh();
     DetailProductStore.load(DetailProductStore.product.productId);
   };
 
