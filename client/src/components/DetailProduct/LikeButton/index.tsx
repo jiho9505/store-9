@@ -30,7 +30,7 @@ const Like = () => {
     }
     DetailProductStore.product.isLike ? setIsIconActive(true) : setIsIconActive(false);
     return () => clearTimeout(timer);
-  }, [AuthStore.isLogined]);
+  }, [AuthStore.isLogined, DetailProductStore.product.isLike]);
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -46,7 +46,7 @@ const Like = () => {
     } else if (mode === 'add') {
       createMsg('success', alertMsg['SUCCESS_ADD_LIKE']);
     } else if (mode === 'remove') {
-      createMsg('success', alertMsg['FAIL_ADD_LIKE']);
+      createMsg('success', alertMsg['SUCCESS_REMOVE_LIKE']);
     }
   };
 

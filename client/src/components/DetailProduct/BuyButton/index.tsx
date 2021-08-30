@@ -28,14 +28,16 @@ const Buy = ({ selectedStock }: BuyProps) => {
   }, []);
 
   const handleClickText = async () => {
-    if (!AuthStore.isLogined) return createMsg();
+    // if (!AuthStore.isLogined) return createMsg();
     try {
       const result = await OrderApi.addCartItem({
         productId: DetailProductStore.product.productId,
         amount: selectedStock,
       });
       if (result.ok) {
-        const { id, amount, order_id } = result.data;
+        const { id, amount, order_id, orderId } = result.data;
+        console.log('orderId: ', orderId);
+        console.log(' order_id : ', order_id);
         setBuyInfo({
           cartId: order_id,
           products: [
