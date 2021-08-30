@@ -36,7 +36,7 @@ const PostModal = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [showErrorMsg, setShowErrorMsg] = useState<boolean>(false);
-  const [starScore, setStarScore] = useState<number>(1);
+  const [starScore, setStarScore] = useState<number>(5);
 
   useEffect(() => {
     return () => {
@@ -72,8 +72,8 @@ const PostModal = ({
         refresh();
         load(product.id);
         onClose();
-      } catch (err) {
-        alert('리뷰등록에 실패했습니다.');
+      } catch (e) {
+        alert(e.response.data.message);
       }
     } else if (form === 'QNA') {
       try {
@@ -84,8 +84,8 @@ const PostModal = ({
         });
         load(product.id);
         onClose();
-      } catch (err) {
-        alert('문의등록에 실패했습니다.');
+      } catch (e) {
+        alert(e.response.data.message);
       }
     }
   };

@@ -37,11 +37,11 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
 
   useEffect(() => {
     if (title === '상품 후기') {
-      setPostInfoDatas(reviews.slice(initPageStart, initPageEnd));
-      setWholeDatas(reviews);
+      setPostInfoDatas(DetailProductStore.product.reviews.slice(initPageStart, initPageEnd));
+      setWholeDatas(DetailProductStore.product.reviews);
     } else if (title === '상품 문의') {
-      setPostInfoDatas(qnas.slice(initPageStart, initPageEnd));
-      setWholeDatas(qnas);
+      setPostInfoDatas(DetailProductStore.product.qnas.slice(initPageStart, initPageEnd));
+      setWholeDatas(DetailProductStore.product.qnas);
     }
     return () => clearTimeout(timer);
   }, [DetailProductStore.product]);
@@ -72,8 +72,10 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
   };
 
   const handleClickButton = () => {
+    console.log('isBuy Value', DetailProductStore.product.isBuy, isBuy);
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
-    if (title === '상품 후기' && !isBuy) return viewMsgByUserStatus('notbuy');
+    if (title === '상품 후기' && !DetailProductStore.product.isBuy)
+      return viewMsgByUserStatus('notbuy');
     setIsActiveModal(true);
   };
 
@@ -118,7 +120,7 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
             item={{
               product: {
                 ...DetailProductStore.product,
-                id: productId,
+                id: DetailProductStore.product.productId,
               },
             }}
             formType={{ form: title === '상품 후기' ? 'REVIEW' : 'QNA', mode: 'ENROLL' }}

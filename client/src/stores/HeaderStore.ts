@@ -8,7 +8,7 @@ type CategoryType = {
 }[];
 
 class CaregoryStore {
-  parentCategories: CategoryType = [];
+  parentCategories: CategoryType = [{ name: '전체', id: 0, parentId: null }];
   subCategories: CategoryType = [];
   productNames: string[];
 
@@ -20,7 +20,7 @@ class CaregoryStore {
     try {
       const result = await CategoryApi.getCategories();
       if (result.ok) {
-        this.parentCategories = result.data.parentCategories;
+        this.parentCategories = [...this.parentCategories, ...result.data.parentCategories];
         this.subCategories = result.data.subCategories;
         this.productNames = result.data.productNames;
       }
