@@ -5,6 +5,7 @@ import ProductRequest from '../../../shared/dtos/product/request';
 import ProductResponse from '../../../shared/dtos/product/response';
 import createProduct from '../utils/product';
 import constant from '../utils/constant';
+import { Request, Response } from 'express';
 
 namespace ProductController {
   export const getMain: RouteHandler<null, ProductResponse.GetMain> = async (req, res) => {
@@ -71,62 +72,61 @@ namespace ProductController {
     }
   };
 
-  export const getDetail: RouteHandler<ProductRequest.GetDetail, ProductResponse.GetDetail> =
-    async (req, res) => {
-      try {
-        const userId = res.locals?.user?.id || 1;
-        const { productId } = req.params;
+  export const getDetail = async (req: Request, res: Response) => {
+    try {
+      const userId = res.locals?.user?.id || 0;
+      const productId = Number(req.params.productId);
 
-        const { product, reviews, qnas, recommendProducts, totalProductCount, soldProductAmounts } =
-          await getCustomRepository(ProductRepository).getDetail({
-            productId,
-            userId,
-          });
-
-        const formatProduct = createProduct({
-          soldProductAmounts: soldProductAmounts.map(
-            ({ sold_product_amount }) => sold_product_amount
-          ),
-          totalProductCount: totalProductCount,
+      const { product, reviews, qnas, recommendProducts, totalProductCount, soldProductAmounts } =
+        await getCustomRepository(ProductRepository).getDetail({
+          productId,
+          userId,
         });
 
-        res.json({
-          ok: true,
-          data: {
-            productId: Number(productId),
-            name: product.name,
-            price: Number(product.price),
-            stock: Number(product.stock),
-            thumbnail: product.thumbnail,
-            contentImages: product.content?.split(';')?.filter(Boolean),
-            discountRate: Number(product.discount_rate),
-            isLike: product.is_like !== '0',
-            isBuy: product.is_bought !== '0',
-            reviews: reviews.map((review) => ({
-              id: review.id,
-              title: review.title,
-              content: review.content,
-              rate: review.rate,
-              username: review.username,
-              createdAt: review.created_at,
-            })),
-            qnas: qnas.map((qna) => ({
-              id: qna.id,
-              title: qna.title,
-              content: qna.content,
-              username: qna.username,
-              createdAt: qna.created_at,
-              isPrivate: qna.isPrivate,
-            })),
-            recommends: recommendProducts.map(formatProduct),
-          },
-        });
-      } catch (e) {
-        console.error(e);
+      const formatProduct = createProduct({
+        soldProductAmounts: soldProductAmounts.map(
+          ({ sold_product_amount }) => sold_product_amount
+        ),
+        totalProductCount: totalProductCount,
+      });
 
-        res.status(500).json({ ok: false, message: constant.PRODUCT_LOAD_FAILURE });
-      }
-    };
+      res.json({
+        ok: true,
+        data: {
+          productId: Number(productId),
+          name: product.name,
+          price: Number(product.price),
+          stock: Number(product.stock),
+          thumbnail: product.thumbnail,
+          contentImages: product.content?.split(';')?.filter(Boolean),
+          discountRate: Number(product.discount_rate),
+          isLike: product.is_like !== '0',
+          isBuy: product.is_bought !== '0',
+          reviews: reviews.map((review) => ({
+            id: review.id,
+            title: review.title,
+            content: review.content,
+            rate: review.rate,
+            username: review.username,
+            createdAt: review.created_at,
+          })),
+          qnas: qnas.map((qna) => ({
+            id: qna.id,
+            title: qna.title,
+            content: qna.content,
+            username: qna.username,
+            createdAt: qna.created_at,
+            isPrivate: qna.isPrivate,
+          })),
+          recommends: recommendProducts.map(formatProduct),
+        },
+      });
+    } catch (e) {
+      console.error(e);
+
+      res.status(500).json({ ok: false, message: constant.PRODUCT_LOAD_FAILURE });
+    }
+  };
 
   export const create: RouteHandler<ProductRequest.Create, ProductResponse.Create> = async (
     req,
