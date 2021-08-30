@@ -99,7 +99,7 @@ namespace ProductController {
             stock: Number(product.stock),
             thumbnail: product.thumbnail,
             contentImages: product.content?.split(';')?.filter(Boolean),
-            discountRate: product.discount_rate,
+            discountRate: Number(product.discount_rate),
             isLike: product.is_like !== '0',
             isBuy: product.is_bought !== '0',
             reviews: reviews.map((review) => ({
