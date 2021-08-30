@@ -4,10 +4,9 @@ import { observer } from 'mobx-react';
 
 import ItemLists from '@/components/common/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
-import Loading from '@/components/common/Loading';
 
 import RefreshStore from '@/stores/RefreshStore';
-import { normalContainerWidth } from '@/static/style/common';
+import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import ProductApi from '@/apis/ProductApi';
 
@@ -18,16 +17,15 @@ const sortByObj = {
   3: 'HIGH_PRICE',
   4: 'LOW_PRICE',
 };
-const size = 20;
+const size = 16;
 
 const ProductList = () => {
   const [sortByIdx, setSortByIdx] = useState<number>(0);
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isActiveInfiniteScroll, setIsActiveInfiniteScroll] = useState<boolean>(true);
   const [page, setPage] = useState<number>(0);
   const { refreshComponent } = RefreshStore;
+  const [showLoadMore, setShowLoadMore] = useState(false);
 
   const filter = {
     page,
@@ -42,15 +40,13 @@ const ProductList = () => {
       try {
         filter.page = 0;
         const result = await ProductApi.getList(filter);
+
         if (result.ok) {
+          if (result.data.totalCount < 20) setShowLoadMore(false);
+          else setShowLoadMore(true);
           setProduct(result.data.products);
           setTotalProductCount(result.data.totalCount);
           setPage(1);
-          if (result.data.products.length < size) {
-            setIsActiveInfiniteScroll(false);
-          } else {
-            setIsActiveInfiniteScroll(true);
-          }
         }
       } catch (e) {
         alert(e.response.data.message);
@@ -66,37 +62,16 @@ const ProductList = () => {
     setSortByIdx(index);
   };
 
-  const observeTag = () => {
-    if (!isActiveInfiniteScroll) return;
-
-    const observerCallback = (entries, observer) => {
-      entries.forEach(async (entry) => {
-        if (!entry.isIntersecting) return;
-        if (entry.target.id === 'end') {
-          try {
-            setIsLoading(true);
-
-            const result = await ProductApi.getList(filter);
-            if (result.ok) {
-              if (result.data.products.length > 0) {
-                setPage(page + 1);
-                setProduct([...product, ...result.data.products]);
-              } else {
-                setIsActiveInfiniteScroll(false);
-              }
-            }
-          } catch (e) {
-            alert(e.response.data.message);
-          } finally {
-            setIsLoading(false);
-          }
-        }
-        observer.unobserve(entry.target);
-      });
-    };
-    const items = document.querySelectorAll('.item');
-    const observer = new IntersectionObserver(observerCallback);
-    items.forEach((item) => observer.observe(item));
+  const handleClickButton = async () => {
+    const result = await ProductApi.getList(filter);
+    if (result.ok) {
+      if (result.data.products.length) {
+        setProduct([...product, ...result.data.products]);
+        setPage(page + 1);
+      } else {
+        setShowLoadMore(false);
+      }
+    }
   };
 
   return (
@@ -107,8 +82,12 @@ const ProductList = () => {
           totalProductCount={totalProductCount}
           sortByIdx={sortByIdx}
         ></ItemFilterBar>
-        <ItemLists observeTag={observeTag} products={product}></ItemLists>
-        {isLoading && <Loading size="small" />}
+        <ItemLists products={product}></ItemLists>
+        {showLoadMore && (
+          <LoadMoreContainer>
+            <LoadMore onClick={handleClickButton}>상품 더보기</LoadMore>
+          </LoadMoreContainer>
+        )}
       </ElementContainer>
     </WholeContainer>
   );
@@ -116,8 +95,26 @@ const ProductList = () => {
 
 export default observer(ProductList);
 
+const LoadMoreContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
+const LoadMore = styled.button`
+  border-radius: 50px;
+  font-family: ${baeminFont};
+  font-size: 20px;
+  background-color: ${baemin};
+  color: white;
+  width: 150px;
+  height: 50px;
+`;
+
 const WholeContainer = styled.div`
   width: 100vw;
+  min-height: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
