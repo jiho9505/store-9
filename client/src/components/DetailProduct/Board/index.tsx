@@ -23,6 +23,10 @@ let timer: number = 0;
 const initPageStart = 0;
 const initPageEnd = 10;
 
+/**
+ * TODO:
+ * 안되면 refresh 이용하기.
+ */
 const ProductBoard = ({ title }: ProductBoardProps) => {
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [postInfoDatas, setPostInfoDatas] = useState([]);
@@ -58,6 +62,8 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
       createMsg(alertMsg['REQUIRED_LOGIN']);
     } else if (mode === 'notbuy') {
       createMsg(requireBuyHistoryMsg);
+    } else if (mode === 'alreadyWrite') {
+      createMsg(DetailProductStore.errorMsg);
     }
   };
 
@@ -76,11 +82,13 @@ const ProductBoard = ({ title }: ProductBoardProps) => {
     if (!AuthStore.isLogined) return viewMsgByUserStatus('notlogin');
     if (title === '상품 후기' && !DetailProductStore.product.isBuy)
       return viewMsgByUserStatus('notbuy');
+    if (DetailProductStore.errorMsg) return viewMsgByUserStatus('alreadyWrite');
     setIsActiveModal(true);
   };
 
   const handleClickForClose = () => {
     setIsActiveModal(false);
+    DetailProductStore.load(DetailProductStore.product.productId);
   };
 
   const handleClickTitle = (e: React.MouseEvent<HTMLSpanElement>) => {

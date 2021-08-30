@@ -9,6 +9,7 @@ import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
+import ProductResponse from '@shared/dtos/product/response';
 
 type ItemListsProps = {
   observeTag?: () => void;
@@ -23,8 +24,8 @@ type ItemListsProps = {
 const ItemLists = ({ observeTag, products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item, idx) => (
-        <Item key={idx} className="item">
+      products.map((item) => (
+        <Item key={item.productId} className="item">
           <ItemImage item={item}></ItemImage>
           <ItemContent item={item}></ItemContent>
           {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
@@ -54,7 +55,7 @@ const ItemLists = ({ observeTag, products }: ItemListsProps) => {
     <>
       <ItemContainer>
         {createItem()}
-        <EndPositionTag className="item" id="end" />
+        {observeTag && <EndPositionTag className="item" id="end" />}
       </ItemContainer>
     </>
   );
@@ -103,7 +104,9 @@ const StarContainer = guguStyled.div`
   }
 `;
 
-const EndPositionTag = styled.div``;
+const EndPositionTag = styled.div`
+  margin-top: 600px;
+`;
 
 const Item = guguStyled.article`
   position: relative;
