@@ -12,6 +12,9 @@
 게스트 로그인 / id: guest, password: 1234
            / id: guest02, password: 1234
 ```
+### ``기능설명``
+<img src="https://user-images.githubusercontent.com/35404137/131428685-8700cc89-2e63-496d-b246-e502f45abd7e.gif">
+<p width="50%">test</p>|
 
 ### ``기술스택 ``
 
