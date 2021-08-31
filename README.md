@@ -4,8 +4,10 @@
 <br><br>
 
 ## 배민 문방구 프로젝트
+```
 게스트 로그인 / id: guest, password: 1234
            / id: guest02, password: 1234
+```
 
 ### ``기술스택 ``
 
