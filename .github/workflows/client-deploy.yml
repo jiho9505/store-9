@@ -2,7 +2,7 @@ name: CI/CD-client
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 env:
   DOCKER_IMAGE: ghcr.io/woowa-techcamp-2021/store-9
