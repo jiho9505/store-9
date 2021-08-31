@@ -6,7 +6,7 @@ import ItemLists from '@/components/common/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
 
 import RefreshStore from '@/stores/RefreshStore';
-import { baemin, baeminFont, normalContainerWidth } from '@/static/style/common';
+import { baemin, baeminFont, normalContainerWidth, primary1 } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import ProductApi from '@/apis/ProductApi';
 
@@ -24,6 +24,7 @@ const ProductList = () => {
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
   const [page, setPage] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { refreshComponent } = RefreshStore;
   const [showLoadMore, setShowLoadMore] = useState(false);
 
@@ -63,6 +64,7 @@ const ProductList = () => {
   };
 
   const handleClickButton = async () => {
+    setIsLoading(true);
     const result = await ProductApi.getList(filter);
     if (result.ok) {
       if (result.data.products.length) {
@@ -72,6 +74,7 @@ const ProductList = () => {
         setShowLoadMore(false);
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -85,7 +88,9 @@ const ProductList = () => {
         <ItemLists products={product}></ItemLists>
         {showLoadMore && (
           <LoadMoreContainer>
-            <LoadMore onClick={handleClickButton}>상품 더보기</LoadMore>
+            <LoadMore onClick={handleClickButton}>
+              {isLoading ? <Spinner /> : '상품 더보기'}
+            </LoadMore>
           </LoadMoreContainer>
         )}
       </ElementContainer>
@@ -110,6 +115,9 @@ const LoadMore = styled.button`
   color: white;
   width: 150px;
   height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const WholeContainer = styled.div`
@@ -126,4 +134,21 @@ const ElementContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+`;
+
+const Spinner = styled.div`
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid grey; /* Grey */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.5s linear infinite;
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
