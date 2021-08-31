@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
 
@@ -12,15 +12,21 @@ import AuthStore from '@/stores/AuthStore';
 import { greyLine } from '@/static/style/common';
 import { alertMsg } from '@/utils/errorMessage';
 
-type LikeModeType = 'notlogin' | 'add' | 'remove';
+type LikeModeType = 'notlogin' | 'add' | 'remove' | 'fail';
 let timer: number = 0;
 
 const Like = () => {
+  const [isIconActive, setIsIconActive] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({
     showMessage: false,
     messageContent: '',
     messageMode: 'fail',
   });
+
+  useEffect(() => {
+    if (!AuthStore.isLogined) setIsIconActive(false);
+    return () => clearTimeout(timer);
+  }, [AuthStore.isLogined]);
 
   const createMsg = (mode: MessageModeType, title: string) => {
     setMessage({ showMessage: true, messageContent: title, messageMode: mode });
@@ -46,9 +52,13 @@ const Like = () => {
     try {
       const result = await UserApi.toggleLike({ productId: DetailProductStore.product.productId });
       if (result.ok) {
-        DetailProductStore.product.isLike
-          ? viewMsgByUserStatus('remove')
-          : viewMsgByUserStatus('add');
+        if (isIconActive) {
+          viewMsgByUserStatus('remove');
+          setIsIconActive(false);
+        } else if (!isIconActive) {
+          viewMsgByUserStatus('add');
+          setIsIconActive(true);
+        }
       }
     } catch (e) {
       viewMsgByUserStatus('notlogin');
@@ -57,10 +67,7 @@ const Like = () => {
 
   return (
     <LikeContainer>
-      <i
-        className={`${DetailProductStore.product.isLike ? 'fas' : 'far'} fa-heart`}
-        onClick={handleClickBtn}
-      ></i>
+      <i className={`${isIconActive ? 'fas' : 'far'} fa-heart`} onClick={handleClickBtn}></i>
       {message.showMessage && (
         <ModalPortal>
           <Message text={message.messageContent} mode={message.messageMode} />

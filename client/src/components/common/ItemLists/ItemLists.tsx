@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import styled from '@emotion/styled';
+import React from 'react';
 import guguStyled from '@/core/styled';
 
 import EmptyPannel from '../EmptyPannel';
@@ -11,7 +10,6 @@ import StarComponent from '../Star';
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
 
 type ItemListsProps = {
-  observeTag?: () => void;
   products: {
     productId?: number;
     name?: string;
@@ -23,27 +21,28 @@ type ItemListsProps = {
     badges?: string[];
     stock?: number;
   }[];
-  showEndTag?: boolean;
 };
 
-const ItemLists = ({ showEndTag, observeTag, products }: ItemListsProps) => {
+const ItemLists = ({ products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item) => (
-        <Item key={item.productId} className="item">
-          <ItemImage item={item}></ItemImage>
-          <ItemContent item={item}></ItemContent>
-          {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
-          <StarContainer>
-            <StarComponent score={item.reviewAverageRate} />
-            <span>{item.reviewCount}</span>
-          </StarContainer>
-          <LikeContainer>
-            <i className="fas fa-heart"></i>
-            <span>{item.likeCount}</span>
-          </LikeContainer>
-        </Item>
-      ))
+      products.map((item, idx) => {
+        return (
+          <Item key={`${idx}_${item.productId}`} className="item">
+            <ItemImage item={item}></ItemImage>
+            <ItemContent item={item}></ItemContent>
+            {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
+            <StarContainer>
+              <StarComponent score={item.reviewAverageRate} />
+              <span>{item.reviewCount}</span>
+            </StarContainer>
+            <LikeContainer>
+              <i className="fas fa-heart"></i>
+              <span>{item.likeCount}</span>
+            </LikeContainer>
+          </Item>
+        );
+      })
     ) : (
       <EmptyContainer>
         <EmptyPannel />
@@ -52,18 +51,7 @@ const ItemLists = ({ showEndTag, observeTag, products }: ItemListsProps) => {
     );
   };
 
-  useEffect(() => {
-    observeTag?.();
-  });
-
-  return (
-    <>
-      <ItemContainer>
-        {createItem()}
-        {observeTag && <EndPositionTag className="item" id="end" />}
-      </ItemContainer>
-    </>
-  );
+  return <ItemContainer>{createItem()}</ItemContainer>;
 };
 
 export default ItemLists;
@@ -107,10 +95,6 @@ const StarContainer = guguStyled.div`
   span {
     margin-left: 5px;
   }
-`;
-
-const EndPositionTag = styled.div`
-  margin-top: 600px;
 `;
 
 const Item = guguStyled.article`

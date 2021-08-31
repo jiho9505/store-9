@@ -77,48 +77,41 @@ client
 server
 
 ├── /node_modules
-├── /@types
-├── /config
-├── .env
-├── .eslintrc
+├── ormconfig.js
 ├── tsconfig.json
+├── .env
+├── ecosystem.config.js
+├── jest.config.js
+├── package.json
+├── app.ts
 └── /src
-    ├── /apis
-    ├── /components
-    ├── /core
-    ├── /hooks
-    ├── /pages
-    ├── /remotes
-    ├── /static
-    ├── /stores
-    ├── /utils
-    ├── app.tsx
-    ├── index.html
-    └── index.tsx
+    ├── /@types
+    ├── /api
+    ├── /controllers
+    ├── /entities
+    ├── /middlewares
+    ├── /migrations
+    ├── /repositories
+    ├── /routes
+    ├── /tests
+    └── /utils
+    
 ```
 
 ```
 shared
 
-├── /node_modules
-├── /@types
-├── /config
-├── .env
-├── .eslintrc
-├── tsconfig.json
-└── /src
-    ├── /apis
-    ├── /components
-    ├── /core
-    ├── /hooks
-    ├── /pages
-    ├── /remotes
-    ├── /static
-    ├── /stores
-    ├── /utils
-    ├── app.tsx
-    ├── index.html
-    └── index.tsx
+├── dtos
+├── utils
+└──  operators
+```
+
+```
+others
+
+├── .gitignore
+├── prettier.config.js
+└── README.md
 ```
 
 

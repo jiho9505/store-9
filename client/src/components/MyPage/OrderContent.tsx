@@ -31,11 +31,11 @@ const ProductInfoCell = ({ thumbNail, name }) => {
   );
 };
 
-const ReviewButton = ({ isReviewed, onClick }) => {
-  const buttonName = isReviewed ? '작성완료' : '리뷰작성';
+const ReviewButton = ({ isReviewed, onEnroll, onModify }) => {
+  const buttonName = isReviewed ? '리뷰수정' : '리뷰작성';
   return (
     <Cell>
-      <Button isReview={isReviewed} onClick={isReviewed ? null : onClick}>
+      <Button isReview={isReviewed} onClick={isReviewed ? onModify : onEnroll}>
         {buttonName}
       </Button>
     </Cell>
@@ -46,6 +46,11 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
   const [activeModal, setActiveModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
   const history = useHistory();
+
+  const handleClickModifyReviewBtn = (e) => {
+    e.stopPropagation();
+    history.push('/mypage/review');
+  };
 
   const handleClickReviewBtn = (idx) => (e) => {
     e.stopPropagation();
@@ -68,7 +73,7 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
     const [parentIdx, childIdx] = idx.split('_');
     const { orderItems } = orderProducts[parentIdx];
     const { productId } = orderItems[childIdx];
-    history.push(`/detail?id=${productId}`)
+    history.push(`/detail?id=${productId}`);
   };
 
   const tableBody = useMemo(() => {
@@ -94,7 +99,8 @@ const OrderContent = ({ orderProducts }: OrderContentProps) => {
               c: (
                 <ReviewButton
                   isReviewed={isReviewed}
-                  onClick={handleClickReviewBtn(`${idx}_${sub_idx}`)}
+                  onModify={handleClickModifyReviewBtn}
+                  onEnroll={handleClickReviewBtn(`${idx}_${sub_idx}`)}
                 />
               ),
               colSpan: 1,
