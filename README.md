@@ -16,6 +16,16 @@
 <img src="https://user-images.githubusercontent.com/35404137/131428685-8700cc89-2e63-496d-b246-e502f45abd7e.gif">
 <p width="50%">test</p>|
 
+#### `` 인증 ``
+<img width="50%" src="https://user-images.githubusercontent.com/32658347/131429625-62fb26b1-9fe7-4d65-a3ee-8e8baeed9e30.png" >
+
+```
+배민 문방구 회원가입 화면입니다
+- 각 입력값은 입력시에 검증되고, 제출전에도 검증이 됩니다. 또한 서버에서도 검증 프로세스가 있습니다.
+- 카카오 주소 api를 사용해서 주소 입력이 가능합니다.
+- 깃허브를 통한 회원가입시에는 입력 항목이 조금 달라지게 됩니다.
+```
+
 ### ``기술스택 ``
 
 - <strong>Frontend : </strong>
