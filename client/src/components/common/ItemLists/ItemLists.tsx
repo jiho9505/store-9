@@ -26,9 +26,9 @@ type ItemListsProps = {
 const ItemLists = ({ products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item, idx) => {
+      products.map((item) => {
         return (
-          <Item key={`${idx}_${item.productId}`} className="item">
+          <Item key={item.productId} className="item">
             <ItemImage item={item}></ItemImage>
             <ItemContent item={item}></ItemContent>
             {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
