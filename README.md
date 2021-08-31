@@ -21,7 +21,7 @@
 배민 문방구 장바구니 화면입니다
 - 품목을 삭제, 추가 할 수 있으며 옵션 변경도 가능합니다.
 ```
-
+---
 #### `` 주문하기 ``
 <img width="50%" src="https://user-images.githubusercontent.com/35404137/131431994-f37ac178-f215-463a-b2c5-fb2edd2fba67.png" > 
 
@@ -29,7 +29,7 @@
 배민 문방구 주문하기 화면입니다
 - 선택한 품목을 구매할 수 있으며, 주무서 작성 폼에 유효성 검사 프로세스가 있습니다
 ```
-
+---
 #### `` 마이페이지 ``
 <img width="50%" src="https://user-images.githubusercontent.com/35404137/131432350-cacf9693-8122-497e-8333-692cece0dad9.gif">
 
@@ -38,7 +38,7 @@
 - 찜한 상품, 구매상품, 작성한 리뷰, 작성한 문의 사항을 확인해 볼 수 있습니다.
 - 구매상품과 문의 사항은 기간 별로 필터링 해볼 수 있습니다.
 ```
-
+---
 #### ``🔒 회원가입``
 
 <img width="60%" src="https://user-images.githubusercontent.com/32658347/131431834-aedd31d1-4bf8-40fc-8fa8-cf05142b840a.gif" >
@@ -52,11 +52,11 @@
 ```
 ---
 
+#### ``🔒 로그인``
+
 <img width="60%" src="https://user-images.githubusercontent.com/32658347/131432745-4a63bea1-5dfb-48c7-aad0-719933887b88.gif" >
 <img width="60%" src="https://user-images.githubusercontent.com/32658347/131432863-e327ab02-ecf9-4655-ac6d-ac1313262b0b.gif" >
 
-
-#### ``🔒 로그인``
 
 ```
 배민 문방구 로그인 화면입니다
