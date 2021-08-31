@@ -13,9 +13,6 @@
            / id: guest02, password: 1234
 ```
 ### ``기능설명``
-<img src="https://user-images.githubusercontent.com/35404137/131428685-8700cc89-2e63-496d-b246-e502f45abd7e.gif">
-<p width="50%">test</p>|
-
 #### `` 인증 ``
 <img width="50%" src="https://user-images.githubusercontent.com/32658347/131429625-62fb26b1-9fe7-4d65-a3ee-8e8baeed9e30.png" >
 
@@ -24,6 +21,31 @@
 - 각 입력값은 입력시에 검증되고, 제출전에도 검증이 됩니다. 또한 서버에서도 검증 프로세스가 있습니다.
 - 카카오 주소 api를 사용해서 주소 입력이 가능합니다.
 - 깃허브를 통한 회원가입시에는 입력 항목이 조금 달라지게 됩니다.
+```
+
+#### `` 장바구니 ``
+<img width="50%" src="https://user-images.githubusercontent.com/35404137/131428685-8700cc89-2e63-496d-b246-e502f45abd7e.gif" >  
+
+```
+배민 문방구 장바구니 화면입니다
+- 품목을 삭제, 추가 할 수 있으며 옵션 변경도 가능합니다.
+```
+
+#### `` 주문하기 ``
+<img width="50%" src="https://user-images.githubusercontent.com/35404137/131431994-f37ac178-f215-463a-b2c5-fb2edd2fba67.png" > 
+
+```
+배민 문방구 주문하기 화면입니다
+- 선택한 품목을 구매할 수 있으며, 주무서 작성 폼에 유효성 검사 프로세스가 있습니다
+```
+
+#### `` 마이페이지 ``
+<img width="50%" src="https://user-images.githubusercontent.com/35404137/131432350-cacf9693-8122-497e-8333-692cece0dad9.gif">
+
+```
+배민 문방구 마이페이지 화면입니다
+- 찜한 상품, 구매상품, 작성한 리뷰, 작성한 문의 사항을 확인해 볼 수 있습니다.
+- 구매상품과 문의 사항은 기간 별로 필터링 해볼 수 있습니다.
 ```
 
 ### ``기술스택 ``
