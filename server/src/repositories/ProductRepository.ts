@@ -261,7 +261,7 @@ export default class ProductRepository extends Repository<Product> {
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
           ${whereCategory}
           GROUP BY p.id
-          ORDER BY total_amount DESC
+          ORDER BY total_amount DESC, p.created_at DESC
           LIMIT ${size}
           OFFSET ${page * size}
         `;
@@ -274,7 +274,7 @@ export default class ProductRepository extends Repository<Product> {
           FROM products p
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
           ${whereCategory}
-          ORDER BY created_at DESC
+          ORDER BY created_at DESC, p.created_at DESC
           LIMIT ${size}
           OFFSET ${page * size}
         `;
@@ -291,7 +291,7 @@ export default class ProductRepository extends Repository<Product> {
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
           ${whereCategory}
           GROUP BY p.id 
-          ORDER BY like_count DESC
+          ORDER BY like_count DESC, p.created_at DESC
           LIMIT ${size}
           OFFSET ${page * size}
         `;
@@ -304,7 +304,7 @@ export default class ProductRepository extends Repository<Product> {
           FROM products p
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
           ${whereCategory}
-          ORDER BY p.price DESC
+          ORDER BY p.price DESC, p.created_at DESC
           LIMIT ${size}
           OFFSET ${page * size}
         `;
@@ -317,7 +317,7 @@ export default class ProductRepository extends Repository<Product> {
           FROM products p
           ${PRODUCT_QUERY.COMMON_LEFT_JOIN}
           ${whereCategory}
-          ORDER BY p.price ASC
+          ORDER BY p.price ASC, p.created_at DESC
           LIMIT ${size}
           OFFSET ${page * size}
         `;
