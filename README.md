@@ -1,6 +1,10 @@
-## 🕊 구구 비둘기파 (9팀) 🐦
+<h2 align='center'>🕊 구구 비둘기파 (9팀) 🐦</h2>
 
-조직원 : 문지호, 안준범, 이재윤, 조혁주 
+<p align='center' >
+<img width="500" height="500"  alt="스크린샷 2021-08-13 오후 12 14 43" src="https://user-images.githubusercontent.com/32658347/131289707-fe4d9181-d302-4df9-ae9c-792cb4833fff.png">
+</p>
+
+<h3 align='center'>조직원 : 문지호, 안준범, 이재윤, 조혁주 </h3>
 <br><br>
 
 ## 배민 문방구 프로젝트
@@ -118,10 +122,3 @@ others
 ```
 
 
-
-
-❗️이 구역은 우리가 접수한다❗️
-
-
-
-<img width="500" height="500" alt="스크린샷 2021-08-13 오후 12 14 43" src="https://user-images.githubusercontent.com/32658347/131289707-fe4d9181-d302-4df9-ae9c-792cb4833fff.png">
