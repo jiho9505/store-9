@@ -4,9 +4,10 @@ import { observer } from 'mobx-react';
 
 import ItemLists from '@/components/common/ItemLists/ItemLists';
 import ItemFilterBar from '@/components/ProductList/ItemFilterBar';
+import Loading from '@/components/common/Loading';
 
 import RefreshStore from '@/stores/RefreshStore';
-import { baemin, baeminFont, normalContainerWidth, primary1 } from '@/static/style/common';
+import { normalContainerWidth } from '@/static/style/common';
 import { getQueryStringValue } from '@/utils/getQueryStringValue';
 import ProductApi from '@/apis/ProductApi';
 
@@ -17,17 +18,15 @@ const sortByObj = {
   3: 'HIGH_PRICE',
   4: 'LOW_PRICE',
 };
-const size = 16;
+const size = 8;
 
 const ProductList = () => {
   const [sortByIdx, setSortByIdx] = useState<number>(0);
   const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [product, setProduct] = useState([]);
-  const [page, setPage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
   const { refreshComponent } = RefreshStore;
-  const [showLoadMore, setShowLoadMore] = useState(false);
-
   const filter = {
     page,
     size,
@@ -40,14 +39,12 @@ const ProductList = () => {
     (async () => {
       try {
         filter.page = 0;
+        setPage(0);
         const result = await ProductApi.getList(filter);
-
         if (result.ok) {
-          if (result.data.totalCount < 20) setShowLoadMore(false);
-          else setShowLoadMore(true);
           setProduct(result.data.products);
           setTotalProductCount(result.data.totalCount);
-          setPage(1);
+          setPage((prev) => prev + 1);
         }
       } catch (e) {
         alert(e.response.data.message);
@@ -59,22 +56,44 @@ const ProductList = () => {
     setSortByIdx(0);
   }, [refreshComponent]);
 
+  useEffect(() => {
+    if (page > 0) observeTag();
+  }, [page]);
+
   const handleFilter = (index: number) => {
     setSortByIdx(index);
   };
 
-  const handleClickButton = async () => {
-    setIsLoading(true);
-    const result = await ProductApi.getList(filter);
-    if (result.ok) {
-      if (result.data.products.length) {
-        setProduct([...product, ...result.data.products]);
-        setPage(page + 1);
-      } else {
-        setShowLoadMore(false);
-      }
-    }
-    setIsLoading(false);
+  const observeTag = () => {
+    const observerCallback = (entries, observer) => {
+      entries.forEach(async (entry) => {
+        if (entry.isIntersecting) {
+          try {
+            setIsLoading(true);
+            const result = await ProductApi.getList(filter);
+            if (result.ok) {
+              if (result.data.products.length > 0) {
+                setProduct([...product, ...result.data.products]);
+                setPage((prev) => prev + 1);
+              }
+            }
+          } catch (e) {
+            alert(e.response.data.message);
+          } finally {
+            setIsLoading(false);
+            observer.unobserve(entry.target);
+          }
+        }
+      });
+    };
+
+    const options = {
+      rootMargin: '250px',
+      threshold: 0.5,
+    };
+    const target = document.querySelector('#end');
+    const observer = new IntersectionObserver(observerCallback, options);
+    observer.observe(target);
   };
 
   return (
@@ -86,39 +105,13 @@ const ProductList = () => {
           sortByIdx={sortByIdx}
         ></ItemFilterBar>
         <ItemLists products={product}></ItemLists>
-        {showLoadMore && (
-          <LoadMoreContainer>
-            <LoadMore onClick={handleClickButton}>
-              {isLoading ? <Spinner /> : '상품 더보기'}
-            </LoadMore>
-          </LoadMoreContainer>
-        )}
+        {isLoading && <Loading size="small" />}
       </ElementContainer>
     </WholeContainer>
   );
 };
 
 export default observer(ProductList);
-
-const LoadMoreContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-`;
-
-const LoadMore = styled.button`
-  border-radius: 50px;
-  font-family: ${baeminFont};
-  font-size: 20px;
-  background-color: ${baemin};
-  color: white;
-  width: 150px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const WholeContainer = styled.div`
   width: 100vw;
@@ -134,21 +127,4 @@ const ElementContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
-`;
-
-const Spinner = styled.div`
-  border: 4px solid #f3f3f3; /* Light grey */
-  border-top: 4px solid grey; /* Grey */
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: spin 0.5s linear infinite;
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 `;

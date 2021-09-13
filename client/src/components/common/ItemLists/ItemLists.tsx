@@ -8,6 +8,7 @@ import ItemContent from './ItemContent/ItemContent';
 import StarComponent from '../Star';
 
 import { baeminFont, greySpan, red1 } from '@/static/style/common';
+import styled from '@emotion/styled';
 
 type ItemListsProps = {
   products: {
@@ -26,9 +27,9 @@ type ItemListsProps = {
 const ItemLists = ({ products }: ItemListsProps) => {
   const createItem = () => {
     return products.length > 0 ? (
-      products.map((item) => {
+      products.map((item, idx) => {
         return (
-          <Item key={item.productId} className="item">
+          <Item key={item.productId}>
             <ItemImage item={item}></ItemImage>
             <ItemContent item={item}></ItemContent>
             {item.stock ? <ItemLabel product={item}></ItemLabel> : ``}
@@ -40,6 +41,7 @@ const ItemLists = ({ products }: ItemListsProps) => {
               <i className="fas fa-heart"></i>
               <span>{item.likeCount}</span>
             </LikeContainer>
+            {idx === products.length - 1 && <End id="end" />}
           </Item>
         );
       })
@@ -55,6 +57,8 @@ const ItemLists = ({ products }: ItemListsProps) => {
 };
 
 export default ItemLists;
+
+const End = styled.div``;
 
 const EmptyMessage = guguStyled.span`
   color: ${greySpan};
