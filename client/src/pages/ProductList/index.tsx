@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react';
 
@@ -44,7 +44,7 @@ const ProductList = () => {
         if (result.ok) {
           setProduct(result.data.products);
           setTotalProductCount(result.data.totalCount);
-          setPage((prev) => prev + 1);
+          setPage(1);
         }
       } catch (e) {
         alert(e.response.data.message);
@@ -64,8 +64,8 @@ const ProductList = () => {
     setSortByIdx(index);
   };
 
-  const observeTag = () => {
-    const observerCallback = (entries, observer) => {
+  const observerCallback = useCallback(
+    (entries, observer) => {
       entries.forEach(async (entry) => {
         if (entry.isIntersecting) {
           try {
@@ -74,7 +74,7 @@ const ProductList = () => {
             if (result.ok) {
               if (result.data.products.length > 0) {
                 setProduct([...product, ...result.data.products]);
-                setPage((prev) => prev + 1);
+                setPage(page + 1);
               }
             }
           } catch (e) {
@@ -85,8 +85,11 @@ const ProductList = () => {
           }
         }
       });
-    };
+    },
+    [page]
+  );
 
+  const observeTag = useCallback(() => {
     const options = {
       rootMargin: '250px',
       threshold: 0.5,
@@ -94,7 +97,7 @@ const ProductList = () => {
     const target = document.querySelector('#end');
     const observer = new IntersectionObserver(observerCallback, options);
     observer.observe(target);
-  };
+  }, [page]);
 
   return (
     <WholeContainer>
@@ -120,7 +123,6 @@ const WholeContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 const ElementContainer = styled.div`
   width: ${normalContainerWidth};
   margin-top: 50px;

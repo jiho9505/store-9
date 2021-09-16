@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 import { baemin, baeminFont, baeminThickFont, lightBlack } from '@/static/style/common';
@@ -55,7 +55,7 @@ const ItemFilterBar = ({ handleFilter, totalProductCount, sortByIdx }: ItemFilte
   );
 };
 
-export default ItemFilterBar;
+export default memo(ItemFilterBar);
 
 const Container = styled.div`
   display: flex;
