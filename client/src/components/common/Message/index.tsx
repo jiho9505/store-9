@@ -38,8 +38,8 @@ const Message = ({ text, children, mode }: MessageProps) => {
     }
   };
   return (
-    <WholeContainer>
-      <MessageContainer show={adjustAnimation}>
+    <WholeContainer show={adjustAnimation}>
+      <MessageContainer>
         <Text>
           {createIcon()}
           {text}
@@ -52,13 +52,24 @@ const Message = ({ text, children, mode }: MessageProps) => {
 
 export default Message;
 
-type MessageContainerProps = {
+type WholeContainerProps = {
   show: boolean;
 };
 
-const WholeContainer = styled.div`
+const showMessage = keyframes`
+  from {
+    transform: translateY(-15%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(-15%);
+  }
+`;
+
+const WholeContainer = styled.div<WholeContainerProps>`
   display: flex;
-  align-items: center;
   justify-content: center;
   z-index: 1;
   position: fixed;
@@ -67,34 +78,20 @@ const WholeContainer = styled.div`
   width: 100%;
   height: 100%;
   font-size: 1.2rem;
+  animation: ${showMessage} ${showErrorMsgTime}ms ease;
 `;
 
-const showMessage = keyframes`
-  from {
-    transform: translateY(-500px);
-  }
-  50% {
-    transform: translateY(-350px);
-  }
-  100% {
-    transform: translateY(-500px);
-  }
-`;
-
-const MessageContainer = styled.div<MessageContainerProps>`
+const MessageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  min-height: 70px;
-  max-height: 120px;
+  height: 70px;
   padding: 15px 20px;
   width: 430px;
   background: ${greyBg1};
   border-radius: 0.5rem;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
   z-index: 1;
-  animation: ${showMessage} ${showErrorMsgTime}ms ease;
 `;
 
 const Text = styled.div`
