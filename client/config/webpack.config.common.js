@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
@@ -8,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
-    filename: 'index.js',
+    filename: '[name].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -21,19 +20,7 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-              plugins: ['@emotion', '@babel/plugin-transform-runtime', 'transform-remove-console'],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: 'babel-loader',
       },
       {
         test: /\.(jpg|jpeg|png|gif|ico)$/,
@@ -52,9 +39,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-    new MiniCssExtractPlugin({
-      filename: 'index.css',
-    }),
-    new Dotenv(),
+    new Dotenv({ path: process.env.NODE_ENV === 'development' ? '.env.dev' : '.env' }),
   ],
 };
