@@ -14,9 +14,12 @@ import useHistory from '@/hooks/customHooks/useHistory';
 import SEARCH from '@/static/assets/img/search.png';
 
 const timeToShowError = 2000;
+const debounceTime = 200;
+let timer;
 type SearchBarProps = {
   words: string[];
 };
+
 const SearchBar = ({ words }: SearchBarProps) => {
   const [history, setHistory] = useLocalStorage('searchs', []);
   const [nameForSearch, setNameForSearch] = useState<string>('');
@@ -114,13 +117,20 @@ const SearchBar = ({ words }: SearchBarProps) => {
       return;
     }
 
-    const matchedWords = words
-      .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
-      .sort((a, b) => a.length - b.length)
-      .slice(0, 10);
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      getMatchedWords();
+    }, debounceTime);
 
-    setRecommendWords(matchedWords);
-    setIdxForChoicedWord(-1);
+    const getMatchedWords = () => {
+      const matchedWords = words
+        .filter((word) => word.search(getRegExp(e.currentTarget.value)) !== -1)
+        .sort((a, b) => a.length - b.length)
+        .slice(0, 10);
+
+      setRecommendWords(matchedWords);
+      setIdxForChoicedWord(-1);
+    };
   };
 
   const handleKeyPressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
