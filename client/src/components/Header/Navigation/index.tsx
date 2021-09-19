@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from '@/core/Router';
 
@@ -10,7 +10,6 @@ import CIRCLE from '@/static/assets/img/circle.png';
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
 let timer: number = 0;
-let cursurInHeader = true;
 type NavigationProps = {
   categories: CategoryType;
   subCategories: CategoryType;
@@ -23,25 +22,12 @@ const Navigation = ({ categories, subCategories }: NavigationProps) => {
   const [matchedItemIdToURL, setMatchedItemIdToURL] = useState<number>(-1);
   const { refresh } = RefreshStore;
 
-  useEffect(() => {
-    document.addEventListener('mouseover', handleMouseOverOnDocument);
-    return () => {
-      document.removeEventListener('mouseover', handleMouseOverOnDocument);
-    };
-  }, []);
-
-  const handleMouseOverOnDocument = (e: Event) => {
-    const { target } = e;
-    if (!(target instanceof HTMLElement)) return;
-    if (!cursurInHeader) return;
-    if (!target.closest('#NavBorder')) {
-      setSubItems([]);
-      setMouseOverdItemName('');
-      getQueryStringValue('categoryId')
-        ? setMatchedItemIdToURL(getCatgoryIdx(Number(getQueryStringValue('categoryId'))))
-        : setMatchedItemIdToURL(-1);
-      cursurInHeader = false;
-    }
+  const handleMouseLeaveContainer = () => {
+    setSubItems([]);
+    setMouseOverdItemName('');
+    getQueryStringValue('categoryId')
+      ? setMatchedItemIdToURL(getCatgoryIdx(Number(getQueryStringValue('categoryId'))))
+      : setMatchedItemIdToURL(-1);
   };
 
   const getCatgoryIdx = (ctgId) => {
@@ -78,7 +64,6 @@ const Navigation = ({ categories, subCategories }: NavigationProps) => {
     setSubItems(newSubItems);
     setMouseOverdItemName(itemName);
     setMatchedItemIdToURL(-1);
-    cursurInHeader = true;
   };
 
   const handleMouseOutLink = () => {
@@ -90,7 +75,7 @@ const Navigation = ({ categories, subCategories }: NavigationProps) => {
   };
 
   return (
-    <NavigationContainer id="NavBorder">
+    <NavigationContainer onMouseLeave={handleMouseLeaveContainer}>
       <Menu>
         {categories.map((category) => (
           <Item key={category.name}>
