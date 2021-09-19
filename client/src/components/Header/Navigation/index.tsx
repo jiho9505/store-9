@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from '@/core/Router';
 
@@ -10,11 +10,12 @@ import CIRCLE from '@/static/assets/img/circle.png';
 const weightWhenSubItemsLengthEven = -50;
 const timeToMoveOtherMenu = 150;
 let timer: number = 0;
-
+let cursurInHeader = true;
 type NavigationProps = {
   categories: CategoryType;
   subCategories: CategoryType;
 };
+
 const Navigation = ({ categories, subCategories }: NavigationProps) => {
   const [subItemXpos, setSubItemXpos] = useState<number>(0);
   const [subItems, setSubItems] = useState([]);
@@ -29,26 +30,28 @@ const Navigation = ({ categories, subCategories }: NavigationProps) => {
     };
   }, []);
 
-  const handleMouseOverOnDocument = useCallback((e: Event) => {
+  const handleMouseOverOnDocument = (e: Event) => {
     const { target } = e;
     if (!(target instanceof HTMLElement)) return;
+    if (!cursurInHeader) return;
     if (!target.closest('#NavBorder')) {
       setSubItems([]);
       setMouseOverdItemName('');
       getQueryStringValue('categoryId')
         ? setMatchedItemIdToURL(getCatgoryIdx(Number(getQueryStringValue('categoryId'))))
         : setMatchedItemIdToURL(-1);
+      cursurInHeader = false;
     }
-  }, []);
+  };
 
-  const getCatgoryIdx = useCallback((ctgId) => {
+  const getCatgoryIdx = (ctgId) => {
     if (ctgId > categories.length) {
       subCategories.forEach((subcategory) => {
         if (subcategory.id === ctgId) ctgId = subcategory.parentId;
       });
     }
     return ctgId;
-  }, []);
+  };
 
   const handleMouseOverLink = (e: React.ChangeEvent<HTMLAnchorElement>) => {
     const waitTime = new Promise((resolve) => {
@@ -75,6 +78,7 @@ const Navigation = ({ categories, subCategories }: NavigationProps) => {
     setSubItems(newSubItems);
     setMouseOverdItemName(itemName);
     setMatchedItemIdToURL(-1);
+    cursurInHeader = true;
   };
 
   const handleMouseOutLink = () => {
